@@ -3207,8 +3207,11 @@ body.book-open{overflow:hidden}
       window.Cal('init', NS, { origin: 'https://app.cal.com' });
       window.Cal.ns[NS]('inline', { elementOrSelector: '#bookcal', calLink: link, config: { layout: 'month_view', theme: theme() } });
       window.Cal.ns[NS]('ui', { theme: theme(), styles: { branding: { brandColor: brand() } }, hideEventTypeDetails: false, layout: 'month_view' });
-      window.Cal.ns[NS]('on', { action: 'linkReady', callback: function(){ sheet.classList.add('loaded'); } });
-      window.Cal.ns[NS]('on', { action: 'linkFailed', callback: function(){ broke(); } });
+      window.Cal.ns[NS]('on', { action: '*', callback: function(e){
+        var t = e && e.detail && e.detail.type;
+        if (t === 'linkFailed') broke();
+        else if (t === '__iframeReady' || t === 'linkReady' || t === 'navigatedToBooker' || t === 'availabilityLoaded' || t === 'slotsFetched') sheet.classList.add('loaded');
+      } });
       setTimeout(function(){ if (!sheet.classList.contains('loaded')) broke(); }, 9000);
     }
     function broke(){ if (sheet.classList.contains('loaded')) return; fail.hidden = false; sheet.classList.add('loaded'); }
