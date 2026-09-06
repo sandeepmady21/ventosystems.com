@@ -795,6 +795,7 @@ a{color:inherit}
   background:var(--ink);color:var(--paper);padding:4px 8px;border-radius:99px;opacity:0;transition:opacity .3s ease,transform .35s var(--spring);pointer-events:none;z-index:5;box-shadow:0 8px 20px -8px rgba(16,19,25,.5)}
 .sat .say::before{content:"";display:inline-block;width:6px;height:6px;border-radius:99px;background:var(--pc,var(--c-green));margin-right:6px;vertical-align:1px}
 .sat.said .say{opacity:1;transform:translate(-50%,0)}
+.sat .say{display:none}  /* the arrival pills made the hero busy; the moving labels tell the story on their own */
 .ag{position:absolute;left:0;top:0;z-index:12;display:flex;align-items:center;gap:6px;pointer-events:none;will-change:transform;opacity:0;transition:opacity .35s ease}
 .ag.on{opacity:1}
 .ag svg{width:22px;height:22px;fill:var(--ac);filter:drop-shadow(0 0 7px color-mix(in srgb,var(--ac) 75%,transparent));animation:agspin 3s linear infinite;flex:none}
