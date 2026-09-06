@@ -1261,21 +1261,20 @@ body,.btn,.mark .dot,.eyebrow,.case .result b,.masthead,.section,.hero,.feature,
 /* ---------- scope: the plan builder ---------- */
 .plan{display:grid;gap:var(--s4);grid-template-columns:minmax(0,1fr)}
 @media (min-width:900px){.plan{grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:var(--s5);align-items:start}}
-.mods{display:grid;grid-template-columns:minmax(0,1fr);gap:.6rem}
+.mods{display:grid;grid-template-columns:minmax(0,1fr);gap:.4rem}
 @media (min-width:480px){.mods{grid-template-columns:repeat(2,minmax(0,1fr))}}
-.mod{display:grid;grid-template-columns:34px 1fr;grid-template-rows:auto auto;column-gap:.7rem;align-items:center;text-align:left;
-  border:1px solid var(--line);border-radius:calc(var(--radius,6px) * 1.4);background:var(--surface);padding:.75rem .85rem;cursor:pointer;font-family:var(--sans);color:var(--ink);
-  transition:border-color .2s ease,background .25s ease,box-shadow .25s ease,border-radius .3s;position:relative}
-.mod i{grid-row:1/-1;width:34px;height:34px;border-radius:calc(var(--radius,6px) * 1.2);background:color-mix(in srgb,var(--mc) 12%,var(--surface));display:flex;align-items:center;justify-content:center;transition:background .25s,border-radius .3s}
-.mod i svg{width:17px;height:17px;stroke:var(--mc);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.mod b{font-size:.9375rem;font-weight:600;letter-spacing:-.01em;min-width:0;padding-right:1.6rem}
-.mod small{font-family:var(--mono);font-size:.68rem;letter-spacing:.06em;color:var(--muted);text-transform:uppercase}
-.mod::after{content:"";position:absolute;right:.8rem;top:50%;width:18px;height:18px;margin-top:-9px;border-radius:99px;border:1.5px solid var(--line);transition:background .25s,border-color .25s,box-shadow .25s}
+.mod{display:flex;align-items:center;gap:.5rem;text-align:left;
+  border:1px solid var(--line);border-radius:calc(var(--radius,6px) * 1.2);background:var(--surface);padding:.42rem .55rem .42rem .45rem;cursor:pointer;font-family:var(--sans);color:var(--ink);
+  transition:border-color .2s ease,background .25s ease,box-shadow .25s ease,border-radius .3s;position:relative;min-width:0}
+.mod i{width:26px;height:26px;border-radius:calc(var(--radius,6px) * 1.1);background:color-mix(in srgb,var(--mc) 12%,var(--surface));display:flex;align-items:center;justify-content:center;transition:background .25s,border-radius .3s;flex:none}
+.mod i svg{width:14px;height:14px;stroke:var(--mc);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.mod b{font-size:.85rem;font-weight:600;letter-spacing:-.01em;min-width:0;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:0 1.4rem 0 0}
+.mod::after{content:"";position:absolute;right:.55rem;top:50%;width:15px;height:15px;margin-top:-7.5px;border-radius:99px;border:1.5px solid var(--line);transition:background .25s,border-color .25s,box-shadow .25s}
 .mod:hover{border-color:var(--mc)}
 .mod.on{border-color:var(--mc);background:color-mix(in srgb,var(--mc) 7%,var(--surface));box-shadow:0 10px 24px -16px var(--mc)}
 .mod.on i{background:var(--mc)}
 .mod.on i svg{stroke:#fff}
-.mod.on::after{background:var(--mc);border-color:var(--mc);box-shadow:inset 0 0 0 3.5px var(--surface)}
+.mod.on::after{background:var(--mc);border-color:var(--mc);box-shadow:inset 0 0 0 3px var(--surface)}
 .mod:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
 .plan-card{border:1px solid var(--line);border-top:3px solid var(--blue);border-radius:calc(var(--radius,6px) * 1.6);background:linear-gradient(180deg,color-mix(in srgb,var(--blue) 7%,var(--surface)),var(--surface) 42%);padding:var(--s4);display:flex;flex-direction:column;gap:var(--s3);transition:border-color .5s,background .5s,border-radius .3s}
 .plan-left{display:flex;flex-direction:column;gap:var(--s3)}
@@ -1933,14 +1932,14 @@ body,.btn,.mark .dot,.eyebrow,.case .result b,.masthead,.section,.hero,.feature,
           <button type="button" data-set="web,agent,integ">Internal tool + agent</button>
         </div>
         <div class="mods" id="mods" role="group" aria-label="What is in scope">
-          <button type="button" class="mod on" data-k="web" data-w="4" style="--mc:var(--blue)"><i><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18M8 21h8"/></svg></i><b>Web app</b><small>4 weeks</small></button>
-          <button type="button" class="mod" data-k="mobile" data-w="4" style="--mc:var(--c-violet)"><i><svg viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="2.5"/><path d="M11 18h2"/></svg></i><b>Mobile app</b><small>4 weeks</small></button>
-          <button type="button" class="mod" data-k="agent" data-w="3" style="--mc:var(--c-cyan)"><i><svg viewBox="0 0 24 24"><path d="M12 2c.6 5.4 4.6 9.4 10 10-5.4.6-9.4 4.6-10 10-.6-5.4-4.6-9.4-10-10 5.4-.6 9.4-4.6 10-10z"/></svg></i><b>AI agent</b><small>3 weeks</small></button>
-          <button type="button" class="mod on" data-k="design" data-w="2" style="--mc:var(--guide)"><i><svg viewBox="0 0 24 24"><circle cx="8" cy="8" r="3"/><rect x="13" y="5" width="6" height="6" rx="1.5"/><path d="M5 19l3-6 3 6zM13 13h6v6h-6z"/></svg></i><b>Design system</b><small>2 weeks</small></button>
-          <button type="button" class="mod on" data-k="auth" data-w="1" style="--mc:var(--c-amber)"><i><svg viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></i><b>Auth &amp; roles</b><small>1 week</small></button>
-          <button type="button" class="mod" data-k="pay" data-w="1" style="--mc:var(--c-green)"><i><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 10h18M7 15h3"/></svg></i><b>Payments</b><small>1 week</small></button>
-          <button type="button" class="mod" data-k="admin" data-w="2" style="--mc:#7A5AF0"><i><svg viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="5" rx="1.5"/><rect x="13" y="10" width="8" height="11" rx="1.5"/><rect x="3" y="13" width="8" height="8" rx="1.5"/></svg></i><b>Admin dashboard</b><small>2 weeks</small></button>
-          <button type="button" class="mod" data-k="integ" data-w="2" style="--mc:#0B8FA8"><i><svg viewBox="0 0 24 24"><path d="M9 7H6a3 3 0 0 0 0 6h3M15 7h3a3 3 0 0 1 0 6h-3M8 10h8"/><path d="M12 13v4M9 21h6"/></svg></i><b>Integrations</b><small>2 weeks</small></button>
+          <button type="button" class="mod on" data-k="web" data-w="4" style="--mc:var(--blue)"><i><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18M8 21h8"/></svg></i><b>Web app</b></button>
+          <button type="button" class="mod" data-k="mobile" data-w="4" style="--mc:var(--c-violet)"><i><svg viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="2.5"/><path d="M11 18h2"/></svg></i><b>Mobile app</b></button>
+          <button type="button" class="mod" data-k="agent" data-w="3" style="--mc:var(--c-cyan)"><i><svg viewBox="0 0 24 24"><path d="M12 2c.6 5.4 4.6 9.4 10 10-5.4.6-9.4 4.6-10 10-.6-5.4-4.6-9.4-10-10 5.4-.6 9.4-4.6 10-10z"/></svg></i><b>AI agent</b></button>
+          <button type="button" class="mod on" data-k="design" data-w="2" style="--mc:var(--guide)"><i><svg viewBox="0 0 24 24"><circle cx="8" cy="8" r="3"/><rect x="13" y="5" width="6" height="6" rx="1.5"/><path d="M5 19l3-6 3 6zM13 13h6v6h-6z"/></svg></i><b>Design system</b></button>
+          <button type="button" class="mod on" data-k="auth" data-w="1" style="--mc:var(--c-amber)"><i><svg viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></i><b>Auth &amp; roles</b></button>
+          <button type="button" class="mod" data-k="pay" data-w="1" style="--mc:var(--c-green)"><i><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 10h18M7 15h3"/></svg></i><b>Payments</b></button>
+          <button type="button" class="mod" data-k="admin" data-w="2" style="--mc:#7A5AF0"><i><svg viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="5" rx="1.5"/><rect x="13" y="10" width="8" height="11" rx="1.5"/><rect x="3" y="13" width="8" height="8" rx="1.5"/></svg></i><b>Admin dashboard</b></button>
+          <button type="button" class="mod" data-k="integ" data-w="2" style="--mc:#0B8FA8"><i><svg viewBox="0 0 24 24"><path d="M9 7H6a3 3 0 0 0 0 6h3M15 7h3a3 3 0 0 1 0 6h-3M8 10h8"/><path d="M12 13v4M9 21h6"/></svg></i><b>Integrations</b></button>
         </div>
         </div>
         <div class="plan-card">
