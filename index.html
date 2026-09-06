@@ -864,8 +864,11 @@ body,.btn,.mark .dot,.eyebrow,.case .result b,.masthead,.section,.hero,.feature,
 
 /* ---- five worlds ---- */
 /* web: dark ground */
-.scene.dark .ground{background:#151922;border-color:#252B37;background-image:linear-gradient(#1C222D 1px,transparent 1px),linear-gradient(90deg,#1C222D 1px,transparent 1px);background-size:22px 22px;background-position:0 0}
-.scene.dark .fp{border-color:#7FD7EA;opacity:.35}
+.scene.dark .ground{background:transparent;border-color:transparent;background-image:none;box-shadow:none}
+.scene.dark .fp{display:none}
+/* the web screen carries its own thin, even dark rim instead of sitting on a dark board (parallax made the board look thick on two sides) */
+.scene.dark .win.w-app{border-radius:8px;box-shadow:0 0 0 5px #151922,0 2px 4px rgba(16,19,25,.08),0 26px 50px rgba(16,19,25,.22)}
+.scene.dark .win.w-app:hover{box-shadow:0 0 0 5px #151922,0 3px 6px rgba(16,19,25,.10),0 40px 70px rgba(16,19,25,.24)}
 
 /* mobile: colour wash */
 .scene.wash .ground{border:0;background:radial-gradient(70% 65% at 36% 30%,color-mix(in srgb,var(--blue) 22%,transparent),transparent 72%),radial-gradient(55% 55% at 80% 84%,color-mix(in srgb,var(--c-violet) 20%,transparent),transparent 70%),radial-gradient(40% 40% at 15% 85%,color-mix(in srgb,var(--c-cyan) 14%,transparent),transparent 70%),var(--sunk);box-shadow:none}
@@ -2949,6 +2952,46 @@ body,.btn,.mark .dot,.eyebrow,.case .result b,.masthead,.section,.hero,.feature,
     document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && head.classList.contains('open')){ set(false); btn.focus(); } });
     document.addEventListener('click', function(e){ if (head.classList.contains('open') && !head.contains(e.target)) set(false); });
     window.addEventListener('resize', function(){ if (window.innerWidth > 820) set(false); });
+  })();
+
+  /* ---- 3d. tap anywhere on a screen and it does the next thing (the controls are small on a phone) ---- */
+  (function(){
+    var CONTROLS = 'button, a, input, select, textarea, label, [role="button"], [tabindex], .ph-tabs .tab, .pill2, #appteam .role, #appset .r, .ph-set .row, [data-go], [data-toast], [data-item], .bars i, .sw i';
+    function seq(steps){ var i = 0; return function(){ steps[i++ % steps.length](); }; }
+    var TAP = {
+      build: function(){ var w = live.web; if (!w) return null; return seq([
+        function(){ w.setView('trend'); }, function(){ w.setView('table'); }, function(){ w.setPage('orders'); }, function(){ w.setPage('customers'); },
+        function(){ w.setPage('settings'); }, function(){ w.setPage('overview'); w.setView('bars'); w.setRange('7'); }, function(){ w.setRange('90'); w.setView('trend'); },
+        function(){ w.deploy(); }, function(){ w.setRange('30'); w.setView('bars'); }]); },
+      mobile: function(){ var m = live.mobile, ph = document.getElementById('phone'); if (!m || !ph) return null; return seq([
+        function(){ m.setTab('track'); }, function(){ m.setTab('orders'); }, function(){ m.setTab('account'); }, function(){ m.setTab('home'); },
+        function(){ m.placeOrder(); }, function(){ m.setOS(ph.getAttribute('data-os') === 'android' ? 'ios' : 'android'); }]); },
+      ai: function(){ var a = live.agents, win = document.getElementById('wag'); if (!a || !win) return null; return seq([
+        function(){ a.act('p'); }, function(){ a.act('r'); }, function(){ a.act('b'); }, function(){ a.act('v'); }, function(){ a.act('o'); },
+        function(){ if (win.classList.contains('done')) a.merge(); else a.run(); }, function(){ a.run(); }]); },
+      design: function(){ var d = live.design; if (!d) return null; return seq([
+        function(){ d.theme('lavender'); }, function(){ d.theme('mint'); }, function(){ d.theme('peach'); }, function(){ d.theme('rose'); }, function(){ d.theme('aqua'); },
+        function(){ d.mode('dark'); }, function(){ d.radius(14); }, function(){ d.type('serif'); }, function(){ d.theme(''); }, function(){ d.mode('light'); },
+        function(){ d.type('mono'); }, function(){ d.radius(2); }, function(){ d.type('sans'); }, function(){ d.radius(6); }]); }
+    };
+    Object.keys(TAP).forEach(function(id){
+      var sec = document.getElementById(id), sc = sec && sec.querySelector('.scene'); if (!sc) return;
+      var next = TAP[id](); if (!next) return;
+      sc.addEventListener('click', function(e){
+        if (e.target.closest && e.target.closest(CONTROLS)) return;   /* a real control: it handles itself */
+        if (live.takeOver) live.takeOver(sc);
+        next();
+      });
+    });
+    /* the hero: a tap beside the surfaces turns the next one over */
+    var sys = document.getElementById('system');
+    if (sys){
+      var sats = Array.prototype.slice.call(sys.querySelectorAll('.sat')), si = 0;
+      sys.addEventListener('click', function(e){
+        if (e.target.closest && e.target.closest('.sat')) return;
+        var s = sats[si++ % sats.length]; if (s) s.click();
+      });
+    }
   })();
 
   /* ---- 4. figures count in ---- */
