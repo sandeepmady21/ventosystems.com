@@ -1134,6 +1134,9 @@ body,.btn,.mark .dot,.eyebrow,.case .result b,.masthead,.section,.hero,.feature,
 .c-back{--cc:var(--c-green);--click:ck-back 20s;--cz:56px}
 @keyframes ck-back{0%,7%,9%,81%,83%,100%{transform:scale(1)}8%,82%{transform:scale(.8)}}
 .c-qa{--cc:var(--c-amber);--click:ck-qa 18s;--cz:116px}
+.c-hero{--cc:var(--blue);--click:ck-hero 16s;--cz:0px;z-index:14}
+@keyframes ck-hero{0%,9%,11%,31%,33%,53%,55%,100%{transform:scale(1)}10%,32%,54%{transform:scale(.8)}}
+.system.hold .cur{opacity:0!important}
 @keyframes ck-qa{0%,9%,11%,29%,31%,47%,49%,65%,67%,85%,87%,100%{transform:scale(1)}10%,30%,48%,66%,86%{transform:scale(.8)}}
 
 /* brush */
@@ -1601,6 +1604,7 @@ body,.btn,.mark .dot,.eyebrow,.case .result b,.masthead,.section,.hero,.feature,
           <div class="ag" style="--ac:var(--c-violet)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2c.6 5.4 4.6 9.4 10 10-5.4.6-9.4 4.6-10 10-.6-5.4-4.6-9.4-10-10 5.4-.6 9.4-4.6 10-10z"/></svg><span class="lbl"></span></div>
           <div class="ag" style="--ac:var(--c-cyan)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2c.6 5.4 4.6 9.4 10 10-5.4.6-9.4 4.6-10 10-.6-5.4-4.6-9.4-10-10 5.4-.6 9.4-4.6 10-10z"/></svg><span class="lbl"></span></div>
           <div class="ag" style="--ac:var(--c-green)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2c.6 5.4 4.6 9.4 10 10-5.4.6-9.4 4.6-10 10-.6-5.4-4.6-9.4-10-10 5.4-.6 9.4-4.6 10-10z"/></svg><span class="lbl"></span></div>
+          <div class="cur c-hero" aria-hidden="true"><svg viewBox="0 0 17 21"><path d="M1.5 1.5 L15.5 12 L9 12.8 L12.8 19.6 L10 20.8 L6.2 14 L1.5 18 Z" fill="var(--cc)" stroke="#fff" stroke-width="1.2" stroke-linejoin="round"/></svg><span class="tag">click</span></div>
         </div>
       </div>
 
@@ -2328,6 +2332,37 @@ body,.btn,.mark .dot,.eyebrow,.case .result b,.masthead,.section,.hero,.feature,
         { at: .82, fn: function(){ live.ripple(drawer.querySelector('#agmerge')); live.agents.merge(); } }
       ]);
     });
+
+    /* the hero: a cursor turns the phone over, picks a colour from the design card, then flips the dashboard - until you click */
+    safe(function(){
+      var sys = $('#system'), stage = $('#sysstage'); if (!sys || !stage) return;
+      var mob = $('.sat[data-k="mobile"]', stage), des = $('.sat[data-k="design"]', stage), web = $('.sat[data-k="web"]', stage);
+      var swMint = $('.dsm .sw i[data-p="mint"]', des), swSky = $('.dsm .sw i[data-p=""]', des);
+      /* positions on the 560 x 520 stage: the surfaces are scaled around their centres, so points inside them are scaled the same way */
+      function centre(sat){ return { x: sat.offsetLeft + sat.offsetWidth / 2, y: sat.offsetTop + sat.offsetHeight / 2 }; }
+      function inside(sat, el){
+        var c = centre(sat), sc = parseFloat(sat.style.getPropertyValue('--sc')) || 1, x = 0, y = 0, n = el;
+        while (n && n !== sat){ x += n.offsetLeft; y += n.offsetTop; n = n.offsetParent; }
+        var px = sat.offsetLeft + x + el.offsetWidth / 2, py = sat.offsetTop + y + el.offsetHeight / 2;
+        return { x: c.x + (px - c.x) * sc, y: c.y + (py - c.y) * sc };
+      }
+      var H0 = pt(548, 486), H1 = centre(mob), H2 = inside(des, swMint), H3 = centre(web);
+      H1 = off(H1, 6, 10); H3 = off(H3, 10, 4);
+      var an = drive($('.c-hero', stage), [H0, H1, H2, H3],
+        [[0,0],[.08,1,1],[.18,1],[.30,2,1],[.40,2],[.52,3,1],[.62,3],[1,4,1]], 16000);
+      if (!an) return;
+      sys._anims = [an];
+      var flip = 0;
+      live.cue(sys, an, [
+        { at: .10, fn: function(){ mob.click(); } },
+        { at: .32, fn: function(){ (flip % 2 ? swSky : swMint).click(); } },
+        { at: .54, fn: function(){ web.click(); flip++; } }
+      ]);
+      /* out of view, the cursor rests */
+      if ('IntersectionObserver' in window){
+        new IntersectionObserver(function(es){ es.forEach(function(en){ sys.classList.toggle('off', !en.isIntersecting); (en.isIntersecting && !sys.classList.contains('hold')) ? an.play() : an.pause(); }); }, { threshold: .2 }).observe(sys);
+      }
+    });
   })();
 
   /* ---- 1d. scroll camera ---- */
@@ -2505,15 +2540,25 @@ body,.btn,.mark .dot,.eyebrow,.case .result b,.masthead,.section,.hero,.feature,
     function all(sel, root){ return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
     function keyish(fn){ return function(e){ if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); fn(e); } }; }
 
-    /* the first click in a scene dismisses its demo cursor: from then on, you drive */
+    /* a click in a scene hands it to you: the demo cursor steps aside and the tag says so; leave it alone for a while and the demo resumes */
+    var IDLE = 7000;
     function takeOver(sc){
-      if (!sc || sc._held) return;
-      sc._held = true; sc.classList.add('hold');
-      (sc._anims || []).forEach(function(a){ a.pause(); });
-      var tag = sc.querySelector('.live-tag'); if (tag){ tag.innerHTML = '<i></i><b>You</b> are driving'; tag.classList.add('done'); setTimeout(function(){ tag.classList.add('gone'); }, 2600); }
+      if (!sc) return;
+      clearTimeout(sc._release);
+      if (!sc._held){
+        sc._held = true; sc.classList.add('hold');
+        (sc._anims || []).forEach(function(a){ a.pause(); });
+        var tag = sc.querySelector('.live-tag'); if (tag){ tag.innerHTML = '<i></i><b>You</b> are driving'; tag.classList.add('done'); }
+      }
+      sc._release = setTimeout(function(){ release(sc); }, IDLE);
     }
-    all('.feature .scene').forEach(function(sc){
-      sc.addEventListener('pointerdown', function(e){ if (e.target.closest && e.target.closest('.stage')) takeOver(sc); });
+    function release(sc){
+      sc._held = false; sc.classList.remove('hold');
+      if (!sc.classList.contains('off')) (sc._anims || []).forEach(function(a){ a.play(); });
+      var tag = sc.querySelector('.live-tag'); if (tag){ tag.innerHTML = '<i></i><b>Live</b> \u00b7 click anything'; tag.classList.remove('done'); }
+    }
+    all('.feature .scene, .hero .system').forEach(function(sc){
+      sc.addEventListener('pointerdown', function(e){ if (sc.classList.contains('system') || (e.target.closest && e.target.closest('.stage'))) takeOver(sc); });
       var tag = document.createElement('span'); tag.className = 'live-tag'; tag.innerHTML = '<i></i><b>Live</b> \u00b7 click anything'; sc.appendChild(tag);
     });
     /* the first time a scene comes into view, its controls glint once: these are buttons */
