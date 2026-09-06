@@ -1452,8 +1452,40 @@ body,.btn,.mark .dot,.eyebrow,.case .result b,.masthead,.section,.hero,.feature,
 .foot .spec b{color:var(--ink);font-weight:500}
 
 
+/* ---------- booking: the 30-minute call, picked from a calendar in a sheet ---------- */
+.book{position:fixed;inset:0;z-index:60;display:flex;align-items:center;justify-content:center;padding:var(--s3)}
+.book[hidden]{display:none}
+.book-back{position:absolute;inset:0;background:color-mix(in srgb,var(--ink) 55%,transparent);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);animation:bookfade .25s ease}
+.book-card{position:relative;width:min(100%,940px);max-height:min(92vh,860px);display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);border-radius:calc(var(--radius,6px) * 2.6);box-shadow:0 40px 90px -30px rgba(16,19,25,.5);overflow:hidden;animation:bookin .35s var(--spring)}
+@keyframes bookfade{from{opacity:0}}
+@keyframes bookin{from{opacity:0;transform:translateY(14px) scale(.98)}}
+.book-hd{display:flex;align-items:flex-start;justify-content:space-between;gap:var(--s3);padding:var(--s3) var(--s4) var(--s3);border-bottom:1px solid var(--line-soft)}
+.book-hd h3{font-size:1.25rem;font-weight:600;letter-spacing:-.02em;margin:.35rem 0 0}
+.book-sub{margin:.35rem 0 0;color:var(--muted);font-size:.9rem;max-width:52ch}
+.book-x{width:36px;height:36px;border-radius:99px;border:1px solid var(--line);background:var(--surface);color:var(--muted);font-size:1.4rem;line-height:1;cursor:pointer;flex:none;transition:color .2s,border-color .2s}
+.book-x:hover{color:var(--ink);border-color:var(--ink)}
+.book-body{position:relative;flex:1;min-height:420px;overflow:auto;background:var(--paper)}
+.book-cal{min-height:420px}
+.book-cal iframe{display:block;width:100%;min-height:420px;border:0}
+.book-wait{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:6px;pointer-events:none;transition:opacity .3s}
+.book-wait i{width:8px;height:8px;border-radius:99px;background:var(--blue);animation:bookdot 1s ease-in-out infinite}
+.book-wait i:nth-child(2){animation-delay:.15s}.book-wait i:nth-child(3){animation-delay:.3s}
+@keyframes bookdot{0%,100%{opacity:.25;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
+.book.loaded .book-wait{opacity:0}
+.book-fail{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--s3);text-align:center;padding:var(--s4);background:var(--paper)}
+.book-fail[hidden]{display:none}
+.book-fail p{margin:0;color:var(--muted)}
+body.book-open{overflow:hidden}
+@media (max-width:640px){
+  .book{padding:0;align-items:stretch}
+  .book-card{width:100%;max-height:none;border-radius:0;border:0}
+  .book-hd{padding:var(--s3)}
+}
+
 /* ---------- dark theme: the site follows the visitor's device (or the switch in the header) ---------- */
 :root[data-theme="dark"]{color-scheme:dark}
+:root[data-theme="dark"] .book-back{background:rgba(0,0,0,.6)}
+:root[data-theme="dark"] .book-card{box-shadow:0 40px 90px -30px rgba(0,0,0,.8)}
 :root[data-theme="dark"] .win{box-shadow:0 2px 4px rgba(0,0,0,.35),0 24px 48px rgba(0,0,0,.5)}
 :root[data-theme="dark"] .ground{box-shadow:0 50px 100px rgba(0,0,0,.45)}
 :root[data-theme="dark"] .masthead{background:color-mix(in srgb,var(--paper) 78%,transparent)}
@@ -2138,7 +2170,7 @@ body,.btn,.mark .dot,.eyebrow,.case .result b,.masthead,.section,.hero,.feature,
         <p>Send the specification, the wireframes, or three sentences and a deadline. You will get a scoped estimate back within two working days.</p>
         <div class="actions">
           <a class="btn btn-primary" href="mailto:hello@ventosystems.com">hello@ventosystems.com</a>
-          <a class="btn btn-ghost" href="mailto:hello@ventosystems.com?subject=30-minute%20call">Book a 30-minute call</a>
+          <a class="btn btn-ghost" id="bookbtn" data-cal="" href="mailto:hello@ventosystems.com?subject=30-minute%20call">Book a 30-minute call</a>
         </div>
       </div>
       <div class="avail" aria-label="Availability">
@@ -2151,6 +2183,21 @@ body,.btn,.mark .dot,.eyebrow,.case .result b,.masthead,.section,.hero,.feature,
     </div>
   </section>
 </main>
+
+<div class="book" id="book" hidden role="dialog" aria-modal="true" aria-labelledby="bookttl">
+  <div class="book-back" data-close></div>
+  <div class="book-card">
+    <div class="book-hd">
+      <div><p class="eyebrow">30 minutes</p><h3 id="bookttl">Pick a time that suits you</h3><p class="book-sub">Times are shown in your time zone. You get a calendar invite with a video link straight away.</p></div>
+      <button type="button" class="book-x" data-close aria-label="Close">&times;</button>
+    </div>
+    <div class="book-body">
+      <div class="book-cal" id="bookcal"></div>
+      <div class="book-wait" id="bookwait"><i></i><i></i><i></i></div>
+      <div class="book-fail" id="bookfail" hidden><p>The calendar could not load here.</p><a class="btn btn-primary" href="mailto:hello@ventosystems.com?subject=30-minute%20call">Email us for a time instead</a></div>
+    </div>
+  </div>
+</div>
 
 <footer class="foot">
   <div class="wrap">
@@ -3143,6 +3190,34 @@ body,.btn,.mark .dot,.eyebrow,.case .result b,.masthead,.section,.hero,.feature,
     document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && head.classList.contains('open')){ set(false); btn.focus(); } });
     document.addEventListener('click', function(e){ if (head.classList.contains('open') && !head.contains(e.target)) set(false); });
     window.addEventListener('resize', function(){ if (window.innerWidth > 820) set(false); });
+  })();
+
+  /* ---- 3g. booking: the Book-a-call button opens a sheet with the Cal.com calendar in it (set data-cal on the button to your Cal.com link, e.g. "vento/30min") ---- */
+  (function(){
+    var btn = document.getElementById('bookbtn'), sheet = document.getElementById('book'), host = document.getElementById('bookcal'), fail = document.getElementById('bookfail');
+    if (!btn || !sheet || !host) return;
+    var link = (btn.getAttribute('data-cal') || '').trim(); if (!link) return;   /* no link yet: the button keeps emailing */
+    var NS = 'vento', started = false, lastFocus = null;
+    function theme(){ return document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light'; }
+    function brand(){ return getComputedStyle(document.documentElement).getPropertyValue('--blue').trim() || '#2F6FEB'; }
+    function boot(){
+      if (started) return; started = true;
+      /* the official loader: defines window.Cal and fetches the embed script once */
+      (function(C, A, L){ var p = function(a, ar){ a.q.push(ar); }; var d = C.document; C.Cal = C.Cal || function(){ var cal = C.Cal, ar = arguments; if (!cal.loaded){ cal.ns = {}; cal.q = cal.q || []; var sc = d.createElement('script'); sc.src = A; sc.onerror = function(){ broke(); }; d.head.appendChild(sc); cal.loaded = true; } if (ar[0] === L){ var api = function(){ p(api, arguments); }; var namespace = ar[1]; api.q = api.q || []; if (typeof namespace === 'string'){ cal.ns[namespace] = cal.ns[namespace] || api; p(cal.ns[namespace], ar); p(cal, ['initNamespace', namespace]); } else p(cal, ar); return; } p(cal, ar); }; })(window, 'https://app.cal.com/embed/embed.js', 'init');
+      window.Cal('init', NS, { origin: 'https://app.cal.com' });
+      window.Cal.ns[NS]('inline', { elementOrSelector: '#bookcal', calLink: link, config: { layout: 'month_view', theme: theme() } });
+      window.Cal.ns[NS]('ui', { theme: theme(), styles: { branding: { brandColor: brand() } }, hideEventTypeDetails: false, layout: 'month_view' });
+      window.Cal.ns[NS]('on', { action: 'linkReady', callback: function(){ sheet.classList.add('loaded'); } });
+      window.Cal.ns[NS]('on', { action: 'linkFailed', callback: function(){ broke(); } });
+      setTimeout(function(){ if (!sheet.classList.contains('loaded')) broke(); }, 9000);
+    }
+    function broke(){ if (sheet.classList.contains('loaded')) return; fail.hidden = false; sheet.classList.add('loaded'); }
+    function open(){ lastFocus = document.activeElement; sheet.hidden = false; document.body.classList.add('book-open'); boot(); var x = sheet.querySelector('.book-x'); if (x) x.focus(); }
+    function close(){ sheet.hidden = true; document.body.classList.remove('book-open'); if (lastFocus && lastFocus.focus) lastFocus.focus(); }
+    btn.addEventListener('click', function(e){ e.preventDefault(); open(); });
+    btn.setAttribute('href', '#book'); btn.setAttribute('aria-haspopup', 'dialog');
+    sheet.addEventListener('click', function(e){ if (e.target.closest('[data-close]')) close(); });
+    document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && !sheet.hidden) close(); });
   })();
 
   /* ---- 3f. the flag ribbon: enough copies that the loop never shows a gap, however wide the card ---- */
