@@ -1362,15 +1362,29 @@ body,.btn,.mark .dot,.eyebrow,.case .result b,.masthead,.section,.hero,.feature,
   .flag b{font-size:.6rem}
   .p6-foot{grid-template-columns:1fr}
 }
-@media (max-width:520px){
-  .p6{--lab:0px}
-  .p6-row{grid-template-columns:1fr;gap:2px;min-height:0;padding:4px 0}
-  .p6-row b{font-size:.62rem;font-family:var(--mono);font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);position:relative;z-index:4;justify-self:start;background:var(--surface);padding-right:.4rem}
-  .bar .t{display:none}
-  .p6-ms,.p6-weeks{grid-template-columns:repeat(7,minmax(0,1fr))}
-  .p6-ms > span,.p6-weeks > span{display:none}
-  .p6-ms{grid-template-columns:1fr}
-  .flag b{display:none}
+/* phones: the week grid does not fit, so the same plan becomes a vertical timeline of its milestones */
+.p6-list{display:none;list-style:none;margin:0;padding:0}
+@media (max-width:640px){
+  .p6-grid,.p6-txt{display:none}
+  .p6{cursor:default}
+  .p6-list{display:block;position:relative;padding-left:1.9rem;--r0:26px;--r1:26px;--fill:0px}
+  .p6-list::before{content:"";position:absolute;left:8px;top:var(--r0);bottom:var(--r1);width:2px;background:var(--line-soft);border-radius:2px}
+  .p6-list::after{content:"";position:absolute;left:8px;top:var(--r0);height:var(--fill);width:2px;background:var(--blue);border-radius:2px;transition:height .2s linear}
+  .p6-item{position:relative;padding:.5rem 0 .6rem;cursor:pointer}
+  .p6-item .dot{position:absolute;left:-1.9rem;top:.62rem;width:18px;height:18px;border-radius:99px;background:var(--surface);border:2px solid var(--line);z-index:1;transition:background .3s,border-color .3s,box-shadow .3s}
+  .p6-item.seen .dot{background:var(--blue);border-color:var(--blue)}
+  .p6-item.on .dot{background:var(--blue);border-color:var(--blue);box-shadow:0 0 0 4px color-mix(in srgb,var(--blue) 22%,transparent)}
+  .p6-item .wk{display:block;font-family:var(--mono);font-size:.64rem;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);transition:color .3s}
+  .p6-item.on .wk{color:var(--blue)}
+  .p6-item b{display:block;font-size:1.05rem;font-weight:600;letter-spacing:-.015em;color:var(--muted);margin-top:.1rem;transition:color .3s}
+  .p6-item.on b,.p6-item.seen b{color:var(--ink)}
+  .p6-item .more{display:grid;grid-template-rows:0fr;transition:grid-template-rows .4s ease}
+  .p6-item.on .more{grid-template-rows:1fr}
+  .p6-item .more > div{overflow:hidden}
+  .p6-item p{margin:.35rem 0 0;color:var(--muted);font-size:.9375rem;line-height:1.55}
+  .p6-item .p6-out{margin:.6rem 0 .2rem}
+  .p6-foot{grid-template-columns:1fr;margin-top:var(--s2)}
+  .p6-nav{justify-content:space-between}
 }
 
 /* ---------- stack ---------- */
@@ -1978,6 +1992,7 @@ body,.btn,.mark .dot,.eyebrow,.case .result b,.masthead,.section,.hero,.feature,
           <div class="p6-head" id="p6head" aria-hidden="true"><i></i></div>
           </div>
         </div>
+        <ol class="p6-list" id="p6list"></ol>
         <div class="p6-foot">
           <div class="p6-txt" id="p6txt"><span class="wk" id="p6wk">Week 0 &middot; milestone 1 of 5</span><h3 id="roadh">Scope signed</h3><p id="roadp">Ninety minutes on what you are building and why. You leave with a written scope and a fixed price for the first cycle, whether or not you continue with us.</p><div class="chips p6-out" id="roadout"><span>Written scope</span><span>Fixed price</span><span>Named team</span></div></div>
           <div class="p6-nav">
@@ -2869,10 +2884,24 @@ body,.btn,.mark .dot,.eyebrow,.case .result b,.masthead,.section,.hero,.feature,
       ['Week 6', 'Live', 'Production deploy, handover documentation, and a written list of everything we would do next if it were ours.', ['Production deploy', 'Handover docs', 'What we would do next']]
     ];
     var u = 0, at = -1, target = null, hold = 1, ending = false, running = false, raf = 0, last = null, CREEP = 1 / 30;
+    /* the same milestones as a vertical list, for phones */
+    var list = document.getElementById('p6list'), items = [];
+    if (list){
+      list.innerHTML = STEPS.map(function(s, i){ return '<li class="p6-item" data-i="' + i + '"><span class="dot"></span><span class="wk">' + s[0] + '</span><b>' + s[1] + '</b><div class="more"><div><p>' + s[2] + '</p><div class="chips p6-out">' + s[3].map(function(t){ return '<span>' + t + '</span>'; }).join('') + '</div></div></div></li>'; }).join('');
+      items = $$('.p6-item');
+    }
+    function dotY(j){ var it = items[j], d = it.querySelector('.dot'); return it.offsetTop + d.offsetTop + d.offsetHeight / 2; }
+    function drawList(i){
+      if (!items.length || !list.offsetParent) return;
+      var y0 = dotY(0), y1 = dotY(N - 1), y;
+      if (i < 0) y = y0; else if (i >= N - 1) y = y1; else y = dotY(i) + Math.max(0, Math.min(1, (u - MS[i]) / (MS[i + 1] - MS[i]))) * (dotY(i + 1) - dotY(i));
+      list.style.setProperty('--r0', y0 + 'px'); list.style.setProperty('--r1', (list.offsetHeight - y1) + 'px'); list.style.setProperty('--fill', Math.max(0, y - y0) + 'px');
+    }
     function setStep(i){
       if (i === at) return; at = i;
       p6.setAttribute('data-at', i);
       flags.forEach(function(f, j){ f.classList.toggle('on', j === i); f.classList.toggle('seen', j < i); });
+      items.forEach(function(it, j){ it.classList.toggle('on', j === i); it.classList.toggle('seen', j < i); });
       wk.textContent = STEPS[i][0] + ' \u00b7 milestone ' + (i + 1) + ' of ' + N; h.textContent = STEPS[i][1]; p.textContent = STEPS[i][2]; pos.textContent = (i + 1) + ' / ' + N;
       if (out) out.innerHTML = STEPS[i][3].map(function(t){ return '<span>' + t + '</span>'; }).join('');
       txt.classList.remove('swap'); void txt.offsetWidth; txt.classList.add('swap');
@@ -2882,6 +2911,7 @@ body,.btn,.mark .dot,.eyebrow,.case .result b,.masthead,.section,.hero,.feature,
       bars.forEach(function(b){ var a = parseFloat(b.style.getPropertyValue('--a')), e = parseFloat(b.style.getPropertyValue('--b')); b.classList.toggle('done', (u * 7 - a) / (e - a) > .55); });
       var i = -1; for (var k = 0; k < N; k++) if (u >= MS[k] - .004) i = k;
       if (i >= 0) setStep(i);
+      drawList(i);
     }
     function go(i){ i = Math.max(0, Math.min(N - 1, i)); target = MS[i]; ending = false; head.classList.remove('reset'); }
     function frame(now){
@@ -2904,7 +2934,9 @@ body,.btn,.mark .dot,.eyebrow,.case .result b,.masthead,.section,.hero,.feature,
     p6.addEventListener('click', function(e){
       if (e.target.closest('.p6-nav')) return;
       var f = e.target.closest('.flag'); if (f){ go(parseInt(f.getAttribute('data-i'), 10)); return; }
+      var it = e.target.closest('.p6-item'); if (it){ go(parseInt(it.getAttribute('data-i'), 10)); return; }
       var grid = p6.querySelector('.p6-grid'), r = grid.getBoundingClientRect(), lab = parseFloat(getComputedStyle(p6).getPropertyValue('--lab')) || 0;
+      if (r.width < 1) return;
       var x = (e.clientX - r.left - lab) / (r.width - lab), best = 0, bd = 9;
       MS.forEach(function(m, i){ var d = Math.abs(m - x); if (d < bd){ bd = d; best = i; } });
       go(best);
