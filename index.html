@@ -762,6 +762,9 @@ a{color:inherit}
 /* ---- the surfaces: a composed system, with agents carrying work between the screens ---- */
 .system{position:relative;height:calc(520px * var(--ss,1));user-select:none;--ss:1}
 .sys-stage{position:absolute;left:50%;top:50%;width:560px;height:520px;transform:translate(-50%,-50%) scale(var(--ss,1));transform-origin:center}
+.sys-stage.whirl{animation:whirl .9s var(--spring)}
+@keyframes whirl{0%{transform:translate(-50%,-50%) scale(var(--ss,1)) rotate(0)}35%{transform:translate(-50%,-50%) scale(calc(var(--ss,1) * .96)) rotate(-7deg)}100%{transform:translate(-50%,-50%) scale(var(--ss,1)) rotate(0)}}
+.system{cursor:pointer}
 .links{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none;z-index:1}
 .links .thread{fill:none;stroke:color-mix(in srgb,var(--blue) 34%,transparent);stroke-width:1;stroke-dasharray:3 6;stroke-linecap:round}
 .links .trace{fill:none;stroke:var(--ac);stroke-width:2;stroke-linecap:round;opacity:0;transition:opacity .5s ease;filter:drop-shadow(0 0 4px color-mix(in srgb,var(--ac) 60%,transparent))}
@@ -1165,6 +1168,14 @@ body,.btn,.mark .dot,.eyebrow,.case .result b,.masthead,.section,.hero,.feature,
 .chips span{font-size:.8125rem;color:var(--ink);background:var(--sunk);border-radius:99px;padding:.32rem .7rem;line-height:1.3;transition:background .2s,color .2s}
 .chips span:hover{background:color-mix(in srgb,var(--blue) 14%,var(--sunk))}
 .row3c .fine{margin:.8rem 0 0;font-family:var(--mono);font-size:.66rem;color:var(--muted);letter-spacing:.02em}
+/* countries: a slow, seamless ribbon of flags */
+.flags{overflow:hidden;position:relative;margin:.2rem 0 .1rem;-webkit-mask:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent);mask:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent)}
+.flags-track{display:flex;width:max-content;animation:flags 22s linear infinite;will-change:transform}
+.flags:hover .flags-track{animation-play-state:paused}
+.fl{display:block;width:27px;height:18px;flex:none;margin-right:.55rem;border-radius:3px;overflow:hidden;box-shadow:0 0 0 1px rgba(16,19,25,.14),0 3px 8px -5px rgba(16,19,25,.4);transition:transform .25s var(--spring)}
+.fl:hover{transform:translateY(-2px) scale(1.06)}
+.fl svg{display:block;width:100%;height:100%}
+@keyframes flags{to{transform:translateX(-50%)}}
 /* ---------- proof numbers ---------- */
 .figures{
   display:grid;gap:var(--s3);grid-template-columns:repeat(2,minmax(0,1fr));
@@ -1284,7 +1295,12 @@ body,.btn,.mark .dot,.eyebrow,.case .result b,.masthead,.section,.hero,.feature,
 .presets button:active{transform:scale(.97)}
 .presets button.on{background:var(--blue);border-color:var(--blue);color:var(--blue-ink)}
 .presets button:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
-.pc-top{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:var(--s3);align-items:end}
+.pc-hero .lbl{font-family:var(--mono);font-size:.68rem;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin:0 0 .3rem}
+.pc-hero .big{font-size:clamp(1.7rem,3vw,2.2rem);font-weight:600;letter-spacing:-.03em;color:var(--blue);margin:0;line-height:1.05;font-variant-numeric:tabular-nums;transition:color .5s}
+.pc-hero .sub{margin:.4rem 0 0;font-size:.8rem;color:var(--muted)}
+.pc-top{display:grid;grid-template-columns:minmax(0,auto) minmax(0,auto) minmax(0,1fr);gap:var(--s4);align-items:start}
+.pc-top .pace{justify-self:end}
+.pc-top .pace .lbl{text-align:right}
 .pc-top .team{display:flex;margin:.45rem 0 0;padding:0}
 .pc-top .team i{width:24px;height:24px;border-radius:99px;display:inline-flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.6rem;font-weight:500;color:#fff;background:var(--blue);border:2px solid var(--surface);margin-left:-7px;box-shadow:0 2px 6px -2px rgba(16,19,25,.35);animation:tlin .4s var(--spring) both}
 .pc-top .team i:first-child{margin-left:0}
@@ -1294,8 +1310,6 @@ body,.btn,.mark .dot,.eyebrow,.case .result b,.masthead,.section,.hero,.feature,
 .tl-weeks span.m{color:var(--blue);font-weight:500}
 .pc-top .lbl{font-family:var(--mono);font-size:.68rem;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin:0 0 .3rem}
 .pc-top .big{font-size:1.15rem;font-weight:600;letter-spacing:-.025em;margin:0;font-variant-numeric:tabular-nums;transition:color .5s;line-height:1.25}
-.pc-top div:first-child .big{font-size:clamp(1.6rem,3vw,2.1rem);color:var(--blue);line-height:1}
-.pc-top div:first-child .big span{font-variant-numeric:tabular-nums}
 .tl{display:flex;gap:3px;align-items:flex-end;height:44px;padding-top:6px;border-top:1px solid var(--line-soft)}
 .tl i{flex:1;height:100%;border-radius:4px;background:var(--mc);position:relative;transform-origin:bottom;animation:tlin .5s var(--spring) both;animation-delay:calc(var(--i) * 28ms);min-width:0;opacity:.92}
 .tl i.cut{margin-left:6px}
@@ -1303,13 +1317,25 @@ body,.btn,.mark .dot,.eyebrow,.case .result b,.masthead,.section,.hero,.feature,
 .tl i.rel{background:var(--c-green);flex:.7}
 .tl i.rel::after{content:"";position:absolute;left:50%;top:-8px;width:0;height:0;border-left:5px solid transparent;border-right:5px solid transparent;border-top:6px solid var(--c-green);transform:translateX(-50%)}
 @keyframes tlin{from{transform:scaleY(.15);opacity:0}}
-.tl-key{margin:-.4rem 0 0;font-family:var(--mono);font-size:.64rem;letter-spacing:.04em;color:var(--muted);display:flex;flex-wrap:wrap;gap:.35rem .8rem}
-.tl-key span{display:inline-flex;align-items:center;gap:.35rem}
-.tl-key span::before{content:"";width:8px;height:8px;border-radius:2px;background:var(--mc)}
-.pc-foot{display:flex;align-items:center;justify-content:space-between;gap:var(--s2);flex-wrap:wrap;border-top:1px solid var(--line-soft);padding-top:var(--s3)}
-.pc-foot .btn{white-space:nowrap}
+.pc-inc{display:flex;flex-wrap:wrap;align-items:center;gap:.35rem .4rem;margin:-.2rem 0 0}
+.pc-inc .pl{font-family:var(--mono);font-size:.64rem;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin-right:.25rem}
+.pc-inc .none{font-size:.8rem;color:var(--muted)}
+.pc-inc .it{display:inline-flex;align-items:center;gap:.35rem;font-size:.78rem;font-weight:500;color:var(--ink);background:color-mix(in srgb,var(--mc) 10%,var(--surface));border:1px solid color-mix(in srgb,var(--mc) 28%,var(--surface));border-radius:99px;padding:.16rem .55rem .16rem .42rem;animation:tlin .35s var(--spring) both}
+.pc-inc .it::before{content:"";width:7px;height:7px;border-radius:99px;background:var(--mc);flex:none}
+.pc-foot{display:flex;align-items:center;justify-content:space-between;gap:var(--s3);border-top:1px solid var(--line-soft);padding-top:var(--s3)}
+.pc-foot .btn{white-space:nowrap;flex:none}
+.pc-foot .fine{max-width:36ch}
+@media (max-width:520px){
+  .pc-top{grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s3)}
+  .pc-top .pace{grid-column:1 / -1;justify-self:start}
+  .pc-top .pace .lbl{text-align:left}
+  .pc-foot{flex-direction:column;align-items:stretch}
+  .pc-foot .fine{max-width:none}
+  .pc-foot .btn{text-align:center}
+  .tl{height:38px}
+}
 .seg2.site{display:flex;background:var(--sunk);border-radius:var(--radius,6px);padding:3px;gap:2px}
-.seg2.site button{border:0;background:transparent;font-family:var(--sans);font-size:.85rem;font-weight:500;color:var(--muted);padding:.4rem .9rem;border-radius:calc(var(--radius,6px) - 2px);cursor:pointer;transition:background .2s,color .2s,box-shadow .2s}
+.seg2.site button{border:0;background:transparent;font-family:var(--sans);font-size:.8rem;font-weight:500;color:var(--muted);padding:.36rem .72rem;border-radius:calc(var(--radius,6px) - 2px);cursor:pointer;transition:background .2s,color .2s,box-shadow .2s}
 .seg2.site button:hover{color:var(--ink)}
 .seg2.site button.on{background:var(--surface);color:var(--ink);box-shadow:0 1px 2px rgba(16,19,25,.14)}
 .plan-card .fine{font-family:var(--mono);font-size:.68rem;line-height:1.7;color:var(--muted);margin:0;letter-spacing:.02em}
@@ -1412,7 +1438,8 @@ body,.btn,.mark .dot,.eyebrow,.case .result b,.masthead,.section,.hero,.feature,
 
 @media (prefers-reduced-motion:reduce){
   .win,.fp,.case .detail,.case .plus,.step::before{transition:none!important}
-  .win,.chip-win,.you,.rp,.avail .live{animation:none!important}
+  .win,.chip-win,.you,.rp,.avail .live,.flags-track{animation:none!important}
+  .flags-track{flex-wrap:wrap;width:auto;row-gap:.5rem}.flags-track .fl[aria-hidden]{display:none}
   .inspect,.tour,.rig,.sat .mini{transition:none!important}
   html{scroll-behavior:auto}
   .orbit,.cur,.cur svg,.brush,.ab .paint path,.ab .drop,.ab .marq,.ab .marq i,.ph-body > *,.toast,.ph-btn .rip,.nd .av.ring::after,.nd .bar i,.tb .run,.code .row.hl,.cap .live,.chip-win .pend,.nd .caret,.w-ds .sec,.w-ds .sec::before,.w-ds .sec::after,.w-ds .callout,.w-ds .in i{animation:none!important}
@@ -1904,8 +1931,9 @@ body,.btn,.mark .dot,.eyebrow,.case .result b,.masthead,.section,.hero,.feature,
           <div class="chips"><span>AWS</span><span>Google Cloud</span><span>Vercel</span><span>Stripe</span><span>Twilio</span><span>Expo</span><span>Anthropic</span><span>OpenAI</span></div>
         </div>
         <div class="row3c">
-          <h3><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18"/></svg>Countries we ship to</h3>
-          <div class="chips"><span>India</span><span>United Arab Emirates</span><span>Singapore</span><span>United Kingdom</span><span>Germany</span><span>Netherlands</span><span>United States</span><span>Australia</span></div>
+          <h3><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18"/></svg>Countries</h3>
+          <div class="flags" aria-label="India, United Arab Emirates, Singapore, United Kingdom, Germany, Netherlands, United States, Australia"><div class="flags-track"><span class="fl" title="India"><svg viewBox="0 0 60 40" role="img" aria-label="India"><rect width="60" height="40" fill="#FF9933"/><rect y="13.33" width="60" height="13.34" fill="#fff"/><rect y="26.67" width="60" height="13.33" fill="#138808"/><circle cx="30" cy="20" r="5" fill="none" stroke="#000080" stroke-width="1.3"/><circle cx="30" cy="20" r="1" fill="#000080"/></svg></span><span class="fl" title="United Arab Emirates"><svg viewBox="0 0 60 40" role="img" aria-label="United Arab Emirates"><rect width="60" height="40" fill="#00732F"/><rect y="13.33" width="60" height="13.34" fill="#fff"/><rect y="26.67" width="60" height="13.33" fill="#000"/><rect width="15" height="40" fill="#FF0000"/></svg></span><span class="fl" title="Singapore"><svg viewBox="0 0 60 40" role="img" aria-label="Singapore"><rect width="60" height="40" fill="#EF3340"/><rect y="20" width="60" height="20" fill="#fff"/><circle cx="14.5" cy="10" r="6.2" fill="#fff"/><circle cx="17" cy="10" r="5.4" fill="#EF3340"/><path d="M0,-1L.294,-.405.951,-.309.476,.155.588,.809 0,.5-.588,.809-.476,.155-.951,-.309-.294,-.405Z" transform="translate(20.5 5.6) scale(1.35)" fill="#fff"/><path d="M0,-1L.294,-.405.951,-.309.476,.155.588,.809 0,.5-.588,.809-.476,.155-.951,-.309-.294,-.405Z" transform="translate(16.6 8.4) scale(1.35)" fill="#fff"/><path d="M0,-1L.294,-.405.951,-.309.476,.155.588,.809 0,.5-.588,.809-.476,.155-.951,-.309-.294,-.405Z" transform="translate(24.4 8.4) scale(1.35)" fill="#fff"/><path d="M0,-1L.294,-.405.951,-.309.476,.155.588,.809 0,.5-.588,.809-.476,.155-.951,-.309-.294,-.405Z" transform="translate(18.1 12.9) scale(1.35)" fill="#fff"/><path d="M0,-1L.294,-.405.951,-.309.476,.155.588,.809 0,.5-.588,.809-.476,.155-.951,-.309-.294,-.405Z" transform="translate(22.9 12.9) scale(1.35)" fill="#fff"/></svg></span><span class="fl" title="United Kingdom"><svg viewBox="0 0 60 40" role="img" aria-label="United Kingdom"><rect width="60" height="40" fill="#012169"/><path d="M0 0L60 40M60 0L0 40" stroke="#fff" stroke-width="8"/><path d="M0 0L60 40M60 0L0 40" stroke="#C8102E" stroke-width="2.6"/><path d="M30 0V40M0 20H60" stroke="#fff" stroke-width="12"/><path d="M30 0V40M0 20H60" stroke="#C8102E" stroke-width="7"/></svg></span><span class="fl" title="Germany"><svg viewBox="0 0 60 40" role="img" aria-label="Germany"><rect width="60" height="40" fill="#000"/><rect y="13.33" width="60" height="13.34" fill="#DD0000"/><rect y="26.67" width="60" height="13.33" fill="#FFCE00"/></svg></span><span class="fl" title="Netherlands"><svg viewBox="0 0 60 40" role="img" aria-label="Netherlands"><rect width="60" height="40" fill="#AE1C28"/><rect y="13.33" width="60" height="13.34" fill="#fff"/><rect y="26.67" width="60" height="13.33" fill="#21468B"/></svg></span><span class="fl" title="United States"><svg viewBox="0 0 60 40" role="img" aria-label="United States"><rect width="60" height="40" fill="#fff"/><rect y="0.00" width="60" height="3.08" fill="#B22234"/><rect y="6.15" width="60" height="3.08" fill="#B22234"/><rect y="12.31" width="60" height="3.08" fill="#B22234"/><rect y="18.46" width="60" height="3.08" fill="#B22234"/><rect y="24.62" width="60" height="3.08" fill="#B22234"/><rect y="30.77" width="60" height="3.08" fill="#B22234"/><rect y="36.92" width="60" height="3.08" fill="#B22234"/><rect width="26" height="21.6" fill="#3C3B6E"/><circle cx="2.6" cy="2.4" r=".75" fill="#fff"/><circle cx="7.1" cy="2.4" r=".75" fill="#fff"/><circle cx="11.6" cy="2.4" r=".75" fill="#fff"/><circle cx="16.1" cy="2.4" r=".75" fill="#fff"/><circle cx="20.6" cy="2.4" r=".75" fill="#fff"/><circle cx="25.1" cy="2.4" r=".75" fill="#fff"/><circle cx="4.8" cy="5.8" r=".75" fill="#fff"/><circle cx="9.3" cy="5.8" r=".75" fill="#fff"/><circle cx="13.8" cy="5.8" r=".75" fill="#fff"/><circle cx="18.4" cy="5.8" r=".75" fill="#fff"/><circle cx="22.9" cy="5.8" r=".75" fill="#fff"/><circle cx="2.6" cy="9.2" r=".75" fill="#fff"/><circle cx="7.1" cy="9.2" r=".75" fill="#fff"/><circle cx="11.6" cy="9.2" r=".75" fill="#fff"/><circle cx="16.1" cy="9.2" r=".75" fill="#fff"/><circle cx="20.6" cy="9.2" r=".75" fill="#fff"/><circle cx="25.1" cy="9.2" r=".75" fill="#fff"/><circle cx="4.8" cy="12.6" r=".75" fill="#fff"/><circle cx="9.3" cy="12.6" r=".75" fill="#fff"/><circle cx="13.8" cy="12.6" r=".75" fill="#fff"/><circle cx="18.4" cy="12.6" r=".75" fill="#fff"/><circle cx="22.9" cy="12.6" r=".75" fill="#fff"/><circle cx="2.6" cy="16.0" r=".75" fill="#fff"/><circle cx="7.1" cy="16.0" r=".75" fill="#fff"/><circle cx="11.6" cy="16.0" r=".75" fill="#fff"/><circle cx="16.1" cy="16.0" r=".75" fill="#fff"/><circle cx="20.6" cy="16.0" r=".75" fill="#fff"/><circle cx="25.1" cy="16.0" r=".75" fill="#fff"/><circle cx="4.8" cy="19.4" r=".75" fill="#fff"/><circle cx="9.3" cy="19.4" r=".75" fill="#fff"/><circle cx="13.8" cy="19.4" r=".75" fill="#fff"/><circle cx="18.4" cy="19.4" r=".75" fill="#fff"/><circle cx="22.9" cy="19.4" r=".75" fill="#fff"/></svg></span><span class="fl" title="Australia"><svg viewBox="0 0 60 40" role="img" aria-label="Australia"><rect width="60" height="40" fill="#00008B"/><g transform="scale(.5)"><rect width="60" height="40" fill="#012169"/><path d="M0 0L60 40M60 0L0 40" stroke="#fff" stroke-width="8"/><path d="M0 0L60 40M60 0L0 40" stroke="#C8102E" stroke-width="2.6"/><path d="M30 0V40M0 20H60" stroke="#fff" stroke-width="12"/><path d="M30 0V40M0 20H60" stroke="#C8102E" stroke-width="7"/></g><polygon points="15.00,25.40 15.87,28.20 18.60,27.13 16.95,29.55 19.48,31.02 16.56,31.25 17.00,34.14 15.00,32.00 13.00,34.14 13.44,31.25 10.52,31.02 13.05,29.55 11.40,27.13 14.13,28.20" fill="#fff"/><polygon points="45.00,6.60 45.46,8.05 46.88,7.50 46.02,8.77 47.34,9.53 45.82,9.65 46.04,11.16 45.00,10.05 43.96,11.16 44.18,9.65 42.66,9.53 43.98,8.77 43.12,7.50 44.54,8.05" fill="#fff"/><polygon points="37.00,16.60 37.46,18.05 38.88,17.50 38.02,18.77 39.34,19.53 37.82,19.65 38.04,21.16 37.00,20.05 35.96,21.16 36.18,19.65 34.66,19.53 35.98,18.77 35.12,17.50 36.54,18.05" fill="#fff"/><polygon points="52.00,14.60 52.46,16.05 53.88,15.50 53.02,16.77 54.34,17.53 52.82,17.65 53.04,19.16 52.00,18.05 50.96,19.16 51.18,17.65 49.66,17.53 50.98,16.77 50.12,15.50 51.54,16.05" fill="#fff"/><polygon points="45.00,29.60 45.46,31.05 46.88,30.50 46.02,31.77 47.34,32.53 45.82,32.65 46.04,34.16 45.00,33.05 43.96,34.16 44.18,32.65 42.66,32.53 43.98,31.77 43.12,30.50 44.54,31.05" fill="#fff"/><path d="M0,-1L.294,-.405.951,-.309.476,.155.588,.809 0,.5-.588,.809-.476,.155-.951,-.309-.294,-.405Z" transform="translate(48.5 22.5) scale(1.2)" fill="#fff"/></svg></span><span class="fl" title="India" aria-hidden="true"><svg viewBox="0 0 60 40" role="img" aria-label="India"><rect width="60" height="40" fill="#FF9933"/><rect y="13.33" width="60" height="13.34" fill="#fff"/><rect y="26.67" width="60" height="13.33" fill="#138808"/><circle cx="30" cy="20" r="5" fill="none" stroke="#000080" stroke-width="1.3"/><circle cx="30" cy="20" r="1" fill="#000080"/></svg></span><span class="fl" title="United Arab Emirates" aria-hidden="true"><svg viewBox="0 0 60 40" role="img" aria-label="United Arab Emirates"><rect width="60" height="40" fill="#00732F"/><rect y="13.33" width="60" height="13.34" fill="#fff"/><rect y="26.67" width="60" height="13.33" fill="#000"/><rect width="15" height="40" fill="#FF0000"/></svg></span><span class="fl" title="Singapore" aria-hidden="true"><svg viewBox="0 0 60 40" role="img" aria-label="Singapore"><rect width="60" height="40" fill="#EF3340"/><rect y="20" width="60" height="20" fill="#fff"/><circle cx="14.5" cy="10" r="6.2" fill="#fff"/><circle cx="17" cy="10" r="5.4" fill="#EF3340"/><path d="M0,-1L.294,-.405.951,-.309.476,.155.588,.809 0,.5-.588,.809-.476,.155-.951,-.309-.294,-.405Z" transform="translate(20.5 5.6) scale(1.35)" fill="#fff"/><path d="M0,-1L.294,-.405.951,-.309.476,.155.588,.809 0,.5-.588,.809-.476,.155-.951,-.309-.294,-.405Z" transform="translate(16.6 8.4) scale(1.35)" fill="#fff"/><path d="M0,-1L.294,-.405.951,-.309.476,.155.588,.809 0,.5-.588,.809-.476,.155-.951,-.309-.294,-.405Z" transform="translate(24.4 8.4) scale(1.35)" fill="#fff"/><path d="M0,-1L.294,-.405.951,-.309.476,.155.588,.809 0,.5-.588,.809-.476,.155-.951,-.309-.294,-.405Z" transform="translate(18.1 12.9) scale(1.35)" fill="#fff"/><path d="M0,-1L.294,-.405.951,-.309.476,.155.588,.809 0,.5-.588,.809-.476,.155-.951,-.309-.294,-.405Z" transform="translate(22.9 12.9) scale(1.35)" fill="#fff"/></svg></span><span class="fl" title="United Kingdom" aria-hidden="true"><svg viewBox="0 0 60 40" role="img" aria-label="United Kingdom"><rect width="60" height="40" fill="#012169"/><path d="M0 0L60 40M60 0L0 40" stroke="#fff" stroke-width="8"/><path d="M0 0L60 40M60 0L0 40" stroke="#C8102E" stroke-width="2.6"/><path d="M30 0V40M0 20H60" stroke="#fff" stroke-width="12"/><path d="M30 0V40M0 20H60" stroke="#C8102E" stroke-width="7"/></svg></span><span class="fl" title="Germany" aria-hidden="true"><svg viewBox="0 0 60 40" role="img" aria-label="Germany"><rect width="60" height="40" fill="#000"/><rect y="13.33" width="60" height="13.34" fill="#DD0000"/><rect y="26.67" width="60" height="13.33" fill="#FFCE00"/></svg></span><span class="fl" title="Netherlands" aria-hidden="true"><svg viewBox="0 0 60 40" role="img" aria-label="Netherlands"><rect width="60" height="40" fill="#AE1C28"/><rect y="13.33" width="60" height="13.34" fill="#fff"/><rect y="26.67" width="60" height="13.33" fill="#21468B"/></svg></span><span class="fl" title="United States" aria-hidden="true"><svg viewBox="0 0 60 40" role="img" aria-label="United States"><rect width="60" height="40" fill="#fff"/><rect y="0.00" width="60" height="3.08" fill="#B22234"/><rect y="6.15" width="60" height="3.08" fill="#B22234"/><rect y="12.31" width="60" height="3.08" fill="#B22234"/><rect y="18.46" width="60" height="3.08" fill="#B22234"/><rect y="24.62" width="60" height="3.08" fill="#B22234"/><rect y="30.77" width="60" height="3.08" fill="#B22234"/><rect y="36.92" width="60" height="3.08" fill="#B22234"/><rect width="26" height="21.6" fill="#3C3B6E"/><circle cx="2.6" cy="2.4" r=".75" fill="#fff"/><circle cx="7.1" cy="2.4" r=".75" fill="#fff"/><circle cx="11.6" cy="2.4" r=".75" fill="#fff"/><circle cx="16.1" cy="2.4" r=".75" fill="#fff"/><circle cx="20.6" cy="2.4" r=".75" fill="#fff"/><circle cx="25.1" cy="2.4" r=".75" fill="#fff"/><circle cx="4.8" cy="5.8" r=".75" fill="#fff"/><circle cx="9.3" cy="5.8" r=".75" fill="#fff"/><circle cx="13.8" cy="5.8" r=".75" fill="#fff"/><circle cx="18.4" cy="5.8" r=".75" fill="#fff"/><circle cx="22.9" cy="5.8" r=".75" fill="#fff"/><circle cx="2.6" cy="9.2" r=".75" fill="#fff"/><circle cx="7.1" cy="9.2" r=".75" fill="#fff"/><circle cx="11.6" cy="9.2" r=".75" fill="#fff"/><circle cx="16.1" cy="9.2" r=".75" fill="#fff"/><circle cx="20.6" cy="9.2" r=".75" fill="#fff"/><circle cx="25.1" cy="9.2" r=".75" fill="#fff"/><circle cx="4.8" cy="12.6" r=".75" fill="#fff"/><circle cx="9.3" cy="12.6" r=".75" fill="#fff"/><circle cx="13.8" cy="12.6" r=".75" fill="#fff"/><circle cx="18.4" cy="12.6" r=".75" fill="#fff"/><circle cx="22.9" cy="12.6" r=".75" fill="#fff"/><circle cx="2.6" cy="16.0" r=".75" fill="#fff"/><circle cx="7.1" cy="16.0" r=".75" fill="#fff"/><circle cx="11.6" cy="16.0" r=".75" fill="#fff"/><circle cx="16.1" cy="16.0" r=".75" fill="#fff"/><circle cx="20.6" cy="16.0" r=".75" fill="#fff"/><circle cx="25.1" cy="16.0" r=".75" fill="#fff"/><circle cx="4.8" cy="19.4" r=".75" fill="#fff"/><circle cx="9.3" cy="19.4" r=".75" fill="#fff"/><circle cx="13.8" cy="19.4" r=".75" fill="#fff"/><circle cx="18.4" cy="19.4" r=".75" fill="#fff"/><circle cx="22.9" cy="19.4" r=".75" fill="#fff"/></svg></span><span class="fl" title="Australia" aria-hidden="true"><svg viewBox="0 0 60 40" role="img" aria-label="Australia"><rect width="60" height="40" fill="#00008B"/><g transform="scale(.5)"><rect width="60" height="40" fill="#012169"/><path d="M0 0L60 40M60 0L0 40" stroke="#fff" stroke-width="8"/><path d="M0 0L60 40M60 0L0 40" stroke="#C8102E" stroke-width="2.6"/><path d="M30 0V40M0 20H60" stroke="#fff" stroke-width="12"/><path d="M30 0V40M0 20H60" stroke="#C8102E" stroke-width="7"/></g><polygon points="15.00,25.40 15.87,28.20 18.60,27.13 16.95,29.55 19.48,31.02 16.56,31.25 17.00,34.14 15.00,32.00 13.00,34.14 13.44,31.25 10.52,31.02 13.05,29.55 11.40,27.13 14.13,28.20" fill="#fff"/><polygon points="45.00,6.60 45.46,8.05 46.88,7.50 46.02,8.77 47.34,9.53 45.82,9.65 46.04,11.16 45.00,10.05 43.96,11.16 44.18,9.65 42.66,9.53 43.98,8.77 43.12,7.50 44.54,8.05" fill="#fff"/><polygon points="37.00,16.60 37.46,18.05 38.88,17.50 38.02,18.77 39.34,19.53 37.82,19.65 38.04,21.16 37.00,20.05 35.96,21.16 36.18,19.65 34.66,19.53 35.98,18.77 35.12,17.50 36.54,18.05" fill="#fff"/><polygon points="52.00,14.60 52.46,16.05 53.88,15.50 53.02,16.77 54.34,17.53 52.82,17.65 53.04,19.16 52.00,18.05 50.96,19.16 51.18,17.65 49.66,17.53 50.98,16.77 50.12,15.50 51.54,16.05" fill="#fff"/><polygon points="45.00,29.60 45.46,31.05 46.88,30.50 46.02,31.77 47.34,32.53 45.82,32.65 46.04,34.16 45.00,33.05 43.96,34.16 44.18,32.65 42.66,32.53 43.98,31.77 43.12,30.50 44.54,31.05" fill="#fff"/><path d="M0,-1L.294,-.405.951,-.309.476,.155.588,.809 0,.5-.588,.809-.476,.155-.951,-.309-.294,-.405Z" transform="translate(48.5 22.5) scale(1.2)" fill="#fff"/></svg></span></div></div>
+          <p class="fine">Eight countries across Asia, the Middle East, Europe, North America and Australia.</p>
         </div>
       </div>
       <div class="figures">
@@ -1946,19 +1974,19 @@ body,.btn,.mark .dot,.eyebrow,.case .result b,.masthead,.section,.hero,.feature,
         </div>
         </div>
         <div class="plan-card">
+          <div class="pc-hero"><p class="lbl">Price</p><p class="big" id="plp">$34,000 &ndash; $46,000</p><p class="sub" id="plnote">Standard pace &middot; two-week cycles</p></div>
           <div class="pc-top">
             <div><p class="lbl">Timeline</p><p class="big"><span id="plw">8</span> weeks</p></div>
-            <div><p class="lbl">Price</p><p class="big" id="plp">$34,000 &ndash; $46,000</p></div>
             <div><p class="lbl">Team</p><p class="big" id="plt">2 eng + 1 design</p><p class="team" id="plteam" aria-hidden="true"></p></div>
+            <div class="pace"><p class="lbl">Pace</p><div class="seg2 site" id="plpace"><button type="button" data-pace="standard" class="on">Standard</button><button type="button" data-pace="compressed">Compressed</button></div></div>
           </div>
           <div class="tl" id="pltl" aria-hidden="true"></div>
           <div class="tl-weeks" id="plweeks" aria-hidden="true"></div>
-          <p class="tl-key" id="plkey"></p>
+          <p class="pc-inc"><span class="pl">Includes</span><span id="plkey" style="display:contents"></span></p>
           <div class="pc-foot">
-            <div class="seg2 site" id="plpace"><button type="button" data-pace="standard" class="on">Standard</button><button type="button" data-pace="compressed">Compressed</button></div>
+            <p class="fine">Indicative, from similar past engagements. You get a fixed quote after the scoping call; work is invoiced fortnightly.</p>
             <a class="btn btn-primary" id="plsend" href="mailto:hello@ventosystems.com?subject=Scope">Send this scope</a>
           </div>
-          <p class="fine">Fixed scope per cycle. Invoiced fortnightly. Placeholder figures &mdash; swap for your real bands.</p>
         </div>
       </div>
     </div>
@@ -2841,15 +2869,16 @@ body,.btn,.mark .dot,.eyebrow,.case .result b,.masthead,.section,.hero,.feature,
       tween(W, total);
       P.textContent = money(mid * .86) + ' \u2013 ' + money(mid * 1.14);
       T.textContent = eng + ' eng' + (des ? ' + ' + des + ' design' : '');
-      var html = '<i class="setup" style="--i:0"></i>', i = 1, keyHtml = '<span style="--mc:color-mix(in srgb,var(--ink) 28%,var(--surface))">scoping &amp; setup</span>';
+      var html = '<i class="setup" style="--i:0"></i>', i = 1, keyHtml = '';
       var scale = weeks ? (total - setup) / weeks : 1;
       on.forEach(function(m){
         var n = Math.max(1, Math.round(parseInt(m.getAttribute('data-w'), 10) * scale)), mc = m.style.getPropertyValue('--mc');
         for (var k = 0; k < n; k++){ html += '<i style="--mc:' + mc + ';--i:' + i + '"' + ((i % 2 === 1 && i > 1) ? ' class="cut"' : '') + '></i>'; i++; }
-        keyHtml += '<span style="--mc:' + mc + '">' + m.querySelector('b').textContent + '</span>';
+        keyHtml += '<span class="it" style="--mc:' + mc + '">' + m.querySelector('b').textContent + '</span>';
       });
       html += '<i class="rel" style="--i:' + i + '"></i>';
-      tl.innerHTML = html; key.innerHTML = keyHtml + '<span style="--mc:var(--c-green)">release</span>';
+      tl.innerHTML = html; key.innerHTML = keyHtml || '<span class="none">nothing yet \u2014 switch a piece on</span>';
+      var note = document.getElementById('plnote'); if (note) note.innerHTML = pace === 'compressed' ? 'Compressed pace \u00b7 one more engineer, about 30% faster' : 'Standard pace \u00b7 two-week cycles';
       /* a week ruler under the blocks, with the demo weeks marked */
       var wk = document.getElementById('plweeks');
       if (wk){ var cols = ''; for (var w = 1; w <= i + 1; w++){ var ms = (w === 1) ? 'setup' : (w === i + 1) ? 'live' : (w > 1 && (w - 1) % 2 === 0) ? 'demo' : ''; cols += '<span' + (ms ? ' class="m"' : '') + '>' + (ms || 'w' + w) + '</span>'; } wk.innerHTML = cols; wk.style.gridTemplateColumns = 'repeat(' + (i + 1) + ',minmax(0,1fr))'; wk.style.display = i + 1 > 14 ? 'none' : ''; }
@@ -2859,7 +2888,9 @@ body,.btn,.mark .dot,.eyebrow,.case .result b,.masthead,.section,.hero,.feature,
       /* which preset, if any, matches the current selection */
       var pre = document.getElementById('plpre');
       if (pre){ var cur = on.map(function(m){ return m.getAttribute('data-k'); }).sort().join(','); Array.prototype.forEach.call(pre.querySelectorAll('button'), function(b){ b.classList.toggle('on', b.getAttribute('data-set').split(',').sort().join(',') === cur); }); }
-      send.setAttribute('href', 'mailto:hello@ventosystems.com?subject=' + encodeURIComponent('Scope: ' + on.map(function(m){ return m.querySelector('b').textContent; }).join(', ') + ' \u00b7 ' + total + ' weeks \u00b7 ' + pace));
+      var names = on.map(function(m){ return m.querySelector('b').textContent; }).join(', ') || 'to be decided';
+      send.setAttribute('href', 'mailto:hello@ventosystems.com?subject=' + encodeURIComponent('Scope: ' + names + ' \u00b7 ' + total + ' weeks') +
+        '&body=' + encodeURIComponent('Hi Vento,\n\nI would like to scope a project.\n\nIn scope: ' + names + '\nTimeline: ' + total + ' weeks (' + pace + ' pace)\nTeam: ' + T.textContent + '\nIndicative price: ' + P.textContent + '\n\nA bit about what we are building:\n'));
     }
     mods.addEventListener('click', function(e){ var m = e.target.closest('.mod'); if (!m) return; m.classList.toggle('on'); render(); });
     var preEl = document.getElementById('plpre');
@@ -3015,13 +3046,16 @@ body,.btn,.mark .dot,.eyebrow,.case .result b,.masthead,.section,.hero,.feature,
         next();
       });
     });
-    /* the hero: a tap beside the surfaces turns the next one over */
-    var sys = document.getElementById('system');
+    /* the hero: a tap beside the surfaces recolours the whole site and gives the system a turn */
+    var sys = document.getElementById('system'), sysStage = document.getElementById('sysstage');
     if (sys){
-      var sats = Array.prototype.slice.call(sys.querySelectorAll('.sat')), si = 0;
+      var PALS = ['', 'lavender', 'mint', 'peach', 'rose', 'aqua'];
       sys.addEventListener('click', function(e){
         if (e.target.closest && e.target.closest('.sat')) return;
-        var s = sats[si++ % sats.length]; if (s) s.click();
+        var cur = document.documentElement.getAttribute('data-accent') || '', n = PALS[(PALS.indexOf(cur) + 1) % PALS.length];
+        if (live.setPal) live.setPal(n);
+        if (sysStage){ sysStage.classList.remove('whirl'); void sysStage.offsetWidth; sysStage.classList.add('whirl'); }
+        Array.prototype.forEach.call(sys.querySelectorAll('.sat'), function(s){ s.classList.remove('tap'); void s.offsetWidth; s.classList.add('tap'); });
       });
     }
   })();
