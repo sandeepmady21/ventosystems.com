@@ -794,30 +794,17 @@ a{color:inherit}
 .phone[data-os="android"] .ph-head{padding:8px 14px 7px}
 .phone[data-os="android"] .ph-hero{padding:8px 10px}
 .phone[data-os="android"] .ph-hero strong{margin:2px 0 6px}
-/* ---- nudges: a handwritten note and a pulsing ring show what to click, until you do ---- */
-.nudge{position:absolute;left:var(--x);top:var(--y);z-index:31;display:flex;align-items:center;gap:5px;font-family:var(--hand);font-size:18px;font-weight:600;line-height:1;color:var(--ink);white-space:nowrap;pointer-events:none;opacity:0;transform:rotate(var(--r,-4deg)) translateY(8px);transition:opacity .5s ease,transform .6s var(--spring)}
-.nudge svg{width:26px;height:26px;flex:none;transform:rotate(var(--ar,0deg));stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.nudge.on{opacity:.9;transform:rotate(var(--r,-4deg))}
-.system .nudge{font-size:19px}
+/* ---- nudges: one handwritten note per scene walks from control to control, always pointing at the next thing to try; a ring pulses on it ---- */
+.nudge{position:absolute;left:var(--x,20px);top:var(--y,20px);z-index:31;display:flex;align-items:center;gap:5px;font-family:var(--hand);font-size:18px;font-weight:600;line-height:1;color:var(--ink);white-space:nowrap;pointer-events:none;opacity:0;padding:3px 9px 4px;border-radius:9px;background:color-mix(in srgb,var(--paper) 84%,transparent);box-shadow:0 2px 8px -4px rgba(16,19,25,.35);transform:translateZ(260px) rotate(var(--r,-3deg));transition:left .55s var(--spring),top .55s var(--spring),opacity .4s ease,color .3s}
+.nudge.rev{flex-direction:row-reverse}
+.nudge svg{width:24px;height:24px;flex:none;transform:rotate(var(--ar,0deg));stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;transition:transform .55s var(--spring),opacity .3s,width .3s}
+.nudge.on{opacity:1}
+.nudge.lost svg,.nudge.end svg,.nudge.ok svg{opacity:0;width:0}
+.nudge.ok{color:var(--c-green)}
+.system .nudge{font-size:19px;transform:rotate(var(--r,-3deg))}
 .hp{animation:hp 1.7s ease-out infinite}
 @keyframes hp{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--blue) 70%,transparent)}70%{box-shadow:0 0 0 10px color-mix(in srgb,var(--blue) 0%,transparent)}100%{box-shadow:0 0 0 0 color-mix(in srgb,var(--blue) 0%,transparent)}}
 .stage [role="button"],.stage .tab,.stage .pill2,.stage .os,.stage .sw i,.stage .th,.stage .tf,.stage .ag-step,.stage .seg a,.stage .side a,.stage .isy,.stage .dep,.stage .ph-row,.stage .ph-btn,.stage .ph-set .row,.stage .set .r,.stage .role,.stage .call,.stage .wbtn,.stage [data-toast],.stage [data-go],.stage .re,.sys-stage .sat,.sys-stage .sw i{cursor:pointer}
-/* ---- try lists: each scene says what you can do in it; the ring waits on the next thing, doing it ticks it off ---- */
-.try-h{font-family:var(--mono);font-size:.62rem;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin:1.25rem 0 .55rem;display:flex;align-items:center;gap:.5rem}
-.try-h i{width:6px;height:6px;border-radius:99px;background:var(--c-green);display:block;animation:pulse 2s ease-out infinite}
-.try{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.5rem;font-size:.86rem;color:var(--muted);max-width:30rem}
-.try li{display:flex;align-items:flex-start;gap:.6rem;line-height:1.35;transition:color .3s}
-.try li i{width:17px;height:17px;border-radius:99px;border:1.5px solid var(--line);flex:none;position:relative;margin-top:1px;transition:border-color .3s,background .3s,transform .3s var(--spring),box-shadow .3s}
-.try li.now{color:var(--ink)}
-.try li.now i{border-color:var(--blue);box-shadow:0 0 0 3px color-mix(in srgb,var(--blue) 18%,transparent)}
-.try li.done i{background:var(--c-green);border-color:var(--c-green);transform:scale(1.08)}
-.try li.done i::after{content:"";position:absolute;left:5px;top:2px;width:4px;height:8px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg)}
-.try li b{color:var(--ink);font-weight:600}
-.try li.done{color:var(--muted)}.try li.done b{color:inherit}
-.try li.done span{text-decoration:line-through;text-decoration-color:color-mix(in srgb,var(--muted) 45%,transparent)}
-.try-done{margin:.6rem 0 0;font-size:.8rem;color:var(--c-green);font-weight:500;opacity:0;transition:opacity .4s}
-.try-done.on{opacity:1}
-.hero-rest .try-h{margin-top:1.4rem}
 /* the Apple Watch Ultra beside the iPhone: brushed titanium, a raised rim around a flat crystal, the black bezel, the crown in its guard, the orange Action button and an Ocean band with its buckle */
 .watch{position:absolute;left:294px;top:252px;width:96px;transform:translateZ(105px) translateX(-26px) scale(.86);opacity:0;transition:opacity .35s ease,transform .7s var(--spring);cursor:pointer;pointer-events:none;user-select:none;filter:drop-shadow(0 26px 22px rgba(16,19,25,.28))}
 .watch.on{opacity:1;transform:translateZ(105px);pointer-events:auto;transition:opacity .35s ease .75s,transform .7s var(--spring) .75s}
@@ -1737,13 +1724,6 @@ body.book-open{overflow:hidden}
           <a class="btn btn-primary" href="#scope">Scope a project</a>
           <a class="btn btn-ghost" href="#work">Clients &amp; partners</a>
         </div>
-        <p class="try-h"><i></i>Try it</p>
-        <ul class="try" data-scene="system">
-            <li data-t=".sat[data-k=&quot;mobile&quot;]" data-p=".sat[data-k=&quot;mobile&quot;] .mini"><i></i><span>Click the <b>phone</b> to flip through its screens</span></li>
-            <li data-t=".dsm .sw i"><i></i><span>Pick a <b>colour</b> on the design card; the whole site follows</span></li>
-            <li data-t=".sat[data-k=&quot;web&quot;]" data-p=".sat[data-k=&quot;web&quot;] .mini"><i></i><span>Click the <b>dashboard</b> to switch its view</span></li>
-        </ul>
-        <p class="try-done">You have the idea. Everything below works the same way.</p>
         </div>
       </div>
 
@@ -1782,8 +1762,6 @@ body.book-open{overflow:hidden}
               </div>
             </div>
           </div>
-          <span class="nudge" style="--x:28px;--y:392px;--r:-5deg;--ar:-40deg"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20c2-8 8-13 16-15"/><path d="M14 4l6 1-1 6"/></svg>Click the phone</span>
-          <span class="nudge" style="--x:150px;--y:38px;--r:-3deg;--ar:40deg" data-nudge>Pick a colour<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20c2-8 8-13 16-15"/><path d="M14 4l6 1-1 6"/></svg></span>
           <div class="ag" style="--ac:var(--c-violet)"><span class="av"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2c.6 5.4 4.6 9.4 10 10-5.4.6-9.4 4.6-10 10-.6-5.4-4.6-9.4-10-10 5.4-.6 9.4-4.6 10-10z"/></svg></span><span class="card"><b class="nm"></b><small class="lbl"></small></span></div>
           <div class="ag" style="--ac:var(--c-cyan)"><span class="av"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2c.6 5.4 4.6 9.4 10 10-5.4.6-9.4 4.6-10 10-.6-5.4-4.6-9.4-10-10 5.4-.6 9.4-4.6 10-10z"/></svg></span><span class="card"><b class="nm"></b><small class="lbl"></small></span></div>
           <div class="ag" style="--ac:var(--c-green)"><span class="av"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2c.6 5.4 4.6 9.4 10 10-5.4.6-9.4 4.6-10 10-.6-5.4-4.6-9.4-10-10 5.4-.6 9.4-4.6 10-10z"/></svg></span><span class="card"><b class="nm"></b><small class="lbl"></small></span></div>
@@ -1800,20 +1778,11 @@ body.book-open{overflow:hidden}
         <h2>Websites &amp; web apps.</h2>
         <p class="svc"><b>Dashboards</b> &middot; portals &middot; internal tools &middot; APIs &middot; SAP, ServiceNow &amp; Salesforce integrations</p>
         <p class="d">Marketing sites, portals, dashboards and internal tools. This admin is a working one &mdash; open Integrations and it syncs orders to SAP, ServiceNow and Salesforce.</p>
-        <p class="try-h"><i></i>Try it</p>
-        <ul class="try" data-scene="build">
-            <li data-t="#deploy"><i></i><span>Press <b>Deploy</b> and watch the version bump</span></li>
-            <li data-t="#igrid .isy" data-p="#appside a[data-page=&quot;integ&quot;], #igrid .isy"><i></i><span>Open <b>Integrations</b> and press Sync now on SAP</span></li>
-            <li data-t="#orders .pill2" data-p="#appside a[data-page=&quot;orders&quot;], #orders .pill2"><i></i><span>On <b>Orders</b>, click a status to move an order along</span></li>
-            <li data-t="#view a[data-view=&quot;trend&quot;]"><i></i><span>Flip the chart to <b>Trend</b></span></li>
-        </ul>
-        <p class="try-done">All done here. Everything else in it works too.</p>
       </div>
       <div class="scene dark" style="--sw:640;--sh:400" aria-label="A working dashboard you can click through: ranges, chart views, pages, order statuses and settings all respond.">
         <div class="rig"><div class="orbit"><div class="stage">
           <div class="ground"></div>
           <div class="fp" style="left:14px;top:14px;width:612px;height:372px"></div>
-          <span class="nudge" style="--x:452px;--y:-38px;--r:-3deg;--ar:120deg" data-nudge>Try Deploy<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20c2-8 8-13 16-15"/><path d="M14 4l6 1-1 6"/></svg></span>
           <div class="win w-app" id="wapp" data-page="overview" data-range="30" data-view="bars" style="left:14px;top:14px;width:612px;height:372px;--z:36px">
             <div class="tb"><span class="dots"><i></i><i></i><i></i></span><span class="ttl">ops.example.com</span><span id="apppath">/overview</span><span class="sp"><span class="ver" id="appver">v1.24</span></span></div>
             <div class="body">
@@ -1965,14 +1934,6 @@ body.book-open{overflow:hidden}
         <h2>Mobile apps, iOS and Android.</h2>
         <p class="svc"><b>React Native</b> &middot; Expo &middot; Swift &middot; Kotlin &middot; store submission</p>
         <p class="d">One codebase, both stores. Try the app, then switch it to Android.</p>
-        <p class="try-h"><i></i>Try it</p>
-        <ul class="try" data-scene="mobile">
-            <li data-t="#watch" data-p="#watch .wcase"><i></i><span>Tap the <b>watch</b>: it has three faces</span></li>
-            <li data-t=".os-switch .os[data-os=&quot;android&quot;]"><i></i><span>Switch to <b>Android</b>; it becomes a foldable</span></li>
-            <li data-t="#phbtn"><i></i><span><b>Place the order</b>; it lands on the watch</span></li>
-            <li data-t="#phone .tab[data-tab=&quot;track&quot;]"><i></i><span>Open <b>Track</b> for the live map</span></li>
-        </ul>
-        <p class="try-done">All done here. Everything else in it works too.</p>
       </div>
       <div class="scene wash" style="--sw:420;--sh:540" aria-label="A phone app you can tap through. The switch turns the same app into an iPhone with an Apple Watch beside it, or a dual-screen Android with the map open on the second screen.">
         <div class="rig"><div class="orbit"><div class="stage">
@@ -2072,7 +2033,6 @@ body.book-open{overflow:hidden}
             <i class="hinge"></i>
             <i class="fshadow"></i>
           </div>
-          <span class="nudge" style="--x:262px;--y:472px;--r:-4deg;--ar:-35deg"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20c2-8 8-13 16-15"/><path d="M14 4l6 1-1 6"/></svg>Tap the watch</span>
           <div class="watch on" id="watch" data-s="0" role="button" tabindex="0" aria-label="Apple Watch Ultra, tap it to see the next screen">
             <i class="band top"></i>
             <div class="wcase"><i class="rim"></i><i class="guard"></i><i class="crown"></i><i class="sideb"></i><i class="action"></i><i class="mic"></i>
@@ -2096,19 +2056,11 @@ body.book-open{overflow:hidden}
         <h2>AI agents &amp; automation.</h2>
         <p class="svc"><b>AI agents</b> &middot; chatbots &middot; LLM features &middot; retrieval &middot; evaluation</p>
         <p class="d">Agents, chatbots and LLM features that act on your systems. Press run, or click a stage to watch it work.</p>
-        <p class="try-h"><i></i>Try it</p>
-        <ul class="try" data-scene="ai">
-            <li data-t="#agrun"><i></i><span>Press <b>Run</b>: five agents ship a change</span></li>
-            <li data-t=".ag-step"><i></i><span>Click a <b>stage</b> to see exactly what it did</span></li>
-            <li data-t="#agmerge.ready"><i></i><span><b>Merge</b> the pull request when it opens</span></li>
-        </ul>
-        <p class="try-done">All done here. Everything else in it works too.</p>
       </div>
       <div class="scene soft" style="--sw:640;--sh:400" aria-label="Several agents working on a change together. Click an agent and it does its job in front of you; press run for the whole pipeline; merge the pull request at the end.">
         <div class="rig"><div class="orbit"><div class="stage">
           <div class="ground"></div>
           <div class="fp" style="left:14px;top:14px;width:612px;height:372px"></div>
-          <span class="nudge" style="--x:452px;--y:-38px;--r:-3deg;--ar:120deg" data-nudge>Press Run<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20c2-8 8-13 16-15"/><path d="M14 4l6 1-1 6"/></svg></span>
           <div class="win w-agents" id="wag" style="left:14px;top:14px;width:612px;height:372px;--z:44px">
             <div class="tb"><span class="dots"><i></i><i></i><i></i></span><span class="ttl">Agent run</span><span id="agrunid">&middot; #418</span><span class="sp"><span class="ag-state" id="agstate"><i></i><span>idle</span></span><span class="run" id="agrun" role="button" tabindex="0" data-nudge>&#9654;&nbsp; Run pipeline</span></span></div>
             <div class="body ag-body">
@@ -2174,20 +2126,11 @@ body.book-open{overflow:hidden}
         <h2>Design &amp; design systems.</h2>
         <p class="svc"><b>UI/UX</b> &middot; design systems &middot; prototypes &middot; architecture review</p>
         <p class="d">Interfaces, design systems and prototypes. This brand kit styles the very page you are on.</p>
-        <p class="try-h"><i></i>Try it</p>
-        <ul class="try" data-scene="design">
-            <li data-t="#dsth .th"><i></i><span>Pick a <b>theme</b>; the page you are reading follows</span></li>
-            <li data-t="#dstf .tf[data-type=&quot;serif&quot;]"><i></i><span>Try the <b>serif</b></span></li>
-            <li data-t="#dsrad button"><i></i><span>Change the <b>corners</b></span></li>
-            <li data-t="#dsmode button[data-m=&quot;dark&quot;]"><i></i><span>Flip the site to <b>dark</b></span></li>
-        </ul>
-        <p class="try-done">All done here. Everything else in it works too.</p>
       </div>
       <div class="scene draft" style="--sw:640;--sh:400" aria-label="A brand kit for the product: six themes shown as tiny interfaces, three typefaces, a corner radius and light or dark. Every control changes the preview and the whole site around it.">
         <div class="rig"><div class="orbit"><div class="stage">
           <div class="ground"></div>
           <div class="fp" style="left:14px;top:14px;width:612px;height:372px"></div>
-          <span class="nudge" style="--x:258px;--y:-38px;--r:3deg;--ar:200deg"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20c2-8 8-13 16-15"/><path d="M14 4l6 1-1 6"/></svg>Pick a theme</span>
           <div class="win w-ds" id="wds" data-type="sans" style="left:14px;top:14px;width:612px;height:372px;--z:30px">
             <div class="tb"><span class="dots"><i></i><i></i><i></i></span><span class="ttl">Brand kit</span><span>&middot; tokens.json &middot; <span id="dsver">v3.2</span></span><span class="sp"><span class="pill" id="dspill">Approved</span></span></div>
             <div class="body">
@@ -2824,15 +2767,6 @@ body.book-open{overflow:hidden}
       var tag = document.createElement('span'); tag.className = 'live-tag'; tag.innerHTML = '<i></i><b>Click anything</b> \u00b7 it\u2019s live'; sc.appendChild(tag);
     });
     live.takeOver = takeOver;
-    /* the handwritten notes appear once a scene is in view, and stay */
-    (function(){
-      all('.feature .scene, .hero .system').forEach(function(sc){
-        function show(){ all('.nudge', sc).forEach(function(n){ n.classList.add('on'); }); }
-        if (still){ show(); return; }
-        if ('IntersectionObserver' in window){ var seen = false; new IntersectionObserver(function(es){ es.forEach(function(en){ if (en.isIntersecting && !seen){ seen = true; setTimeout(show, 600); } }); }, { threshold: .3 }).observe(sc); }
-        else setTimeout(show, 1200);
-      });
-    })();
 
     /* a ripple where a demo click lands */
     live.ripple = function(el){
@@ -3576,31 +3510,82 @@ body.book-open{overflow:hidden}
     }
   })();
 
-  /* ---- 3h. try lists: each scene lists what you can do; the ring waits on the next thing, and doing it ticks it off ---- */
+  /* ---- 3h. nudges: one handwritten note per scene walks from control to control; do the thing and it moves on to the next ---- */
   (function(){
-    var HOSTS = { system: '#system', build: '#build .scene', mobile: '#mobile .scene', ai: '#ai .scene', design: '#design .scene' };
+    var ARROW = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20c2-8 8-13 16-15"/><path d="M14 4l6 1-1 6"/></svg>';
+    var SCENES = {
+      system: { host: '#system', stage: '#sysstage', end: 'All of this is live', steps: [
+        { t: '.sat[data-k="mobile"]', p: '.sat[data-k="mobile"] .mini', say: 'Click the phone' },
+        { t: '.dsm .sw i', p: '.dsm .sw i[data-p="mint"]', say: 'Pick a colour' },
+        { t: '.sat[data-k="web"]', p: '.sat[data-k="web"] .mini', say: 'Click the dashboard' } ] },
+      build: { host: '#build .scene', stage: '#build .stage', end: 'It all works. Poke around.', steps: [
+        { t: '#deploy', say: 'Press Deploy' },
+        { t: '#appside a[data-page="integ"]', say: 'Open Integrations' },
+        { t: '#igrid .isy', say: 'Press Sync now' },
+        { t: '#appside a[data-page="orders"]', say: 'Open Orders' },
+        { t: '#orders .pill2', say: 'Click a status' },
+        { t: '#appside a[data-page="overview"]', say: 'Back to Overview' },
+        { t: '#view a[data-view="trend"]', say: 'Flip it to Trend' } ] },
+      mobile: { host: '#mobile .scene', stage: '#mobile .stage', end: 'Now it is yours', steps: [
+        { t: '#watch', p: '#watch .wcase', say: 'Tap the watch' },
+        { t: '#phbtn', say: 'Place the order' },
+        { t: '#phone .tab[data-tab="track"]', say: 'Open Track' },
+        { t: '.os-switch .os[data-os="android"]', say: 'Switch to Android' } ] },
+      ai: { host: '#ai .scene', stage: '#ai .stage', end: 'Shipped. Run it again if you like.', steps: [
+        { t: '#agrun', say: 'Press Run' },
+        { t: '.ag-step', say: 'Click a stage' },
+        { t: '#agmerge.ready', p: '#agmerge', say: 'Merge it once it opens' } ] },
+      design: { host: '#design .scene', stage: '#design .stage', end: 'The whole page followed', steps: [
+        { t: '#dsth .th', p: '#dsth .th[data-p="lavender"]', say: 'Pick a theme' },
+        { t: '#dstf .tf[data-type="serif"]', say: 'Try the serif' },
+        { t: '#dsrad button[data-r="14"]', say: 'Round the corners' },
+        { t: '#dsmode button[data-m="dark"]', say: 'Go dark' } ] }
+    };
     function all(sel, root){ try { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); } catch (e) { return []; } }
-    all('.try').forEach(function(list){
-      var key = list.getAttribute('data-scene'), host = document.querySelector(HOSTS[key] || ''); if (!host) return;
-      var items = all('li', list), doneLine = list.nextElementSibling && list.nextElementSibling.classList.contains('try-done') ? list.nextElementSibling : null, pulsed = null, left = items.length;
-      function targets(li, forPulse){ return all((forPulse && li.getAttribute('data-p')) || li.getAttribute('data-t') || '', host); }
-      function refresh(){
-        if (pulsed){ pulsed.classList.remove('hp'); pulsed = null; }
-        var next = null; items.forEach(function(li){ li.classList.remove('now'); if (!next && !li.classList.contains('done')) next = li; });
-        if (next){ next.classList.add('now'); var t = targets(next, true).filter(function(el){ return el.getClientRects().length; })[0]; if (t){ t.classList.add('hp'); pulsed = t; } }
-        else if (doneLine) doneLine.classList.add('on');
+    function visible(el){ return !!el && el.getClientRects().length > 0; }
+    Object.keys(SCENES).forEach(function(key){
+      var sc = SCENES[key], host = document.querySelector(sc.host), stage = document.querySelector(sc.stage); if (!host || !stage) return;
+      var note = document.createElement('span'); note.className = 'nudge'; note.setAttribute('aria-hidden', 'true'); note.innerHTML = '<span class="nt"></span>' + ARROW; stage.appendChild(note);
+      var txt = note.firstChild, i = 0, pulsed = null, shown = false, okT = 0;
+      function step(){ return sc.steps[i]; }
+      function anchor(){ var s = step(); if (!s) return null; return all(s.p || s.t, host).filter(visible)[0] || (s.p ? all(s.t, host).filter(visible)[0] : null) || null; }
+      function place(){
+        var s = step(), el = anchor();
+        if (pulsed && pulsed !== el){ pulsed.classList.remove('hp'); pulsed = null; }
+        if (!s){ txt.textContent = sc.end; note.classList.add('end'); return; }
+        txt.textContent = s.say;
+        if (!el){ note.classList.add('lost'); return; }
+        note.classList.remove('lost');
+        if (pulsed !== el){ el.classList.add('hp'); pulsed = el; }
+        var sr = stage.getBoundingClientRect(), k = (sr.width / stage.offsetWidth) || 1, r = el.getBoundingClientRect();
+        var tx = (r.left - sr.left) / k, ty = (r.top - sr.top) / k, tw = r.width / k, th = r.height / k, W = stage.offsetWidth, H = stage.offsetHeight;
+        var nw = note.offsetWidth, nh = note.offsetHeight, gap = 12;
+        var cands = [
+          { x: tx + tw / 2 - nw / 2, y: ty + th + gap },
+          { x: tx - nw - gap, y: ty + th / 2 - nh / 2 },
+          { x: tx + tw / 2 - nw / 2, y: ty - nh - gap },
+          { x: tx + tw + gap, y: ty + th / 2 - nh / 2 } ];
+        var c = cands.filter(function(c){ return c.x >= 4 && c.y >= 4 && c.x + nw <= W - 4 && c.y + nh <= H - 4; })[0] || cands[0];
+        c.x = Math.max(4, Math.min(W - nw - 4, c.x)); c.y = Math.max(-28, Math.min(H - nh - 4, c.y));
+        var ang = Math.atan2((ty + th / 2) - (c.y + nh / 2), (tx + tw / 2) - (c.x + nw / 2)) * 180 / Math.PI;
+        note.style.setProperty('--x', c.x.toFixed(1) + 'px'); note.style.setProperty('--y', c.y.toFixed(1) + 'px'); note.style.setProperty('--ar', (ang + 43).toFixed(0) + 'deg');
+        note.classList.toggle('rev', Math.abs(ang) > 110);
       }
       function hit(el){
-        if (!el || !el.closest) return;
-        var changed = false;
-        items.forEach(function(li){ if (li.classList.contains('done')) return; if (targets(li).some(function(t){ return t === el || t.contains(el); })){ li.classList.add('done'); left--; changed = true; } });
-        if (changed) refresh();
+        var s = step(); if (!s || !el || !el.closest) return;
+        if (!all(s.t, host).some(function(t){ return t === el || t.contains(el); })) return;
+        i++; note.classList.add('ok'); txt.textContent = 'Nice'; clearTimeout(okT);
+        okT = setTimeout(function(){ note.classList.remove('ok'); place(); }, 900);
       }
       host.addEventListener('pointerdown', function(e){ hit(e.target); }, true);
       host.addEventListener('keydown', function(e){ if (e.key === 'Enter' || e.key === ' ') hit(e.target); }, true);
-      /* controls appear and disappear (a page opens, a PR becomes ready): keep the ring on something visible */
-      var tick = setInterval(function(){ if (left <= 0){ clearInterval(tick); return; } if (!pulsed || !pulsed.getClientRects().length) refresh(); }, 1500);
-      refresh();
+      function show(){ if (shown) return; shown = true; place(); requestAnimationFrame(function(){ note.classList.add('on'); }); }
+      if (still) show();
+      else if ('IntersectionObserver' in window) new IntersectionObserver(function(es){ es.forEach(function(en){ if (en.isIntersecting) setTimeout(show, 400); }); }, { threshold: .3 }).observe(host);
+      else setTimeout(show, 1000);
+      /* pages open and close, buttons come and go: the note follows the control */
+      setInterval(function(){ if (shown && !note.classList.contains('ok')) place(); }, 1200);
+      window.addEventListener('resize', function(){ if (shown) place(); });
     });
   })();
 
