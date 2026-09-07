@@ -3531,33 +3531,23 @@ body.book-open{overflow:hidden}
     var ARROW = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20c2-8 8-13 16-15"/><path d="M14 4l6 1-1 6"/></svg>';
     var hoverable = window.matchMedia('(hover:hover)').matches;
     var CTRL = 'button, a, [role="button"], .tab, .pill2, .os, .sw i, .th, .tf, .ag-step, .seg a, .side a, .isy, .dep, .ph-row, .ph-btn, .ph-set .row, .set .r, .role, .call, .wbtn, [data-toast], [data-go], .re';
+    /* two steps a scene at most, the ones with the biggest visible payoff; after that the note steps back and the scene is theirs */
     var SCENES = {
       system: { host: '#system', stage: '#sysstage', end: 'All of this is live', steps: [
         { t: '.sat[data-k="mobile"]', p: '.sat[data-k="mobile"] .mini', say: 'Click the phone' },
-        { t: '.dsm .sw i', p: '.dsm .sw i[data-p="mint"]', say: 'Pick a colour' },
-        { t: '.sat[data-k="web"]', p: '.sat[data-k="web"] .mini', say: 'Click the dashboard' } ] },
+        { t: '.dsm .sw i', p: '.dsm .sw i[data-p="mint"]', say: 'Pick a colour' } ] },
       build: { host: '#build .scene', stage: '#build .stage', end: 'It all works. Poke around.', steps: [
         { t: '#deploy', say: 'Press Deploy' },
-        { t: '#appside a[data-page="integ"]', say: 'Open Integrations' },
-        { t: '#igrid .isy', say: 'Press Sync now' },
-        { t: '#appside a[data-page="orders"]', say: 'Open Orders' },
-        { t: '#orders .pill2', say: 'Click a status' },
-        { t: '#appside a[data-page="overview"]', say: 'Back to Overview' },
-        { t: '#view a:not(.on)', p: '#view a[data-view="trend"]:not(.on)', say: 'Flip the chart' } ] },
+        { t: '#appside a[data-page="integ"]', say: 'Open Integrations' } ] },
       mobile: { host: '#mobile .scene', stage: '#mobile .stage', end: 'Now it is yours', steps: [
-        { t: '#watch', p: '#watch .wcase', say: 'Tap the watch' },
         { t: '#phbtn', say: 'Place the order' },
-        { t: '#phone .tab[data-tab="track"]', say: 'Open Track' },
         { t: '.os-switch .os[data-os="android"]', say: 'Switch to Android' } ] },
-      ai: { host: '#ai .scene', stage: '#ai .stage', end: 'Shipped. Run it again if you like.', steps: [
+      ai: { host: '#ai .scene', stage: '#ai .stage', end: 'Shipped. Poke around.', steps: [
         { t: '#agrun', say: 'Press Run' },
-        { t: '#agmerge.ready', say: 'Merge it once it opens' },
-        { t: '.ag-step', say: 'Click a stage to replay it' } ] },
-      design: { host: '#design .scene', stage: '#design .stage', end: 'The whole page followed', steps: [
-        { t: '#dsth .th', p: '#dsth .th[data-p="lavender"]', say: 'Pick a theme' },
-        { t: '#dstf .tf[data-type="serif"]', say: 'Try the serif' },
-        { t: '#dsrad button[data-r="14"]', say: 'Round the corners' },
-        { t: '#dsmode button[data-m="dark"]', say: 'Go dark' } ] }
+        { t: '#agmerge.ready', say: 'Merge it once it opens' } ] },
+      design: { host: '#design .scene', stage: '#design .stage', end: 'The whole page followed. Yours now.', steps: [
+        { t: '#dsmode button[data-m="dark"]', say: 'Go dark' },
+        { t: '#dsth .th', p: '#dsth .th[data-p="lavender"]', say: 'Pick a theme' } ] }
     };
     function all(sel, root){ try { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); } catch (e) { return []; } }
     function visible(el){ return !!el && el.getClientRects().length > 0; }
