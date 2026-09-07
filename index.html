@@ -762,7 +762,8 @@ a{color:inherit}
 .os-switch .os.on i{opacity:1;background:var(--c-green)}
 .os-switch .os:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
 /* ---- android is a foldable: one inner display bent at the hinge, the second half swung open toward you and held there, so the two halves face each other ---- */
-.phone{transition:left .8s var(--spring) .5s,border-radius .5s ease .5s}   /* going back to the iPhone, the body waits for the fold to shut */
+.phone{transition:left .8s var(--spring),border-radius .5s ease .5s}
+.phone.staying{left:12px}   /* going back to the iPhone, the body waits for the fold to shut */
 .phone.dual{left:12px;border-radius:26px 4px 4px 26px;transition:left .8s var(--spring),border-radius .5s ease}
 .phone.dual::after{display:none}
 .phone.dual .scr{border-radius:22px 0 0 22px;inset:4px 0 4px 4px}
@@ -795,9 +796,10 @@ a{color:inherit}
 .phone[data-os="android"] .ph-hero{padding:8px 10px}
 .phone[data-os="android"] .ph-hero strong{margin:2px 0 6px}
 /* ---- the parts: the app laid out in two columns beside the phone until it is built; Build flies them home, Take apart lays them out again ---- */
-.phone.apart{left:12px}
+.phone.apart{left:12px;transition:left .8s var(--spring),border-radius .5s ease}
 .phone.parts .scr{overflow:visible}
 .phone.parts .ph-page{display:flex}
+.phone.parts .ph-page.on{z-index:2}
 .phone.parts .ph-page > *,.phone.settled .ph-page > *{animation:none}   /* the parts carry their own motion; the page entrance waits for the next tab change */
 .phone .prt{transform-origin:0 0;transition:transform .95s var(--spring),opacity .35s ease;will-change:transform}
 .build-btn{position:absolute;left:12px;bottom:6px;transform:translateZ(var(--z,120px));display:inline-flex;align-items:center;gap:6px;padding:7px 12px;border-radius:99px;border:1px solid var(--ink);background:var(--ink);color:var(--paper);font-family:var(--mono);font-size:9px;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;box-shadow:0 2px 4px rgba(16,19,25,.08),0 16px 32px rgba(16,19,25,.14);transition:background .25s,color .25s,border-color .25s,opacity .25s}
@@ -3033,7 +3035,7 @@ body.book-open{overflow:hidden}
       function trackHome(){ if (track && mainBody && track.parentNode !== mainBody) mainBody.insertBefore(track, mainBody.querySelector('.ph-page[data-pg="orders"]')); }
       function setOS(os){
         var dual = os === 'android';
-        if (dual && exploded){ build(); setTimeout(function(){ setOS(os); }, 1000 + parts.length * 55 + 250); return; }   /* the parts go home before the phone unfolds */
+        if (dual && exploded){ build(); setTimeout(function(){ setOS(os); }, 4200); return; }   /* the parts go home before the phone unfolds */
         clearTimeout(osT); clearTimeout(osT2);
         ph.classList.toggle('dual', dual);
         if (dual){
@@ -3042,6 +3044,7 @@ body.book-open{overflow:hidden}
           if (track && foldBody && track.parentNode !== foldBody) foldBody.appendChild(track);
         } else {
           /* the fold shuts first; the iPhone chrome and the map page come back once it has */
+          ph.classList.add('staying'); setTimeout(function(){ ph.classList.remove('staying'); }, 500);
           osT = setTimeout(function(){ ph.setAttribute('data-os', os); }, 500);
           osT2 = setTimeout(trackHome, 760);
         }
@@ -3098,31 +3101,50 @@ body.book-open{overflow:hidden}
         colB.forEach(function(p, i){ place(p, i, X[1]); });
         return out;
       }
+      var homeParts = colA.slice(0, colA.length - 1), pages = [colA[colA.length - 1]].concat(colB).filter(Boolean);
       function explode(instant){
         if (exploded || building) return; exploded = true; scene._gate = true;
         (scene._anims || []).forEach(function(a){ if (a.playState === 'running') a.pause(); });
         if (ph.classList.contains('dual')) setOS('ios');
-        if (buildBtn){ buildBtn.classList.remove('quiet'); buildBtn.lastChild.textContent = 'Build'; }
-        ph.classList.add('parts', 'apart'); void ph.offsetWidth;
-        var L = layout(), n = L.length;
-        if (instant){ ph.style.transition = 'none'; if (watch) watch.style.transition = 'none'; }
-        L.forEach(function(it, i){ it.el.style.transition = instant ? 'none' : ''; it.el.style.transitionDelay = instant ? '0s' : ((n - 1 - i) * 45) + 'ms'; it.el.style.transform = it.t; });
-        if (watch){ watch.style.transformOrigin = '0 0'; watch.style.transform = L.watch; }
-        if (instant) requestAnimationFrame(function(){ requestAnimationFrame(function(){ ph.style.transition = ''; if (watch) watch.style.transition = ''; L.forEach(function(it){ it.el.style.transition = ''; }); }); });
+        if (buildBtn){ buildBtn.classList.remove('quiet'); buildBtn.lastChild.textContent = instant ? 'Build' : 'Taking apart'; if (!instant) buildBtn.classList.add('busy'); }
+        ph.classList.add('parts', 'apart');
+        var L = layout(), by = {}; L.forEach(function(it){ by[it.el === undefined ? '' : parts.indexOf(it.el)] = it.t; });
+        function T(p){ return by[parts.indexOf(p)]; }
+        if (instant){
+          ph.style.transition = 'none'; if (watch) watch.style.transition = 'none';
+          parts.forEach(function(p){ p.style.transition = 'none'; p.style.transform = T(p) + (pages.indexOf(p) !== -1 ? ' translateZ(-3px)' : ''); p.style.opacity = ''; });
+          if (watch){ watch.style.transformOrigin = '0 0'; watch.style.transform = L.watch; }
+          requestAnimationFrame(function(){ requestAnimationFrame(function(){ ph.style.transition = ''; if (watch) watch.style.transition = ''; parts.forEach(function(p){ p.style.transition = ''; }); }); });
+          return;
+        }
+        /* the watch comes off first, then the other screens slide out from under the home screen, then the home screen comes apart from the bottom up */
+        pages.forEach(function(p){ p.style.transition = 'none'; p.style.opacity = '0'; });
+        void ph.offsetWidth;
+        if (watch){ watch.style.transformOrigin = '0 0'; watch.style.transition = 'transform .8s var(--spring), opacity .3s'; watch.style.transform = L.watch; }
+        pages.forEach(function(p, i){ var d = 250 + i * 200; p.style.transition = 'transform .8s cubic-bezier(.3,0,.2,1) ' + d + 'ms, opacity .35s ease ' + d + 'ms'; p.style.transform = T(p) + ' translateZ(-3px)'; p.style.opacity = '1'; });
+        homeParts.slice().reverse().forEach(function(p, i){ var d = 900 + i * 150; p.style.transition = 'transform .85s var(--spring) ' + d + 'ms, opacity .3s'; p.style.transform = T(p); });
+        building = true;
+        clearTimeout(bT);
+        bT = setTimeout(function(){ building = false; parts.forEach(function(p){ p.style.transition = ''; }); if (buildBtn){ buildBtn.classList.remove('busy'); buildBtn.lastChild.textContent = 'Build'; } }, 900 + homeParts.length * 150 + 900);
       }
       function build(){
         if (!exploded || building) return; building = true;
-        if (buildBtn) buildBtn.classList.add('busy');
+        if (buildBtn){ buildBtn.classList.add('busy'); buildBtn.lastChild.textContent = 'Building'; }
         ph.classList.remove('apart');
-        parts.forEach(function(p, i){ p.style.transition = ''; p.style.transitionDelay = (i * 55) + 'ms'; p.style.transform = ''; });
-        if (watch){ watch.style.transition = ''; watch.style.transform = ''; }
+        /* the home screen goes together from the top down, one part after another; then the other screens slide in beneath it; the watch is the last piece */
+        homeParts.forEach(function(p, i){ p.style.transition = 'transform .85s var(--spring) ' + (i * 170) + 'ms, opacity .3s'; p.style.transform = ''; });
+        var t1 = homeParts.length * 170 + 350;
+        pages.forEach(function(p, i){ var d = t1 + i * 220; p.style.transition = 'transform .8s cubic-bezier(.4,0,.2,1) ' + d + 'ms, opacity .4s ease ' + (d + 300) + 'ms'; p.style.transform = 'translateZ(-3px)'; p.style.opacity = '0'; });
+        var t2 = t1 + pages.length * 220 + 300;
+        if (watch){ watch.style.transition = 'transform .8s var(--spring) ' + t2 + 'ms, opacity .3s'; watch.style.transform = ''; }
         clearTimeout(bT);
         bT = setTimeout(function(){
-          ph.classList.remove('parts'); ph.classList.add('settled'); parts.forEach(function(p){ p.style.transitionDelay = ''; }); if (watch) watch.style.transformOrigin = '';
+          ph.classList.remove('parts'); ph.classList.add('settled');
+          parts.forEach(function(p){ p.style.transition = ''; p.style.opacity = ''; p.style.transform = ''; }); if (watch){ watch.style.transformOrigin = ''; watch.style.transition = ''; }
           exploded = false; building = false; scene._gate = false;
           if (buildBtn){ buildBtn.classList.remove('busy'); buildBtn.classList.add('quiet'); buildBtn.lastChild.textContent = 'Take apart'; }
           if (!scene.classList.contains('off') && !scene._held) (scene._anims || []).forEach(function(a){ if (a.playState === 'paused') a.play(); });
-        }, still ? 0 : 1000 + parts.length * 55 + 120);
+        }, still ? 0 : t2 + 950);
       }
       if (buildBtn) on(buildBtn, 'click', function(){ if (exploded) build(); else explode(still); });
       if (!still){
