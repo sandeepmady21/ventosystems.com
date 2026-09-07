@@ -569,6 +569,10 @@ a{color:inherit}
   --pc:#fff;--pt:#101319;--pm:#6B7280;--pl:#E6E8EE;
 }
 .phone .scr::after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,rgba(255,255,255,.22) 0%,rgba(255,255,255,0) 38%);pointer-events:none;z-index:5}
+/* the glass: the same soft light the phone screen catches, on every window, device and card; a hairline of it along each top edge */
+.plan,.row3c,.logo{position:relative}
+.win::after,.mini::after,.chip-win::after,.plan::after,.p6::after,.avail::after,.row3c::after,.logo::after,.book-card::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:40;background:linear-gradient(115deg,rgba(255,255,255,var(--gl,.1)) 0%,rgba(255,255,255,0) var(--gs,30%));box-shadow:inset 0 1px 0 rgba(255,255,255,var(--ge,.07))}
+.win,.mini,.chip-win{--gl:.18;--gs:38%;--ge:.1}
 .phone .island{position:absolute;left:50%;top:9px;width:62px;height:18px;border-radius:99px;background:#0E1117;transform:translateX(-50%);z-index:4}
 .phone .cam{display:none;position:absolute;left:50%;top:9px;width:10px;height:10px;border-radius:99px;background:#0E1117;transform:translateX(-50%);z-index:4;box-shadow:inset 0 0 0 2px #1E2430}
 .homebar{position:absolute;left:50%;bottom:5px;width:56px;height:4px;border-radius:99px;background:var(--pt);transform:translateX(-50%);z-index:4;opacity:.8}
@@ -715,7 +719,7 @@ a{color:inherit}
 .phone.night .ph-btn{background:#E7EAF1;color:#101319}
 .phone.night .ph-row .re{background:#20305A;color:#8EB0FF}
 .phone.night .toast{background:#E7EAF1;color:#101319}
-.phone.night .ph-map{--m-land:#171B22;--m-blk:#1D222B;--m-water:#14263A;--m-park:#17281F;--m-tree:#1F3A29;--m-pond:#16304A;--m-bld:#272E39;--m-rd2:#2A3140;--m-rdc:#171B22;--m-rd1:#353D4B;--m-lbl:#6B7380;--m-me:#E7EAF1;--m-poi:#D9A066}
+.phone.night .ph-map{--m-land:#171B22;--m-blk:#212734;--m-water:#16304A;--m-park:#1B3125;--m-tree:#27472F;--m-pond:#1A3A58;--m-bld:#303847;--m-rd2:#323A4A;--m-rdc:#171B22;--m-rd1:#404A5B;--m-lbl:#6B7380;--m-me:#E7EAF1;--m-poi:#D9A066}
 .phone.night .eta-card{background:#1B1F27;color:#E7EAF1}
 .phone.night .ph-steps i{border-color:#3A4252}
 .phone.night .sw2{background:#3A4252}
@@ -1592,13 +1596,14 @@ body.book-open{overflow:hidden}
 :root[data-theme="dark"] .mp .scr u{background:#2A3140;box-shadow:none}
 :root[data-theme="dark"] .mp .scr s,:root[data-theme="dark"] .mp .scr em{background:#E7EAF1;color:#101319}
 :root[data-theme="dark"] .mp .done em{background:var(--c-green);color:#fff}
-:root[data-theme="dark"] .mp .map{--m-land:#171B22;--m-blk:#1D222B;--m-water:#14263A;--m-park:#17281F;--m-tree:#1F3A29;--m-pond:#16304A;--m-bld:#272E39;--m-rd2:#2A3140;--m-rdc:#171B22;--m-rd1:#353D4B}
+:root[data-theme="dark"] .mp .map{--m-land:#171B22;--m-blk:#212734;--m-water:#16304A;--m-park:#1B3125;--m-tree:#27472F;--m-pond:#1A3A58;--m-bld:#303847;--m-rd2:#323A4A;--m-rdc:#171B22;--m-rd1:#404A5B}
 :root[data-theme="dark"] .mp .notif{background:#E7EAF1;color:#101319}
 :root[data-theme="dark"] .wd{background:#161B23;border-color:#2A3140}
 :root[data-theme="dark"] .wd .ws{background:#1D232E}
 :root[data-theme="dark"] .wd .ws i{background:#3A4252}
 :root[data-theme="dark"] .wd .wt i,:root[data-theme="dark"] .wd .wv > *{background:#232937}
-:root[data-theme="dark"] .wd .wr i{background:#2E3646}
+:root[data-theme="dark"] .wd .wr i:nth-child(2),:root[data-theme="dark"] .wd .wr i:nth-child(4){background:#3D4657}
+:root[data-theme="dark"] .phone,:root[data-theme="dark"] .fold,:root[data-theme="dark"] .mp{outline:1px solid rgba(255,255,255,.08);outline-offset:0}
 :root[data-theme="dark"] .dsm{background:#161B23;border-color:#2A3140}
 :root[data-theme="dark"] .dsm b{color:#E7EAF1}
 :root[data-theme="dark"] .dsm u{background:#2A3140}
@@ -1618,7 +1623,7 @@ body.book-open{overflow:hidden}
 :root[data-theme="dark"] .phone:not(.day) .ph-btn{background:#E7EAF1;color:#101319}
 :root[data-theme="dark"] .phone:not(.day) .ph-row .re{background:#20305A;color:#8EB0FF}
 :root[data-theme="dark"] .phone:not(.day) .toast{background:#E7EAF1;color:#101319}
-:root[data-theme="dark"] .phone:not(.day) .ph-map{--m-land:#171B22;--m-blk:#1D222B;--m-water:#14263A;--m-park:#17281F;--m-tree:#1F3A29;--m-pond:#16304A;--m-bld:#272E39;--m-rd2:#2A3140;--m-rdc:#171B22;--m-rd1:#353D4B;--m-lbl:#6B7380;--m-me:#E7EAF1;--m-poi:#D9A066}
+:root[data-theme="dark"] .phone:not(.day) .ph-map{--m-land:#171B22;--m-blk:#212734;--m-water:#16304A;--m-park:#1B3125;--m-tree:#27472F;--m-pond:#1A3A58;--m-bld:#303847;--m-rd2:#323A4A;--m-rdc:#171B22;--m-rd1:#404A5B;--m-lbl:#6B7380;--m-me:#E7EAF1;--m-poi:#D9A066}
 :root[data-theme="dark"] .phone:not(.day) .eta-card{background:#1B1F27;color:#E7EAF1}
 :root[data-theme="dark"] .phone:not(.day) .ph-steps i{border-color:#3A4252}
 :root[data-theme="dark"] .phone:not(.day) .sw2{background:#3A4252}
