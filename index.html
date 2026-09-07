@@ -555,7 +555,7 @@ a{color:inherit}
 
 /* phone */
 .phone{
-  position:absolute;left:56px;top:60px;width:200px;height:424px;border-radius:36px;
+  position:absolute;left:56px;top:76px;width:200px;height:424px;border-radius:36px;
   background:linear-gradient(160deg,#343A47 0%,#171B23 55%,#0E1117 100%);
   box-shadow:inset 0 0 0 1.5px #454C5B,inset 0 0 0 3px #0E1117,0 2px 4px rgba(16,19,25,.25),0 34px 64px rgba(16,19,25,.34);
   transform:translateZ(var(--z,40px));animation:rise 1.5s var(--spring);transition:border-radius .5s ease;
@@ -727,42 +727,54 @@ a{color:inherit}
 .os-switch .os.on{background:var(--ink);color:var(--paper)}
 .os-switch .os.on i{opacity:1;background:var(--c-green)}
 .os-switch .os:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
-/* ---- android is a foldable: one inner display bent at the hinge, the second half swung open and held at an angle ---- */
-.phone{transition:left .8s var(--spring),border-radius .5s ease}
-.phone.dual{left:36px;border-radius:36px 3px 3px 36px}
-.phone.dual .scr{border-radius:32px 0 0 32px;inset:4px 0 4px 4px}
-.phone.dual .scr::after{background:linear-gradient(115deg,rgba(255,255,255,.18) 0%,rgba(255,255,255,0) 38%),linear-gradient(90deg,transparent 90%,rgba(0,0,0,.22))}
+/* ---- android is a foldable: one inner display bent at the hinge, the second half swung open toward you and held there, so the two halves face each other ---- */
+.phone{transition:left .8s var(--spring) .5s,border-radius .5s ease .5s}   /* going back to the iPhone, the body waits for the fold to shut */
+.phone.dual{left:12px;border-radius:26px 4px 4px 26px;transition:left .8s var(--spring),border-radius .5s ease}
+.phone.dual::after{display:none}
+.phone.dual .scr{border-radius:22px 0 0 22px;inset:4px 0 4px 4px}
+.phone.dual .scr::after{background:linear-gradient(115deg,rgba(255,255,255,.18) 0%,rgba(255,255,255,0) 38%),linear-gradient(90deg,transparent 91%,rgba(0,0,0,.2))}
 .phone.dual .island,.phone.dual > .scr > .cam{display:none}
+.phone.dual > .scr > .ph-status .ic{visibility:hidden}
 .phone.dual .ph-tabs .tab[data-tab="track"]{display:none}
-.fold{position:absolute;left:100%;top:0;width:200px;height:424px;border-radius:3px 36px 36px 3px;background:linear-gradient(160deg,#2A2E38 0%,#12151B 55%,#0B0D12 100%);box-shadow:inset 0 0 0 2px #3A3F4B,inset 0 0 0 4px #0E1117;
-  transform-origin:0 50%;transform:perspective(700px) rotateY(100deg);opacity:0;visibility:hidden;backface-visibility:hidden;transition:transform .8s var(--spring),opacity .25s,visibility 0s .8s}
-.phone.dual .fold{transform:perspective(700px) rotateY(32deg);opacity:1;visibility:visible;transition:transform 1.05s var(--spring),opacity .3s .05s,visibility 0s}
-.fold .scr{inset:4px 4px 4px 0;border-radius:0 32px 32px 0}
-.fold .scr::after{background:linear-gradient(90deg,rgba(0,0,0,.42),rgba(0,0,0,.12) 30%,rgba(0,0,0,0) 55%),linear-gradient(115deg,rgba(255,255,255,.22) 0%,rgba(255,255,255,0) 40%)}
-.fold::before{content:"";position:absolute;left:0;top:6px;bottom:6px;width:1.5px;background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.4),rgba(255,255,255,.05));z-index:9}
-.fold .ph-body{padding-bottom:14px}
-.phone.dual .fold .ph-page{display:flex}
-.phone.dual .fold .ph-page > *{animation:none}
-.fshadow{position:absolute;left:100%;top:14px;width:160px;height:396px;background:linear-gradient(90deg,rgba(16,19,25,.36),rgba(16,19,25,.12) 45%,rgba(16,19,25,0));transform:translateZ(-108px) skewY(-4deg);transform-origin:0 0;filter:blur(5px);opacity:0;transition:opacity .5s .3s;pointer-events:none}
+.fold{position:absolute;left:100%;top:0;width:200px;height:424px;border-radius:4px 26px 26px 4px;background:linear-gradient(200deg,#2A2E38 0%,#12151B 55%,#0B0D12 100%);box-shadow:inset 0 0 0 2px #3A3F4B,inset 0 0 0 4px #0E1117;
+  transform-origin:0 50%;transform:perspective(1100px) rotateY(-100deg);opacity:0;visibility:hidden;backface-visibility:hidden;transition:transform .75s cubic-bezier(.55,0,.6,.35),opacity .15s .55s,visibility 0s .75s}
+.phone.dual .fold{transform:perspective(1100px) rotateY(-32deg);opacity:1;visibility:visible;transition:transform 1.05s var(--spring),opacity .3s .05s,visibility 0s}
+.fold::after{content:"";position:absolute;right:-3px;top:100px;width:3px;height:72px;border-radius:2px;background:#3A3F4B}
+.phone.dual .fold .scr{inset:4px 4px 4px 0;border-radius:0 22px 22px 0}
+.fold .scr::after{background:linear-gradient(90deg,rgba(0,0,0,.26),rgba(0,0,0,.08) 26%,rgba(0,0,0,0) 46%),linear-gradient(115deg,rgba(255,255,255,.24) 0%,rgba(255,255,255,0) 42%)}
+.fold .ph-status .clock{visibility:hidden}
+.fold .ph-body{padding-bottom:8px}
+.fold .ph-page{display:flex}
+.fold .ph-page > *{animation:none}
+/* the hinge: a titanium spine over the seam, capped top and bottom */
+.hinge{position:absolute;left:calc(100% - 3px);top:2px;bottom:2px;width:6px;border-radius:3px;background:linear-gradient(90deg,#23262E,#6E7583 30%,#C3C8D2 50%,#6E7583 70%,#1B1E25);box-shadow:0 0 0 .5px rgba(0,0,0,.45),0 1px 2px rgba(0,0,0,.4);transform:translateZ(3px);opacity:0;transition:opacity .25s .5s;pointer-events:none}
+.hinge::before,.hinge::after{content:"";position:absolute;left:0;right:0;height:18px;border-radius:3px;background:linear-gradient(90deg,#1B1E25,#565D6B 50%,#1B1E25);box-shadow:inset 0 1px 0 rgba(255,255,255,.16)}
+.hinge::before{top:0}.hinge::after{bottom:0}
+.phone.dual .hinge{opacity:1;transition:opacity .25s .15s}
+/* the shadow the open half throws on the mat */
+.fshadow{position:absolute;left:100%;top:18px;width:200px;height:432px;border-radius:26px;background:rgba(16,19,25,.34);transform:translateZ(-108px) translateX(14px) skewY(5deg);transform-origin:0 0;filter:blur(12px);opacity:0;transition:opacity .5s .3s;pointer-events:none}
 .phone.dual .fshadow{opacity:1}
+:root[data-theme="dark"] .fshadow{background:rgba(0,0,0,.55)}
 /* the Material tab bar is taller: the pages above it tighten a little */
 .phone[data-os="android"] .ph-page{gap:6px}
 .phone[data-os="android"] .ph-head{padding:8px 14px 7px}
 .phone[data-os="android"] .ph-hero{padding:8px 10px}
 .phone[data-os="android"] .ph-hero strong{margin:2px 0 6px}
 /* the Apple Watch Ultra beside the iPhone: brushed titanium, a raised rim around a flat crystal, the black bezel, the crown in its guard, the orange Action button and an Ocean band with its buckle */
-.watch{position:absolute;left:294px;top:236px;width:96px;transform:translateZ(105px) translateX(-26px) scale(.86);opacity:0;transition:opacity .35s ease,transform .7s var(--spring);cursor:pointer;pointer-events:none;user-select:none;filter:drop-shadow(0 26px 22px rgba(16,19,25,.28))}
-.watch.on{opacity:1;transform:translateZ(105px);pointer-events:auto}
+.watch{position:absolute;left:294px;top:252px;width:96px;transform:translateZ(105px) translateX(-26px) scale(.86);opacity:0;transition:opacity .35s ease,transform .7s var(--spring);cursor:pointer;pointer-events:none;user-select:none;filter:drop-shadow(0 26px 22px rgba(16,19,25,.28))}
+.watch.on{opacity:1;transform:translateZ(105px);pointer-events:auto;transition:opacity .35s ease .75s,transform .7s var(--spring) .75s}
 .watch:focus-visible{outline:2px solid var(--blue);outline-offset:8px;border-radius:24px}
 .watch.tap .wcase{animation:tap .45s var(--spring)}
-/* the band */
-.watch .band{display:block;position:relative;width:46px;height:40px;margin:0 auto;background:repeating-linear-gradient(180deg,#FB8140 0 3.5px,#DA561D 3.5px 6px);border-radius:10px 10px 4px 4px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.2),inset 3px 0 6px -3px rgba(255,255,255,.35),inset -4px 0 8px -4px rgba(0,0,0,.4)}
-.watch .band::before{content:"";position:absolute;left:8px;right:8px;bottom:-2px;height:6px;border-radius:2px;background:linear-gradient(180deg,#5A5F67,#2A2E35);box-shadow:0 1px 1px rgba(255,255,255,.2)}
-.watch .band.bot{border-radius:4px 4px 10px 10px}
-.watch .band.bot::before{top:-2px;bottom:auto}
-.watch .band.bot::after{content:"";position:absolute;left:50%;margin-left:-19px;bottom:4px;width:38px;height:11px;border-radius:3px;background:linear-gradient(180deg,#D7DBE0,#8F949C 55%,#6E737B);box-shadow:inset 0 1px 1px rgba(255,255,255,.6),0 1px 2px rgba(0,0,0,.35)}
+/* the Ocean band: ribbed orange fluoroelastomer that curves away above the case, the titanium buckle below it */
+.watch .band{display:block;position:relative;width:46px;height:46px;margin:0 auto;border-radius:13px 13px 5px 5px;
+  background:linear-gradient(180deg,rgba(0,0,0,0) 72%,rgba(0,0,0,.4)),linear-gradient(90deg,rgba(0,0,0,.34),rgba(0,0,0,0) 24%,rgba(255,255,255,.1) 50%,rgba(0,0,0,0) 76%,rgba(0,0,0,.34)),repeating-linear-gradient(180deg,#FFA366 0 1px,#F6782F 1px 3px,#D4561B 3px 4.6px,#B3431A 4.6px 5.6px);
+  box-shadow:inset 0 0 0 .5px rgba(0,0,0,.3);transform:perspective(140px) rotateX(16deg);transform-origin:50% 100%;
+  -webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,0),#000 62%);mask-image:linear-gradient(180deg,rgba(0,0,0,0),#000 62%)}
+.watch .band.bot{height:58px;border-radius:5px 5px 14px 14px;background:linear-gradient(0deg,rgba(0,0,0,0) 78%,rgba(0,0,0,.4)),linear-gradient(90deg,rgba(0,0,0,.34),rgba(0,0,0,0) 24%,rgba(255,255,255,.1) 50%,rgba(0,0,0,0) 76%,rgba(0,0,0,.34)),repeating-linear-gradient(180deg,#FFA366 0 1px,#F6782F 1px 3px,#D4561B 3px 4.6px,#B3431A 4.6px 5.6px);transform:perspective(140px) rotateX(-12deg);transform-origin:50% 0;-webkit-mask-image:none;mask-image:none}
+.watch .band.bot::after{content:"";position:absolute;left:50%;margin-left:-27px;bottom:7px;width:54px;height:16px;border-radius:5px;background:linear-gradient(180deg,#E4E7EB,#A8ADB5 52%,#737881);box-shadow:inset 0 1px 1px rgba(255,255,255,.65),inset 0 -1px 1px rgba(0,0,0,.25),0 1px 2px rgba(0,0,0,.45)}
+.watch .band.bot::before{content:"";position:absolute;z-index:2;left:50%;margin-left:-22px;bottom:10px;width:44px;height:10px;border-radius:3px;background:linear-gradient(90deg,rgba(0,0,0,.34),rgba(0,0,0,0) 24%,rgba(255,255,255,.1) 50%,rgba(0,0,0,0) 76%,rgba(0,0,0,.34)),repeating-linear-gradient(180deg,#FFA366 0 1px,#F6782F 1px 3px,#D4561B 3px 4.6px,#B3431A 4.6px 5.6px);box-shadow:inset 0 0 0 .5px rgba(0,0,0,.3)}
 /* the case */
-.watch .wcase{position:relative;width:96px;height:112px;border-radius:29px;margin:-4px 0;
+.watch .wcase{position:relative;z-index:2;width:96px;height:112px;border-radius:29px;margin:-4px 0;
   background:linear-gradient(155deg,#DCE0E5 0%,#B4B9C1 30%,#8E939C 58%,#5E636B 100%);
   box-shadow:inset 0 0 0 1px #4E535B,inset 0 2px 2px rgba(255,255,255,.65),inset 0 -4px 6px rgba(0,0,0,.38),inset 3px 0 4px -3px rgba(255,255,255,.4),0 2px 3px rgba(16,19,25,.3)}
 .watch .wcase::before{content:"";position:absolute;inset:0;border-radius:inherit;background:repeating-linear-gradient(115deg,rgba(255,255,255,.07) 0 1px,rgba(0,0,0,.05) 1px 2.5px);opacity:.9;pointer-events:none}
@@ -779,25 +791,24 @@ a{color:inherit}
 .watch .wscr::after{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.13),rgba(255,255,255,0) 40%);pointer-events:none}
 .watch .ws{position:absolute;inset:0;opacity:0;transform:scale(.9);transition:opacity .28s ease,transform .45s var(--spring);pointer-events:none}
 .watch[data-s="0"] .ws[data-w="0"],.watch[data-s="1"] .ws[data-w="1"],.watch[data-s="2"] .ws[data-w="2"]{opacity:1;transform:none}
-/* screen one: the Wayfinder-style face, our delivery as its dial */
+/* screen one: a Modular Ultra style face with the bezel track along the edge, the delivery as its dial */
 .watch .wticks{position:absolute;inset:0;width:100%;height:100%}
-.watch .wticks circle{fill:none;stroke:#3A3F47;stroke-width:2.2;stroke-dasharray:1 2.35}
-.watch .wticks circle.q{stroke:#F26522;stroke-width:2.6;stroke-dasharray:1.6 48.66}
-.watch .wtime{position:absolute;right:10px;top:8px;font-size:9px;font-weight:600;letter-spacing:.01em}
-.watch .wday{position:absolute;left:10px;top:8px;font-size:5.6px;font-weight:700;color:#F26522;letter-spacing:.08em}
-.watch .wbat{position:absolute;left:10px;top:17px;font-size:5px;font-weight:600;color:#3ED68A;letter-spacing:.06em}
-.watch .wring{position:absolute;left:50%;top:20px;width:42px;height:42px;margin-left:-21px;transform:rotate(-90deg)}
+.watch .wticks rect{fill:none;stroke:#353A43;stroke-width:2;stroke-dasharray:1 2.1}
+.watch .wticks rect.q{stroke:#F26522;stroke-width:2.4;stroke-dasharray:1.6 67.5;stroke-dashoffset:-16.4}
+.watch .wtime{position:absolute;right:9px;top:6px;font-size:10px;font-weight:600;letter-spacing:-.01em;line-height:1}
+.watch .wday{position:absolute;left:9px;top:7px;font-size:5.8px;font-weight:700;color:#F26522;letter-spacing:.08em;line-height:1}
+.watch .wring{position:absolute;left:50%;top:19px;width:44px;height:44px;margin-left:-22px;transform:rotate(-90deg)}
 .watch .wring circle{fill:none;stroke-width:4}
 .watch .wring .bg{stroke:#1E2126}
 .watch .wring .fg{stroke:#F26522;stroke-linecap:round;stroke-dasharray:94.2;stroke-dashoffset:var(--o,80);transition:stroke-dashoffset .8s ease}
-.watch strong{position:absolute;left:0;right:0;top:32px;text-align:center;font-size:13px;font-weight:600;letter-spacing:-.03em;line-height:1}
-.watch strong small{display:block;font-size:5.4px;font-weight:700;color:#9AA0AD;letter-spacing:.1em;margin-top:1px}
-.watch .wmsg{position:absolute;left:0;right:0;top:64px;text-align:center;font-size:5.8px;color:#9AA0AD;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:0 8px}
-.watch .wbtn{position:absolute;left:12px;right:12px;bottom:6px;height:12px;border-radius:99px;background:#F26522;color:#fff;font-size:6.4px;font-weight:700;display:flex;align-items:center;justify-content:center;letter-spacing:.04em}
+.watch strong{position:absolute;left:0;right:0;top:32px;text-align:center;font-size:14px;font-weight:700;letter-spacing:-.04em;line-height:1}
+.watch strong small{display:block;font-size:5.2px;font-weight:700;color:#9AA0AD;letter-spacing:.12em;margin-top:1px}
+.watch .wmsg{position:absolute;left:0;right:0;top:63px;text-align:center;font-size:5.6px;color:#9AA0AD;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:0 9px;line-height:1.5}
+.watch .wbtn{position:absolute;left:13px;right:13px;bottom:6px;height:12px;border-radius:99px;background:#F26522;color:#fff;font-size:6.4px;font-weight:700;display:flex;align-items:center;justify-content:center;letter-spacing:.04em}
 /* screen two: the courier's route at a glance */
 .watch .wmap{position:absolute;inset:0;background:#0F1218}
 .watch .wmap svg{position:absolute;inset:0;width:100%;height:100%}
-.watch .wmap .land{fill:#161A21}.watch .wmap .park{fill:#18261F}.watch .wmap .rd2 path{fill:none;stroke:#242A34;stroke-width:1.6}.watch .wmap .rd1 path{fill:none;stroke:#2E3542;stroke-width:3}
+.watch .wmap .land{fill:#171B23}.watch .wmap .park{fill:#1B2D22}.watch .wmap .tree circle{fill:#27452F}.watch .wmap .rd2 path{fill:none;stroke:#2A303B;stroke-width:1.6}.watch .wmap .rd1 path{fill:none;stroke:#3A4250;stroke-width:3}
 .watch .wmap .rt{fill:none;stroke:#F26522;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:3 3;animation:flow 1s linear infinite}
 .watch .wmap .me{fill:#fff}.watch .wmap .pin{fill:#F26522}
 .watch .wmap .weta{position:absolute;left:7px;right:7px;bottom:7px;height:16px;border-radius:99px;background:rgba(0,0,0,.74);display:flex;align-items:center;justify-content:center;gap:3px;font-size:6.8px;font-weight:600}
@@ -806,7 +817,7 @@ a{color:inherit}
 .watch .wnote{position:absolute;inset:0;padding:10px 10px 7px;display:flex;flex-direction:column}
 .watch .wnote .wapp{display:flex;align-items:center;gap:4px;font-size:5.8px;font-weight:700;color:#9AA0AD;letter-spacing:.06em;text-transform:uppercase}
 .watch .wnote .wapp i{width:9px;height:9px;border-radius:3px;background:linear-gradient(135deg,#2B6CF6,#5B4BE8);display:block}
-.watch .wnote b{display:block;font-size:9.5px;font-weight:600;letter-spacing:-.02em;margin-top:7px;line-height:1.15}
+.watch .wnote b{display:block;font-size:8.8px;font-weight:600;letter-spacing:-.02em;margin-top:6px;line-height:1.15}
 .watch .wnote p{margin:3px 0 0;font-size:6.4px;line-height:1.35;color:#9AA0AD}
 .watch .wnote .wacts{margin-top:auto;display:flex;gap:4px}
 .watch .wnote .wacts span{flex:1;height:13px;border-radius:99px;background:#1E2126;font-size:6.4px;font-weight:600;display:flex;align-items:center;justify-content:center}
@@ -832,8 +843,8 @@ a{color:inherit}
 .system{cursor:pointer}
 .links{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none;z-index:1}
 .links .thread{fill:none;stroke:color-mix(in srgb,var(--blue) 34%,transparent);stroke-width:1;stroke-dasharray:3 6;stroke-linecap:round}
-.links .trace{fill:none;stroke:var(--ac);stroke-width:2;stroke-linecap:round;opacity:0;transition:opacity .5s ease;filter:drop-shadow(0 0 4px color-mix(in srgb,var(--ac) 60%,transparent))}
-.links .trace.on{opacity:.85;transition:none}
+.links .trace{fill:none;stroke:var(--ac);stroke-width:1.5;stroke-linecap:round;opacity:0;transition:opacity .5s ease}
+.links .trace.on{opacity:.55;transition:none}
 .sat{position:absolute;left:var(--x);top:var(--y);z-index:var(--z,2);cursor:pointer;will-change:transform;transform-origin:center;
   animation:float 7s ease-in-out infinite;animation-delay:calc(var(--depth,10) * -.3s);transform:translate(var(--dx,0px),var(--dy,0px)) scale(var(--sc,1))}
 @keyframes float{0%,100%{transform:translate(var(--dx,0px),var(--dy,0px)) scale(var(--sc,1))}50%{transform:translate(var(--dx,0px),calc(var(--dy,0px) - 6px)) scale(var(--sc,1))}}
@@ -850,15 +861,15 @@ a{color:inherit}
 .sat .say::before{content:"";display:inline-block;width:6px;height:6px;border-radius:99px;background:var(--pc,var(--c-green));margin-right:6px;vertical-align:1px}
 .sat.said .say{opacity:1;transform:translate(-50%,0)}
 .sat .say{display:none}  /* the arrival pills made the hero busy; the moving labels tell the story on their own */
-.ag{position:absolute;left:0;top:0;z-index:12;display:flex;align-items:center;gap:5px;pointer-events:none;will-change:transform;opacity:0;transition:opacity .35s ease}
+/* the agents: a small tinted spark that travels the threads, its name in quiet small caps beside it */
+.ag{position:absolute;left:0;top:0;z-index:12;display:flex;align-items:center;gap:4px;pointer-events:none;will-change:transform;opacity:0;transition:opacity .35s ease}
 .ag.on{opacity:1}
-.ag .av{width:22px;height:22px;border-radius:8px;background:var(--ac);display:flex;align-items:center;justify-content:center;flex:none;box-shadow:0 8px 16px -6px color-mix(in srgb,var(--ac) 85%,transparent),0 0 0 2px var(--paper);animation:agbob 1.1s ease-in-out infinite}
-.ag .av svg{width:16px;height:16px;fill:none;stroke:#fff;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-@keyframes agbob{50%{transform:translateY(-2px)}}
-.ag .card{display:flex;flex-direction:column;gap:1px;background:var(--surface);border:1px solid color-mix(in srgb,var(--ac) 40%,var(--line));border-radius:8px;padding:3px 8px 4px;box-shadow:0 8px 20px -10px rgba(16,19,25,.45);white-space:nowrap}
-.ag .card b{font-family:var(--sans);font-size:8px;font-weight:600;color:var(--ink);letter-spacing:-.01em;line-height:1.2}
-.ag .card small{font-family:var(--mono);font-size:7.2px;color:var(--muted);display:flex;align-items:center;gap:3px;line-height:1.3}
-.ag .card small::after{content:"";width:3px;height:7px;background:var(--ac);animation:blink 1s steps(2) infinite}
+.ag .av{width:16px;height:16px;border-radius:99px;background:var(--ac);display:flex;align-items:center;justify-content:center;flex:none;box-shadow:0 0 0 3px color-mix(in srgb,var(--ac) 16%,transparent),0 6px 14px -6px var(--ac);animation:agpulse 2.2s ease-in-out infinite}
+.ag .av svg{width:10px;height:10px;fill:#fff;stroke:none;display:block}
+@keyframes agpulse{50%{box-shadow:0 0 0 6px color-mix(in srgb,var(--ac) 7%,transparent),0 6px 14px -6px var(--ac)}}
+.ag .card{display:block;font-family:var(--mono);font-size:7px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);background:color-mix(in srgb,var(--paper) 80%,transparent);padding:2px 6px;border-radius:99px;white-space:nowrap;box-shadow:0 1px 2px rgba(16,19,25,.06)}
+.ag .card b{font-weight:500;color:inherit;font-size:inherit;letter-spacing:inherit;line-height:1.2}
+.ag .card small{display:none}
 /* what arrives, shows */
 .mp .notif{position:absolute;left:7px;right:7px;top:16px;background:#101319;color:#fff;font-family:var(--sans);font-size:7.5px;font-weight:500;padding:5px 8px;border-radius:9px;display:flex;align-items:center;gap:5px;transform:translateY(-36px);opacity:0;transition:transform .45s var(--spring),opacity .3s;z-index:6;white-space:nowrap}
 .mp .notif i{width:7px;height:7px;border-radius:99px;background:var(--c-green);display:block;flex:none}
@@ -1221,7 +1232,7 @@ body,.btn,.mark .dot,.eyebrow,.case .result b,.masthead,.section,.hero,.feature,
 }
 /* every live tag sits just above its screen: the windows start 14px into their stage, the phone 60px */
 .scene .live-tag{left:calc(50% - (var(--sw) * .5px - 14px) * var(--scale,1));top:calc(var(--scale,1) * 14px - 32px)}
-.scene.wash .live-tag{left:calc(50% - (var(--sw) * .5px - 56px) * var(--scale,1));top:calc(var(--scale,1) * 60px - 32px)}
+.scene.wash .live-tag{left:calc(50% - (var(--sw) * .5px - 56px) * var(--scale,1));top:calc(var(--scale,1) * 76px - 32px)}
 /* phones: the screens run edge to edge so they can be as large as possible */
 @media (max-width:600px){
   .feature .scene{width:calc(100% + 2 * var(--s3));margin-left:calc(-1 * var(--s3))}
@@ -1704,9 +1715,9 @@ body.book-open{overflow:hidden}
               </div>
             </div>
           </div>
-          <div class="ag" style="--ac:var(--c-violet)"><span class="av"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5V6"/><circle cx="12" cy="2.6" r="1.3" fill="#fff" stroke="none"/><rect x="4" y="6" width="16" height="13" rx="4.5"/><circle cx="9" cy="12" r="1.5" fill="#fff" stroke="none"/><circle cx="15" cy="12" r="1.5" fill="#fff" stroke="none"/><path d="M9.5 15.8h5"/></svg></span><span class="card"><b class="nm"></b><small class="lbl"></small></span></div>
-          <div class="ag" style="--ac:var(--c-cyan)"><span class="av"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5V6"/><circle cx="12" cy="2.6" r="1.3" fill="#fff" stroke="none"/><rect x="4" y="6" width="16" height="13" rx="4.5"/><circle cx="9" cy="12" r="1.5" fill="#fff" stroke="none"/><circle cx="15" cy="12" r="1.5" fill="#fff" stroke="none"/><path d="M9.5 15.8h5"/></svg></span><span class="card"><b class="nm"></b><small class="lbl"></small></span></div>
-          <div class="ag" style="--ac:var(--c-green)"><span class="av"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5V6"/><circle cx="12" cy="2.6" r="1.3" fill="#fff" stroke="none"/><rect x="4" y="6" width="16" height="13" rx="4.5"/><circle cx="9" cy="12" r="1.5" fill="#fff" stroke="none"/><circle cx="15" cy="12" r="1.5" fill="#fff" stroke="none"/><path d="M9.5 15.8h5"/></svg></span><span class="card"><b class="nm"></b><small class="lbl"></small></span></div>
+          <div class="ag" style="--ac:var(--c-violet)"><span class="av"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2c.6 5.4 4.6 9.4 10 10-5.4.6-9.4 4.6-10 10-.6-5.4-4.6-9.4-10-10 5.4-.6 9.4-4.6 10-10z"/></svg></span><span class="card"><b class="nm"></b><small class="lbl"></small></span></div>
+          <div class="ag" style="--ac:var(--c-cyan)"><span class="av"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2c.6 5.4 4.6 9.4 10 10-5.4.6-9.4 4.6-10 10-.6-5.4-4.6-9.4-10-10 5.4-.6 9.4-4.6 10-10z"/></svg></span><span class="card"><b class="nm"></b><small class="lbl"></small></span></div>
+          <div class="ag" style="--ac:var(--c-green)"><span class="av"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2c.6 5.4 4.6 9.4 10 10-5.4.6-9.4 4.6-10 10-.6-5.4-4.6-9.4-10-10 5.4-.6 9.4-4.6 10-10z"/></svg></span><span class="card"><b class="nm"></b><small class="lbl"></small></span></div>
           <div class="cur c-hero" aria-hidden="true"><svg viewBox="0 0 17 21"><path d="M1.5 1.5 L15.5 12 L9 12.8 L12.8 19.6 L10 20.8 L6.2 14 L1.5 18 Z" fill="var(--cc)" stroke="#fff" stroke-width="1.2" stroke-linejoin="round"/></svg><span class="tag">click</span></div>
         </div>
       </div>
@@ -1862,10 +1873,10 @@ body.book-open{overflow:hidden}
         <p class="svc"><b>React Native</b> &middot; Expo &middot; Swift &middot; Kotlin &middot; store submission</p>
         <p class="d">One codebase, both stores. Try the app, then switch it to Android.</p>
       </div>
-      <div class="scene wash" style="--sw:420;--sh:500" aria-label="A phone app you can tap through. The switch turns the same app into an iPhone with an Apple Watch beside it, or a dual-screen Android with the map open on the second screen.">
+      <div class="scene wash" style="--sw:420;--sh:540" aria-label="A phone app you can tap through. The switch turns the same app into an iPhone with an Apple Watch beside it, or a dual-screen Android with the map open on the second screen.">
         <div class="rig"><div class="orbit"><div class="stage">
           <div class="ground"></div>
-          <div class="fp" style="left:56px;top:60px;width:200px;height:424px;border-radius:36px"></div>
+          <div class="fp" style="left:56px;top:76px;width:200px;height:424px;border-radius:36px"></div>
           <div class="os-switch" id="osswitch" style="--z:100px" role="group" aria-label="Platform" data-nudge>
             <span class="os on" data-os="ios" role="button" tabindex="0"><i></i>iOS</span><span class="os" data-os="android" role="button" tabindex="0"><i></i>Android</span>
           </div>
@@ -1953,19 +1964,18 @@ body.book-open{overflow:hidden}
             </div>
             <div class="fold" aria-hidden="true">
               <div class="scr">
-                <div class="cam"></div>
                 <div class="ph-status"><b class="clock">9:41</b><span class="ic"><i class="sig"></i><i class="bat"></i></span></div>
                 <div class="ph-body"></div>
-                <div class="homebar"></div>
               </div>
             </div>
+            <i class="hinge"></i>
             <i class="fshadow"></i>
           </div>
           <div class="watch on" id="watch" data-s="0" role="button" tabindex="0" aria-label="Apple Watch Ultra, tap it to see the next screen">
             <i class="band top"></i>
             <div class="wcase"><i class="rim"></i><i class="guard"></i><i class="crown"></i><i class="sideb"></i><i class="action"></i><i class="mic"></i>
               <div class="wscr">
-                <div class="ws" data-w="0"><svg class="wticks" viewBox="0 0 74 90" aria-hidden="true"><circle cx="37" cy="45" r="32"/><circle class="q" cx="37" cy="45" r="32"/></svg><b class="wday">SAT 5</b><b class="wbat">82%</b><b class="wtime">9:41</b><svg class="wring" viewBox="0 0 36 36"><circle class="bg" cx="18" cy="18" r="15"/><circle class="fg" cx="18" cy="18" r="15"/></svg><strong><span class="eta">12</span><small>MIN</small></strong><small class="wmsg">Order #4821 &middot; Arjun</small><span class="wbtn">Track</span></div>
+                <div class="ws" data-w="0"><svg class="wticks" viewBox="0 0 74 90" aria-hidden="true"><rect x="3" y="3" width="68" height="84" rx="16"/><rect class="q" x="3" y="3" width="68" height="84" rx="16"/></svg><b class="wday">SAT 5</b><b class="wtime">9:41</b><svg class="wring" viewBox="0 0 36 36"><circle class="bg" cx="18" cy="18" r="15"/><circle class="fg" cx="18" cy="18" r="15"/></svg><strong><span class="eta">12</span><small>MIN</small></strong><small class="wmsg">Order #4821 &middot; Arjun</small><span class="wbtn">Track</span></div>
                 <div class="ws" data-w="1"><div class="wmap"><svg viewBox="0 0 66 84" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect class="land" width="66" height="84"/><path class="park" d="M0 40c8-5 18-4 24 2v26c-6 4-16 3-24-1z"/><g class="tree"><circle cx="7" cy="48" r="2"/><circle cx="16" cy="58" r="2.2"/></g><rect class="park" x="46" y="66" width="20" height="14" rx="2"/><g class="rd2"><path d="M12 0V36M12 74V84M44 0V84M0 16H66M26 54H66"/></g><g class="rd1"><path d="M26 0V84M0 30H66M0 70H66"/></g><path class="rt" d="M12 78V70H26V30H50V14"/><circle class="me" cx="12" cy="78" r="3"/><g transform="translate(50 14)"><path class="pin" d="M0 1.5c-4-5-6-8-6-11a6 6 0 0 1 12 0c0 3-2 6-6 11z"/><circle r="2" cy="-9.5" fill="#000"/></g></svg><span class="weta"><span class="eta">12</span> min <small>&middot; 0.8 km</small></span></div></div>
                 <div class="ws" data-w="2"><div class="wnote"><span class="wapp"><i></i>Deliveries</span><b class="wn-t">Arriving soon</b><p class="wn-p">Arjun is 0.8 km away with order #4821.</p><div class="wacts"><span class="pri">Track</span><span>Dismiss</span></div></div></div>
               </div>
@@ -2604,7 +2614,7 @@ body.book-open{overflow:hidden}
         var x = bez(p0.x, c.x, p2.x, e), y = bez(p0.y, c.y, p2.y, e);
         if (g.lbl.textContent !== leg.text){ g.lbl.textContent = leg.text; if (g.nm) g.nm.textContent = leg.who; }
         g.el.classList.add('on');
-        g.el.style.transform = 'translate(' + (x - 11).toFixed(1) + 'px,' + (y - 11).toFixed(1) + 'px)';
+        g.el.style.transform = 'translate(' + (x - 8).toFixed(1) + 'px,' + (y - 8).toFixed(1) + 'px)';
         g.trace.setAttribute('d', pathD(p0, c, p2));
         var L = g.trace.getTotalLength();
         g.trace.classList.add('on'); g.trace.style.strokeDasharray = L.toFixed(1); g.trace.style.strokeDashoffset = (L * (1 - e)).toFixed(1);
@@ -2896,14 +2906,20 @@ body.book-open{overflow:hidden}
         all('.ph-tabs .tab', ph).forEach(function(a){ a.classList.toggle('on', a.getAttribute('data-tab') === t); });
         all('.ph-page', ph).forEach(function(pg){ pg.classList.toggle('on', pg.getAttribute('data-pg') === t); });
       }
-      var mainBody = ph.querySelector('.ph-body'), foldBody = ph.querySelector('.fold .ph-body'), track = ph.querySelector('.ph-page[data-pg="track"]');
+      var mainBody = ph.querySelector('.ph-body'), foldBody = ph.querySelector('.fold .ph-body'), track = ph.querySelector('.ph-page[data-pg="track"]'), osT = 0, osT2 = 0;
+      function trackHome(){ if (track && mainBody && track.parentNode !== mainBody) mainBody.insertBefore(track, mainBody.querySelector('.ph-page[data-pg="orders"]')); }
       function setOS(os){
         var dual = os === 'android';
-        ph.setAttribute('data-os', os); ph.classList.toggle('dual', dual);
-        if (dual && ph.getAttribute('data-tab') === 'track') setTab('home');
-        if (track && foldBody && mainBody){
-          if (dual && track.parentNode !== foldBody) foldBody.appendChild(track);
-          else if (!dual && track.parentNode !== mainBody) mainBody.insertBefore(track, mainBody.querySelector('.ph-page[data-pg="orders"]'));
+        clearTimeout(osT); clearTimeout(osT2);
+        ph.classList.toggle('dual', dual);
+        if (dual){
+          ph.setAttribute('data-os', os);
+          if (ph.getAttribute('data-tab') === 'track') setTab('home');
+          if (track && foldBody && track.parentNode !== foldBody) foldBody.appendChild(track);
+        } else {
+          /* the fold shuts first; the iPhone chrome and the map page come back once it has */
+          osT = setTimeout(function(){ ph.setAttribute('data-os', os); }, 500);
+          osT2 = setTimeout(trackHome, 760);
         }
         if (watch) watch.classList.toggle('on', !dual);
         all('.os-switch .os').forEach(function(c){ c.classList.toggle('on', c.getAttribute('data-os') === os); });
