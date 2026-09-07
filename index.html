@@ -794,6 +794,16 @@ a{color:inherit}
 .phone[data-os="android"] .ph-head{padding:8px 14px 7px}
 .phone[data-os="android"] .ph-hero{padding:8px 10px}
 .phone[data-os="android"] .ph-hero strong{margin:2px 0 6px}
+/* ---- nudges: a handwritten note and a pulsing ring show what to click, until you do ---- */
+.nudge{position:absolute;left:var(--x);top:var(--y);z-index:31;display:flex;align-items:center;gap:5px;font-family:var(--hand);font-size:18px;font-weight:600;line-height:1;color:var(--ink);white-space:nowrap;pointer-events:none;opacity:0;transform:rotate(var(--r,-4deg)) translateY(8px);transition:opacity .5s ease,transform .6s var(--spring)}
+.nudge svg{width:26px;height:26px;flex:none;transform:rotate(var(--ar,0deg));stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.nudge.on{opacity:.9;transform:rotate(var(--r,-4deg))}
+.hold .nudge,.touched .nudge{opacity:0!important;transform:rotate(var(--r,-4deg)) scale(.92)}
+.system .nudge{font-size:19px}
+.hp{animation:hp 1.7s ease-out infinite}
+@keyframes hp{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--blue) 70%,transparent)}70%{box-shadow:0 0 0 10px color-mix(in srgb,var(--blue) 0%,transparent)}100%{box-shadow:0 0 0 0 color-mix(in srgb,var(--blue) 0%,transparent)}}
+.hold .hp,.touched .hp{animation:none}
+.stage [role="button"],.stage .tab,.stage .pill2,.stage .os,.stage .sw i,.stage .th,.stage .tf,.stage .ag-step,.stage .seg a,.stage .side a,.stage .isy,.stage .dep,.stage .ph-row,.stage .ph-btn,.stage .ph-set .row,.stage .set .r,.stage .role,.stage .call,.stage .wbtn,.stage [data-toast],.stage [data-go],.stage .re,.sys-stage .sat,.sys-stage .sw i{cursor:pointer}
 /* the Apple Watch Ultra beside the iPhone: brushed titanium, a raised rim around a flat crystal, the black bezel, the crown in its guard, the orange Action button and an Ocean band with its buckle */
 .watch{position:absolute;left:294px;top:252px;width:96px;transform:translateZ(105px) translateX(-26px) scale(.86);opacity:0;transition:opacity .35s ease,transform .7s var(--spring);cursor:pointer;pointer-events:none;user-select:none;filter:drop-shadow(0 26px 22px rgba(16,19,25,.28))}
 .watch.on{opacity:1;transform:translateZ(105px);pointer-events:auto;transition:opacity .35s ease .75s,transform .7s var(--spring) .75s}
@@ -1751,10 +1761,11 @@ body.book-open{overflow:hidden}
               </div>
             </div>
           </div>
+          <span class="nudge" style="--x:28px;--y:392px;--r:-5deg;--ar:-40deg"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20c2-8 8-13 16-15"/><path d="M14 4l6 1-1 6"/></svg>Click the phone</span>
+          <span class="nudge" style="--x:150px;--y:38px;--r:-3deg;--ar:40deg" data-nudge>Pick a colour<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20c2-8 8-13 16-15"/><path d="M14 4l6 1-1 6"/></svg></span>
           <div class="ag" style="--ac:var(--c-violet)"><span class="av"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2c.6 5.4 4.6 9.4 10 10-5.4.6-9.4 4.6-10 10-.6-5.4-4.6-9.4-10-10 5.4-.6 9.4-4.6 10-10z"/></svg></span><span class="card"><b class="nm"></b><small class="lbl"></small></span></div>
           <div class="ag" style="--ac:var(--c-cyan)"><span class="av"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2c.6 5.4 4.6 9.4 10 10-5.4.6-9.4 4.6-10 10-.6-5.4-4.6-9.4-10-10 5.4-.6 9.4-4.6 10-10z"/></svg></span><span class="card"><b class="nm"></b><small class="lbl"></small></span></div>
           <div class="ag" style="--ac:var(--c-green)"><span class="av"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2c.6 5.4 4.6 9.4 10 10-5.4.6-9.4 4.6-10 10-.6-5.4-4.6-9.4-10-10 5.4-.6 9.4-4.6 10-10z"/></svg></span><span class="card"><b class="nm"></b><small class="lbl"></small></span></div>
-          <div class="cur c-hero" aria-hidden="true"><svg viewBox="0 0 17 21"><path d="M1.5 1.5 L15.5 12 L9 12.8 L12.8 19.6 L10 20.8 L6.2 14 L1.5 18 Z" fill="var(--cc)" stroke="#fff" stroke-width="1.2" stroke-linejoin="round"/></svg><span class="tag">click</span></div>
         </div>
       </div>
 
@@ -1773,6 +1784,7 @@ body.book-open{overflow:hidden}
         <div class="rig"><div class="orbit"><div class="stage">
           <div class="ground"></div>
           <div class="fp" style="left:14px;top:14px;width:612px;height:372px"></div>
+          <span class="nudge" style="--x:452px;--y:-38px;--r:-3deg;--ar:120deg" data-nudge>Try Deploy<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20c2-8 8-13 16-15"/><path d="M14 4l6 1-1 6"/></svg></span>
           <div class="win w-app" id="wapp" data-page="overview" data-range="30" data-view="bars" style="left:14px;top:14px;width:612px;height:372px;--z:36px">
             <div class="tb"><span class="dots"><i></i><i></i><i></i></span><span class="ttl">ops.example.com</span><span id="apppath">/overview</span><span class="sp"><span class="ver" id="appver">v1.24</span></span></div>
             <div class="body">
@@ -1912,7 +1924,6 @@ body.book-open{overflow:hidden}
             </div>
             <div class="toast2" id="apptoast"><i></i><span>Deployed v1.25 &middot; staging</span></div>
           </div>
-          <div class="cur c-eng"><svg viewBox="0 0 17 21" aria-hidden="true"><path d="M1.5 1.5 L15.5 12 L9 12.8 L12.8 19.6 L10 20.8 L6.2 14 L1.5 18 Z" fill="var(--cc)" stroke="#fff" stroke-width="1.2" stroke-linejoin="round"/></svg><span class="tag">backend</span></div>
         </div></div></div>
       </div>
     </div>
@@ -2024,6 +2035,7 @@ body.book-open{overflow:hidden}
             <i class="hinge"></i>
             <i class="fshadow"></i>
           </div>
+          <span class="nudge" style="--x:262px;--y:472px;--r:-4deg;--ar:-35deg"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20c2-8 8-13 16-15"/><path d="M14 4l6 1-1 6"/></svg>Tap the watch</span>
           <div class="watch on" id="watch" data-s="0" role="button" tabindex="0" aria-label="Apple Watch Ultra, tap it to see the next screen">
             <i class="band top"></i>
             <div class="wcase"><i class="rim"></i><i class="guard"></i><i class="crown"></i><i class="sideb"></i><i class="action"></i><i class="mic"></i>
@@ -2035,7 +2047,6 @@ body.book-open{overflow:hidden}
             </div>
             <i class="band bot"></i>
           </div>
-          <div class="cur c-qa"><svg viewBox="0 0 17 21" aria-hidden="true"><path d="M1.5 1.5 L15.5 12 L9 12.8 L12.8 19.6 L10 20.8 L6.2 14 L1.5 18 Z" fill="var(--cc)" stroke="#fff" stroke-width="1.2" stroke-linejoin="round"/></svg><span class="tag">qa</span></div>
         </div></div></div>
       </div>
     </div>
@@ -2053,6 +2064,7 @@ body.book-open{overflow:hidden}
         <div class="rig"><div class="orbit"><div class="stage">
           <div class="ground"></div>
           <div class="fp" style="left:14px;top:14px;width:612px;height:372px"></div>
+          <span class="nudge" style="--x:452px;--y:-38px;--r:-3deg;--ar:120deg" data-nudge>Press Run<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20c2-8 8-13 16-15"/><path d="M14 4l6 1-1 6"/></svg></span>
           <div class="win w-agents" id="wag" style="left:14px;top:14px;width:612px;height:372px;--z:44px">
             <div class="tb"><span class="dots"><i></i><i></i><i></i></span><span class="ttl">Agent run</span><span id="agrunid">&middot; #418</span><span class="sp"><span class="ag-state" id="agstate"><i></i><span>idle</span></span><span class="run" id="agrun" role="button" tabindex="0" data-nudge>&#9654;&nbsp; Run pipeline</span></span></div>
             <div class="body ag-body">
@@ -2106,7 +2118,6 @@ body.book-open{overflow:hidden}
               <div class="ag-foot"><span class="hint">branch <b>feat/verify-auth</b> &middot; sandbox <b>ready</b> &middot; retries <b>2</b></span><span class="ag-stats"><b id="agtok">0</b> tokens<s></s><b id="agcost">$0.00</b><s></s><b id="agtime">0.0s</b></span></div>
             </div>
           </div>
-          <div class="cur c-back"><svg viewBox="0 0 17 21" aria-hidden="true"><path d="M1.5 1.5 L15.5 12 L9 12.8 L12.8 19.6 L10 20.8 L6.2 14 L1.5 18 Z" fill="var(--cc)" stroke="#fff" stroke-width="1.2" stroke-linejoin="round"/></svg><span class="tag">backend</span></div>
         </div></div></div>
       </div>
     </div>
@@ -2124,6 +2135,7 @@ body.book-open{overflow:hidden}
         <div class="rig"><div class="orbit"><div class="stage">
           <div class="ground"></div>
           <div class="fp" style="left:14px;top:14px;width:612px;height:372px"></div>
+          <span class="nudge" style="--x:258px;--y:-38px;--r:3deg;--ar:200deg"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20c2-8 8-13 16-15"/><path d="M14 4l6 1-1 6"/></svg>Pick a theme</span>
           <div class="win w-ds" id="wds" data-type="sans" style="left:14px;top:14px;width:612px;height:372px;--z:30px">
             <div class="tb"><span class="dots"><i></i><i></i><i></i></span><span class="ttl">Brand kit</span><span>&middot; tokens.json &middot; <span id="dsver">v3.2</span></span><span class="sp"><span class="pill" id="dspill">Approved</span></span></div>
             <div class="body">
@@ -2168,7 +2180,6 @@ body.book-open{overflow:hidden}
               </div>
             </div>
           </div>
-          <div class="cur c-design"><svg viewBox="0 0 17 21" aria-hidden="true"><path d="M1.5 1.5 L15.5 12 L9 12.8 L12.8 19.6 L10 20.8 L6.2 14 L1.5 18 Z" fill="var(--cc)" stroke="#fff" stroke-width="1.2" stroke-linejoin="round"/></svg><span class="tag">design</span></div>
         </div></div></div>
       </div>
     </div>
@@ -2754,13 +2765,26 @@ body.book-open{overflow:hidden}
     function release(sc){
       sc._held = false; sc.classList.remove('hold');
       if (!sc.classList.contains('off')) (sc._anims || []).forEach(function(a){ a.play(); });
-      var tag = sc.querySelector('.live-tag'); if (tag){ tag.innerHTML = '<i></i><b>Live</b> \u00b7 click anything'; tag.classList.remove('done'); }
+      var tag = sc.querySelector('.live-tag'); if (tag){ tag.innerHTML = '<i></i><b>Click anything</b> \u00b7 it\u2019s live'; tag.classList.remove('done'); }
     }
     all('.feature .scene, .hero .system').forEach(function(sc){
       sc.addEventListener('pointerdown', function(e){ if (sc.classList.contains('system') || (e.target.closest && e.target.closest('.stage'))) takeOver(sc); });
-      var tag = document.createElement('span'); tag.className = 'live-tag'; tag.innerHTML = '<i></i><b>Live</b> \u00b7 click anything'; sc.appendChild(tag);
+      var tag = document.createElement('span'); tag.className = 'live-tag'; tag.innerHTML = '<i></i><b>Click anything</b> \u00b7 it\u2019s live'; sc.appendChild(tag);
     });
     live.takeOver = takeOver;
+    /* the nudges: notes and a pulsing ring appear once a scene is in view, and go for good at the first click in it */
+    (function(){
+      var PULSE = { system: '.dsm .sw i[data-p="mint"]', build: '#deploy', mobile: '.os-switch .os[data-os="android"]', ai: '#agrun', design: '#dsth .th[data-p="lavender"]' };
+      var hosts = all('.feature .scene, .hero .system');
+      hosts.forEach(function(sc){
+        sc.addEventListener('pointerdown', function(){ sc.classList.add('touched'); all('.hp', sc).forEach(function(h){ h.classList.remove('hp'); }); });
+        var sec = sc.closest('section'), key = sc.classList.contains('system') ? 'system' : (sec && sec.id) || '';
+        function show(){ if (sc.classList.contains('touched')) return; all('.nudge', sc).forEach(function(n){ n.classList.add('on'); }); var t = PULSE[key] && sc.querySelector(PULSE[key]); if (t) t.classList.add('hp'); }
+        if (still){ show(); return; }
+        if ('IntersectionObserver' in window){ var seen = false; new IntersectionObserver(function(es){ es.forEach(function(en){ if (en.isIntersecting && !seen){ seen = true; setTimeout(show, 700); } }); }, { threshold: .3 }).observe(sc); }
+        else setTimeout(show, 1200);
+      });
+    })();
 
     /* a ripple where a demo click lands */
     live.ripple = function(el){
@@ -3183,9 +3207,9 @@ body.book-open{overflow:hidden}
       on(document.getElementById('agmerge'), 'click', merge);
       on(document.getElementById('agmerge'), 'keydown', keyish(merge));
       on(runBtn, 'click', runAll); on(runBtn, 'keydown', keyish(runAll));
-      /* the demo cursor presses Run on its own; without motion, the pipeline runs once when it comes into view */
+      /* the pipeline runs once by itself when it comes into view; after that it is yours */
       var started = false;
-      if (still){ if ('IntersectionObserver' in window) new IntersectionObserver(function(es){ es.forEach(function(en){ if (en.isIntersecting && !started){ started = true; runAll(); } }); }, { threshold: .12 }).observe(scene); else runAll(); }
+      if ('IntersectionObserver' in window) new IntersectionObserver(function(es){ es.forEach(function(en){ if (en.isIntersecting && !started){ started = true; setTimeout(runAll, still ? 0 : 900); } }); }, { threshold: .3 }).observe(scene); else runAll();
       live.agents = { run: runAll, act: act, merge: merge };
     })();
 
