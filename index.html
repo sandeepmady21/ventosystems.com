@@ -160,6 +160,16 @@ a{color:inherit}
 /* ---------- scenes ---------- */
 .hero .wrap{display:grid;gap:var(--s5);grid-template-columns:minmax(0,1fr);align-items:center}
 @media (min-width:960px){.hero .wrap{grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);gap:var(--s5)}}
+/* phones and small tablets: the headline, then the live illustration, then the rest of the words */
+@media (max-width:959px){
+  .hero-top{display:contents}
+  .hero-head{order:-2;max-width:34rem}
+  .hero .system{order:-1;margin:calc(var(--ss,1) * -40px) 0 calc(var(--ss,1) * -70px)}
+  .hero-rest{order:0;max-width:34rem}
+  .hero-rest .lede{margin-top:0}
+  .hero .wrap{gap:var(--s4)}
+  .hero{padding-top:var(--s3)}
+}
 .hero-top{max-width:34rem}
 .scene{
   position:relative;width:100%;height:calc(var(--sh) * 1px * var(--scale,1));
@@ -1591,12 +1601,16 @@ body.book-open{overflow:hidden}
   <section class="hero">
     <div class="wrap">
       <div class="hero-top">
+        <div class="hero-head">
         <p class="eyebrow">Product studio</p>
         <h1>One team. <em>Every surface your product needs.</em></h1>
+        </div>
+        <div class="hero-rest">
         <p class="lede">Websites, web apps, mobile apps and AI agents, and the design that holds them together &mdash; built by the same small senior team, in two-week cycles, in a repository you own from the first commit.</p>
         <div class="actions">
           <a class="btn btn-primary" href="#scope">Scope a project</a>
           <a class="btn btn-ghost" href="#work">Clients &amp; partners</a>
+        </div>
         </div>
       </div>
 
