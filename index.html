@@ -517,6 +517,36 @@ a{color:inherit}
 /* web app: richer customers + settings pages */
 .w-app .cust2{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);gap:7px;flex:1;min-height:0}
 .w-app .cust2 .cgrid{grid-template-columns:1fr;gap:5px;align-content:start}
+/* integrations: the systems of record the shop writes to, and a log of what went where */
+.w-app .igrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;flex:none}
+.w-app .ig{display:flex;flex-direction:column;gap:5px;padding:7px 9px 6px;background:var(--as);border:1px solid var(--al);border-radius:7px;font-family:var(--sans);min-width:0;transition:border-color .2s,box-shadow .2s}
+.w-app .ig:hover{border-color:color-mix(in srgb,var(--sc) 45%,var(--al))}
+.w-app .ig .ih{display:flex;align-items:center;gap:6px;min-width:0}
+.w-app .ig .im{width:18px;height:18px;border-radius:5px;background:color-mix(in srgb,var(--sc) 16%,transparent);color:var(--sc);display:flex;align-items:center;justify-content:center;flex:none}
+.w-app .ig .im svg{width:10px;height:10px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.w-app .ig .ih b{font-size:8.5px;font-weight:600;color:var(--ai);letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.w-app .ig .st{margin-left:auto;width:6px;height:6px;border-radius:99px;background:var(--c-green);flex:none;box-shadow:0 0 0 2px color-mix(in srgb,var(--c-green) 22%,transparent);transition:background .3s}
+.w-app .ig.busy .st{background:var(--c-amber);box-shadow:0 0 0 2px color-mix(in srgb,var(--c-amber) 22%,transparent);animation:conpulse 1s ease-out infinite}
+.w-app .ig small{display:block;font-size:6.6px;color:var(--am);line-height:1.35}
+.w-app .ig code{display:block;font-family:var(--mono);font-size:6.6px;color:var(--ai);background:var(--ab);border:1px solid var(--al);border-radius:4px;padding:3px 5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:border-color .3s}
+.w-app .ig code.bump{animation:tap .5s var(--spring);border-color:color-mix(in srgb,var(--sc) 50%,var(--al))}
+.w-app .ig .if{display:flex;align-items:center;gap:6px;margin-top:2px}
+.w-app .ig .isy{font-family:var(--sans);font-size:7px;font-weight:600;padding:3px 8px;border-radius:99px;background:color-mix(in srgb,var(--sc) 12%,transparent);color:var(--sc);cursor:pointer;transition:background .2s,transform .2s var(--spring);user-select:none;display:inline-flex;align-items:center;gap:4px}
+.w-app .ig .isy:hover{background:color-mix(in srgb,var(--sc) 22%,transparent)}
+.w-app .ig .isy i{width:6px;height:6px;border-radius:99px;border:1.5px solid currentColor;border-right-color:transparent;display:none}
+.w-app .ig.busy .isy{opacity:.7;pointer-events:none}.w-app .ig.busy .isy i{display:block;animation:spin 1s linear infinite}
+.w-app .ig .if em{font-style:normal;font-family:var(--mono);font-size:6.2px;color:var(--am);margin-left:auto;white-space:nowrap}
+.w-app .ilog{flex:1;min-height:0}
+.w-app .ilog .ch-hd small{margin-left:auto;font-family:var(--mono);font-size:6.2px;letter-spacing:.08em;text-transform:uppercase;display:flex;align-items:center;gap:4px}
+.w-app .ilog .ch-hd small i{width:5px;height:5px;border-radius:99px;background:var(--c-green);display:block;animation:conpulse 2s ease-out infinite}
+.w-app .lrows{flex:1;min-height:0;overflow:hidden;margin-top:3px;display:flex;flex-direction:column}
+.w-app .lr{display:grid;grid-template-columns:38px 56px minmax(0,1fr);gap:7px;align-items:center;padding:3px 0;border-bottom:1px solid var(--al);font-family:var(--sans);font-size:7.2px;color:var(--ai);animation:rowin .3s ease both;flex:none}
+.w-app .lr .t{font-family:var(--mono);font-size:6.3px;color:var(--am);font-variant-numeric:tabular-nums}
+.w-app .lr .sys{font-family:var(--mono);font-size:5.8px;letter-spacing:.06em;text-transform:uppercase;color:var(--sc);background:color-mix(in srgb,var(--sc) 12%,transparent);padding:1px 4px;border-radius:99px;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.w-app .lr .m{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.w-app .lr .m b{font-weight:600;color:var(--ai)}
+.w-app .lr .m::before{content:"";display:inline-block;width:5px;height:5px;border-radius:99px;background:var(--c-green);margin-right:5px;vertical-align:1px}
+.w-app .lr.warn .m::before{background:var(--c-amber)}
 .w-app .cmap{padding:6px 8px}
 .w-app .cm-body{flex:1;min-height:0;display:grid;grid-template-rows:minmax(0,1fr) auto;gap:6px;margin-top:5px}
 .w-app .cm-body svg{width:100%;height:100%;border-radius:6px;background:#E9EEF5;background-image:linear-gradient(#DCE3EE 1px,transparent 1px),linear-gradient(90deg,#DCE3EE 1px,transparent 1px);background-size:12px 12px}
@@ -1736,8 +1766,8 @@ body.book-open{overflow:hidden}
       <div class="copy">
         <p class="eyebrow">Product engineering &middot; Web</p>
         <h2>Websites &amp; web apps.</h2>
-        <p class="svc"><b>Dashboards</b> &middot; portals &middot; internal tools &middot; APIs</p>
-        <p class="d">Marketing sites, portals, dashboards and internal tools. This admin is a working one.</p>
+        <p class="svc"><b>Dashboards</b> &middot; portals &middot; internal tools &middot; APIs &middot; SAP, ServiceNow &amp; Salesforce integrations</p>
+        <p class="d">Marketing sites, portals, dashboards and internal tools. This admin is a working one &mdash; open Integrations and it syncs orders to SAP, ServiceNow and Salesforce.</p>
       </div>
       <div class="scene dark" style="--sw:640;--sh:400" aria-label="A working dashboard you can click through: ranges, chart views, pages, order statuses and settings all respond.">
         <div class="rig"><div class="orbit"><div class="stage">
@@ -1751,6 +1781,7 @@ body.book-open{overflow:hidden}
                 <a class="on" data-page="overview"><svg viewBox="0 0 12 12"><rect x="1.5" y="1.5" width="4" height="4" rx="1"/><rect x="6.5" y="1.5" width="4" height="4" rx="1"/><rect x="1.5" y="6.5" width="4" height="4" rx="1"/><rect x="6.5" y="6.5" width="4" height="4" rx="1"/></svg>Overview</a>
                 <a data-page="orders"><svg viewBox="0 0 12 12"><path d="M2.5 4h7l-.6 6h-5.8z"/><path d="M4.5 4V3a1.5 1.5 0 0 1 3 0v1"/></svg>Orders<em>12</em></a>
                 <a data-page="customers"><svg viewBox="0 0 12 12"><circle cx="6" cy="4" r="2"/><path d="M2.5 10.5c0-2 1.6-3.5 3.5-3.5s3.5 1.5 3.5 3.5"/></svg>Customers</a>
+                <a data-page="integ"><svg viewBox="0 0 12 12"><path d="M4.5 3.5h-1a2.5 2.5 0 0 0 0 5h1M7.5 3.5h1a2.5 2.5 0 0 1 0 5h-1M4.5 6h3"/></svg>Integrations</a>
                 <a data-page="settings"><svg viewBox="0 0 12 12"><path d="M2 3.5h8M2 6h8M2 8.5h8"/><circle cx="4" cy="3.5" r="1" fill="currentColor"/><circle cx="8" cy="6" r="1" fill="currentColor"/><circle cx="5" cy="8.5" r="1" fill="currentColor"/></svg>Settings</a>
                 <span class="me"><i></i>Priya S.</span>
               </nav>
@@ -1835,6 +1866,22 @@ body.book-open{overflow:hidden}
                       </div>
                     </div>
                   </div>
+                </div>
+
+                <div class="page pg-integ" data-pg="integ">
+                  <div class="ochips"><span class="oc" style="--oc:var(--c-green)">3 connected</span><span class="oc" style="--oc:var(--blue)"><span id="igcount">142</span> records synced today</span><span class="oc" style="--oc:var(--c-amber)">1 retry</span><span class="oc" style="--oc:var(--c-violet)">last sync <span id="iglast">09:41</span></span></div>
+                  <div class="igrid" id="igrid" data-nudge>
+                    <div class="ig" data-sys="sap" style="--sc:var(--blue)"><div class="ih"><span class="im"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="6" rx="7" ry="3"/><path d="M5 6v12c0 1.7 3.1 3 7 3s7-1.3 7-3V6"/><path d="M5 12c0 1.7 3.1 3 7 3s7-1.3 7-3"/></svg></span><b>SAP S/4HANA</b><i class="st"></i></div><small>A sales order, delivery and invoice for every order</small><code class="ilast">SO 4500012345 &middot; #4821 &middot; created</code><div class="if"><span class="isy"><i></i>Sync now</span><em class="iago">2 min ago</em></div></div>
+                    <div class="ig" data-sys="snow" style="--sc:var(--c-green)"><div class="ih"><span class="im"><svg viewBox="0 0 24 24"><path d="M4 8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v2a2 2 0 0 0 0 4v2a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-2a2 2 0 0 0 0-4z"/><path d="M13 6v12" stroke-dasharray="2 2"/></svg></span><b>ServiceNow</b><i class="st"></i></div><small>An incident for every late delivery, closed when it lands</small><code class="ilast">INC0012345 &middot; #4819 &middot; open</code><div class="if"><span class="isy"><i></i>Sync now</span><em class="iago">5 min ago</em></div></div>
+                    <div class="ig" data-sys="sf" style="--sc:var(--c-cyan)"><div class="ih"><span class="im"><svg viewBox="0 0 24 24"><path d="M7 18a4 4 0 0 1-.7-7.9A5.5 5.5 0 0 1 17 9.5 3.5 3.5 0 0 1 17.5 18z"/></svg></span><b>Salesforce</b><i class="st"></i></div><small>Accounts and order activity, kept in step with the shop</small><code class="ilast">Priya S. &middot; 41 orders &middot; updated</code><div class="if"><span class="isy"><i></i>Sync now</span><em class="iago">just now</em></div></div>
+                  </div>
+                  <div class="card ilog"><div class="ch-hd"><span>Sync log</span><small><i></i>live</small></div><div class="lrows" id="iglog">
+                    <div class="lr" style="--sc:var(--c-cyan)"><span class="t">09:41:15</span><span class="sys">Salesforce</span><span class="m">Account <b>Priya S.</b> &middot; order activity logged for #4821</span></div>
+                    <div class="lr" style="--sc:var(--blue)"><span class="t">09:41:12</span><span class="sys">SAP</span><span class="m">Sales order <b>4500012345</b> created for #4821 &middot; $9.40</span></div>
+                    <div class="lr" style="--sc:var(--blue)"><span class="t">09:38:40</span><span class="sys">SAP</span><span class="m">Delivery <b>80001192</b> posted for #4819</span></div>
+                    <div class="lr warn" style="--sc:var(--c-green)"><span class="t">09:36:02</span><span class="sys">ServiceNow</span><span class="m"><b>INC0012345</b> opened &middot; courier delayed on #4819 &middot; assigned to Ops</span></div>
+                    <div class="lr" style="--sc:var(--c-cyan)"><span class="t">09:30:55</span><span class="sys">Salesforce</span><span class="m">12 accounts refreshed &middot; nightly job &middot; 0 conflicts</span></div>
+                  </div></div>
                 </div>
 
                 <div class="page pg-settings" data-pg="settings">
@@ -2415,18 +2462,22 @@ body.book-open{overflow:hidden}
     /* web: the engineer flips the range and the chart, opens Orders, comes back, then ships a deploy */
     safe(function(){
       var web = $('#build .scene'); if (!web) return;
-      var r7 = $('#rng a[data-range="7"]', web), tr = $('#view a[data-view="trend"]', web), ord = $('#appside a[data-page="orders"]', web), ov = $('#appside a[data-page="overview"]', web), dp = $('#deploy', web);
-      var W0 = pt(620, 40), W1 = at(r7, .5, .5), W2 = at(tr, .5, .5), W3 = at(ord, .5, .5), W4 = at(ov, .5, .5), W5 = at(dp, .5, .5);
-      var an = drive($('.c-eng', web), [W0, W1, W2, W3, W4, W5],
-        [[0,0],[.06,1,1],[.12,1],[.22,2,1],[.30,2],[.40,3,1],[.52,3],[.60,4,1],[.66,4],[.76,5,1],[.86,5],[1,6,1]], 20000);
+      var r7 = $('#rng a[data-range="7"]', web), tr = $('#view a[data-view="trend"]', web), ord = $('#appside a[data-page="orders"]', web), ig = $('#appside a[data-page="integ"]', web), sy = $('#igrid .ig[data-sys="sap"] .isy', web), ov = $('#appside a[data-page="overview"]', web), dp = $('#deploy', web);
+      var pgI = $('.pg-integ', web); if (pgI) pgI.classList.add('on');   /* the sync button sits on a page that is not open yet: measure it, then put the page away */
+      var W0 = pt(620, 40), W1 = at(r7, .5, .5), W2 = at(tr, .5, .5), W3 = at(ord, .5, .5), W6 = at(ig, .5, .5), W7 = at(sy, .5, .5), W4 = at(ov, .5, .5), W5 = at(dp, .5, .5);
+      if (pgI) pgI.classList.remove('on');
+      var an = drive($('.c-eng', web), [W0, W1, W2, W3, W6, W7, W4, W5],
+        [[0,0],[.05,1,1],[.10,1],[.18,2,1],[.25,2],[.33,3,1],[.42,3],[.49,4,1],[.55,4],[.61,5,1],[.70,5],[.77,6,1],[.83,6],[.90,7,1],[.97,7],[1,8,1]], 26000);
       register(web, [an]);
       var flip = 0;
       live.cue(web, an, [
-        { at: .08, fn: function(){ live.ripple(r7); live.web.setRange(flip % 2 ? '90' : '7'); } },
-        { at: .25, fn: function(){ live.ripple(tr); live.web.setView(flip % 2 ? 'bars' : 'trend'); } },
-        { at: .42, fn: function(){ live.ripple(ord); live.web.setPage('orders'); } },
-        { at: .62, fn: function(){ live.ripple(ov); live.web.setPage('overview'); } },
-        { at: .78, fn: function(){ live.ripple(dp); if (flip % 2 === 0) live.web.deploy(); flip++; } }
+        { at: .07, fn: function(){ live.ripple(r7); live.web.setRange(flip % 2 ? '90' : '7'); } },
+        { at: .21, fn: function(){ live.ripple(tr); live.web.setView(flip % 2 ? 'bars' : 'trend'); } },
+        { at: .36, fn: function(){ live.ripple(ord); live.web.setPage('orders'); } },
+        { at: .52, fn: function(){ live.ripple(ig); live.web.setPage('integ'); } },
+        { at: .64, fn: function(){ live.ripple(sy); live.web.sync(['sap', 'snow', 'sf'][flip % 3]); } },
+        { at: .80, fn: function(){ live.ripple(ov); live.web.setPage('overview'); } },
+        { at: .93, fn: function(){ live.ripple(dp); if (flip % 2 === 0) live.web.deploy(); flip++; } }
       ]);
     });
 
@@ -2841,8 +2892,8 @@ body.book-open{overflow:hidden}
         app.setAttribute('data-page', p);
         all('#appside a').forEach(function(a){ a.classList.toggle('on', a.getAttribute('data-page') === p); });
         all('.page', app).forEach(function(pg){ pg.classList.toggle('on', pg.getAttribute('data-pg') === p); });
-        document.getElementById('pgtitle').textContent = p.charAt(0).toUpperCase() + p.slice(1);
-        document.getElementById('apppath').textContent = '/' + p;
+        document.getElementById('pgtitle').textContent = p === 'integ' ? 'Integrations' : p.charAt(0).toUpperCase() + p.slice(1);
+        document.getElementById('apppath').textContent = '/' + (p === 'integ' ? 'integrations' : p);
         req('GET', '/' + p, 200, 12 + Math.round(Math.random() * 20));
       }
       var ver = 24, busy = false;
@@ -2860,8 +2911,42 @@ body.book-open{overflow:hidden}
       var ROLES = ['owner', 'admin', 'staff'];
       on(document.getElementById('appteam'), 'click', function(e){ var r = e.target.closest('.role'); if (!r) return; var n = (parseInt(r.getAttribute('data-r'), 10) + 1) % 3; r.setAttribute('data-r', n); r.textContent = ROLES[n]; toast(r.parentNode.querySelector('b').textContent + ' is now ' + ROLES[n]); });
       on(document.getElementById('approt'), 'click', function(){ var k = document.getElementById('appkey'), hex = '0123456789abcdef', s = 'fw_live_'; for (var i = 0; i < 4; i++) s += hex.charAt(Math.floor(Math.random() * 16)); s += '\u2026'; for (var j = 0; j < 4; j++) s += hex.charAt(Math.floor(Math.random() * 16)); k.textContent = s; k.classList.remove('bump'); void k.offsetWidth; k.classList.add('bump'); toast('API key rotated \u00b7 old key valid for 24h'); });
+      /* integrations: three systems of record, a log of what went where, and every order change writes to it */
+      var igLog = document.getElementById('iglog'), igCount = document.getElementById('igcount'), igLast = document.getElementById('iglast'), igrid = document.getElementById('igrid');
+      var SYS = { sap: { name: 'SAP', col: 'var(--blue)' }, snow: { name: 'ServiceNow', col: 'var(--c-green)' }, sf: { name: 'Salesforce', col: 'var(--c-cyan)' } };
+      var igSec = 9 * 3600 + 41 * 60 + 20, synced = 142, so = 4500012345, dl = 80001192, inv = 90000417, inc = 12345, nextOrder = 4822, incOpen = true;
+      function z2(n){ return (n < 10 ? '0' : '') + n; }
+      function igTick(){ igSec += 4 + Math.round(Math.random() * 30); var h = Math.floor(igSec / 3600) % 24, m = Math.floor(igSec / 60) % 60, sc = igSec % 60; igLast.textContent = z2(h) + ':' + z2(m); return z2(h) + ':' + z2(m) + ':' + z2(sc); }
+      function ilog(sys, html, warn){
+        if (!igLog) return;
+        var r = document.createElement('div'); r.className = 'lr' + (warn ? ' warn' : ''); r.style.setProperty('--sc', SYS[sys].col);
+        r.innerHTML = '<span class="t">' + igTick() + '</span><span class="sys">' + SYS[sys].name + '</span><span class="m">' + html + '</span>';
+        igLog.insertBefore(r, igLog.firstChild); while (igLog.children.length > 6) igLog.removeChild(igLog.lastChild);
+      }
+      function igCard(sys, last, ago){ var c = igrid && igrid.querySelector('.ig[data-sys="' + sys + '"]'); if (!c) return; var code = c.querySelector('.ilast'); code.innerHTML = last; code.classList.remove('bump'); void code.offsetWidth; code.classList.add('bump'); c.querySelector('.iago').textContent = ago || 'just now'; }
+      function counted(n){ synced += n; if (igCount) igCount.textContent = synced; }
+      function sync(sys){
+        var card = igrid && igrid.querySelector('.ig[data-sys="' + sys + '"]'); if (!card || card.classList.contains('busy') || !SYS[sys]) return;
+        card.classList.add('busy'); card.querySelector('.isy').lastChild.textContent = 'Syncing';
+        setTimeout(function(){
+          var n;
+          if (sys === 'sap'){ so++; n = 3; ilog('sap', 'Sales order <b>' + so + '</b> created for #' + nextOrder + ' \u00b7 2 more queued'); igCard('sap', 'SO ' + so + ' \u00b7 #' + nextOrder + ' \u00b7 created'); nextOrder++; }
+          else if (sys === 'snow'){ n = 2; if (incOpen){ ilog('snow', '<b>INC00' + inc + '</b> resolved \u00b7 #4819 delivered'); igCard('snow', 'INC00' + inc + ' \u00b7 #4819 \u00b7 resolved'); } else { inc++; ilog('snow', '<b>INC00' + inc + '</b> opened \u00b7 courier delayed on #' + (nextOrder - 1) + ' \u00b7 assigned to Ops', true); igCard('snow', 'INC00' + inc + ' \u00b7 #' + (nextOrder - 1) + ' \u00b7 open'); } incOpen = !incOpen; }
+          else { n = 14; ilog('sf', '<b>14 accounts</b> refreshed \u00b7 3 new \u00b7 0 conflicts'); igCard('sf', '14 accounts \u00b7 3 new \u00b7 refreshed'); }
+          counted(n); toast(SYS[sys].name + ' \u00b7 ' + n + ' records synced');
+          card.classList.remove('busy'); card.querySelector('.isy').lastChild.textContent = 'Sync now';
+        }, still ? 0 : 1100);
+      }
+      function onStatus(id, st){
+        if (st === 'paid'){ so++; ilog('sap', 'Sales order <b>' + so + '</b> created for #' + id); igCard('sap', 'SO ' + so + ' \u00b7 #' + id + ' \u00b7 created'); }
+        else if (st === 'packed'){ dl++; ilog('sap', 'Delivery <b>' + dl + '</b> created for #' + id); igCard('sap', 'DL ' + dl + ' \u00b7 #' + id + ' \u00b7 created'); }
+        else if (st === 'shipped'){ ilog('sf', 'Account activity \u00b7 <b>#' + id + '</b> out for delivery'); igCard('sf', '#' + id + ' \u00b7 out for delivery \u00b7 logged'); }
+        else { inv++; ilog('sap', 'Invoice <b>' + inv + '</b> posted for #' + id); igCard('sap', 'INV ' + inv + ' \u00b7 #' + id + ' \u00b7 posted'); }
+        counted(1);
+      }
+      on(igrid, 'click', function(e){ var b = e.target.closest('.isy'); if (!b) return; var c = b.closest('.ig'); if (c) sync(c.getAttribute('data-sys')); });
       /* left alone, the app keeps moving: views, ranges and pages take turns */
-      var TOUR = [function(){ setView('trend'); }, function(){ setRange('7'); }, function(){ setPage('orders'); }, function(){ setPage('customers'); }, function(){ setPage('overview'); setView('bars'); setRange('30'); }, function(){ setView('table'); }, function(){ setRange('90'); setView('trend'); }], autoN = 0;
+      var TOUR = [function(){ setView('trend'); }, function(){ setRange('7'); }, function(){ setPage('orders'); }, function(){ setPage('customers'); }, function(){ setPage('integ'); }, function(){ sync('sap'); }, function(){ setPage('overview'); setView('bars'); setRange('30'); }, function(){ setView('table'); }, function(){ setRange('90'); setView('trend'); }], autoN = 0;
       setInterval(function(){
         if (scene.classList.contains('off') || !scene._held || still) return;
         if (performance.now() - lastTouch < 9000) return;
@@ -2879,6 +2964,7 @@ body.book-open{overflow:hidden}
         var stp = pill.parentNode.querySelector('.step'); if (stp) stp.setAttribute('data-s', n);
         var id = pill.parentNode.querySelector('.oid').textContent.replace('#', '');
         req('PATCH', '/api/orders/' + id + ' {status:' + ST[n] + '}', 200, 14 + Math.round(Math.random() * 12));
+        onStatus(id, ST[n]);
       });
       on(document.getElementById('appset'), 'click', function(e){
         var r = e.target.closest('.r'); if (!r) return;
@@ -2891,7 +2977,7 @@ body.book-open{overflow:hidden}
       function siteDark(){ return document.documentElement.getAttribute('data-theme') === 'dark'; }
       function setNight(on){ app.classList.toggle('night', on); app.classList.toggle('day', !on && siteDark()); var r = app.querySelector('#appset .r[data-set="night"]'); if (r) r.classList.toggle('on', on); }
       function syncTheme(t){ app.classList.remove('day'); setNight(t === 'dark'); }
-      live.web = { setRange: setRange, setView: setView, setPage: setPage, deploy: deploy, setNight: setNight, syncTheme: syncTheme };
+      live.web = { setRange: setRange, setView: setView, setPage: setPage, deploy: deploy, setNight: setNight, syncTheme: syncTheme, sync: sync };
     })();
 
     /* ---- mobile: an app you can tap through, on either platform ---- */
@@ -3381,6 +3467,7 @@ body.book-open{overflow:hidden}
     var TAP = {
       build: function(){ var w = live.web; if (!w) return null; return seq([
         function(){ w.setView('trend'); }, function(){ w.setView('table'); }, function(){ w.setPage('orders'); }, function(){ w.setPage('customers'); },
+        function(){ w.setPage('integ'); }, function(){ w.sync('sap'); }, function(){ w.sync('snow'); },
         function(){ w.setPage('settings'); }, function(){ w.setPage('overview'); w.setView('bars'); w.setRange('7'); }, function(){ w.setRange('90'); w.setView('trend'); },
         function(){ w.deploy(); }, function(){ w.setRange('30'); w.setView('bars'); }]); },
       mobile: function(){ var m = live.mobile, ph = document.getElementById('phone'); if (!m || !ph) return null; return seq([
