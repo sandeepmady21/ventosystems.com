@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Vento Systems is a product studio. We build websites, web apps, mobile apps and AI agents — one senior team for the whole product, design included.">
+<meta name="description" content="Vento Systems is a software studio. We build websites, web apps, mobile apps and AI agents, and implement the enterprise systems behind them — SAP, ServiceNow, Salesforce — one senior team for the whole product, design included.">
 <meta name="theme-color" content="#EEF2FA" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0E1116" media="(prefers-color-scheme: dark)">
 <meta name="color-scheme" content="light dark">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Vento Systems">
-<meta property="og:title" content="Vento Systems — websites, web apps, mobile apps and AI agents">
-<meta property="og:description" content="Vento Systems is a product studio. We build websites, web apps, mobile apps and AI agents — one senior team for the whole product, design included.">
+<meta property="og:title" content="Vento Systems — web, mobile, AI agents and enterprise systems">
+<meta property="og:description" content="Vento Systems is a software studio. We build websites, web apps, mobile apps and AI agents, and implement the enterprise systems behind them — SAP, ServiceNow, Salesforce — one senior team for the whole product, design included.">
 <meta property="og:url" content="https://ventosystems.com/">
 <meta name="twitter:card" content="summary">
 <link rel="canonical" href="https://ventosystems.com/">
@@ -1400,6 +1400,7 @@ body,.btn,.mark .dot,.eyebrow,.case .result b,.masthead,.section,.hero,.feature,
 .pc-top .team i{width:24px;height:24px;border-radius:99px;display:inline-flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.6rem;font-weight:500;color:#fff;background:var(--blue);border:2px solid var(--surface);margin-left:-7px;box-shadow:0 2px 6px -2px rgba(16,19,25,.35);animation:tlin .4s var(--spring) both}
 .pc-top .team i:first-child{margin-left:0}
 .pc-top .team i.d{background:var(--guide)}
+.pc-top .team i.c{background:#5B6B8C}
 .tl-weeks{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);gap:3px;font-family:var(--mono);font-size:.56rem;letter-spacing:.04em;color:var(--muted);margin-top:-.2rem}
 .tl-weeks span{text-align:center;white-space:nowrap;overflow:hidden}
 .tl-weeks span.m{color:var(--blue);font-weight:500}
@@ -1668,11 +1669,11 @@ body.book-open{overflow:hidden}
     <div class="wrap">
       <div class="hero-top">
         <div class="hero-head">
-        <p class="eyebrow">Product studio</p>
+        <p class="eyebrow">Software studio</p>
         <h1>One team. <em>Every surface your product needs.</em></h1>
         </div>
         <div class="hero-rest">
-        <p class="lede">Websites, web apps, mobile apps and AI agents, and the design that holds them together &mdash; built by the same small senior team, in two-week cycles, in a repository you own from the first commit.</p>
+        <p class="lede">Websites, web apps, mobile apps and AI agents, and the design that holds them together. The enterprise systems behind them too &mdash; SAP, ServiceNow, Salesforce and the integrations between them. All of it by the same small senior team, in two-week cycles, in a repository you own from the first commit.</p>
         <div class="actions">
           <a class="btn btn-primary" href="#scope">Scope a project</a>
           <a class="btn btn-ghost" href="#work">Clients &amp; partners</a>
@@ -2176,6 +2177,7 @@ body.book-open{overflow:hidden}
           <button type="button" data-set="web,design,auth,pay,admin">SaaS MVP</button>
           <button type="button" data-set="mobile,design,auth,pay">Mobile-first</button>
           <button type="button" data-set="web,agent,integ">Internal tool + agent</button>
+          <button type="button" data-set="erp,integ">SAP / ServiceNow rollout</button>
         </div>
         <div class="mods" id="mods" role="group" aria-label="What is in scope">
           <span class="pl">In scope</span>
@@ -2187,6 +2189,7 @@ body.book-open{overflow:hidden}
           <button type="button" class="mod" data-k="pay" data-w="1" style="--mc:var(--c-green)"><i><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 10h18M7 15h3"/></svg></i><b>Payments</b></button>
           <button type="button" class="mod" data-k="admin" data-w="2" style="--mc:#7A5AF0"><i><svg viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="5" rx="1.5"/><rect x="13" y="10" width="8" height="11" rx="1.5"/><rect x="3" y="13" width="8" height="8" rx="1.5"/></svg></i><b>Admin dashboard</b></button>
           <button type="button" class="mod" data-k="integ" data-w="2" style="--mc:#0B8FA8"><i><svg viewBox="0 0 24 24"><path d="M9 7H6a3 3 0 0 0 0 6h3M15 7h3a3 3 0 0 1 0 6h-3M8 10h8"/><path d="M12 13v4M9 21h6"/></svg></i><b>Integrations</b></button>
+          <button type="button" class="mod" data-k="erp" data-w="6" style="--mc:#5B6B8C" title="SAP, ServiceNow, Salesforce: implementation, configuration, migration"><i><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="6" rx="1.5"/><rect x="3" y="14" width="18" height="6" rx="1.5"/><path d="M7 7h.01M7 17h.01"/></svg></i><b>Enterprise systems</b></button>
         </div>
         </div>
         <div class="plan-card">
@@ -3156,10 +3159,11 @@ body.book-open{overflow:hidden}
       if (pace === 'compressed') total = Math.max(setup + (weeks ? 1 : 0), Math.round(total * .72));
       var eng = weeks > 8 ? 3 : 2; if (pace === 'compressed' && weeks) eng++;
       var des = on.some(function(m){ return /web|mobile|design/.test(m.getAttribute('data-k')); }) ? 1 : 0;
+      var con = on.some(function(m){ return m.getAttribute('data-k') === 'erp'; }) ? 1 : 0;   /* a functional consultant leads an SAP or ServiceNow rollout */
       var rate = pace === 'compressed' ? 6200 : 4800, mid = total * rate;
       tween(W, total);
       P.textContent = money(mid * .86) + ' \u2013 ' + money(mid * 1.14);
-      T.textContent = eng + ' eng' + (des ? ' + ' + des + ' design' : '');
+      T.textContent = eng + ' eng' + (des ? ' + ' + des + ' design' : '') + (con ? ' + 1 consultant' : '');
       var html = '<i class="setup" style="--i:0"></i>', i = 1, keyHtml = '';
       var scale = weeks ? (total - setup) / weeks : 1;
       on.forEach(function(m){
@@ -3175,7 +3179,7 @@ body.book-open{overflow:hidden}
       if (wk){ var cols = ''; for (var w = 1; w <= i + 1; w++){ var ms = (w === 1) ? 'setup' : (w === i + 1) ? 'live' : (w > 1 && (w - 1) % 2 === 0) ? 'demo' : ''; cols += '<span' + (ms ? ' class="m"' : '') + '>' + (ms || 'w' + w) + '</span>'; } wk.innerHTML = cols; wk.style.gridTemplateColumns = 'repeat(' + (i + 1) + ',minmax(0,1fr))'; wk.style.display = i + 1 > 14 ? 'none' : ''; }
       /* the team, as people */
       var tm = document.getElementById('plteam');
-      if (tm){ var ppl = ''; for (var e2 = 0; e2 < eng; e2++) ppl += '<i style="animation-delay:' + (e2 * 60) + 'ms">E' + (e2 + 1) + '</i>'; if (des) ppl += '<i class="d" style="animation-delay:' + (eng * 60) + 'ms">D</i>'; tm.innerHTML = ppl; }
+      if (tm){ var ppl = ''; for (var e2 = 0; e2 < eng; e2++) ppl += '<i style="animation-delay:' + (e2 * 60) + 'ms">E' + (e2 + 1) + '</i>'; if (des) ppl += '<i class="d" style="animation-delay:' + (eng * 60) + 'ms">D</i>'; if (con) ppl += '<i class="c" style="animation-delay:' + ((eng + des) * 60) + 'ms">C</i>'; tm.innerHTML = ppl; }
       /* which preset, if any, matches the current selection */
       var pre = document.getElementById('plpre');
       if (pre){ var cur = on.map(function(m){ return m.getAttribute('data-k'); }).sort().join(','); Array.prototype.forEach.call(pre.querySelectorAll('button'), function(b){ b.classList.toggle('on', b.getAttribute('data-set').split(',').sort().join(',') === cur); }); }
