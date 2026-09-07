@@ -794,6 +794,26 @@ a{color:inherit}
 .phone[data-os="android"] .ph-head{padding:8px 14px 7px}
 .phone[data-os="android"] .ph-hero{padding:8px 10px}
 .phone[data-os="android"] .ph-hero strong{margin:2px 0 6px}
+/* ---- the parts: the app laid out in two columns beside the phone until it is built; Build flies them home, Take apart lays them out again ---- */
+.phone.apart{left:12px}
+.phone.parts .scr{overflow:visible}
+.phone.parts .ph-page{display:flex}
+.phone.parts .ph-page > *,.phone.settled .ph-page > *{animation:none}   /* the parts carry their own motion; the page entrance waits for the next tab change */
+.phone .prt{transform-origin:0 0;transition:transform .95s var(--spring),opacity .35s ease;will-change:transform}
+.build-btn{position:absolute;left:12px;bottom:6px;transform:translateZ(var(--z,120px));display:inline-flex;align-items:center;gap:6px;padding:7px 12px;border-radius:99px;border:1px solid var(--ink);background:var(--ink);color:var(--paper);font-family:var(--mono);font-size:9px;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;box-shadow:0 2px 4px rgba(16,19,25,.08),0 16px 32px rgba(16,19,25,.14);transition:background .25s,color .25s,border-color .25s,opacity .25s}
+.build-btn i{width:7px;height:7px;border-radius:99px;background:var(--c-green);display:block;flex:none}
+.build-btn:hover{filter:brightness(1.12)}
+.build-btn.quiet{background:var(--surface);color:var(--muted);border-color:var(--line)}
+.build-btn.quiet i{background:var(--muted);opacity:.6}
+.build-btn.busy{pointer-events:none;opacity:.6}
+.build-btn:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+/* after its one demo loop, a scene parks its cursor and taps one control until you take over */
+.hp{animation:hp 1.7s ease-out infinite}
+@keyframes hp{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--blue) 65%,transparent)}70%{box-shadow:0 0 0 9px color-mix(in srgb,var(--blue) 0%,transparent)}100%{box-shadow:0 0 0 0 color-mix(in srgb,var(--blue) 0%,transparent)}}
+.scene.hold .hp,.system.hold .hp{animation:none}
+.cur.parked svg{animation:none}
+.cur.parked{opacity:.75}
+.stage [role="button"],.stage .tab,.stage .pill2,.stage .os,.stage .sw i,.stage .th,.stage .tf,.stage .ag-step,.stage .seg a,.stage .side a,.stage .isy,.stage .dep,.stage .ph-row,.stage .ph-btn,.stage .ph-set .row,.stage .set .r,.stage .role,.stage .call,.stage .wbtn,.stage [data-toast],.stage [data-go],.stage .re{cursor:pointer}
 /* the Apple Watch Ultra beside the iPhone: brushed titanium, a raised rim around a flat crystal, the black bezel, the crown in its guard, the orange Action button and an Ocean band with its buckle */
 .watch{position:absolute;left:294px;top:252px;width:96px;transform:translateZ(105px) translateX(-26px) scale(.86);opacity:0;transition:opacity .35s ease,transform .7s var(--spring);cursor:pointer;pointer-events:none;user-select:none;filter:drop-shadow(0 26px 22px rgba(16,19,25,.28))}
 .watch.on{opacity:1;transform:translateZ(105px);pointer-events:auto;transition:opacity .35s ease .75s,transform .7s var(--spring) .75s}
@@ -1933,6 +1953,7 @@ body.book-open{overflow:hidden}
           <div class="os-switch" id="osswitch" style="--z:100px" role="group" aria-label="Platform" data-nudge>
             <span class="os on" data-os="ios" role="button" tabindex="0"><i></i>iOS</span><span class="os" data-os="android" role="button" tabindex="0"><i></i>Android</span>
           </div>
+          <button type="button" class="build-btn quiet" id="buildbtn" style="--z:120px" data-nudge aria-label="Take the app apart or build it"><i></i><span>Take apart</span></button>
           <div class="phone" id="phone" data-os="ios" data-tab="home" style="--z:110px">
             <div class="scr">
               <div class="island"></div><div class="cam"></div>
@@ -2395,7 +2416,7 @@ body.book-open{overflow:hidden}
           Array.prototype.forEach.call(sc.querySelectorAll('[data-typer]'), function(el){
             if (el._typer) on ? el._typer.resume() : el._typer.pause();
           });
-          (sc._anims || []).forEach(function(an){ (on && !sc.classList.contains('hold')) ? an.play() : an.pause(); });
+          (sc._anims || []).forEach(function(an){ if (on && !sc.classList.contains('hold') && !sc._gate){ if (an.playState === 'paused') an.play(); } else if (an.playState === 'running') an.pause(); });
         });
       }, { threshold: 0.12 });
       scenes.forEach(function(sc){ io.observe(sc); });
@@ -2418,7 +2439,7 @@ body.book-open{overflow:hidden}
     /* the cursor travels at one steady speed between stops, pauses briefly at each, then moves on;
        the schedule only says where it goes and roughly how long it lingers */
     var SPEED = 540, TRAVEL_MIN = 320, TRAVEL_MAX = 1050, DWELL = .8;
-    function drive(cur, pts, sched, dur){
+    function drive(cur, pts, sched, dur, loop){
       if (!cur) return null;
       var d = 'M' + pts.map(function(p){ return p.x.toFixed(1) + ' ' + p.y.toFixed(1); }).join(' L') + ' Z';
       var total = 0, cum = [0];
@@ -2441,7 +2462,8 @@ body.book-open{overflow:hidden}
       });
       kf[kf.length - 1].offset = 1;
       cur.classList.add('ready');
-      var an = cur.animate(kf, { duration: t, iterations: Infinity });
+      var an = cur.animate(kf, { duration: t, iterations: loop ? Infinity : 1, fill: loop ? 'none' : 'forwards' });
+      if (!loop) an.addEventListener('finish', function(){ cur.classList.add('parked'); });
       /* cues were written against the old timeline: map them onto the new one */
       an._remap = function(f){
         for (var j = 1; j < sched.length; j++){
@@ -2451,10 +2473,12 @@ body.book-open{overflow:hidden}
       };
       return an;
     }
-    function register(scene, anims){
+    function register(scene, anims, hint){
       if (!scene) return;
       scene._anims = anims.filter(Boolean);
-      if (scene.classList.contains('off')) scene._anims.forEach(function(a){ a.pause(); });
+      if (scene.classList.contains('off') || scene._gate) scene._anims.forEach(function(a){ if (a.playState === 'running') a.pause(); });
+      /* after the one loop, a control pulses until the scene is taken over */
+      if (hint) scene._anims.forEach(function(a){ a.addEventListener('finish', function(){ if (!scene._held) hint.classList.add('hp'); }); });
     }
     var $ = function(sel, root){ return (root || document).querySelector(sel); };
     function safe(fn){ try { fn(); } catch (e) { if (window.console) console.warn('cursor setup skipped:', e.message); } }
@@ -2468,7 +2492,7 @@ body.book-open{overflow:hidden}
       if (pgI) pgI.classList.remove('on');
       var an = drive($('.c-eng', web), [W0, W1, W2, W3, W6, W7, W4, W5],
         [[0,0],[.05,1,1],[.10,1],[.18,2,1],[.25,2],[.33,3,1],[.42,3],[.49,4,1],[.55,4],[.61,5,1],[.70,5],[.77,6,1],[.83,6],[.90,7,1],[.97,7],[1,8,1]], 26000);
-      register(web, [an]);
+      register(web, [an], dp);
       var flip = 0;
       live.cue(web, an, [
         { at: .07, fn: function(){ live.ripple(r7); live.web.setRange(flip % 2 ? '90' : '7'); } },
@@ -2490,7 +2514,7 @@ body.book-open{overflow:hidden}
       var M0 = pt(380, 480), M1 = at(tTrack, .5, .5), M2 = at(tHome, .5, .5), M3 = at(btn, .5, .55), MW = at(wc, .5, .5), M4 = at(chipA, .5, .5), M5 = at(chipI, .5, .5);
       var an = drive($('.c-qa', mob), [M0, M1, M2, M3, MW, M4, M5],
         [[0,0],[.07,1,1],[.16,1],[.22,2,1],[.30,2],[.36,3,1],[.44,3],[.50,4,1],[.64,4],[.70,5,1],[.79,5],[.86,6,1],[.94,6],[1,7,1]], 21000);
-      register(mob, [an]);
+      register(mob, [an], chipA);
       live.cue(mob, an, [
         { at: .09, fn: function(){ live.ripple(tTrack); live.mobile.setTab('track'); } },
         { at: .24, fn: function(){ live.ripple(tHome); live.mobile.setTab('home'); } },
@@ -2509,7 +2533,7 @@ body.book-open{overflow:hidden}
       var D0 = pt(600, 300), D1 = at(thL, .5, .5), D2 = at(tyS, .5, .5), D3 = at(rdR, .5, .5);
       var an = drive($('.c-design', ds), [D0, D1, D2, D3],
         [[0,0],[.08,1,1],[.18,1],[.30,2,1],[.40,2],[.52,3,1],[.62,3],[1,4,1]], 14000);
-      register(ds, [an]);
+      register(ds, [an], thL);
       var flip = 0;
       live.cue(ds, an, [
         { at: .10, fn: function(){ live.ripple(thL); live.design.theme(flip % 2 ? '' : 'lavender'); } },
@@ -2525,7 +2549,7 @@ body.book-open{overflow:hidden}
       var A0 = pt(360, 330), A1 = at(run, .5, .5), A2 = at(build, .5, .5), A3 = off(stagePos(drawer), drawer.offsetWidth - 56, 18);
       var an = drive($('.c-back', ag), [A0, A1, A2, A3],
         [[0,0],[.06,1,1],[.12,1],[.30,2,1],[.56,2],[.72,3,1],[.90,3],[1,4,1]], 20000);
-      register(ag, [an]);
+      register(ag, [an], run);
       live.cue(ag, an, [
         { at: .08, fn: function(){ live.ripple(run); live.agents.run(); } },
         { at: .82, fn: function(){ live.ripple(drawer.querySelector('#agmerge')); live.agents.merge(); } }
@@ -2548,7 +2572,7 @@ body.book-open{overflow:hidden}
       var H0 = pt(548, 486), H1 = centre(mob), H2 = inside(des, swMint), H3 = centre(web);
       H1 = off(H1, 6, 10); H3 = off(H3, 10, 4);
       var an = drive($('.c-hero', stage), [H0, H1, H2, H3],
-        [[0,0],[.08,1,1],[.18,1],[.30,2,1],[.40,2],[.52,3,1],[.62,3],[1,4,1]], 16000);
+        [[0,0],[.08,1,1],[.18,1],[.30,2,1],[.40,2],[.52,3,1],[.62,3],[1,4,1]], 16000, true);
       if (!an) return;
       sys._anims = [an];
       var flip = 0;
@@ -2559,7 +2583,7 @@ body.book-open{overflow:hidden}
       ]);
       /* out of view, the cursor rests */
       if ('IntersectionObserver' in window){
-        new IntersectionObserver(function(es){ es.forEach(function(en){ sys.classList.toggle('off', !en.isIntersecting); (en.isIntersecting && !sys.classList.contains('hold')) ? an.play() : an.pause(); }); }, { threshold: .2 }).observe(sys);
+        new IntersectionObserver(function(es){ es.forEach(function(en){ sys.classList.toggle('off', !en.isIntersecting); if (en.isIntersecting && !sys.classList.contains('hold')){ if (an.playState === 'paused') an.play(); } else if (an.playState === 'running') an.pause(); }); }, { threshold: .2 }).observe(sys);
       }
     });
   })();
@@ -2746,18 +2770,23 @@ body.book-open{overflow:hidden}
       clearTimeout(sc._release);
       if (!sc._held){
         sc._held = true; sc.classList.add('hold');
-        (sc._anims || []).forEach(function(a){ a.pause(); });
+        (sc._anims || []).forEach(function(a){ if (a.playState === 'running') a.pause(); });
+        all('.hp', sc).forEach(function(h){ h.classList.remove('hp'); });
         var tag = sc.querySelector('.live-tag'); if (tag){ tag.innerHTML = '<i></i><b>You</b> are driving'; tag.classList.add('done'); }
       }
       sc._release = setTimeout(function(){ release(sc); }, IDLE);
     }
     function release(sc){
+      if (sc._inside){ sc._release = setTimeout(function(){ release(sc); }, IDLE); return; }   /* still hovering: it stays yours */
       sc._held = false; sc.classList.remove('hold');
-      if (!sc.classList.contains('off')) (sc._anims || []).forEach(function(a){ a.play(); });
+      if (!sc.classList.contains('off') && !sc._gate) (sc._anims || []).forEach(function(a){ if (a.playState === 'paused') a.play(); });
       var tag = sc.querySelector('.live-tag'); if (tag){ tag.innerHTML = '<i></i><b>Live</b> \u00b7 click anything'; tag.classList.remove('done'); }
     }
     all('.feature .scene, .hero .system').forEach(function(sc){
       sc.addEventListener('pointerdown', function(e){ if (sc.classList.contains('system') || (e.target.closest && e.target.closest('.stage'))) takeOver(sc); });
+      /* a mouse arriving is enough: the demo steps aside before you click */
+      sc.addEventListener('pointerenter', function(e){ if (e.pointerType === 'mouse'){ sc._inside = true; takeOver(sc); } });
+      sc.addEventListener('pointerleave', function(e){ if (e.pointerType === 'mouse'){ sc._inside = false; clearTimeout(sc._release); sc._release = setTimeout(function(){ release(sc); }, IDLE); } });
       var tag = document.createElement('span'); tag.className = 'live-tag'; tag.innerHTML = '<i></i><b>Live</b> \u00b7 click anything'; sc.appendChild(tag);
     });
     live.takeOver = takeOver;
@@ -2996,7 +3025,7 @@ body.book-open{overflow:hidden}
       }
       function setTab(t){
         if (t === 'track' && ph.classList.contains('dual')) t = 'home';   /* on the dual screen the map is always open on the right */
-        ph.setAttribute('data-tab', t);
+        ph.setAttribute('data-tab', t); ph.classList.remove('settled');
         all('.ph-tabs .tab', ph).forEach(function(a){ a.classList.toggle('on', a.getAttribute('data-tab') === t); });
         all('.ph-page', ph).forEach(function(pg){ pg.classList.toggle('on', pg.getAttribute('data-pg') === t); });
       }
@@ -3004,6 +3033,7 @@ body.book-open{overflow:hidden}
       function trackHome(){ if (track && mainBody && track.parentNode !== mainBody) mainBody.insertBefore(track, mainBody.querySelector('.ph-page[data-pg="orders"]')); }
       function setOS(os){
         var dual = os === 'android';
+        if (dual && exploded){ build(); setTimeout(function(){ setOS(os); }, 1000 + parts.length * 55 + 250); return; }   /* the parts go home before the phone unfolds */
         clearTimeout(osT); clearTimeout(osT2);
         ph.classList.toggle('dual', dual);
         if (dual){
@@ -3051,7 +3081,55 @@ body.book-open{overflow:hidden}
       function siteDark(){ return document.documentElement.getAttribute('data-theme') === 'dark'; }
       function setNight(on){ ph.classList.toggle('night', on); ph.classList.toggle('day', !on && siteDark()); var row = ph.querySelector('.ph-set .row[data-set="night"]'); if (row) row.classList.toggle('on', on); }
       function syncTheme(t){ ph.classList.remove('day'); setNight(t === 'dark'); }
-      live.mobile = { setTab: setTab, setOS: setOS, placeOrder: placeOrder, setNight: setNight, syncTheme: syncTheme, watchNext: watchNext };
+      /* the parts: the app laid out in two columns beside the phone, and built into it; it builds itself the first time you scroll to it */
+      var scene = ph.closest('.scene'), buildBtn = document.getElementById('buildbtn'), scr = ph.querySelector('.scr'), home = ph.querySelector('.ph-page[data-pg="home"]');
+      var colA = [ph.querySelector('.ph-status'), home.querySelector('.ph-head'), home.querySelector('.ph-hero'), home.querySelector('.ph-stats')].concat(all('.ph-row', home), [home.querySelector('.ph-btn'), ph.querySelector('.ph-tabs'), ph.querySelector('.ph-page[data-pg="account"]')]).filter(Boolean);
+      var colB = [ph.querySelector('.ph-page[data-pg="track"]'), ph.querySelector('.ph-page[data-pg="orders"]')].filter(Boolean);
+      var parts = colA.concat(colB), exploded = false, building = false, autoBuilt = false, bT = 0;
+      parts.forEach(function(p){ p.classList.add('prt'); });
+      function slot(el){ var x = 0, y = 0, n = el; while (n && n !== scr){ x += n.offsetLeft; y += n.offsetTop; n = n.offsetParent; } return { x: x, y: y }; }
+      function layout(){
+        var W = 96, X = [204, 308], out = [], y = 6;
+        function place(p, i, x){ var w = p.offsetWidth || 176, h = p.offsetHeight || 40, sc = Math.min(.6, W / w), sl = slot(p); out.push({ el: p, t: 'translate(' + (x - sl.x).toFixed(1) + 'px,' + (y - sl.y).toFixed(1) + 'px) rotate(' + ((i % 2 ? 1 : -1) * 1.2) + 'deg) scale(' + sc.toFixed(3) + ')' }); y += h * sc + 7; }
+        colA.forEach(function(p, i){ place(p, i, X[0]); });
+        y = 6;
+        /* the watch heads the second column, in stage coordinates */
+        if (watch){ var ws = .42, ww = (watch.offsetWidth || 96) * ws, wh = (watch.offsetHeight || 208) * ws; out.watch = 'translateZ(105px) translate(' + (12 + X[1] + (W - ww) / 2 - 294).toFixed(1) + 'px,' + (76 + y - 252).toFixed(1) + 'px) scale(' + ws + ')'; y += wh + 7; }
+        colB.forEach(function(p, i){ place(p, i, X[1]); });
+        return out;
+      }
+      function explode(instant){
+        if (exploded || building) return; exploded = true; scene._gate = true;
+        (scene._anims || []).forEach(function(a){ if (a.playState === 'running') a.pause(); });
+        if (ph.classList.contains('dual')) setOS('ios');
+        if (buildBtn){ buildBtn.classList.remove('quiet'); buildBtn.lastChild.textContent = 'Build'; }
+        ph.classList.add('parts', 'apart'); void ph.offsetWidth;
+        var L = layout(), n = L.length;
+        if (instant){ ph.style.transition = 'none'; if (watch) watch.style.transition = 'none'; }
+        L.forEach(function(it, i){ it.el.style.transition = instant ? 'none' : ''; it.el.style.transitionDelay = instant ? '0s' : ((n - 1 - i) * 45) + 'ms'; it.el.style.transform = it.t; });
+        if (watch){ watch.style.transformOrigin = '0 0'; watch.style.transform = L.watch; }
+        if (instant) requestAnimationFrame(function(){ requestAnimationFrame(function(){ ph.style.transition = ''; if (watch) watch.style.transition = ''; L.forEach(function(it){ it.el.style.transition = ''; }); }); });
+      }
+      function build(){
+        if (!exploded || building) return; building = true;
+        if (buildBtn) buildBtn.classList.add('busy');
+        ph.classList.remove('apart');
+        parts.forEach(function(p, i){ p.style.transition = ''; p.style.transitionDelay = (i * 55) + 'ms'; p.style.transform = ''; });
+        if (watch){ watch.style.transition = ''; watch.style.transform = ''; }
+        clearTimeout(bT);
+        bT = setTimeout(function(){
+          ph.classList.remove('parts'); ph.classList.add('settled'); parts.forEach(function(p){ p.style.transitionDelay = ''; }); if (watch) watch.style.transformOrigin = '';
+          exploded = false; building = false; scene._gate = false;
+          if (buildBtn){ buildBtn.classList.remove('busy'); buildBtn.classList.add('quiet'); buildBtn.lastChild.textContent = 'Take apart'; }
+          if (!scene.classList.contains('off') && !scene._held) (scene._anims || []).forEach(function(a){ if (a.playState === 'paused') a.play(); });
+        }, still ? 0 : 1000 + parts.length * 55 + 120);
+      }
+      if (buildBtn) on(buildBtn, 'click', function(){ if (exploded) build(); else explode(still); });
+      if (!still){
+        requestAnimationFrame(function(){ explode(true); });
+        if ('IntersectionObserver' in window) new IntersectionObserver(function(es){ es.forEach(function(en){ if (en.isIntersecting && exploded && !building && !autoBuilt){ autoBuilt = true; setTimeout(build, 550); } }); }, { threshold: .4 }).observe(scene);
+      }
+      live.mobile = { setTab: setTab, setOS: setOS, placeOrder: placeOrder, setNight: setNight, syncTheme: syncTheme, watchNext: watchNext, build: build, takeApart: explode, isApart: function(){ return exploded; } };
     })();
 
     /* ---- agents: a pipeline you can run; click a stage and it does its job in front of you; merge the result ---- */
@@ -3470,9 +3548,10 @@ body.book-open{overflow:hidden}
         function(){ w.setPage('integ'); }, function(){ w.sync('sap'); }, function(){ w.sync('snow'); },
         function(){ w.setPage('settings'); }, function(){ w.setPage('overview'); w.setView('bars'); w.setRange('7'); }, function(){ w.setRange('90'); w.setView('trend'); },
         function(){ w.deploy(); }, function(){ w.setRange('30'); w.setView('bars'); }]); },
-      mobile: function(){ var m = live.mobile, ph = document.getElementById('phone'); if (!m || !ph) return null; return seq([
+      mobile: function(){ var m = live.mobile, ph = document.getElementById('phone'); if (!m || !ph) return null; var step = seq([
         function(){ m.setTab('track'); }, function(){ m.setTab('orders'); }, function(){ m.setTab('account'); }, function(){ m.setTab('home'); },
-        function(){ m.placeOrder(); }, function(){ m.watchNext(); }, function(){ m.watchNext(); }, function(){ m.setOS(ph.getAttribute('data-os') === 'android' ? 'ios' : 'android'); }]); },
+        function(){ m.placeOrder(); }, function(){ m.watchNext(); }, function(){ m.watchNext(); }, function(){ m.setOS(ph.getAttribute('data-os') === 'android' ? 'ios' : 'android'); }]);
+        return function(){ if (m.isApart && m.isApart()){ m.build(); return; } step(); }; },
       ai: function(){ var a = live.agents, win = document.getElementById('wag'); if (!a || !win) return null; return seq([
         function(){ a.act('p'); }, function(){ a.act('r'); }, function(){ a.act('b'); }, function(){ a.act('v'); }, function(){ a.act('o'); },
         function(){ if (win.classList.contains('done')) a.merge(); else a.run(); }, function(){ a.run(); }]); },
