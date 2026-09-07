@@ -798,12 +798,41 @@ a{color:inherit}
 .nudge{position:absolute;left:var(--x);top:var(--y);z-index:31;display:flex;align-items:center;gap:5px;font-family:var(--hand);font-size:18px;font-weight:600;line-height:1;color:var(--ink);white-space:nowrap;pointer-events:none;opacity:0;transform:rotate(var(--r,-4deg)) translateY(8px);transition:opacity .5s ease,transform .6s var(--spring)}
 .nudge svg{width:26px;height:26px;flex:none;transform:rotate(var(--ar,0deg));stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .nudge.on{opacity:.9;transform:rotate(var(--r,-4deg))}
-.hold .nudge,.touched .nudge{opacity:0!important;transform:rotate(var(--r,-4deg)) scale(.92)}
 .system .nudge{font-size:19px}
 .hp{animation:hp 1.7s ease-out infinite}
 @keyframes hp{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--blue) 70%,transparent)}70%{box-shadow:0 0 0 10px color-mix(in srgb,var(--blue) 0%,transparent)}100%{box-shadow:0 0 0 0 color-mix(in srgb,var(--blue) 0%,transparent)}}
-.hold .hp,.touched .hp{animation:none}
 .stage [role="button"],.stage .tab,.stage .pill2,.stage .os,.stage .sw i,.stage .th,.stage .tf,.stage .ag-step,.stage .seg a,.stage .side a,.stage .isy,.stage .dep,.stage .ph-row,.stage .ph-btn,.stage .ph-set .row,.stage .set .r,.stage .role,.stage .call,.stage .wbtn,.stage [data-toast],.stage [data-go],.stage .re,.sys-stage .sat,.sys-stage .sw i{cursor:pointer}
+/* ---- the guide: a small robot that rides along at the corner, says what to try here, and does it for you when asked ---- */
+.guide{position:fixed;right:18px;bottom:18px;z-index:55;display:flex;align-items:flex-end;gap:10px;font-family:var(--sans);pointer-events:none}
+.guide > *{pointer-events:auto}
+.g-bot{width:48px;height:48px;border-radius:16px;border:1px solid var(--line);background:var(--surface);box-shadow:0 12px 28px -12px rgba(16,19,25,.5),0 2px 4px rgba(16,19,25,.1);display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0;animation:gbob 3.2s ease-in-out infinite;flex:none}
+.g-bot svg{width:36px;height:36px;display:block;overflow:visible}
+.g-bot .head{fill:var(--blue)}.g-bot .eye{fill:#fff}.g-bot .mouth{stroke:#fff;stroke-width:1.8;stroke-linecap:round;fill:none}.g-bot .ear{fill:color-mix(in srgb,var(--blue) 70%,var(--ink))}.g-bot .ant{stroke:var(--blue);stroke-width:2;stroke-linecap:round}.g-bot .tip{fill:var(--c-green)}
+.g-bot .eyes{transform-origin:20px 21px;animation:gblink 4.5s infinite}
+.g-bot .tip{transform-origin:20px 5px;animation:gtip 2.2s ease-in-out infinite}
+@keyframes gblink{0%,92%,100%{transform:scaleY(1)}95%{transform:scaleY(.12)}}
+@keyframes gtip{50%{transform:scale(1.5)}}
+@keyframes gbob{50%{transform:translateY(-3px)}}
+.g-bot.hop{animation:ghop .6s var(--spring)}
+@keyframes ghop{30%{transform:translateY(-12px) rotate(-8deg)}60%{transform:translateY(0) rotate(4deg)}}
+.g-bubble{position:relative;max-width:290px;background:var(--surface);border:1px solid var(--line);border-radius:14px 14px 4px 14px;padding:.7rem 1.7rem .6rem .9rem;box-shadow:0 16px 36px -14px rgba(16,19,25,.5),0 2px 4px rgba(16,19,25,.08);transform-origin:100% 100%;transition:opacity .25s,transform .35s var(--spring)}
+.guide.min .g-bubble{opacity:0;transform:scale(.8) translateY(6px);pointer-events:none}
+.g-say{margin:0;font-size:.85rem;line-height:1.45;color:var(--ink)}
+.g-say b{color:var(--blue);font-weight:600}
+.g-acts{display:flex;align-items:center;gap:.4rem;margin-top:.6rem}
+.g-show,.g-next{font:600 .72rem/1 var(--sans);padding:.44rem .75rem;border-radius:99px;border:1px solid var(--line);background:var(--paper);color:var(--ink);cursor:pointer;transition:background .2s,color .2s,border-color .2s,filter .2s}
+.g-show{background:var(--blue);color:var(--blue-ink);border-color:var(--blue)}
+.g-show:hover{filter:brightness(1.08)}.g-next:hover{border-color:var(--blue);color:var(--blue)}
+.g-show[hidden]{display:none}
+.g-n{margin-left:auto;font-family:var(--mono);font-size:.62rem;color:var(--muted);letter-spacing:.06em}
+.g-min{position:absolute;top:5px;right:6px;width:22px;height:22px;border:0;background:transparent;color:var(--muted);font-size:16px;line-height:1;cursor:pointer;border-radius:99px;padding:0}
+.g-min:hover{background:var(--sunk);color:var(--ink)}
+.g-bubble.pop{animation:gpop .45s var(--spring)}
+@keyframes gpop{from{transform:scale(.93)}}
+.g-fly{position:fixed;left:0;top:0;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:99px;background:var(--blue);box-shadow:0 0 0 4px color-mix(in srgb,var(--blue) 25%,transparent),0 0 16px var(--blue);opacity:0;pointer-events:none;z-index:56}
+.g-show:focus-visible,.g-next:focus-visible,.g-bot:focus-visible,.g-min:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+@media (max-width:600px){.guide{right:10px;left:10px;bottom:10px;gap:8px}.g-bubble{max-width:none;flex:1}}
+@media (prefers-reduced-motion:reduce){.g-bot,.g-bot .eyes,.g-bot .tip{animation:none}}
 /* the Apple Watch Ultra beside the iPhone: brushed titanium, a raised rim around a flat crystal, the black bezel, the crown in its guard, the orange Action button and an Ocean band with its buckle */
 .watch{position:absolute;left:294px;top:252px;width:96px;transform:translateZ(105px) translateX(-26px) scale(.86);opacity:0;transition:opacity .35s ease,transform .7s var(--spring);cursor:pointer;pointer-events:none;user-select:none;filter:drop-shadow(0 26px 22px rgba(16,19,25,.28))}
 .watch.on{opacity:1;transform:translateZ(105px);pointer-events:auto;transition:opacity .35s ease .75s,transform .7s var(--spring) .75s}
@@ -1017,7 +1046,7 @@ body,.btn,.mark .dot,.eyebrow,.case .result b,.masthead,.section,.hero,.feature,
 .w-agents .tb .run{cursor:pointer;animation:none;background:var(--w-ink);color:var(--w-bg);height:17px;padding:0 9px;font-family:var(--sans);font-size:8px;font-weight:600;letter-spacing:0;transition:transform .2s var(--spring),opacity .2s,filter .2s}
 .w-agents .tb .run:hover{filter:brightness(1.18)}
 .w-agents .tb .run:active{transform:scale(.96)}
-.w-agents .tb .run.busy{opacity:.5;pointer-events:none}
+.w-agents .tb .run.busy{opacity:.6}
 .ag-state{display:inline-flex;align-items:center;gap:4px;font-family:var(--mono);font-size:7px;letter-spacing:.08em;text-transform:uppercase;color:var(--w-muted);margin-right:6px}
 .ag-state i{width:6px;height:6px;border-radius:99px;background:var(--w-line);display:block;transition:background .3s}
 .w-agents.busy .ag-state i{background:var(--c-violet);animation:blink 1s steps(2) infinite}
@@ -2374,6 +2403,18 @@ body.book-open{overflow:hidden}
   </div>
 </footer>
 
+<aside class="guide" id="guide" aria-label="Guide">
+  <div class="g-bubble" id="gbubble">
+    <p class="g-say" id="gsay" aria-live="polite">This page is <b>live</b>. Click the phone in the hero to flip through its screens.</p>
+    <div class="g-acts"><button type="button" class="g-show" id="gshow">Show me</button><button type="button" class="g-next" id="gnext">Next tip</button><span class="g-n" id="gn"></span></div>
+    <button type="button" class="g-min" id="gmin" aria-label="Hide the guide">&times;</button>
+  </div>
+  <button type="button" class="g-bot" id="gbot" aria-label="Show the guide">
+    <svg viewBox="0 0 40 40" aria-hidden="true"><path class="ant" d="M20 10V6"/><circle class="tip" cx="20" cy="5" r="2.6"/><rect class="ear" x="4" y="18" width="4" height="8" rx="1.5"/><rect class="ear" x="32" y="18" width="4" height="8" rx="1.5"/><rect class="head" x="8" y="11" width="24" height="22" rx="7"/><g class="eyes"><circle class="eye" cx="15" cy="21" r="2.6"/><circle class="eye" cx="25" cy="21" r="2.6"/></g><path class="mouth" d="M16 27.5c1.3 1.2 2.6 1.6 4 1.6s2.7-.4 4-1.6"/></svg>
+  </button>
+  <i class="g-fly" id="gfly"></i>
+</aside>
+
 <script>
 (function(){
   var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -2772,16 +2813,12 @@ body.book-open{overflow:hidden}
       var tag = document.createElement('span'); tag.className = 'live-tag'; tag.innerHTML = '<i></i><b>Click anything</b> \u00b7 it\u2019s live'; sc.appendChild(tag);
     });
     live.takeOver = takeOver;
-    /* the nudges: notes and a pulsing ring appear once a scene is in view, and go for good at the first click in it */
+    /* the handwritten notes appear once a scene is in view, and stay */
     (function(){
-      var PULSE = { system: '.dsm .sw i[data-p="mint"]', build: '#deploy', mobile: '.os-switch .os[data-os="android"]', ai: '#agrun', design: '#dsth .th[data-p="lavender"]' };
-      var hosts = all('.feature .scene, .hero .system');
-      hosts.forEach(function(sc){
-        sc.addEventListener('pointerdown', function(){ sc.classList.add('touched'); all('.hp', sc).forEach(function(h){ h.classList.remove('hp'); }); });
-        var sec = sc.closest('section'), key = sc.classList.contains('system') ? 'system' : (sec && sec.id) || '';
-        function show(){ if (sc.classList.contains('touched')) return; all('.nudge', sc).forEach(function(n){ n.classList.add('on'); }); var t = PULSE[key] && sc.querySelector(PULSE[key]); if (t) t.classList.add('hp'); }
+      all('.feature .scene, .hero .system').forEach(function(sc){
+        function show(){ all('.nudge', sc).forEach(function(n){ n.classList.add('on'); }); }
         if (still){ show(); return; }
-        if ('IntersectionObserver' in window){ var seen = false; new IntersectionObserver(function(es){ es.forEach(function(en){ if (en.isIntersecting && !seen){ seen = true; setTimeout(show, 700); } }); }, { threshold: .3 }).observe(sc); }
+        if ('IntersectionObserver' in window){ var seen = false; new IntersectionObserver(function(es){ es.forEach(function(en){ if (en.isIntersecting && !seen){ seen = true; setTimeout(show, 600); } }); }, { threshold: .3 }).observe(sc); }
         else setTimeout(show, 1200);
       });
     })();
@@ -3207,9 +3244,9 @@ body.book-open{overflow:hidden}
       on(document.getElementById('agmerge'), 'click', merge);
       on(document.getElementById('agmerge'), 'keydown', keyish(merge));
       on(runBtn, 'click', runAll); on(runBtn, 'keydown', keyish(runAll));
-      /* the pipeline runs once by itself when it comes into view; after that it is yours */
+      /* Run is yours; without motion, the pipeline runs once when it comes into view so there is something to read */
       var started = false;
-      if ('IntersectionObserver' in window) new IntersectionObserver(function(es){ es.forEach(function(en){ if (en.isIntersecting && !started){ started = true; setTimeout(runAll, still ? 0 : 900); } }); }, { threshold: .3 }).observe(scene); else runAll();
+      if (still){ if ('IntersectionObserver' in window) new IntersectionObserver(function(es){ es.forEach(function(en){ if (en.isIntersecting && !started){ started = true; runAll(); } }); }, { threshold: .12 }).observe(scene); else runAll(); }
       live.agents = { run: runAll, act: act, merge: merge };
     })();
 
@@ -3526,6 +3563,114 @@ body.book-open{overflow:hidden}
         Array.prototype.forEach.call(sys.querySelectorAll('.sat'), function(s){ s.classList.remove('tap'); void s.offsetWidth; s.classList.add('tap'); });
       });
     }
+  })();
+
+  /* ---- 3h. the guide: a small robot at the corner rides along, says what to try in the section you are looking at, and does it for you when asked ---- */
+  (function(){
+    var g = document.getElementById('guide'); if (!g) return;
+    var say = document.getElementById('gsay'), showB = document.getElementById('gshow'), nextB = document.getElementById('gnext'), nEl = document.getElementById('gn'), bot = document.getElementById('gbot'), bubble = document.getElementById('gbubble'), fly = document.getElementById('gfly'), minB = document.getElementById('gmin');
+    var $ = function(s){ return document.querySelector(s); };
+    var root = document.documentElement;
+    function ph(){ return document.getElementById('phone'); }
+    var TIPS = {
+      system: { tips: [
+        { say: 'This page is <b>live</b>. Click the phone in the hero to flip through its screens.', sel: '.sat[data-k="mobile"]', run: function(){ var s = $('.sat[data-k="mobile"]'); if (s) s.click(); } },
+        { say: 'Pick a <b>colour</b> on the design card. The whole site follows it.', sel: '.dsm .sw i[data-p="mint"]', run: function(){ if (live.setPal) live.setPal(root.getAttribute('data-accent') === 'mint' ? 'lavender' : 'mint'); } },
+        { say: 'Click the <b>dashboard</b> to switch its view. The small agents keep carrying work between the three.', sel: '.sat[data-k="web"]', run: function(){ var s = $('.sat[data-k="web"]'); if (s) s.click(); } } ] },
+      build: { tips: [
+        { say: 'This admin works. Press <b>Deploy</b> and watch the version bump.', sel: '#deploy', run: function(){ live.web.deploy(); } },
+        { say: 'Open <b>Integrations</b> and press Sync now on SAP: the order lands in the ERP.', sel: '#appside a[data-page="integ"]', run: function(){ live.web.setPage('integ'); setTimeout(function(){ live.web.sync('sap'); }, 700); } },
+        { say: 'On <b>Orders</b>, click a status to move an order along. It writes to the sync log too.', sel: '#appside a[data-page="orders"]', run: function(){ live.web.setPage('orders'); setTimeout(function(){ var p = $('#orders .pill2'); if (p) p.click(); }, 700); } },
+        { say: 'Flip the chart to <b>Trend</b>, or change the range.', sel: '#view a[data-view="trend"]', run: function(){ live.web.setPage('overview'); setTimeout(function(){ live.web.setView(document.getElementById('wapp').getAttribute('data-view') === 'trend' ? 'bars' : 'trend'); }, 350); } } ] },
+      mobile: { tips: [
+        { say: 'Tap the <b>watch</b>: it has three faces.', sel: '#watch .wcase', run: function(){ if (ph().classList.contains('dual')) live.mobile.setOS('ios'); setTimeout(function(){ live.mobile.watchNext(); }, ph().classList.contains('dual') ? 1400 : 0); } },
+        { say: 'Switch the app to <b>Android</b>. It becomes a foldable, with the map on the second screen.', sel: '.os-switch .os[data-os="android"]', run: function(){ live.mobile.setOS(ph().getAttribute('data-os') === 'android' ? 'ios' : 'android'); } },
+        { say: '<b>Place the order</b>. It shows up on the watch as a notification.', sel: '#phbtn', run: function(){ live.mobile.setTab('home'); live.mobile.placeOrder(); } },
+        { say: 'Open <b>Track</b> for the live map, or Account for the dark switch.', sel: '#phone .tab[data-tab="track"]', run: function(){ live.mobile.setTab(ph().classList.contains('dual') ? 'account' : 'track'); } } ] },
+      ai: { tips: [
+        { say: 'Press <b>Run</b>: five agents plan, research, build, review and open a pull request.', sel: '#agrun', run: function(){ live.agents.run(); } },
+        { say: 'Click any <b>stage</b> to see exactly what that agent did.', sel: '.ag-step[data-agent="b"]', run: function(){ live.agents.act('b'); } },
+        { say: 'When the PR is open, <b>merge</b> it.', sel: '#agmerge', run: function(){ var w = document.getElementById('wag'); if (w && w.classList.contains('done')) live.agents.merge(); else live.agents.run(); } } ] },
+      design: { tips: [
+        { say: 'Pick a <b>theme</b>. The page you are reading changes with it.', sel: '#dsth .th[data-p="lavender"]', run: function(){ live.design.theme(root.getAttribute('data-accent') === 'lavender' ? '' : 'lavender'); } },
+        { say: 'Try the <b>serif</b>, or round the corners.', sel: '#dstf .tf[data-type="serif"]', run: function(){ live.design.type(root.getAttribute('data-type') === 'serif' ? 'sans' : 'serif'); } },
+        { say: 'Flip the whole site to <b>dark</b>.', sel: '#dsmode button[data-m="dark"]', run: function(){ live.design.mode(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'); } } ] },
+      scope: { tips: [
+        { say: 'Switch pieces on and off. The timeline, the team and the price redraw as you go.', sel: '#mods .mod[data-k="mobile"]', run: function(){ var m = $('#mods .mod[data-k="mobile"]'); if (m) m.click(); } },
+        { say: 'Or start from a preset, like an <b>SAP / ServiceNow rollout</b>.', sel: '#plpre button[data-set="erp,integ"]', run: function(){ var b = $('#plpre button[data-set="erp,integ"]'); if (b) b.click(); } } ] },
+      process: { tips: [ { say: 'The six-week plan is playing. Click a <b>milestone</b> to jump to it.', sel: null, run: null } ] },
+      contact: { tips: [ { say: 'Two working days to a scoped estimate. <b>Book a slot</b>, or send three sentences and a deadline.', sel: '#bookbtn', run: null } ] }
+    };
+    var HOSTS = { system: '#system', build: '#build .scene', mobile: '#mobile .scene', ai: '#ai .scene', design: '#design .scene', scope: '#scope', process: '#process', contact: '#contact' };
+    var cur = 'system', idx = {}, pulsed = null, ackT = 0, busy = false;
+    Object.keys(TIPS).forEach(function(k){ idx[k] = 0; });
+    function tip(){ var t = TIPS[cur]; return t.tips[idx[cur] % t.tips.length]; }
+    function pulse(sel){
+      if (pulsed){ pulsed.classList.remove('hp'); pulsed = null; }
+      var el = sel && $(sel); if (el){ el.classList.add('hp'); pulsed = el; }
+    }
+    function render(pop){
+      var t = tip(), n = TIPS[cur].tips.length;
+      say.innerHTML = t.say; showB.hidden = !t.run; nEl.textContent = n > 1 ? ((idx[cur] % n) + 1) + ' / ' + n : ''; nextB.hidden = n < 2;
+      pulse(t.sel);
+      if (pop){ bubble.classList.remove('pop'); void bubble.offsetWidth; bubble.classList.add('pop'); }
+    }
+    function advance(){ idx[cur]++; render(true); }
+    function hop(){ bot.classList.remove('hop'); void bot.offsetWidth; bot.classList.add('hop'); }
+    /* the spark leaves the robot, lands on the control, and the thing happens */
+    function flyTo(el, done){
+      if (!el || still){ done(); return; }
+      var r = el.getBoundingClientRect(), b = bot.getBoundingClientRect();
+      if (!r.width || !r.height){ done(); return; }
+      var x0 = b.left + b.width / 2, y0 = b.top + 8, x1 = r.left + r.width / 2, y1 = r.top + r.height / 2;
+      fly.style.left = x0 + 'px'; fly.style.top = y0 + 'px';
+      var an = fly.animate([{ transform: 'translate(0,0) scale(.6)', opacity: 0 }, { transform: 'translate(0,-12px) scale(1)', opacity: 1, offset: .12 }, { transform: 'translate(' + (x1 - x0) + 'px,' + (y1 - y0) + 'px) scale(1)', opacity: 1, offset: .9 }, { transform: 'translate(' + (x1 - x0) + 'px,' + (y1 - y0) + 'px) scale(2.2)', opacity: 0 }], { duration: 900, easing: 'cubic-bezier(.4,0,.2,1)' });
+      an.onfinish = function(){ if (live.ripple) live.ripple(el); done(); };
+    }
+    function show(){
+      var t = tip(); if (!t.run || busy) return; busy = true;
+      var el = t.sel && $(t.sel);
+      /* the section should be on screen for the trick to be seen */
+      var host = $(HOSTS[cur]); if (host){ var hr = host.getBoundingClientRect(); if (hr.top < 0 || hr.bottom > innerHeight) host.scrollIntoView({ block: 'center', behavior: still ? 'auto' : 'smooth' }); }
+      setTimeout(function(){
+        flyTo(el, function(){
+          try { t.run(); } catch (e) { if (window.console) console.warn('guide:', e.message); }
+          say.innerHTML = 'Like that. ' + (TIPS[cur].tips.length > 1 ? 'Now you.' : '');
+          setTimeout(function(){ busy = false; advance(); }, 1500);
+        });
+      }, 350);
+    }
+    on(showB, 'click', show);
+    on(nextB, 'click', advance);
+    on(minB, 'click', function(){ g.classList.add('min'); });
+    on(bot, 'click', function(){ if (g.classList.contains('min')){ g.classList.remove('min'); render(true); } else g.classList.add('min'); hop(); });
+    /* the section you are looking at is the one the guide talks about */
+    var ratio = {};
+    if ('IntersectionObserver' in window){
+      Object.keys(HOSTS).forEach(function(k){
+        var h = $(HOSTS[k]); if (!h) return;
+        new IntersectionObserver(function(es){
+          es.forEach(function(en){ ratio[k] = en.isIntersecting ? en.intersectionRatio : 0; });
+          var best = cur, bv = -1; Object.keys(ratio).forEach(function(kk){ if (ratio[kk] > bv){ bv = ratio[kk]; best = kk; } });
+          if (bv > 0 && best !== cur){ cur = best; render(true); hop(); }
+        }, { threshold: [0, .25, .5, .75, 1] }).observe(h);
+      });
+    }
+    /* when you do something in a section, the robot notices and offers the next thing */
+    Object.keys(HOSTS).forEach(function(k){
+      var h = $(HOSTS[k]); if (!h) return;
+      h.addEventListener('pointerdown', function(e){
+        if (busy || k !== cur) return;
+        if (e.target.closest && e.target.closest('.guide')) return;
+        clearTimeout(ackT);
+        var t = tip(), target = t.sel && $(t.sel), hit = target && (target === e.target || target.contains(e.target));
+        say.innerHTML = hit ? 'That\u2019s it.' : 'That works too.';
+        bubble.classList.remove('pop'); void bubble.offsetWidth; bubble.classList.add('pop');
+        ackT = setTimeout(function(){ if (hit) advance(); else render(false); }, 1400);
+      }, true);
+    });
+    render(false);
+    function on(el, ev, fn){ if (el) el.addEventListener(ev, fn); }
   })();
 
   /* ---- 4. figures count in ---- */
