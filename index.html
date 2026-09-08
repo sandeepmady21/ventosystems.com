@@ -1242,8 +1242,10 @@ body,.btn,.mark .dot,.eyebrow,.case .result b,.masthead,.section,.hero,.feature,
 @keyframes typ{0%,100%{transform:translateY(0);opacity:.5}50%{transform:translateY(-3px);opacity:1}}
 @keyframes msgin{from{opacity:0;transform:translateY(6px) scale(.97)}to{opacity:1;transform:none}}
 .aphone .aqr{flex:none;display:flex;flex-wrap:wrap;gap:5px;padding:4px 10px 6px;justify-content:flex-end;min-height:14px}
-.aphone .qr{font-size:8px;font-weight:600;color:var(--blue);border:1px solid color-mix(in srgb,var(--blue) 45%,#fff);background:#fff;border-radius:99px;padding:4px 9px;cursor:pointer;white-space:nowrap;transition:background .2s,color .2s,transform .2s var(--spring);animation:msgin .35s var(--spring) both}
-.aphone .qr:hover{background:var(--blue);color:#fff}
+.aphone .qr{font-size:8.4px;font-weight:600;color:#fff;background:var(--blue);border:1px solid color-mix(in srgb,var(--blue) 70%,#000);border-radius:99px;padding:5px 10px;cursor:pointer;white-space:nowrap;box-shadow:0 4px 10px -4px color-mix(in srgb,var(--blue) 70%,transparent);transition:background .2s,color .2s,transform .2s var(--spring),box-shadow .2s;animation:msgin .35s var(--spring) both,qrnudge 3.2s ease-in-out 1.2s infinite}
+.aphone .qr:hover{background:color-mix(in srgb,var(--blue) 85%,#000);transform:translateY(-1px);box-shadow:0 6px 14px -4px color-mix(in srgb,var(--blue) 80%,transparent)}
+.aphone .qr + .qr{animation-delay:.08s,1.7s}
+@keyframes qrnudge{0%,84%,100%{transform:none}88%{transform:translateX(-2px) rotate(-1.5deg)}92%{transform:translateX(2px) rotate(1.5deg)}96%{transform:translateX(-1px)}}
 .aphone .qr:active{transform:scale(.96)}
 .aphone .qr:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
 .aphone .ain{flex:none;margin:0 10px 12px;height:26px;border-radius:99px;background:#fff;border:1px solid #E5E7EC;display:flex;align-items:center;padding:0 5px 0 11px;gap:6px;font-size:8px;color:#9AA0AD}
@@ -1872,7 +1874,7 @@ body.book-open{overflow:hidden}
   .flags-track{flex-wrap:wrap;width:auto;row-gap:.5rem}.flags-track .fl[aria-hidden]{display:none}
   .stack-track{animation:none!important;flex-wrap:wrap;width:auto;row-gap:.4rem}.stack-track .tk[aria-hidden]{display:none}.stack{-webkit-mask:none;mask:none}
   .inspect,.tour,.rig,.sat .mini,.laptop,.sphone,.sphone .spbody,.site .cart,.aphone,.aboard,.wire{transition:none!important}
-  .hp,.nudge,.nudge > svg{animation:none!important}
+  .hp,.nudge,.nudge > svg,.aphone .qr{animation:none!important}
   html{scroll-behavior:auto}
   .orbit,.cur,.cur svg,.brush,.ab .paint path,.ab .drop,.ab .marq,.ab .marq i,.ph-body > *,.toast,.ph-btn .rip,.tb .run,.code .row.hl,.cap .live,.chip-win .pend,.aphone .typing i,.aphone .acall .wv,.aphone .ain .mic,.wire::after,.asy .dot,.w-ds .sec,.w-ds .sec::before,.w-ds .sec::after,.w-ds .callout,.w-ds .in i{animation:none!important}
   .w-design .xl,.w-design .xl::before{transition:none!important}
@@ -3891,7 +3893,7 @@ body.book-open{overflow:hidden}
         { t: '#cartpay', say: '{m}to pay for it' },
         { t: '.mode-switch .md[data-mode="app"]', say: '{m}to open the app behind it', side: 'left' } ] },
       mobile: { host: '#mobile .scene', stage: '#mobile .stage', over: '<b>Phone and watch both work</b> \u00b7 try the tabs', steps: [
-        { t: '#phbtn', say: '{m}to place an order' },
+        { t: '.ph-hero[data-go="track"]', say: '{m}to track the order' },
         { t: '.os-switch .os[data-os="android"]', say: '{m}to fold it into an Android' } ] },
       watch: { host: '#mobile .scene', stage: '#mobile .stage', quiet: true, steps: [
         { t: '#watch', p: '#watch .wcase', say: '{m}to see the watch\u2019s map' } ] },
@@ -3940,7 +3942,7 @@ body.book-open{overflow:hidden}
         if (!el){ note.classList.add('lost'); return; }
         note.classList.remove('lost');
         if (pulsed !== el){ el.classList.add('hp'); pulsed = el; }
-        lastEl = el; around(el, false);
+        around(el, false); lastEl = el;
       }
       /* the tape sits below, left, above or right of the control, each tried centred and aligned to either edge, kept inside the stage.
          It is clickable, so it takes the spot that covers the least of any other control */
@@ -3973,6 +3975,14 @@ body.book-open{overflow:hidden}
           c.cost = others.reduce(function(a, o){ return a + lap(c, o) * (o.tape ? 3 : 1); }, 0) + n * .01;
           if (!best || c.cost < best.cost) best = c;
         });
+        /* a tape that already sits somewhere acceptable stays put: two tapes avoiding each other would otherwise swap places for ever */
+        if (best && lastEl === el && note.style.getPropertyValue('--x')){
+          var cur = { x: parseFloat(note.style.getPropertyValue('--x')), y: parseFloat(note.style.getPropertyValue('--y')) };
+          if (lap(cur, me) === 0 && !keepOff.some(function(o){ return lap(cur, o) > 0; })){
+            cur.cost = others.reduce(function(a, o){ return a + lap(cur, o) * (o.tape ? 3 : 1); }, 0);
+            if (cur.cost <= best.cost + 1) best = cur;
+          }
+        }
         var c = best || cands[0];
         c.x = Math.max(4, Math.min(W - nw - 4, c.x)); c.y = Math.max(-28, Math.min(H - nh - 4, c.y));
         var ang = Math.atan2((ty + th / 2) - (c.y + nh / 2), (tx + tw / 2) - (c.x + nw / 2)) * 180 / Math.PI;
