@@ -846,6 +846,23 @@ a{color:inherit}
 .stage .pill2:hover,.stage .role:hover{translate:0 -1px}
 .hp:hover,.watch:hover .hp,.sat:hover .hp,.watch:hover .wcase{outline:2px solid color-mix(in srgb,var(--blue) 60%,transparent);outline-offset:2px}
 }
+/* charts redraw under the cursor: bars grow up from the baseline in turn, lines draw themselves, the points pop, the donut turns into place */
+@media (hover:hover){
+.wd .wv:hover .wb i,.w-app .chart:hover .bars i b,.w-app .heat:hover .hours i,.w-app .cc:hover .cb i{animation:cgrow .6s var(--spring) both;animation-delay:calc(var(--i,0) * var(--dl,45ms));transform-origin:50% 100%}
+.wd .wv:hover .wr i{animation:cwide .6s var(--spring) both;animation-delay:calc(var(--i,0) * 60ms);transform-origin:0 50%}
+.w-app .hours{--dl:14ms}
+.wd .wv:hover .wl .ln,.w-app .chart:hover .trend .ln,.w-app .kpi:hover .spk path{stroke-dasharray:1;animation:cdraw .9s ease-out both}
+.wd .wv:hover .wl .ar,.w-app .chart:hover .trend .ar{animation:cfade .9s ease-out both}
+.w-app .chart:hover .trend .pts circle{animation:cpop .5s var(--spring) both;animation-delay:calc(var(--i,0) * 70ms + .25s);transform-box:fill-box;transform-origin:center}
+.w-app .donut:hover .dn-body svg{animation:cspin .8s var(--spring) both}
+.w-app .cmap:hover .dot{animation:cpop .5s var(--spring) both;animation-delay:calc(var(--i,0) * 80ms);transform-box:fill-box;transform-origin:center}
+}
+@keyframes cgrow{from{transform:scaleY(.12)}}
+@keyframes cwide{from{transform:scaleX(.1)}}
+@keyframes cdraw{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+@keyframes cfade{from{opacity:0}}
+@keyframes cpop{from{transform:scale(0)}}
+@keyframes cspin{from{transform:rotate(-170deg)}to{transform:rotate(-90deg)}}
 /* the Apple Watch Ultra beside the iPhone: brushed titanium, a raised rim around a flat crystal, the black bezel, the crown in its guard, the orange Action button and an Ocean band with its buckle */
 .watch{position:absolute;left:294px;top:252px;width:96px;transform:translateZ(105px) translateX(-26px) scale(.86);opacity:0;transition:opacity .35s ease,transform .7s var(--spring);cursor:pointer;pointer-events:none;user-select:none;filter:drop-shadow(0 26px 22px rgba(16,19,25,.28))}
 .watch.on{opacity:1;transform:translateZ(105px);pointer-events:auto;transition:opacity .35s ease .75s,transform .7s var(--spring) .75s}
@@ -1886,7 +1903,7 @@ html.flat .phone .fold{z-index:6}
   .flags-track{flex-wrap:wrap;width:auto;row-gap:.5rem}.flags-track .fl[aria-hidden]{display:none}
   .stack-track{animation:none!important;flex-wrap:wrap;width:auto;row-gap:.4rem}.stack-track .tk[aria-hidden]{display:none}.stack{-webkit-mask:none;mask:none}
   .inspect,.tour,.rig,.sat .mini,.laptop,.sphone,.sphone .spbody,.site .cart,.aphone,.aboard,.wire{transition:none!important}
-  .hp,.nudge,.nudge > svg,.aphone .qr{animation:none!important}
+  .hp,.nudge,.nudge > svg,.aphone .qr,.wb i,.bars i b,.hours i,.cb i,.wr i,.trend *,.spk path,.dn-body svg,.cmap .dot{animation:none!important}
   html{scroll-behavior:auto}
   .orbit,.cur,.cur svg,.brush,.ab .paint path,.ab .drop,.ab .marq,.ab .marq i,.ph-body > *,.toast,.ph-btn .rip,.tb .run,.code .row.hl,.cap .live,.chip-win .pend,.aphone .typing i,.aphone .acall .wv,.aphone .ain .mic,.wire::after,.asy .dot,.w-ds .sec,.w-ds .sec::before,.w-ds .sec::after,.w-ds .callout,.w-ds .in i{animation:none!important}
   .w-design .xl,.w-design .xl::before{transition:none!important}
@@ -3066,7 +3083,7 @@ html.flat .phone .fold{z-index:6}
         var rows = '<div><span>bucket</span><span>revenue</span><span>orders</span><span>refunds</span></div>';
         d.bars.forEach(function(v, i){ rows += '<div><span>' + (d.lab[i] || '\u00b7') + '</span><span>' + money(v * d.k) + '</span><span>' + Math.round(v * d.k / 37) + '</span><span>' + (v % 4) + '</span></div>'; });
         tbl.innerHTML = rows;
-        var ptsG = trend.querySelector('.pts'); if (ptsG){ ptsG.innerHTML = pts.map(function(p){ return '<circle r="2.4" cx="' + p[0].toFixed(1) + '" cy="' + p[1].toFixed(1) + '"/>'; }).join(''); }
+        var ptsG = trend.querySelector('.pts'); if (ptsG){ ptsG.innerHTML = pts.map(function(p, i){ return '<circle r="2.4" style="--i:' + i + '" cx="' + p[0].toFixed(1) + '" cy="' + p[1].toFixed(1) + '"/>'; }).join(''); }
         ['rev', 'ord', 'cus', 'ref', 'revd', 'ordd', 'cusd', 'refd', 'live'].forEach(function(k){ all('[data-k="' + k + '"]', app).forEach(function(el){ el.textContent = d[k]; }); });
         var refd = app.querySelector('[data-k="refd"]'); if (refd) refd.className = d.refd.charAt(0) === '+' ? 'dn' : 'up';
         document.getElementById('chlabel').textContent = d.label;
@@ -3639,6 +3656,15 @@ html.flat .phone .fold{z-index:6}
       h.addEventListener('pointermove', function(e){ if (e.pointerType && e.pointerType !== 'mouse') return; mouse = { x: e.clientX, y: e.clientY }; if (host !== h){ host = h; scan(); } if (!scanT){ scanT = setTimeout(function(){ scanT = 0; scan(); }, 600); } if (!raf) raf = requestAnimationFrame(tick); });
       h.addEventListener('pointerleave', function(){ mouse = null; if (!raf) raf = requestAnimationFrame(tick); });
     });
+  })();
+
+  /* ---- 1j. charts: an index on every bar and point for the stagger, and a unit path length so the lines can draw themselves ---- */
+  (function(){
+    function all(sel, root){ return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
+    function index(sel){ all(sel).forEach(function(c){ Array.prototype.forEach.call(c.children, function(el, i){ el.style.setProperty('--i', i); }); }); }
+    index('.wd .wb, .wd .wr, #bars, #hours, .w-app .cb, .w-app .cmap svg');
+    all('.wd .wl .ln, .w-app .trend .ln, .w-app .spk path').forEach(function(p){ p.setAttribute('pathLength', '1'); });
+    live.chartIndex = index;
   })();
 
   /* ---- 2. scope: the plan builder ---- */
