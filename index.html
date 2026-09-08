@@ -141,6 +141,7 @@ a{color:inherit}
 .live-tag{position:absolute;left:0;top:-34px;z-index:12;display:inline-flex;align-items:center;gap:.45rem;font-family:var(--mono);font-size:.64rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:99px;padding:.3rem .7rem;box-shadow:0 8px 20px -10px rgba(16,19,25,.35);transition:opacity .5s ease,transform .5s var(--spring);pointer-events:none}
 .live-tag i{width:7px;height:7px;border-radius:99px;background:var(--c-green);display:block;animation:conpulse 2s ease-out infinite}
 .live-tag b{font-weight:500;color:var(--blue)}
+.live-tag .cg{width:12px;height:12px;flex:none;stroke:var(--ink);fill:var(--surface);stroke-width:1.9;stroke-linejoin:round;stroke-linecap:round;margin:0 -1px 0 -2px}
 .live-tag.done{border-color:var(--blue)}
 .live-tag.gone{opacity:0;transform:translateY(-6px)}
 .cur .tag.turn{background:var(--ink);color:var(--paper)}
@@ -970,11 +971,35 @@ a{color:inherit}
 .mini{position:relative;overflow:hidden}
 .mp{width:92px;height:178px;border-radius:18px;background:linear-gradient(160deg,#343A47,#0E1117);padding:2px}
 .mp .isl{position:absolute;left:50%;top:11px;width:26px;height:7px;border-radius:99px;background:#0E1117;transform:translateX(-50%);z-index:2}
-.mp .track{display:flex;gap:12px;height:100%;transition:transform .6s var(--spring)}
+.mp .track{display:flex;gap:12px;height:100%;transition:transform .9s var(--spring)}
 .mp .scr{width:88px;flex:none;height:100%;border-radius:16px;background:#F4F5F8;padding:18px 7px 7px;display:flex;flex-direction:column;gap:5px;position:relative;overflow:hidden}
 .mp .scr b{display:block;height:34px;border-radius:6px;background:linear-gradient(135deg,var(--blue),color-mix(in srgb,var(--blue) 60%,#5B4BE8))}
 .mp .scr u{display:block;height:15px;border-radius:5px;background:#fff;box-shadow:0 1px 1px rgba(16,19,25,.06)}
-.mp .scr s{display:block;height:20px;border-radius:6px;background:#101319;margin-top:auto}
+.mp .scr s{display:flex;align-items:center;justify-content:center;height:20px;border-radius:6px;background:#101319;margin-top:auto;color:#fff;text-decoration:none;font-family:var(--sans);font-size:6.4px;font-weight:600;white-space:nowrap}
+/* the home screen: a greeting, the order on its way, two rows, the button */
+.mp .home{gap:4px;font-family:var(--sans);color:#101319}
+.mp .home .hh{display:flex;align-items:center;justify-content:space-between}
+.mp .home .hg small{display:block;font-size:4.6px;color:#6B7280;line-height:1.2}
+.mp .home .hg .t{display:block;font-size:7.6px;font-weight:700;letter-spacing:-.02em;line-height:1.15}
+.mp .home .hh i{width:12px;height:12px;border-radius:99px;background:var(--c-violet);color:#fff;font-size:4.4px;font-weight:700;display:flex;align-items:center;justify-content:center;font-style:normal;flex:none}
+.mp .home .eta{position:relative;border-radius:7px;padding:5px 6px 6px;background:linear-gradient(135deg,var(--blue),color-mix(in srgb,var(--blue) 60%,#5B4BE8));color:#fff;overflow:hidden;flex:none}
+.mp .home .eta small{display:block;font-family:var(--mono);font-size:3.9px;letter-spacing:.08em;text-transform:uppercase;opacity:.85}
+.mp .home .eta .t{display:block;font-size:6.6px;font-weight:700;letter-spacing:-.02em;margin:2px 0 4px;line-height:1.15;white-space:nowrap}
+.mp .home .eta .prog{display:block;height:2.5px;border-radius:99px;background:rgba(255,255,255,.3);width:50px;overflow:hidden}.mp .home .eta .prog i{display:block;height:100%;width:62%;border-radius:99px;background:#fff}
+.mp .home .eta .bike{position:absolute;right:5px;top:4px;width:12px;height:12px;stroke:#fff;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.mp .home .row{display:flex;align-items:center;gap:4px;background:#fff;border-radius:5px;padding:3px 4px;box-shadow:0 1px 1px rgba(16,19,25,.06);flex:none}
+.mp .home .row i{width:11px;height:11px;border-radius:4px;background:color-mix(in srgb,var(--c) 18%,#fff);flex:none;position:relative;display:block}
+.mp .home .row i::after{content:"";position:absolute;left:3px;top:3px;width:5px;height:5px;border-radius:2px;background:var(--c)}
+.mp .home .rt{flex:1;min-width:0;display:block}
+.mp .home .rt .t{display:block;font-size:5.1px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.2}
+.mp .home .rt small{display:block;font-size:4px;color:#6B7280;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.2}
+.mp .home .p{font-size:5.1px;font-weight:600;flex:none;font-variant-numeric:tabular-nums}
+/* delivered: a tick, the order, a rating to give */
+.mp .done .dt{font-family:var(--sans);font-size:8px;font-weight:700;letter-spacing:-.02em;color:#101319;margin-top:6px}
+.mp .done .ds{font-family:var(--sans);font-size:4.6px;color:#6B7280;margin-top:1px}
+.mp .done .stars{display:flex;gap:2px;margin-top:5px}
+.mp .done .stars i{width:7px;height:7px;background:var(--c-amber);clip-path:polygon(50% 0,63% 36%,100% 38%,70% 60%,80% 100%,50% 76%,20% 100%,30% 60%,0 38%,37% 36%);display:block}
+.mp .done .stars i:last-child{background:#D5D9E1}
 .mp .scr em{position:absolute;left:7px;right:7px;bottom:7px;height:20px;border-radius:6px;background:#101319;color:#fff;font-style:normal;font-family:var(--sans);font-size:8px;font-weight:600;display:flex;align-items:center;justify-content:center}
 .mp .map{background:var(--m-land);padding:0;--m-land:#F1F2F4;--m-blk:#E7E9EE;--m-water:#BBD6F0;--m-park:#CBE5C4;--m-tree:#A9D3A0;--m-pond:#B3D1EE;--m-bld:#D9DDE4;--m-rd2:#fff;--m-rdc:#D0D5DD;--m-rd1:#fff}
 .mp .map svg{position:absolute;inset:0;width:100%;height:100%}
@@ -1908,9 +1933,9 @@ body.book-open{overflow:hidden}
             <span class="say"></span>
             <div class="mini mp"><i class="isl"></i>
               <div class="track">
-                <div class="scr"><b></b><u></u><u></u><u></u><s></s></div>
+                <div class="scr home"><div class="hh"><span class="hg"><small>Good morning</small><span class="t">Your orders</span></span><i>PS</i></div><div class="eta"><small>Order #4821</small><span class="t">Arriving in 12 min</span><span class="prog"><i></i></span><svg class="bike" viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="17" r="3.2"/><circle cx="18" cy="17" r="3.2"/><path d="M6 17l4-8h5l3 8M10 9l2 8"/></svg></div><div class="row"><i style="--c:var(--blue)"></i><span class="rt"><span class="t">Oat latte &times; 2</span><small>Blue Tokai &middot; 0.8 km</small></span><span class="p">$9.40</span></div><div class="row"><i style="--c:var(--c-amber)"></i><span class="rt"><span class="t">Sourdough</span><small>Bakehouse &middot; 10:15</small></span><span class="p">$6.50</span></div><div class="row"><i style="--c:var(--c-green)"></i><span class="rt"><span class="t">Cold brew &middot; 1L</span><small>Weekly &middot; auto-renews</small></span><span class="p">$11.20</span></div><s>Place order &middot; $27.10</s></div>
                 <div class="scr map"><svg viewBox="0 0 68 120" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect class="land" width="68" height="120"/><g class="blk"><rect x="2" y="2" width="8" height="16" rx="1.5"/><rect x="15" y="2" width="9" height="16" rx="1.5"/><rect x="29" y="2" width="12" height="16" rx="1.5"/><rect x="2" y="23" width="8" height="10" rx="1.5"/><rect x="15" y="23" width="9" height="10" rx="1.5"/><rect x="29" y="23" width="12" height="10" rx="1.5"/><rect x="47" y="23" width="19" height="10" rx="1.5"/><rect x="29" y="39" width="12" height="14" rx="1.5"/><rect x="47" y="39" width="19" height="14" rx="1.5"/><rect x="29" y="59" width="12" height="18" rx="1.5"/><rect x="47" y="59" width="19" height="18" rx="1.5"/><rect x="29" y="83" width="12" height="10" rx="1.5"/><rect x="47" y="83" width="19" height="10" rx="1.5"/><rect x="2" y="99" width="8" height="19" rx="1.5"/><rect x="15" y="99" width="9" height="19" rx="1.5"/><rect x="29" y="99" width="12" height="19" rx="1.5"/><rect x="47" y="99" width="19" height="19" rx="1.5"/></g><path class="water" d="M44 0c4 7 12 10 24 12V0z"/><path class="park" d="M2 38c8-4 16-3 22 2v36c-6 4-14 3-22-1z"/><g class="tree"><circle cx="7" cy="46" r="2"/><circle cx="17" cy="52" r="2.2"/><circle cx="9" cy="64" r="2"/><circle cx="19" cy="68" r="1.8"/></g><path class="pond" d="M9 56c3-2 7-1 8 2s-2 4-5 4-5-3-3-6z"/><rect class="park" x="47" y="83" width="19" height="10" rx="2"/><g class="bld"><rect x="4" y="5" width="5" height="6" rx="1"/><rect x="17" y="5" width="5" height="8" rx="1"/><rect x="31" y="6" width="8" height="6" rx="1"/><rect x="31" y="42" width="8" height="8" rx="1"/><rect x="50" y="42" width="7" height="8" rx="1"/><rect x="59" y="26" width="5" height="5" rx="1"/><rect x="31" y="62" width="8" height="8" rx="1"/><rect x="50" y="63" width="12" height="6" rx="1"/><rect x="31" y="102" width="8" height="7" rx="1"/><rect x="50" y="102" width="7" height="10" rx="1"/><rect x="4" y="104" width="5" height="9" rx="1"/><rect x="17" y="103" width="5" height="6" rx="1"/></g><g class="rd2"><path d="M12 0V34M12 78V120M44 0V120M0 20H68M26 56H68M0 96H68"/></g><g class="rdc"><path d="M26 0V120M0 36H68M0 80H68"/></g><g class="rd1"><path d="M26 0V120M0 36H68M0 80H68"/></g><path class="rt" d="M12 106V80H26V36H52V18"/><circle class="me" cx="12" cy="106" r="3.5"/><g transform="translate(52 18)"><path class="pin" d="M0 1.5c-4-5-6-8-6-11a6 6 0 0 1 12 0c0 3-2 6-6 11z"/><circle r="2" cy="-9.5" fill="#fff"/></g></svg><em>12 min</em></div>
-                <div class="scr done"><span class="tick"></span><em>Delivered</em></div>
+                <div class="scr done"><span class="tick"></span><span class="dt">Delivered</span><span class="ds">#4821 &middot; 11 min &middot; Arjun</span><span class="stars"><i></i><i></i><i></i><i></i><i></i></span><em>Rate Arjun</em></div>
               </div>
               <span class="notif"><i></i><b>Build 42</b> ready</span>
             </div>
@@ -2806,11 +2831,12 @@ body.book-open{overflow:hidden}
     }
 
     /* the work the agents carry, and what each surface does when it lands */
+    var lastFlip = 0;
     var LEGS = [
       { from: 'design', to: 'web', who: 'Design agent', text: 'apply tokens v3.2', done: 'tokens applied', col: 'var(--c-violet)',
         arrive: function(){ var wd = sats.web.querySelector('.wd'); wd.classList.remove('flash'); void wd.offsetWidth; wd.classList.add('flash'); } },
       { from: 'web', to: 'mobile', who: 'Release agent', text: 'ship build 42 to iOS', done: 'build 42 installed', col: 'var(--c-cyan)',
-        arrive: function(){ var mp = sats.mobile.querySelector('.mp'); mp.classList.add('notify'); setTimeout(function(){ mp.classList.remove('notify'); }, 2200); setTimeout(function(){ cycle(sats.mobile); }, 700); } },
+        arrive: function(){ var mp = sats.mobile.querySelector('.mp'); mp.classList.add('notify'); setTimeout(function(){ mp.classList.remove('notify'); }, 2200); if (performance.now() - lastFlip > 16000){ lastFlip = performance.now(); setTimeout(function(){ cycle(sats.mobile); }, 700); } } },
       { from: 'mobile', to: 'design', who: 'QA agent', text: '38 / 38 tests passed', done: 'checks green', col: 'var(--c-green)',
         arrive: function(){ var d = sats.design.querySelector('.dsm'); d.classList.add('checked'); setTimeout(function(){ d.classList.remove('checked'); }, 2400); } }
     ];
@@ -3856,7 +3882,7 @@ body.book-open{overflow:hidden}
     /* one tape a scene, on the control with the biggest payoff, worded as what will happen rather than what to do.
        Once it has been touched the tape peels off and the corner tag keeps a plain hand-over line, so nothing sits on the screens */
     var SCENES = {
-      system: { host: '#system', stage: '#sysstage', over: '<b>Everything here works</b>', steps: [
+      system: { host: '#system', stage: '#sysstage', over: '<svg class="cg" viewBox="0 0 24 24" aria-hidden="true"><path d="M5.5 3.5v16.2l4.4-4.2 3 6.3 2.6-1.2-3-6.2 6-.6z"/></svg><b>to interact</b>', steps: [
         { t: '.sat[data-k="design"]', p: '.sat[data-k="design"] .mini', say: '{m}to recolour the site' },
         { t: '.sat[data-k="mobile"]', p: '.sat[data-k="mobile"] .mini', say: '{m}to flip its screens' },
         { t: '.sat[data-k="web"]', p: '.sat[data-k="web"] .mini', say: '{m}to change the chart' } ] },
