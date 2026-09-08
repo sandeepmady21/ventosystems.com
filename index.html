@@ -1867,6 +1867,18 @@ body.book-open{overflow:hidden}
 :root[data-theme="dark"] .phone:not(.day) .ava{box-shadow:0 0 0 1.5px #262B35}
 :root[data-theme="dark"] .phone:not(.day)[data-os="android"] .ph-btn,.phone[data-os="android"].night .ph-btn{background:var(--blue);color:#fff}
 :root[data-theme="dark"] .phone:not(.day)[data-os="android"] .ph-btn.ghost,.phone[data-os="android"].night .ph-btn.ghost{background:transparent;color:var(--blue);border-color:color-mix(in srgb,var(--blue) 45%,#1D2028)}
+/* iOS Safari: a 3D tree with clipped, animating children flickers, so on iPhones and iPads the scenes are flat (the depth is stacking order only, there is no perspective to lose),
+   the watch's shadow is a box shadow instead of a filter, and the moving parts keep their back faces hidden */
+@supports (-webkit-touch-callout: none){
+  .rig,.orbit,.stage,.stage *{transform-style:flat}
+  .watch{filter:none}
+  .watch .wcase{box-shadow:inset 0 0 0 1px #4E535B,inset 0 2px 2px rgba(255,255,255,.65),inset 0 -4px 6px rgba(0,0,0,.38),inset 3px 0 4px -3px rgba(255,255,255,.4),0 2px 3px rgba(16,19,25,.3),0 26px 22px rgba(16,19,25,.28)}
+  .phone,.phone .scr,.fold,.fold .scr,.watch,.laptop,.sphone,.aphone,.aboard,.mini{-webkit-backface-visibility:hidden;backface-visibility:hidden}
+  .phone .fold{z-index:6}
+  .site .snav{-webkit-backdrop-filter:none;backdrop-filter:none;background:rgba(251,247,242,.97)}
+}
+html.flat .rig,html.flat .orbit,html.flat .stage,html.flat .stage *{transform-style:flat}
+html.flat .phone .fold{z-index:6}
 @media (prefers-reduced-motion:reduce){
   .win,.fp,.case .detail,.case .plus,.step::before,.phone,.watch{transition:none!important}
   .fold{transition:none!important}
@@ -3582,6 +3594,53 @@ body.book-open{overflow:hidden}
     })();
   })();
 
+  /* ---- 1i. near the cursor, the controls lean in: a small shift toward the pointer and a lift under it, easing back when it leaves ---- */
+  (function(){
+    if (still || !window.matchMedia || !window.matchMedia('(hover:hover)').matches) return;
+    var LEAN = 'button, a, [role="button"], .tab, .pill2, .os, .md, .sw i, .th, .tf, .seg a, .side a, .isy, .dep, .ph-row, .ph-btn, .ph-set .row, .set .r, .role, .call, .wbtn, [data-toast], [data-go], .re, .qr, .sadd';
+    var R = 90, MAX = 4, hosts = Array.prototype.slice.call(document.querySelectorAll('.feature .scene, .hero .system'));
+    var live = [], mouse = null, host = null, raf = 0, scanned = 0;
+    function scan(){
+      if (!host) return;
+      var root = host.querySelector('.stage') || host, els = Array.prototype.slice.call(root.querySelectorAll(LEAN)).filter(function(el){ return !el.closest('.nudge') && !el.closest('.sat') || el.matches('.sw i'); });
+      live = els.map(function(el){ if (!el._lean) el._lean = { id: ++scanned, el: el, x: 0, y: 0, s: 1 }; return el._lean; });
+      scanned = live.length ? live[live.length - 1].id : scanned;
+    }
+    function tick(){
+      raf = 0; var moving = false;
+      live.forEach(function(it){
+        var tx = 0, ty = 0, ts = 1;
+        if (mouse && it.el.isConnected){
+          var r = it.el.getBoundingClientRect();
+          if (r.width && r.height){
+            var nx = Math.max(r.left, Math.min(r.right, mouse.x)), ny = Math.max(r.top, Math.min(r.bottom, mouse.y));
+            var dist = Math.hypot(mouse.x - nx, mouse.y - ny), f = Math.max(0, 1 - dist / R);
+            if (f > 0){
+              var cx = r.left + r.width / 2, cy = r.top + r.height / 2, dx = mouse.x - cx, dy = mouse.y - cy, L = Math.hypot(dx, dy) || 1;
+              if (dist > 0){ tx = dx / L * MAX * f; ty = dy / L * MAX * f; }   /* outside: toward the pointer */
+              else { tx = dx / (r.width / 2) * MAX * .6; ty = dy / (r.height / 2) * MAX * .6; }   /* under it: a little toward where it sits */
+              ty -= 1.5 * f; ts = 1 + .025 * f;
+            }
+          }
+        }
+        it.x += (tx - it.x) * .22; it.y += (ty - it.y) * .22; it.s += (ts - it.s) * .22;
+        if (Math.abs(it.x) < .05 && Math.abs(it.y) < .05 && Math.abs(it.s - 1) < .002 && !tx && !ty){
+          if (it.on){ it.on = false; it.el.style.translate = ''; it.el.style.scale = ''; it.x = 0; it.y = 0; it.s = 1; }
+        } else {
+          it.on = true; moving = true;
+          it.el.style.translate = it.x.toFixed(2) + 'px ' + it.y.toFixed(2) + 'px'; it.el.style.scale = it.s.toFixed(3);
+        }
+      });
+      if (moving || mouse) raf = requestAnimationFrame(tick);
+    }
+    var scanT = 0;
+    hosts.forEach(function(h){
+      h.addEventListener('pointerenter', function(){ host = h; scan(); if (!raf) raf = requestAnimationFrame(tick); });
+      h.addEventListener('pointermove', function(e){ if (e.pointerType && e.pointerType !== 'mouse') return; mouse = { x: e.clientX, y: e.clientY }; if (host !== h){ host = h; scan(); } if (!scanT){ scanT = setTimeout(function(){ scanT = 0; scan(); }, 600); } if (!raf) raf = requestAnimationFrame(tick); });
+      h.addEventListener('pointerleave', function(){ mouse = null; if (!raf) raf = requestAnimationFrame(tick); });
+    });
+  })();
+
   /* ---- 2. scope: the plan builder ---- */
   (function(){
     var mods = document.getElementById('mods'); if (!mods) return;
@@ -3892,7 +3951,7 @@ body.book-open{overflow:hidden}
         { t: '#siteOrder, .sbtn.big', p: '#siteOrder', say: '{m}to order a coffee' },
         { t: '#cartpay', say: '{m}to pay for it' },
         { t: '.mode-switch .md[data-mode="app"]', say: '{m}to open the app behind it', side: 'left' } ] },
-      mobile: { host: '#mobile .scene', stage: '#mobile .stage', over: '<b>Phone and watch both work</b> \u00b7 try the tabs', steps: [
+      mobile: { host: '#mobile .scene', stage: '#mobile .stage', over: '<b>Phone and watch both work</b>', steps: [
         { t: '.ph-hero[data-go="track"]', say: '{m}to track the order' },
         { t: '.os-switch .os[data-os="android"]', say: '{m}to fold it into an Android' } ] },
       watch: { host: '#mobile .scene', stage: '#mobile .stage', quiet: true, steps: [
