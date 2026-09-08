@@ -4,9 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Vento Systems is a software studio. We build websites, web apps, mobile apps and AI agents, and implement the enterprise systems behind them — SAP, ServiceNow, Salesforce — one senior team for the whole product, design included.">
-<meta name="theme-color" content="#EEF2FA" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#0E1116" media="(prefers-color-scheme: dark)">
-<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#EEF2FA">
+<meta name="color-scheme" content="light">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Vento Systems">
 <meta property="og:title" content="Vento Systems — web, mobile, AI agents and enterprise systems">
@@ -1916,7 +1915,7 @@ html.flat .phone .fold{z-index:6}
 </style>
 </head>
 <body>
-<script>(function(){try{var t=localStorage.getItem('vento-theme');if(t!=='dark'&&t!=='light')t=window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';if(t==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}})();</script>
+<script>(function(){var r=document.documentElement,t=null;try{t=localStorage.getItem('vento-theme');}catch(e){}if(t==='dark')r.setAttribute('data-theme','dark');else r.removeAttribute('data-theme');})();</script>
 
 <header class="masthead">
   <div class="wrap">
@@ -3893,13 +3892,15 @@ html.flat .phone .fold{z-index:6}
     });
   })();
 
-  /* ---- 3e. light or dark: the site follows the device until you choose ---- */
+  /* ---- 3e. light or dark: light by default, dark only when you choose it (the choice is remembered) ---- */
   (function(){
-    var root = document.documentElement, btn = document.getElementById('modebtn'), mq = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
+    var root = document.documentElement, btn = document.getElementById('modebtn');
     function current(){ return root.getAttribute('data-theme') === 'dark' ? 'dark' : 'light'; }
     function apply(t){
       if (t === 'dark') root.setAttribute('data-theme', 'dark'); else root.removeAttribute('data-theme');
       if (btn){ btn.setAttribute('aria-pressed', t === 'dark' ? 'true' : 'false'); btn.setAttribute('aria-label', t === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'); }
+      var tc = document.querySelector('meta[name="theme-color"]');
+      if (tc) tc.setAttribute('content', t === 'dark' ? '#0E1116' : '#EEF2FA');
       var ds = document.getElementById('wds');
       if (ds && !ds.hasAttribute('data-mode')) Array.prototype.forEach.call(document.querySelectorAll('#dsmode button'), function(b){ b.classList.toggle('on', b.getAttribute('data-m') === t); });
       if (live.readout) live.readout();
@@ -3908,7 +3909,6 @@ html.flat .phone .fold{z-index:6}
     }
     live.setTheme = function(t, remember){ apply(t); if (remember){ try { localStorage.setItem('vento-theme', t); } catch (e) {} } };
     if (btn) btn.addEventListener('click', function(){ live.setTheme(current() === 'dark' ? 'light' : 'dark', true); });
-    if (mq && mq.addEventListener) mq.addEventListener('change', function(e){ var stored = null; try { stored = localStorage.getItem('vento-theme'); } catch (x) {} if (stored !== 'dark' && stored !== 'light') apply(e.matches ? 'dark' : 'light'); });
     apply(current());
   })();
 
