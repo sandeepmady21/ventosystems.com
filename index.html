@@ -3965,10 +3965,10 @@ body.book-open{overflow:hidden}
         i++; note.classList.add('ok'); txt.textContent = 'Nice'; clearTimeout(okT);
         okT = setTimeout(function(){
           if (!step()){ note.classList.remove('ok'); place(); return; }   /* that was the last one: peel off, hand over */
-          /* the next tape comes after a beat, so it reads as a new find rather than a queue */
+          /* the next tape comes after a short beat, so it reads as a new find rather than a queue */
           note.classList.remove('on'); beat = 1;
-          setTimeout(function(){ note.classList.remove('ok'); beat = 0; place(); note.classList.add('on'); }, 1500);
-        }, 900);
+          setTimeout(function(){ note.classList.remove('ok'); beat = 0; place(); note.classList.add('on'); }, 450);
+        }, 600);
         return true;
       }
       host.addEventListener('pointerdown', function(e){
