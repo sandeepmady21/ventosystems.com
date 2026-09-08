@@ -322,6 +322,13 @@ a{color:inherit}
 .w-app .dep:hover{filter:brightness(1.15)}
 .w-app .dep i{width:7px;height:7px;border-radius:99px;border:1.5px solid currentColor;border-right-color:transparent;display:none}
 .w-app .dep.busy{opacity:.7;pointer-events:none}.w-app .dep.busy i{display:block;animation:spin 1s linear infinite}
+.w-app .dep.sale{background:color-mix(in srgb,var(--c-amber) 16%,var(--as));color:var(--c-amber);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--c-amber) 45%,transparent);font-variant-numeric:tabular-nums}
+.w-app .dep.sale.on{background:var(--c-amber);color:#fff;animation:salep 1.1s ease-out infinite}
+@keyframes salep{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--c-amber) 65%,transparent)}100%{box-shadow:0 0 0 9px transparent}}
+.w-app .kpi .kt b.bump{animation:tap .4s var(--spring)}
+.w-app .hours.hot i{transition:background .25s ease}
+.w-app .or.new{animation:orin .5s var(--spring);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--c-amber) 55%,transparent)}
+@keyframes orin{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
 .w-app .page{position:absolute;left:0;right:0;top:28px;bottom:0;padding:8px 10px;display:none;flex-direction:column;gap:8px;min-height:0}
 .w-app .page.on{display:flex;animation:pgin .35s ease}
 @keyframes pgin{from{opacity:0;transform:translateY(4px)}}
@@ -793,31 +800,35 @@ a{color:inherit}
 .phone[data-os="android"] .ph-head{padding:8px 14px 7px}
 .phone[data-os="android"] .ph-hero{padding:8px 10px}
 .phone[data-os="android"] .ph-hero strong{margin:2px 0 6px}
-/* ---- nudges: one handwritten note per scene walks from control to control, always pointing at the next thing to try; a ring pulses on it. The note is a button too: click it and it presses the thing for you ---- */
-.nudge{position:absolute;left:var(--x,20px);top:var(--y,20px);z-index:31;display:flex;align-items:center;gap:5px;font-family:var(--hand);font-size:18px;font-weight:600;line-height:1;color:var(--ink);white-space:nowrap;cursor:pointer;opacity:0;padding:3px 9px 4px;border-radius:9px;background:color-mix(in srgb,var(--paper) 84%,transparent);box-shadow:0 2px 8px -4px rgba(16,19,25,.35);transform:translateZ(260px) rotate(var(--r,-3deg));transition:left .55s var(--spring),top .55s var(--spring),opacity .4s ease,color .3s,translate .25s var(--spring),box-shadow .25s ease,background .25s ease}
+/* ---- nudges: one handwritten note per scene, on a strip of yellow tape, walks from control to control, pointing at the next thing to try; a ring pulses on it. The tape is a button too: click it and it presses the thing for you ---- */
+.nudge{position:absolute;left:var(--x,20px);top:var(--y,20px);z-index:31;display:flex;align-items:center;gap:5px;font-family:var(--hand);font-size:18px;font-weight:600;line-height:1;color:#1F1A08;white-space:nowrap;cursor:pointer;opacity:0;padding:5px 15px 6px;border-radius:1px;box-shadow:0 3px 7px -4px rgba(16,19,25,.45);transform:translateZ(260px) rotate(var(--r,-3deg));transition:left .55s var(--spring),top .55s var(--spring),opacity .4s ease,color .3s,translate .25s var(--spring),box-shadow .25s ease}
 .nudge::before{content:"";position:absolute;inset:-10px}
-.nudge:hover{translate:0 -2px;background:var(--paper);box-shadow:0 8px 18px -8px rgba(16,19,25,.5)}
+/* the tape itself: translucent yellow, a faint weave, torn at both ends */
+.nudge::after{content:"";position:absolute;inset:0;z-index:-1;opacity:.93;background:linear-gradient(180deg,rgba(255,255,255,.3),rgba(255,255,255,0) 45%,rgba(120,90,0,.06)),repeating-linear-gradient(-58deg,rgba(255,255,255,.16) 0 1.5px,transparent 1.5px 5px),#F6D75A;clip-path:polygon(3px 0,100% 0,calc(100% - 3px) 12%,100% 26%,calc(100% - 2px) 41%,100% 56%,calc(100% - 3px) 71%,100% 86%,calc(100% - 2px) 100%,0 100%,3px 87%,0 72%,2px 58%,0 43%,3px 28%,0 14%);transition:opacity .25s}
+.nudge:hover{translate:0 -2px;box-shadow:0 9px 16px -8px rgba(16,19,25,.55)}
+.nudge:hover::after{opacity:1}
 .nudge:active{translate:0 0}
 .nudge.rev{flex-direction:row-reverse}
 .nudge svg{width:24px;height:24px;flex:none;transform:rotate(var(--ar,0deg));stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;transition:transform .55s var(--spring),opacity .3s,width .3s}
 .nudge.on{opacity:1}
 .nudge.lost svg,.nudge.end svg,.nudge.ok svg{opacity:0;width:0}
-.nudge.ok{color:var(--c-green)}
+.nudge.ok{color:#146B39}
 .nudge.end,.nudge.lost{pointer-events:none;cursor:default}
+.nudge.on.end{opacity:0;translate:0 -10px;transition:opacity .5s ease .3s,translate .6s ease .3s}
 .nudge.bob{animation:bob .7s var(--spring)}
 @keyframes bob{0%,100%{translate:0 0}35%{translate:0 -7px}70%{translate:0 2px}}
 .system .nudge{font-size:19px;transform:rotate(var(--r,-3deg))}
 /* the ring is an outline that swells and fades, so the control keeps its own shadow; a knock is one small hop of the control while nobody has touched the scene */
-.hp{animation:hp 1.7s ease-out infinite}
+.hp{animation:none}   /* the teased control gets no ring of its own: rings come only under the mouse */
 @keyframes hp{0%{outline:2px solid color-mix(in srgb,var(--blue) 80%,transparent);outline-offset:1px}70%{outline:2px solid color-mix(in srgb,var(--blue) 0%,transparent);outline-offset:11px}100%{outline:2px solid color-mix(in srgb,var(--blue) 0%,transparent);outline-offset:11px}}
-.hp.knock{animation:hp 1.7s ease-out infinite,knock .7s var(--spring)}
+.hp.knock{animation:knock .7s var(--spring)}
 @keyframes knock{0%,100%{translate:0 0;scale:1}30%{translate:0 -5px;scale:1.06}60%{translate:0 1px;scale:1}}
 .stage [role="button"],.stage .tab,.stage .pill2,.stage .os,.stage .sw i,.stage .th,.stage .tf,.stage .ag-step,.stage .seg a,.stage .side a,.stage .isy,.stage .dep,.stage .ph-row,.stage .ph-btn,.stage .ph-set .row,.stage .set .r,.stage .role,.stage .call,.stage .wbtn,.stage [data-toast],.stage [data-go],.stage .re,.sys-stage .sat,.sys-stage .sw i{cursor:pointer}
-/* ---- live controls answer the pointer before the click: a lift and a ring on hover, and the one the note points at lights up as the cursor merely gets near ---- */
+/* ---- live controls answer the pointer before the click: a lift and a ring, only under the mouse ---- */
 @media (hover:hover){
-.stage .tab:hover,.stage .os:hover,.stage .th:hover,.stage .tf:hover,.stage .ag-step:hover,.stage .seg a:hover,.stage .side a:hover,.stage .isy:hover,.stage .dep:hover,.stage .ph-row:hover,.stage .ph-btn:hover,.stage .ph-set .row:hover,.stage .set .r:hover,.stage .call:hover,.stage .wbtn:hover,.stage [data-toast]:hover,.stage [data-go]:hover,.stage .re:hover,.stage .run:hover,.stage .merge.ready:hover,.stage .near:not(.sat):not(.watch):not(.mini):not(.wcase),.sys-stage .sw i.near{translate:0 -1px;outline:2px solid color-mix(in srgb,var(--blue) 60%,transparent);outline-offset:2px}
+.stage .tab:hover,.stage .os:hover,.stage .th:hover,.stage .tf:hover,.stage .ag-step:hover,.stage .seg a:hover,.stage .side a:hover,.stage .isy:hover,.stage .dep:hover,.stage .ph-row:hover,.stage .ph-btn:hover,.stage .ph-set .row:hover,.stage .set .r:hover,.stage .call:hover,.stage .wbtn:hover,.stage [data-toast]:hover,.stage [data-go]:hover,.stage .re:hover,.stage .run:hover,.stage .merge.ready:hover{translate:0 -1px;outline:2px solid color-mix(in srgb,var(--blue) 60%,transparent);outline-offset:2px}
 .stage .pill2:hover,.stage .role:hover{translate:0 -1px}
-.hp:hover,.hp.near,.watch:hover .hp,.watch.near .hp,.sat:hover .hp,.sat.near .hp,.watch:hover .wcase{animation:none;outline:2px solid color-mix(in srgb,var(--blue) 60%,transparent);outline-offset:2px}
+.hp:hover,.watch:hover .hp,.sat:hover .hp,.watch:hover .wcase{outline:2px solid color-mix(in srgb,var(--blue) 60%,transparent);outline-offset:2px}
 }
 /* the Apple Watch Ultra beside the iPhone: brushed titanium, a raised rim around a flat crystal, the black bezel, the crown in its guard, the orange Action button and an Ocean band with its buckle */
 .watch{position:absolute;left:294px;top:252px;width:96px;transform:translateZ(105px) translateX(-26px) scale(.86);opacity:0;transition:opacity .35s ease,transform .7s var(--spring);cursor:pointer;pointer-events:none;user-select:none;filter:drop-shadow(0 26px 22px rgba(16,19,25,.28))}
@@ -909,11 +920,9 @@ a{color:inherit}
 @keyframes float{0%,100%{transform:translate(var(--dx,0px),var(--dy,0px)) scale(var(--sc,1))}50%{transform:translate(var(--dx,0px),calc(var(--dy,0px) - 6px)) scale(var(--sc,1))}}
 .sat:focus-visible{outline:2px solid var(--blue);outline-offset:8px;border-radius:14px}
 .sat .mini{box-shadow:0 2px 3px rgba(16,19,25,.12),0 30px 50px -14px rgba(16,19,25,.42);transition:box-shadow .35s ease}
-.sat:hover .mini,.sat.near .mini{box-shadow:0 2px 3px rgba(16,19,25,.12),0 34px 56px -14px rgba(16,19,25,.5),0 0 24px color-mix(in srgb,var(--blue) 30%,transparent)}
-.sat.ping .mini{box-shadow:0 2px 3px rgba(16,19,25,.12),0 30px 50px -14px rgba(16,19,25,.42),0 0 26px color-mix(in srgb,var(--pc,var(--blue)) 45%,transparent)}
+.sat:hover .mini{box-shadow:0 2px 3px rgba(16,19,25,.12),0 34px 56px -14px rgba(16,19,25,.5),0 0 24px color-mix(in srgb,var(--blue) 30%,transparent)}
 .sat.tap .mini{animation:tap .45s var(--spring)}
-.sat:hover .mp,.sat.near .mp{box-shadow:0 2px 3px rgba(16,19,25,.12),0 30px 50px -14px rgba(16,19,25,.42),0 0 22px color-mix(in srgb,var(--blue) 40%,transparent)}
-.sat.ping .mp{box-shadow:0 2px 3px rgba(16,19,25,.12),0 30px 50px -14px rgba(16,19,25,.42),0 0 26px color-mix(in srgb,var(--pc,var(--blue)) 55%,transparent)}
+.sat:hover .mp{box-shadow:0 2px 3px rgba(16,19,25,.12),0 30px 50px -14px rgba(16,19,25,.42),0 0 22px color-mix(in srgb,var(--blue) 40%,transparent)}
 @keyframes tap{40%{transform:scale(.96)}}
 .sat .say{position:absolute;left:50%;bottom:calc(100% + 10px);transform:translate(-50%,6px);font-family:var(--mono);font-size:8px;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;
   background:var(--ink);color:var(--paper);padding:4px 8px;border-radius:99px;opacity:0;transition:opacity .3s ease,transform .35s var(--spring);pointer-events:none;z-index:5;box-shadow:0 8px 20px -8px rgba(16,19,25,.5)}
@@ -1033,6 +1042,20 @@ body,.btn,.mark .dot,.eyebrow,.case .result b,.masthead,.section,.hero,.feature,
 .w-agents .tb .run:hover{filter:brightness(1.18)}
 .w-agents .tb .run:active{transform:scale(.96)}
 .w-agents .tb .run.busy{opacity:.6}
+.w-agents .tb .brk{background:transparent;color:var(--w-muted);box-shadow:inset 0 0 0 1px var(--w-line);margin-right:6px}
+.w-agents .tb .brk:hover{filter:none;color:var(--w-del);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--w-del) 60%,var(--w-line))}
+/* trouble: a stage can fail, shake, and get sent back */
+.ag-step.fail{border-color:color-mix(in srgb,var(--w-del) 60%,var(--w-line-soft));background:color-mix(in srgb,var(--w-del) 8%,var(--w-bg));box-shadow:0 10px 24px -10px color-mix(in srgb,var(--w-del) 50%,transparent);animation:shake .5s ease}
+.ag-step.fail .ic{background:var(--w-del)}.ag-step.fail .ic svg{stroke:#fff}
+.ag-step.fail .st{color:var(--w-del)}.ag-step.fail .st i{display:block}
+.ag-step.fail .bar i{width:100%;background:var(--w-del);transition:width .3s ease}
+@keyframes shake{0%,100%{transform:none}20%{transform:translateX(-3px)}40%{transform:translateX(3px)}60%{transform:translateX(-2px)}80%{transform:translateX(2px)}}
+.ag-pane .tests.fail i::after{background:var(--w-del)}
+.ag-pane .tests .bad{color:var(--w-del);font-weight:600;font-style:normal}
+.ag-pane .diff .fix{display:none}.ag-pane .diff.fixing .fix{display:block}
+.ag-pane .verdict.bad{background:color-mix(in srgb,var(--w-del) 14%,var(--w-bg));color:var(--w-del)}
+.ag-pane .notes li.bad::before{background:var(--w-del)}
+.ag-log .bad{color:#FF8A80}
 .ag-state{display:inline-flex;align-items:center;gap:4px;font-family:var(--mono);font-size:7px;letter-spacing:.08em;text-transform:uppercase;color:var(--w-muted);margin-right:6px}
 .ag-state i{width:6px;height:6px;border-radius:99px;background:var(--w-line);display:block;transition:background .3s}
 .w-agents.busy .ag-state i{background:var(--c-violet);animation:blink 1s steps(2) infinite}
@@ -1090,6 +1113,10 @@ body,.btn,.mark .dot,.eyebrow,.case .result b,.masthead,.section,.hero,.feature,
 .ag-work .merge{display:none;margin-left:auto;flex:none;align-items:center;padding:4px 9px;border-radius:99px;font-size:7.8px;font-weight:600;background:var(--w-sunk);color:var(--w-faint);transition:background .3s,color .3s,box-shadow .3s;cursor:pointer;pointer-events:none;white-space:nowrap}
 .ag-work[data-show="o"] .merge{display:inline-flex}
 .ag-work .merge.ready{background:var(--c-green);color:#fff;pointer-events:auto;box-shadow:0 6px 14px -6px color-mix(in srgb,var(--c-green) 70%,transparent)}
+@keyframes hpg{0%{outline:2px solid color-mix(in srgb,var(--c-green) 80%,transparent);outline-offset:1px}70%,100%{outline:2px solid transparent;outline-offset:10px}}
+.ag-work .merge.ready:hover{animation:none;outline:2px solid color-mix(in srgb,var(--c-green) 60%,transparent);outline-offset:2px}
+.cf{position:absolute;left:var(--x);top:var(--y);width:7px;height:11px;border-radius:2px;background:var(--c);pointer-events:none;z-index:60;animation:cf 1.1s cubic-bezier(.2,.7,.4,1) forwards}
+@keyframes cf{0%{transform:translate(0,0) rotate(0);opacity:1}55%{transform:translate(var(--dx),var(--dy)) rotate(var(--rot));opacity:1}100%{transform:translate(calc(var(--dx) * 1.15),calc(var(--dy) + 48px)) rotate(calc(var(--rot) * 1.4));opacity:0}}
 .ag-work .merge.ready:hover{filter:brightness(1.08)}
 .ag-work .merge.done{background:color-mix(in srgb,var(--c-violet) 14%,var(--w-bg));color:var(--c-violet);pointer-events:none}
 .ag-pane{position:relative;min-height:0;min-width:0}
@@ -1200,6 +1227,11 @@ body,.btn,.mark .dot,.eyebrow,.case .result b,.masthead,.section,.hero,.feature,
 .w-ds .seg2 button:focus-visible{outline:2px solid var(--w-ink);outline-offset:1px}
 /* mode: the preview follows the site, and the Mode control switches the whole site */
 :root[data-theme="dark"] .w-ds .prev::before{opacity:.5}
+/* the kit's Mode control themes the preview only; left alone, the preview follows the site */
+.w-ds[data-mode="light"] .prev{--site-paper:color-mix(in srgb,var(--blue) 7%,#F5F7FB);--site-surface:color-mix(in srgb,var(--blue) 3%,#FBFCFE);--site-ink:#101319;--site-muted:#5B6270;--site-line:color-mix(in srgb,var(--blue) 12%,#DDE3EE)}
+.w-ds[data-mode="light"] .prev::before{opacity:.7}
+.w-ds[data-mode="dark"] .prev{--site-paper:color-mix(in srgb,var(--blue) 8%,#0C0F14);--site-surface:color-mix(in srgb,var(--blue) 7%,#141920);--site-ink:#E7EAF1;--site-muted:#8B93A3;--site-line:color-mix(in srgb,var(--blue) 14%,#242A35)}
+.w-ds[data-mode="dark"] .prev::before{opacity:.5}
 /* the preview: an app screen and a few components, rendered with the site's own tokens */
 .w-ds .prev{background:var(--site-paper);padding:12px 14px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;transition:background .5s ease;position:relative}
 .w-ds .prev::before{content:"";position:absolute;inset:0;background-image:radial-gradient(var(--site-line) 1px,transparent 1.2px);background-size:14px 14px;opacity:.7;pointer-events:none}
@@ -1273,7 +1305,7 @@ body,.btn,.mark .dot,.eyebrow,.case .result b,.masthead,.section,.hero,.feature,
 .c-hero{--cc:var(--blue);--click:ck-hero 16s;--cz:0px;z-index:14}
 @keyframes ck-hero{0%,9%,11%,31%,33%,53%,55%,100%{transform:scale(1)}10%,32%,54%{transform:scale(.8)}}
 .system.hold .cur{opacity:0!important}
-.system .live-tag{top:calc(var(--ss,1) * 96px);left:calc(50% - var(--ss,1) * 208px);font-size:.56rem;padding:.24rem .56rem;gap:.35rem}
+.system .live-tag{top:calc(var(--ss,1) * 96px);left:calc(50% - var(--ss,1) * 280px);font-size:.56rem;padding:.24rem .56rem;gap:.35rem}
 .system .live-tag i{width:6px;height:6px}
 @keyframes ck-qa{0%,9%,11%,29%,31%,47%,49%,65%,67%,85%,87%,100%{transform:scale(1)}10%,30%,48%,66%,86%{transform:scale(.8)}}
 
@@ -1330,6 +1362,17 @@ body,.btn,.mark .dot,.eyebrow,.case .result b,.masthead,.section,.hero,.feature,
 .fl:hover{transform:translateY(-2px) scale(1.06)}
 .fl svg{display:block;width:100%;height:100%}
 @keyframes flags{to{transform:translateX(calc(-100% / var(--n,2)))}}
+@media (min-width:900px){.row3c.two{grid-column:span 2}.row3c.wide{grid-column:1 / -1}}
+/* stacks: three ribbons of monogram tiles, the middle one flowing the other way */
+.stack{overflow:hidden;position:relative;margin:.2rem 0 0;-webkit-mask:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+.stack-track{display:flex;width:max-content;animation:flags var(--dur,60s) linear infinite;will-change:transform;margin-bottom:.5rem}
+.stack-track:last-child{margin-bottom:0}
+.stack-track.rev{animation-direction:reverse}
+.stack:hover .stack-track{animation-play-state:paused}
+.tk{display:inline-flex;align-items:center;gap:.45rem;flex:none;height:32px;margin-right:.5rem;padding:0 .75rem 0 .3rem;border-radius:99px;background:var(--sunk);color:var(--ink);font-size:.8125rem;font-weight:500;white-space:nowrap;transition:transform .25s var(--spring),background .2s;cursor:default}
+.tk:hover{transform:translateY(-2px);background:color-mix(in srgb,var(--blue) 14%,var(--sunk))}
+.tk i{width:24px;height:24px;border-radius:7px;background:var(--bc,#333);color:var(--fc,#fff);font-family:var(--sans);font-size:9.5px;font-weight:700;letter-spacing:-.02em;display:flex;align-items:center;justify-content:center;font-style:normal;flex:none;box-shadow:inset 0 1px 0 rgba(255,255,255,.18),0 1px 2px rgba(16,19,25,.15)}
+:root[data-theme="dark"] .tk i{box-shadow:inset 0 1px 0 rgba(255,255,255,.18),0 0 0 1px rgba(255,255,255,.14)}
 /* ---------- proof numbers ---------- */
 .figures{
   display:grid;gap:var(--s3);grid-template-columns:repeat(2,minmax(0,1fr));
@@ -1690,6 +1733,7 @@ body.book-open{overflow:hidden}
   .fold{transition:none!important}
   .win,.chip-win,.you,.rp,.avail .live,.flags-track{animation:none!important}
   .flags-track{flex-wrap:wrap;width:auto;row-gap:.5rem}.flags-track .fl[aria-hidden]{display:none}
+  .stack-track{animation:none!important;flex-wrap:wrap;width:auto;row-gap:.4rem}.stack-track .tk[aria-hidden]{display:none}.stack{-webkit-mask:none;mask:none}
   .inspect,.tour,.rig,.sat .mini{transition:none!important}
   html{scroll-behavior:auto}
   .orbit,.cur,.cur svg,.brush,.ab .paint path,.ab .drop,.ab .marq,.ab .marq i,.ph-body > *,.toast,.ph-btn .rip,.ag-step .bar i,.tb .run,.code .row.hl,.cap .live,.chip-win .pend,.ag-step .caret,.w-ds .sec,.w-ds .sec::before,.w-ds .sec::after,.w-ds .callout,.w-ds .in i{animation:none!important}
@@ -1813,6 +1857,7 @@ body.book-open{overflow:hidden}
                 <div class="top">
                   <h4 id="pgtitle">Overview</h4>
                   <div class="seg" id="rng" data-nudge><a data-range="7">7d</a><a class="on" data-range="30">30d</a><a data-range="90">90d</a></div>
+                  <button class="dep sale" id="flash" type="button" title="Ten seconds of orders pouring in"><i></i><span>Flash sale</span></button>
                   <button class="dep" id="deploy" type="button" data-nudge><i></i><span>Deploy</span></button>
                 </div>
 
@@ -2076,7 +2121,7 @@ body.book-open{overflow:hidden}
           <div class="ground"></div>
           <div class="fp" style="left:14px;top:14px;width:612px;height:372px"></div>
           <div class="win w-agents" id="wag" style="left:14px;top:14px;width:612px;height:372px;--z:44px">
-            <div class="tb"><span class="dots"><i></i><i></i><i></i></span><span class="ttl">Agent run</span><span id="agrunid">&middot; #418</span><span class="sp"><span class="ag-state" id="agstate"><i></i><span>idle</span></span><span class="run" id="agrun" role="button" tabindex="0" data-nudge>&#9654;&nbsp; Run pipeline</span></span></div>
+            <div class="tb"><span class="dots"><i></i><i></i><i></i></span><span class="ttl">Agent run</span><span id="agrunid">&middot; #418</span><span class="sp"><span class="ag-state" id="agstate"><i></i><span>idle</span></span><span class="run brk" id="agbreak" role="button" tabindex="0" title="Make a test fail mid-run and watch the agents deal with it">&#9889;&nbsp; Break a test</span><span class="run" id="agrun" role="button" tabindex="0" data-nudge>&#9654;&nbsp; Run pipeline</span></span></div>
             <div class="body ag-body">
               <div class="ag-task"><span class="k">Task</span><b>Verify auth on <code>POST /jobs</code></b><span class="src">VEN-231 &middot; from Linear</span></div>
 
@@ -2117,7 +2162,7 @@ body.book-open{overflow:hidden}
                 <div class="ag-pane">
                   <div class="dw" data-for="p"><ul class="tasks"><li>Read the auth spec and the failing test</li><li>Patch <code>auth/route.ts</code> and add a test for it</li><li>Open a pull request and hand it to review</li></ul><p class="sum"><span><b>3</b> tasks</span><span><b>2</b> can run in parallel</span><span>est. <b>12 min</b></span></p></div>
                   <div class="dw" data-for="r"><div class="srcs"><div><b>docs/auth.md</b><i style="--w:92%"></i><em>0.92</em></div><div><b>RFC 7519 &middot; JSON Web Tokens</b><i style="--w:81%"></i><em>0.81</em></div><div><b>tests/auth.spec.ts</b><i style="--w:77%"></i><em>0.77</em></div></div><p class="sum"><span><b>3</b> sources</span><span><b>12k</b> tokens read</span><span>best match <b>0.92</b></span></p></div>
-                  <div class="dw" data-for="b"><div class="diff"><div class="ctx">&nbsp; export async function POST(req) {</div><div class="del">&minus; &nbsp; const user = req.user</div><div class="add">+ &nbsp; const user = await auth(req)</div><div class="add">+ &nbsp; if (!user) return deny(401)</div><div class="ctx">&nbsp; &nbsp; const job = await jobs.create(user.id, req.body)</div></div><div class="tests"><i></i><span>run_tests() &middot; <b id="agtestn">0</b> / 38 passed</span></div><p class="sum"><span><b>2</b> files changed</span><span><b>+42</b> &minus;7</span><span><b>38 / 38</b> tests</span></p></div>
+                  <div class="dw" data-for="b"><div class="diff"><div class="ctx">&nbsp; export async function POST(req) {</div><div class="del">&minus; &nbsp; const user = req.user</div><div class="add">+ &nbsp; const user = await auth(req)</div><div class="add">+ &nbsp; if (!user) return deny(401)</div><div class="add fix">+ &nbsp; if (user.exp &lt; now()) return deny(401)</div><div class="ctx">&nbsp; &nbsp; const job = await jobs.create(user.id, req.body)</div></div><div class="tests"><i></i><span id="agtestline">run_tests() &middot; <b id="agtestn">0</b> / 38 passed</span></div><p class="sum"><span><b>2</b> files changed</span><span><b>+42</b> &minus;7</span><span><b>38 / 38</b> tests</span></p></div>
                   <div class="dw" data-for="v"><ul class="notes"><li>Null check on line 12 &mdash; covered by the new test</li><li>Expired-token path still untested &mdash; asks for a case</li></ul><span class="verdict">Approved &middot; 2 notes</span><p class="sum"><span><b>approved</b></span><span><b>2</b> notes</span><span><b>0</b> blocking</span></p></div>
                   <div class="dw" data-for="o"><p class="pr"><b id="agprtitle">#1287 &middot; feat: verify auth on POST /jobs</b><span>into main</span></p><ul class="checks"><li>lint</li><li>types</li><li>tests &middot; 38 / 38</li><li>secrets scan</li></ul><p class="sum"><span><b>4</b> checks</span><span><b>squash</b> merge</span><span>deploys <b>on merge</b></span></p></div>
                   <p class="dw-empty">Click a stage to watch it work<br>or run the whole pipeline</p>
@@ -2141,7 +2186,7 @@ body.book-open{overflow:hidden}
         <p class="svc"><b>UI/UX</b> &middot; design systems &middot; prototypes &middot; architecture review</p>
         <p class="d">Interfaces, design systems and prototypes. This brand kit styles the very page you are on.</p>
       </div>
-      <div class="scene draft" style="--sw:640;--sh:400" aria-label="A brand kit for the product: six themes shown as tiny interfaces, three typefaces, a corner radius and light or dark. Every control changes the preview and the whole site around it.">
+      <div class="scene draft" style="--sw:640;--sh:400" aria-label="A brand kit for the product: six themes shown as tiny interfaces, three typefaces, a corner radius, and light or dark for the preview. Theme, type and corners change the whole site around it.">
         <div class="rig"><div class="orbit"><div class="stage">
           <div class="ground"></div>
           <div class="fp" style="left:14px;top:14px;width:612px;height:372px"></div>
@@ -2212,17 +2257,18 @@ body.book-open{overflow:hidden}
         <a class="logo" href="#contact"><svg viewBox="0 0 160 40" aria-label="Sable and Co"><text x="8" y="27" font-family="Georgia,Times New Roman,serif" font-size="19" font-style="italic" font-weight="400" fill="currentColor">Sable &amp; Co.</text></svg></a>
       </div>
       <div class="rows3">
-        <div class="row3c">
+        <div class="row3c two">
           <h3><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16v11H4zM4 11h16M9 7V5h6v2"/></svg>Products we shipped</h3>
           <div class="chips"><span>Dispatch console</span><span>Patient intake app</span><span>Support agent</span><span>Ordering app</span><span>Ops dashboard</span><span>Customer portal</span><span>Design system</span><span>Field service app</span></div>
         </div>
         <div class="row3c">
-          <h3><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 12h8M12 8v8"/><circle cx="12" cy="12" r="9"/></svg>Technology partners</h3>
-          <div class="chips"><span>AWS</span><span>Google Cloud</span><span>Vercel</span><span>Stripe</span><span>Twilio</span><span>Expo</span><span>Anthropic</span><span>OpenAI</span></div>
-        </div>
-        <div class="row3c">
           <h3><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18"/></svg>Countries</h3>
           <div class="flags" aria-label="India, United Arab Emirates, Singapore, United Kingdom, Germany, Netherlands, United States, Australia"><div class="flags-track"><span class="fl" title="India"><svg viewBox="0 0 60 40" role="img" aria-label="India"><rect width="60" height="40" fill="#FF9933"/><rect y="13.33" width="60" height="13.34" fill="#fff"/><rect y="26.67" width="60" height="13.33" fill="#138808"/><circle cx="30" cy="20" r="5" fill="none" stroke="#000080" stroke-width="1.3"/><circle cx="30" cy="20" r="1" fill="#000080"/></svg></span><span class="fl" title="United Arab Emirates"><svg viewBox="0 0 60 40" role="img" aria-label="United Arab Emirates"><rect width="60" height="40" fill="#00732F"/><rect y="13.33" width="60" height="13.34" fill="#fff"/><rect y="26.67" width="60" height="13.33" fill="#000"/><rect width="15" height="40" fill="#FF0000"/></svg></span><span class="fl" title="Singapore"><svg viewBox="0 0 60 40" role="img" aria-label="Singapore"><rect width="60" height="40" fill="#EF3340"/><rect y="20" width="60" height="20" fill="#fff"/><circle cx="14.5" cy="10" r="6.2" fill="#fff"/><circle cx="17" cy="10" r="5.4" fill="#EF3340"/><path d="M0,-1L.294,-.405.951,-.309.476,.155.588,.809 0,.5-.588,.809-.476,.155-.951,-.309-.294,-.405Z" transform="translate(20.5 5.6) scale(1.35)" fill="#fff"/><path d="M0,-1L.294,-.405.951,-.309.476,.155.588,.809 0,.5-.588,.809-.476,.155-.951,-.309-.294,-.405Z" transform="translate(16.6 8.4) scale(1.35)" fill="#fff"/><path d="M0,-1L.294,-.405.951,-.309.476,.155.588,.809 0,.5-.588,.809-.476,.155-.951,-.309-.294,-.405Z" transform="translate(24.4 8.4) scale(1.35)" fill="#fff"/><path d="M0,-1L.294,-.405.951,-.309.476,.155.588,.809 0,.5-.588,.809-.476,.155-.951,-.309-.294,-.405Z" transform="translate(18.1 12.9) scale(1.35)" fill="#fff"/><path d="M0,-1L.294,-.405.951,-.309.476,.155.588,.809 0,.5-.588,.809-.476,.155-.951,-.309-.294,-.405Z" transform="translate(22.9 12.9) scale(1.35)" fill="#fff"/></svg></span><span class="fl" title="United Kingdom"><svg viewBox="0 0 60 40" role="img" aria-label="United Kingdom"><rect width="60" height="40" fill="#012169"/><path d="M0 0L60 40M60 0L0 40" stroke="#fff" stroke-width="8"/><path d="M0 0L60 40M60 0L0 40" stroke="#C8102E" stroke-width="2.6"/><path d="M30 0V40M0 20H60" stroke="#fff" stroke-width="12"/><path d="M30 0V40M0 20H60" stroke="#C8102E" stroke-width="7"/></svg></span><span class="fl" title="Germany"><svg viewBox="0 0 60 40" role="img" aria-label="Germany"><rect width="60" height="40" fill="#000"/><rect y="13.33" width="60" height="13.34" fill="#DD0000"/><rect y="26.67" width="60" height="13.33" fill="#FFCE00"/></svg></span><span class="fl" title="Netherlands"><svg viewBox="0 0 60 40" role="img" aria-label="Netherlands"><rect width="60" height="40" fill="#AE1C28"/><rect y="13.33" width="60" height="13.34" fill="#fff"/><rect y="26.67" width="60" height="13.33" fill="#21468B"/></svg></span><span class="fl" title="United States"><svg viewBox="0 0 60 40" role="img" aria-label="United States"><rect width="60" height="40" fill="#fff"/><rect y="0.00" width="60" height="3.08" fill="#B22234"/><rect y="6.15" width="60" height="3.08" fill="#B22234"/><rect y="12.31" width="60" height="3.08" fill="#B22234"/><rect y="18.46" width="60" height="3.08" fill="#B22234"/><rect y="24.62" width="60" height="3.08" fill="#B22234"/><rect y="30.77" width="60" height="3.08" fill="#B22234"/><rect y="36.92" width="60" height="3.08" fill="#B22234"/><rect width="26" height="21.6" fill="#3C3B6E"/><circle cx="2.6" cy="2.4" r=".75" fill="#fff"/><circle cx="7.1" cy="2.4" r=".75" fill="#fff"/><circle cx="11.6" cy="2.4" r=".75" fill="#fff"/><circle cx="16.1" cy="2.4" r=".75" fill="#fff"/><circle cx="20.6" cy="2.4" r=".75" fill="#fff"/><circle cx="25.1" cy="2.4" r=".75" fill="#fff"/><circle cx="4.8" cy="5.8" r=".75" fill="#fff"/><circle cx="9.3" cy="5.8" r=".75" fill="#fff"/><circle cx="13.8" cy="5.8" r=".75" fill="#fff"/><circle cx="18.4" cy="5.8" r=".75" fill="#fff"/><circle cx="22.9" cy="5.8" r=".75" fill="#fff"/><circle cx="2.6" cy="9.2" r=".75" fill="#fff"/><circle cx="7.1" cy="9.2" r=".75" fill="#fff"/><circle cx="11.6" cy="9.2" r=".75" fill="#fff"/><circle cx="16.1" cy="9.2" r=".75" fill="#fff"/><circle cx="20.6" cy="9.2" r=".75" fill="#fff"/><circle cx="25.1" cy="9.2" r=".75" fill="#fff"/><circle cx="4.8" cy="12.6" r=".75" fill="#fff"/><circle cx="9.3" cy="12.6" r=".75" fill="#fff"/><circle cx="13.8" cy="12.6" r=".75" fill="#fff"/><circle cx="18.4" cy="12.6" r=".75" fill="#fff"/><circle cx="22.9" cy="12.6" r=".75" fill="#fff"/><circle cx="2.6" cy="16.0" r=".75" fill="#fff"/><circle cx="7.1" cy="16.0" r=".75" fill="#fff"/><circle cx="11.6" cy="16.0" r=".75" fill="#fff"/><circle cx="16.1" cy="16.0" r=".75" fill="#fff"/><circle cx="20.6" cy="16.0" r=".75" fill="#fff"/><circle cx="25.1" cy="16.0" r=".75" fill="#fff"/><circle cx="4.8" cy="19.4" r=".75" fill="#fff"/><circle cx="9.3" cy="19.4" r=".75" fill="#fff"/><circle cx="13.8" cy="19.4" r=".75" fill="#fff"/><circle cx="18.4" cy="19.4" r=".75" fill="#fff"/><circle cx="22.9" cy="19.4" r=".75" fill="#fff"/></svg></span><span class="fl" title="Australia"><svg viewBox="0 0 60 40" role="img" aria-label="Australia"><rect width="60" height="40" fill="#00008B"/><g transform="scale(.5)"><rect width="60" height="40" fill="#012169"/><path d="M0 0L60 40M60 0L0 40" stroke="#fff" stroke-width="8"/><path d="M0 0L60 40M60 0L0 40" stroke="#C8102E" stroke-width="2.6"/><path d="M30 0V40M0 20H60" stroke="#fff" stroke-width="12"/><path d="M30 0V40M0 20H60" stroke="#C8102E" stroke-width="7"/></g><polygon points="15.00,25.40 15.87,28.20 18.60,27.13 16.95,29.55 19.48,31.02 16.56,31.25 17.00,34.14 15.00,32.00 13.00,34.14 13.44,31.25 10.52,31.02 13.05,29.55 11.40,27.13 14.13,28.20" fill="#fff"/><polygon points="45.00,6.60 45.46,8.05 46.88,7.50 46.02,8.77 47.34,9.53 45.82,9.65 46.04,11.16 45.00,10.05 43.96,11.16 44.18,9.65 42.66,9.53 43.98,8.77 43.12,7.50 44.54,8.05" fill="#fff"/><polygon points="37.00,16.60 37.46,18.05 38.88,17.50 38.02,18.77 39.34,19.53 37.82,19.65 38.04,21.16 37.00,20.05 35.96,21.16 36.18,19.65 34.66,19.53 35.98,18.77 35.12,17.50 36.54,18.05" fill="#fff"/><polygon points="52.00,14.60 52.46,16.05 53.88,15.50 53.02,16.77 54.34,17.53 52.82,17.65 53.04,19.16 52.00,18.05 50.96,19.16 51.18,17.65 49.66,17.53 50.98,16.77 50.12,15.50 51.54,16.05" fill="#fff"/><polygon points="45.00,29.60 45.46,31.05 46.88,30.50 46.02,31.77 47.34,32.53 45.82,32.65 46.04,34.16 45.00,33.05 43.96,34.16 44.18,32.65 42.66,32.53 43.98,31.77 43.12,30.50 44.54,31.05" fill="#fff"/><path d="M0,-1L.294,-.405.951,-.309.476,.155.588,.809 0,.5-.588,.809-.476,.155-.951,-.309-.294,-.405Z" transform="translate(48.5 22.5) scale(1.2)" fill="#fff"/></svg></span><span class="fl" title="India" aria-hidden="true"><svg viewBox="0 0 60 40" role="img" aria-label="India"><rect width="60" height="40" fill="#FF9933"/><rect y="13.33" width="60" height="13.34" fill="#fff"/><rect y="26.67" width="60" height="13.33" fill="#138808"/><circle cx="30" cy="20" r="5" fill="none" stroke="#000080" stroke-width="1.3"/><circle cx="30" cy="20" r="1" fill="#000080"/></svg></span><span class="fl" title="United Arab Emirates" aria-hidden="true"><svg viewBox="0 0 60 40" role="img" aria-label="United Arab Emirates"><rect width="60" height="40" fill="#00732F"/><rect y="13.33" width="60" height="13.34" fill="#fff"/><rect y="26.67" width="60" height="13.33" fill="#000"/><rect width="15" height="40" fill="#FF0000"/></svg></span><span class="fl" title="Singapore" aria-hidden="true"><svg viewBox="0 0 60 40" role="img" aria-label="Singapore"><rect width="60" height="40" fill="#EF3340"/><rect y="20" width="60" height="20" fill="#fff"/><circle cx="14.5" cy="10" r="6.2" fill="#fff"/><circle cx="17" cy="10" r="5.4" fill="#EF3340"/><path d="M0,-1L.294,-.405.951,-.309.476,.155.588,.809 0,.5-.588,.809-.476,.155-.951,-.309-.294,-.405Z" transform="translate(20.5 5.6) scale(1.35)" fill="#fff"/><path d="M0,-1L.294,-.405.951,-.309.476,.155.588,.809 0,.5-.588,.809-.476,.155-.951,-.309-.294,-.405Z" transform="translate(16.6 8.4) scale(1.35)" fill="#fff"/><path d="M0,-1L.294,-.405.951,-.309.476,.155.588,.809 0,.5-.588,.809-.476,.155-.951,-.309-.294,-.405Z" transform="translate(24.4 8.4) scale(1.35)" fill="#fff"/><path d="M0,-1L.294,-.405.951,-.309.476,.155.588,.809 0,.5-.588,.809-.476,.155-.951,-.309-.294,-.405Z" transform="translate(18.1 12.9) scale(1.35)" fill="#fff"/><path d="M0,-1L.294,-.405.951,-.309.476,.155.588,.809 0,.5-.588,.809-.476,.155-.951,-.309-.294,-.405Z" transform="translate(22.9 12.9) scale(1.35)" fill="#fff"/></svg></span><span class="fl" title="United Kingdom" aria-hidden="true"><svg viewBox="0 0 60 40" role="img" aria-label="United Kingdom"><rect width="60" height="40" fill="#012169"/><path d="M0 0L60 40M60 0L0 40" stroke="#fff" stroke-width="8"/><path d="M0 0L60 40M60 0L0 40" stroke="#C8102E" stroke-width="2.6"/><path d="M30 0V40M0 20H60" stroke="#fff" stroke-width="12"/><path d="M30 0V40M0 20H60" stroke="#C8102E" stroke-width="7"/></svg></span><span class="fl" title="Germany" aria-hidden="true"><svg viewBox="0 0 60 40" role="img" aria-label="Germany"><rect width="60" height="40" fill="#000"/><rect y="13.33" width="60" height="13.34" fill="#DD0000"/><rect y="26.67" width="60" height="13.33" fill="#FFCE00"/></svg></span><span class="fl" title="Netherlands" aria-hidden="true"><svg viewBox="0 0 60 40" role="img" aria-label="Netherlands"><rect width="60" height="40" fill="#AE1C28"/><rect y="13.33" width="60" height="13.34" fill="#fff"/><rect y="26.67" width="60" height="13.33" fill="#21468B"/></svg></span><span class="fl" title="United States" aria-hidden="true"><svg viewBox="0 0 60 40" role="img" aria-label="United States"><rect width="60" height="40" fill="#fff"/><rect y="0.00" width="60" height="3.08" fill="#B22234"/><rect y="6.15" width="60" height="3.08" fill="#B22234"/><rect y="12.31" width="60" height="3.08" fill="#B22234"/><rect y="18.46" width="60" height="3.08" fill="#B22234"/><rect y="24.62" width="60" height="3.08" fill="#B22234"/><rect y="30.77" width="60" height="3.08" fill="#B22234"/><rect y="36.92" width="60" height="3.08" fill="#B22234"/><rect width="26" height="21.6" fill="#3C3B6E"/><circle cx="2.6" cy="2.4" r=".75" fill="#fff"/><circle cx="7.1" cy="2.4" r=".75" fill="#fff"/><circle cx="11.6" cy="2.4" r=".75" fill="#fff"/><circle cx="16.1" cy="2.4" r=".75" fill="#fff"/><circle cx="20.6" cy="2.4" r=".75" fill="#fff"/><circle cx="25.1" cy="2.4" r=".75" fill="#fff"/><circle cx="4.8" cy="5.8" r=".75" fill="#fff"/><circle cx="9.3" cy="5.8" r=".75" fill="#fff"/><circle cx="13.8" cy="5.8" r=".75" fill="#fff"/><circle cx="18.4" cy="5.8" r=".75" fill="#fff"/><circle cx="22.9" cy="5.8" r=".75" fill="#fff"/><circle cx="2.6" cy="9.2" r=".75" fill="#fff"/><circle cx="7.1" cy="9.2" r=".75" fill="#fff"/><circle cx="11.6" cy="9.2" r=".75" fill="#fff"/><circle cx="16.1" cy="9.2" r=".75" fill="#fff"/><circle cx="20.6" cy="9.2" r=".75" fill="#fff"/><circle cx="25.1" cy="9.2" r=".75" fill="#fff"/><circle cx="4.8" cy="12.6" r=".75" fill="#fff"/><circle cx="9.3" cy="12.6" r=".75" fill="#fff"/><circle cx="13.8" cy="12.6" r=".75" fill="#fff"/><circle cx="18.4" cy="12.6" r=".75" fill="#fff"/><circle cx="22.9" cy="12.6" r=".75" fill="#fff"/><circle cx="2.6" cy="16.0" r=".75" fill="#fff"/><circle cx="7.1" cy="16.0" r=".75" fill="#fff"/><circle cx="11.6" cy="16.0" r=".75" fill="#fff"/><circle cx="16.1" cy="16.0" r=".75" fill="#fff"/><circle cx="20.6" cy="16.0" r=".75" fill="#fff"/><circle cx="25.1" cy="16.0" r=".75" fill="#fff"/><circle cx="4.8" cy="19.4" r=".75" fill="#fff"/><circle cx="9.3" cy="19.4" r=".75" fill="#fff"/><circle cx="13.8" cy="19.4" r=".75" fill="#fff"/><circle cx="18.4" cy="19.4" r=".75" fill="#fff"/><circle cx="22.9" cy="19.4" r=".75" fill="#fff"/></svg></span><span class="fl" title="Australia" aria-hidden="true"><svg viewBox="0 0 60 40" role="img" aria-label="Australia"><rect width="60" height="40" fill="#00008B"/><g transform="scale(.5)"><rect width="60" height="40" fill="#012169"/><path d="M0 0L60 40M60 0L0 40" stroke="#fff" stroke-width="8"/><path d="M0 0L60 40M60 0L0 40" stroke="#C8102E" stroke-width="2.6"/><path d="M30 0V40M0 20H60" stroke="#fff" stroke-width="12"/><path d="M30 0V40M0 20H60" stroke="#C8102E" stroke-width="7"/></g><polygon points="15.00,25.40 15.87,28.20 18.60,27.13 16.95,29.55 19.48,31.02 16.56,31.25 17.00,34.14 15.00,32.00 13.00,34.14 13.44,31.25 10.52,31.02 13.05,29.55 11.40,27.13 14.13,28.20" fill="#fff"/><polygon points="45.00,6.60 45.46,8.05 46.88,7.50 46.02,8.77 47.34,9.53 45.82,9.65 46.04,11.16 45.00,10.05 43.96,11.16 44.18,9.65 42.66,9.53 43.98,8.77 43.12,7.50 44.54,8.05" fill="#fff"/><polygon points="37.00,16.60 37.46,18.05 38.88,17.50 38.02,18.77 39.34,19.53 37.82,19.65 38.04,21.16 37.00,20.05 35.96,21.16 36.18,19.65 34.66,19.53 35.98,18.77 35.12,17.50 36.54,18.05" fill="#fff"/><polygon points="52.00,14.60 52.46,16.05 53.88,15.50 53.02,16.77 54.34,17.53 52.82,17.65 53.04,19.16 52.00,18.05 50.96,19.16 51.18,17.65 49.66,17.53 50.98,16.77 50.12,15.50 51.54,16.05" fill="#fff"/><polygon points="45.00,29.60 45.46,31.05 46.88,30.50 46.02,31.77 47.34,32.53 45.82,32.65 46.04,34.16 45.00,33.05 43.96,34.16 44.18,32.65 42.66,32.53 43.98,31.77 43.12,30.50 44.54,31.05" fill="#fff"/><path d="M0,-1L.294,-.405.951,-.309.476,.155.588,.809 0,.5-.588,.809-.476,.155-.951,-.309-.294,-.405Z" transform="translate(48.5 22.5) scale(1.2)" fill="#fff"/></svg></span></div></div>
+        </div>
+        <div class="row3c wide">
+          <h3><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 12h8M12 8v8"/><circle cx="12" cy="12" r="9"/></svg>Technology partners &amp; stacks</h3>
+          <div class="stack" id="stacks" aria-label="Technology partners and the stacks we build with"></div>
+          <p class="fine">Cloud, payments, AI and enterprise partners, and the stacks we ship in.</p>
         </div>
       </div>
       <div class="figures">
@@ -2767,15 +2813,20 @@ body.book-open{overflow:hidden}
       if (!sc._held){
         sc._held = true; sc.classList.add('hold');
         (sc._anims || []).forEach(function(a){ a.pause(); });
-        var tag = sc.querySelector('.live-tag'); if (tag){ tag.innerHTML = '<i></i><b>You</b> are driving'; tag.classList.add('done'); }
+        var tag = sc.querySelector('.live-tag'); if (tag && !sc._over){ tag.innerHTML = '<i></i><b>You</b> are driving'; tag.classList.add('done'); }
       }
       sc._release = setTimeout(function(){ release(sc); }, IDLE);
     }
     function release(sc){
       sc._held = false; sc.classList.remove('hold');
       if (!sc.classList.contains('off')) (sc._anims || []).forEach(function(a){ a.play(); });
-      var tag = sc.querySelector('.live-tag'); if (tag){ tag.innerHTML = '<i></i><b>Click anything</b> \u00b7 it\u2019s live'; tag.classList.remove('done'); }
+      var tag = sc.querySelector('.live-tag'); if (tag && !sc._over){ tag.innerHTML = '<i></i><b>Click anything</b> \u00b7 it\u2019s live'; tag.classList.remove('done'); }
     }
+    /* once the tape has walked someone through a scene, the tag keeps a plain hand-over line instead */
+    live.handOver = function(sc, html){
+      if (!sc || !html) return; sc._over = html;
+      var tag = sc.querySelector('.live-tag'); if (tag){ tag.innerHTML = '<i></i>' + html; tag.classList.add('done'); }
+    };
     all('.feature .scene, .hero .system').forEach(function(sc){
       sc.addEventListener('pointerdown', function(e){ if (sc.classList.contains('system') || (e.target.closest && e.target.closest('.stage'))) takeOver(sc); });
       var tag = document.createElement('span'); tag.className = 'live-tag'; tag.innerHTML = '<i></i><b>Click anything</b> \u00b7 it\u2019s live'; sc.appendChild(tag);
@@ -2889,7 +2940,7 @@ body.book-open{overflow:hidden}
           if (lg) lg.textContent = share + '%'; acc += len;
         });
         var hrs = document.getElementById('hours');
-        if (hrs){ if (!hrs.children.length){ d.hours.forEach(function(){ hrs.appendChild(document.createElement('i')); }); } Array.prototype.forEach.call(hrs.children, function(el, i){ el.style.setProperty('--v', (Math.round(d.hours[i] * d.hours[i] * .96) + 4) + '%'); el.setAttribute('title', d.hours[i] * 3 + ' orders'); }); }
+        if (hrs){ if (!hrs.children.length){ d.hours.forEach(function(){ hrs.appendChild(document.createElement('i')); }); } Array.prototype.forEach.call(hrs.children, function(el, i){ el.style.setProperty('--v', (Math.round(d.hours[i] * d.hours[i] * .96) + 4) + '%'); el.setAttribute('title', Math.round(d.hours[i] * 3) + ' orders'); }); }
       }
       function req(){}
       var toastT = null;
@@ -2965,6 +3016,45 @@ body.book-open{overflow:hidden}
         counted(1);
       }
       on(igrid, 'click', function(e){ var b = e.target.closest('.isy'); if (!b) return; var c = b.closest('.ig'); if (c) sync(c.getAttribute('data-sys')); });
+      /* a flash sale: ten seconds of orders pouring in, and everything on the overview moves with them */
+      var saleBtn = document.getElementById('flash'), saleOn = false;
+      var ITEMS = [['Oat latte \u00d7 2', 9.4], ['Sourdough loaf', 6.5], ['Cold brew \u00b7 1L', 11.2], ['Ramen bowl', 13.8], ['Masala chai kit', 8.8], ['Filter coffee \u00b7 500g', 7.2], ['Croissant \u00d7 4', 10.4], ['Flat white', 4.6], ['Granola jar', 12.9], ['Bao \u00d7 3', 9.9]];
+      var WHO = [['Priya S.', 'Indiranagar', '#7B54EE', 'PS'], ['Arjun M.', 'Koramangala', '#0E9CB8', 'AM'], ['Lena R.', 'HSR Layout', '#12A05A', 'LR'], ['Tomas K.', 'Whitefield', '#DE8912', 'TK'], ['Nia O.', 'Jayanagar', '#DC3E96', 'NO'], ['Rahul D.', 'Indiranagar', '#2F6FEB', 'RD'], ['Mei L.', 'MG Road', '#0E9CB8', 'ML'], ['Sam T.', 'Bellandur', '#7B54EE', 'ST']];
+      function num(v){ return parseInt(String(v).replace(/[^0-9]/g, ''), 10) || 0; }
+      function fmt(n){ return Math.round(n).toLocaleString('en-US'); }
+      function addOrder(it, who, qty, amt){
+        var list = document.getElementById('orders'); if (!list) return;
+        var r = document.createElement('div'); r.className = 'or new';
+        r.innerHTML = '<span class="pt" style="--pc:var(--c-amber)"><svg viewBox="0 0 24 24"><path d="M5 6h14l-1.5 13h-11z"/><path d="M8 10h8"/></svg></span><span class="ot"><b>' + it[0] + (qty > 1 ? ' \u00d7 ' + qty : '') + '</b><small><i style="--ac:' + who[2] + '">' + who[3] + '</i>' + who[0] + ' \u00b7 ' + who[1] + '</small></span><em>$' + amt.toFixed(2) + '</em><span class="step" data-s="0"><i></i><i></i><i></i></span><span class="pill2" data-s="0">paid</span><i class="oid">#' + (nextOrder - 1) + '</i>';
+        list.insertBefore(r, list.firstChild); while (list.children.length > 6) list.removeChild(list.lastChild);
+        var chip = app.querySelector('.ochips .oc'); if (chip) chip.textContent = (num(chip.textContent) + 1) + ' to pack';
+      }
+      function flash(){
+        if (saleOn || !saleBtn) return; saleOn = true; saleBtn.classList.add('on');
+        var range = app.getAttribute('data-range') || '30', d = DATA[range], ordBase = num(d.ord), revBase = num(d.rev), liveBase = num(d.live), t0 = performance.now(), hour = 9, n = 0, total = 0;
+        var hrs = document.getElementById('hours'); if (hrs) hrs.classList.add('hot');
+        toast('Flash sale is live \u00b7 20% off for 10 minutes'); req('POST', '/api/promotions {code:FLASH20}', 201, 18);
+        function tick(){
+          var it = ITEMS[Math.floor(Math.random() * ITEMS.length)], who = WHO[Math.floor(Math.random() * WHO.length)], qty = it[0].indexOf('\u00d7') > -1 ? 1 : 1 + Math.floor(Math.random() * 3), amt = it[1] * qty * .8;
+          n++; total += amt;
+          d.ord = fmt(ordBase + n); d.rev = fmt(revBase + total); d.live = String(Math.min(liveBase + 24, liveBase + Math.round(n * 1.3)));
+          d.bars[6] = Math.min(100, d.bars[6] + .6);
+          d.hours[hour] = Math.min(10, d.hours[hour] + .45); if (n % 6 === 0) hour = Math.min(23, hour + 1);
+          render(range);
+          all('.kpi .kt b', app).slice(0, 2).forEach(function(b){ b.classList.remove('bump'); void b.offsetWidth; b.classList.add('bump'); });
+          saleBtn.lastElementChild.textContent = n + ' orders \u00b7 ' + Math.max(0, 10 - Math.floor((performance.now() - t0) / 1000)) + 's';
+          if (n % 3 === 1) toast(who[0] + ' \u00b7 ' + it[0] + (qty > 1 ? ' \u00d7 ' + qty : '') + ' \u00b7 $' + amt.toFixed(2));
+          nextOrder++; addOrder(it, who, qty, amt);
+          if (n % 4 === 0){ so++; ilog('sap', 'Sales order <b>' + so + '</b> created for #' + (nextOrder - 1) + ' \u00b7 flash sale'); igCard('sap', 'SO ' + so + ' \u00b7 #' + (nextOrder - 1) + ' \u00b7 created'); counted(1); }
+          if (still || performance.now() - t0 >= 10000) end(); else setTimeout(tick, 220 + Math.random() * 260);
+        }
+        function end(){
+          saleOn = false; saleBtn.classList.remove('on'); saleBtn.lastElementChild.textContent = 'Flash sale'; if (hrs) hrs.classList.remove('hot');
+          toast('Sale over \u00b7 ' + n + ' orders \u00b7 $' + fmt(total) + ' in 10 minutes'); req('GET', '/api/promotions/FLASH20/report', 200, 22);
+        }
+        tick();
+      }
+      on(saleBtn, 'click', flash);
       /* left alone, the app keeps moving: views, ranges and pages take turns (not while the note is still walking someone through it) */
       var TOUR = [function(){ setView('trend'); }, function(){ setRange('7'); }, function(){ setPage('orders'); }, function(){ setPage('customers'); }, function(){ setPage('integ'); }, function(){ sync('sap'); }, function(){ setPage('overview'); setView('bars'); setRange('30'); }, function(){ setView('table'); }, function(){ setRange('90'); setView('trend'); }], autoN = 0;
       setInterval(function(){
@@ -2998,7 +3088,7 @@ body.book-open{overflow:hidden}
       function siteDark(){ return document.documentElement.getAttribute('data-theme') === 'dark'; }
       function setNight(on){ app.classList.toggle('night', on); app.classList.toggle('day', !on && siteDark()); var r = app.querySelector('#appset .r[data-set="night"]'); if (r) r.classList.toggle('on', on); }
       function syncTheme(t){ app.classList.remove('day'); setNight(t === 'dark'); }
-      live.web = { setRange: setRange, setView: setView, setPage: setPage, deploy: deploy, setNight: setNight, syncTheme: syncTheme, sync: sync };
+      live.web = { setRange: setRange, setView: setView, setPage: setPage, deploy: deploy, setNight: setNight, syncTheme: syncTheme, sync: sync, flash: flash };
     })();
 
     /* ---- mobile: an app you can tap through, on either platform ---- */
@@ -3102,7 +3192,7 @@ body.book-open{overflow:hidden}
       function prog(k, ms){ var n = nodes[k]; if (n) n.style.setProperty('--jd', ms + 'ms'); }
       function st(k, state, label, line){
         var n = nodes[k]; if (!n) return;
-        n.classList.remove('run', 'ok', 'merged'); if (state) n.classList.add(state);
+        n.classList.remove('run', 'ok', 'merged', 'fail'); if (state) n.classList.add(state);
         if (state === 'run'){ edge(k, 'flow'); win.classList.add('busy'); statsStart(); } else if (state === 'ok' || state === 'merged'){ edge(k, 'done'); }
         var s = n.querySelector('.st'); s.innerHTML = '<i></i>' + label;
         if (line){ var l = n.querySelector('.line'); if (l) l.innerHTML = line; }
@@ -3179,7 +3269,7 @@ body.book-open{overflow:hidden}
         return d;
       }
       function resetAll(){
-        stop(); merged = false; win.classList.remove('done'); edgesOff(); statsReset(); resetMerge();
+        stop(); merged = false; win.classList.remove('done'); edgesOff(); statsReset(); resetMerge(); calm();
         ['p', 'r', 'b', 'v'].forEach(function(k){ st(k, '', 'idle', IDLE_LINES[k]); resetPanel(k); });
         st('o', '', 'wait', prLine('opens after review')); resetPanel('o');
         document.getElementById('agprtitle').textContent = '#' + prNo() + ' \u00b7 feat: verify auth on POST /jobs';
@@ -3192,22 +3282,110 @@ body.book-open{overflow:hidden}
         order.forEach(function(k){ var t0 = at; later(t0, function(){ act(k, true); }); at += (k === 'p' ? 2300 : k === 'r' ? 2400 : k === 'b' ? 3200 : k === 'v' ? 2100 : 1900) + 350; });
         later(at, function(){ runBtn.classList.remove('busy'); win.classList.remove('busy'); statsStop(); });
       }
+      /* a small burst of confetti from wherever the good news happened */
+      function burst(el){
+        if (!el || still) return;
+        var wr = win.getBoundingClientRect(), mr = el.getBoundingClientRect(), k = (wr.width / win.offsetWidth) || 1, x = (mr.left - wr.left + mr.width / 2) / k, y = (mr.top - wr.top + mr.height / 2) / k;
+        var cols = ['var(--c-green)', 'var(--blue)', 'var(--c-violet)', 'var(--c-amber)', 'var(--c-cyan)', '#FF6BB4'];
+        for (var i = 0; i < 26; i++){
+          var c = document.createElement('i'), a = Math.random() * Math.PI * 2, d = 50 + Math.random() * 90; c.className = 'cf';
+          c.style.setProperty('--x', x.toFixed(0) + 'px'); c.style.setProperty('--y', y.toFixed(0) + 'px'); c.style.setProperty('--c', cols[i % cols.length]);
+          c.style.setProperty('--dx', (Math.cos(a) * d).toFixed(0) + 'px'); c.style.setProperty('--dy', (Math.sin(a) * d - 40).toFixed(0) + 'px'); c.style.setProperty('--rot', (Math.random() * 720 - 360).toFixed(0) + 'deg');
+          win.appendChild(c); (function(n){ setTimeout(function(){ if (n.parentNode) n.parentNode.removeChild(n); }, 1100); })(c);
+        }
+      }
       function merge(){
         if (!win.classList.contains('done') || merged) return; merged = true;
         var m = document.getElementById('agmerge'); m.classList.remove('ready'); m.classList.add('done'); m.textContent = 'Merged into main';
-        st('o', 'merged', 'merged', prLine('in main \u00b7 deploying')); setState('merged');
+        st('o', 'merged', 'merged', prLine('in main \u00b7 deploying')); setState('merged'); burst(m);
         logLine('o', 'pr', '#' + prNo() + ' merged \u00b7 deploy queued', 'ok');
         think('Merged into main. The deploy pipeline picks it up from here.');
+        later(2600, function(){ st('o', 'merged', 'live', prLine('in main \u00b7 live on staging')); logLine('o', 'deploy', 'staging is live \u00b7 42s', 'ok'); think('Live on staging. Brief in, verified change out, and every step of it in the log.'); });
       }
-      on(flow, 'click', function(e){ var n = e.target.closest('.ag-step'); if (n) act(n.getAttribute('data-agent')); });
-      all('.ag-step', win).forEach(function(n){ on(n, 'keydown', keyish(function(){ act(n.getAttribute('data-agent')); })); });
+      /* trouble: a test goes red under Build, Review sends it back, Build fixes it, the suite goes green and the PR opens as usual */
+      var notesEl = work.querySelector('.dw[data-for="v"] .notes'), notesHTML = notesEl ? notesEl.innerHTML : '', bsum = work.querySelector('.dw[data-for="b"] .sum'), bsumHTML = bsum ? bsum.innerHTML : '', tline = document.getElementById('agtestline'), tlineHTML = tline ? tline.innerHTML : '';
+      function calm(){
+        if (notesEl) notesEl.innerHTML = notesHTML; if (bsum) bsum.innerHTML = bsumHTML; if (tline) tline.innerHTML = tlineHTML;
+        var df = work.querySelector('.dw[data-for="b"] .diff'); if (df) df.classList.remove('fixing');
+        var te = work.querySelector('.dw[data-for="b"] .tests'); if (te) te.classList.remove('fail');
+        var vd = work.querySelector('.dw[data-for="v"] .verdict'); if (vd){ vd.classList.remove('bad'); vd.textContent = 'Approved \u00b7 2 notes'; }
+        all('.ag-step.fail', win).forEach(function(n){ n.classList.remove('fail'); });
+      }
+      function countTests(d, to, ms){ var n = 0, iv = setInterval(function(){ var tn = d.querySelector('#agtestn'); n = Math.min(to, n + 3); if (tn) tn.textContent = n; if (n >= to) clearInterval(iv); }, still ? 0 : ms); timers.push(iv); }
+      function breakTest(){
+        runId++; document.getElementById('agrunid').textContent = '\u00b7 #' + runId; log.innerHTML = '';
+        resetAll(); runBtn.classList.add('busy'); setState('running'); win.classList.add('busy'); statsStart();
+        st('p', 'ok', 'done', '3 tasks \u00b7 2 in flight'); st('r', 'ok', 'done', '3 sources \u00b7 12k tokens'); edge('p', 'done'); edge('r', 'done');   /* plan and research are behind us */
+        var d = dw('b'), lines = all('.diff div:not(.fix)', d), tests = d.querySelector('.tests'), diff = d.querySelector('.diff'), dv = dw('v'), verdict = dv.querySelector('.verdict'), notes;
+        resetPanel('b'); resetPanel('v');
+        if (notesEl) notesEl.innerHTML = '<li class="bad">An expired token still gets a 200 \u2014 it must be a 401</li><li>Add a test for the expiry path</li>';
+        notes = all('.notes li', dv);
+        /* 1. build, and one test goes red */
+        show('b'); prog('b', 2600); st('b', 'run', 'run', 'auth/route.ts <i class="caret"></i>');
+        think('Awaiting auth(req) before the handler runs. Then the whole suite.');
+        logLine('b', 'build', 'edit auth/route.ts');
+        lines.forEach(function(el, i){ later(200 + i * 300, function(){ el.classList.add('in'); }); });
+        later(1400, function(){ tests.classList.add('go'); logLine('b', 'build', 'run_tests()'); countTests(d, 37, 100); });
+        later(2700, function(){
+          tests.classList.add('fail'); if (tline) tline.innerHTML = 'run_tests() \u00b7 <b>37</b> / 38 \u00b7 <em class="bad">expired_token FAILED</em>';
+          st('b', 'fail', 'failed', '37 / 38 \u00b7 one red');
+          logLine('b', 'build', 'expired_token FAILED', 'bad');
+          think('One red: an expired token still passes auth. Handing the failure to review.');
+        });
+        /* 2. review reads the failure and sends it back */
+        later(3600, function(){
+          show('v'); prog('v', 1500); st('v', 'run', 'run', 'reading the failure'); edge('b', 'flow');
+          think('The token is verified but its expiry is never checked. Sending it back with a note.');
+          logLine('v', 'review', 'reading the red test');
+          notes.forEach(function(el, i){ later(300 + i * 500, function(){ el.classList.add('in'); }); });
+        });
+        later(5100, function(){
+          verdict.classList.add('in'); verdict.classList.add('bad'); verdict.textContent = 'Changes requested \u00b7 1 blocking';
+          st('v', 'fail', 'redo', 'changes requested \u00b7 1 blocking'); edge('b', 'done');
+          logLine('v', 'review', 'changes requested \u00b7 expiry', 'bad');
+        });
+        /* 3. build fixes it and the suite goes green */
+        later(5900, function(){
+          show('b'); resetPanel('b'); tests.classList.remove('fail'); tests.classList.remove('go'); tests.classList.remove('ok');
+          if (tline) tline.innerHTML = 'run_tests() \u00b7 <b id="agtestn">0</b> / 39 passed';
+          diff.classList.add('fixing'); all('.diff div', d).forEach(function(el){ el.classList.add('in'); }); var fx = d.querySelector('.diff .fix'); if (fx) fx.classList.remove('in');
+          prog('b', 2600); st('b', 'run', 'run', 'fixing the expiry check'); edge('b', 'flow');
+          think('Rejecting tokens past their exp claim, with a test that proves it. Running the suite again.');
+          logLine('b', 'build', 'edit auth/route.ts \u00b7 +1 test');
+          later(500, function(){ if (fx) fx.classList.add('in'); });
+          later(1300, function(){ tests.classList.add('go'); logLine('b', 'build', 'run_tests()'); countTests(d, 39, 95); });
+          later(2700, function(){
+            tests.classList.add('ok'); st('b', 'ok', 'done', '+48 \u2212 7 \u00b7 39 passed'); logLine('b', 'build', '39 / 39 passed', 'ok');
+            if (bsum) bsum.innerHTML = '<span><b>2</b> files changed</span><span><b>+48</b> \u22127</span><span><b>39 / 39</b> tests</span>'; sum(d);
+          });
+        });
+        /* 4. review again, then the PR as usual */
+        later(9000, function(){
+          show('v'); resetPanel('v'); verdict.classList.remove('bad');
+          if (notesEl) notesEl.innerHTML = '<li>Expiry check in place \u2014 covered by the new test</li><li>Null check on line 12 \u2014 covered</li>'; notes = all('.notes li', dv);
+          prog('v', 1500); st('v', 'run', 'run', 'reading the fix'); edge('b', 'done');
+          think('Expiry is checked and tested now. Approving.');
+          logLine('v', 'review', 'reading +48 \u22127');
+          notes.forEach(function(el, i){ later(300 + i * 450, function(){ el.classList.add('in'); }); });
+          later(1400, function(){ verdict.classList.add('in'); verdict.textContent = 'Approved \u00b7 2 notes'; st('v', 'ok', 'done', 'approved \u00b7 2 notes'); logLine('v', 'review', 'approved', 'ok'); sum(dv); });
+        });
+        later(10900, function(){ act('o', true); });
+        later(10900 + 1900 + 350, function(){ runBtn.classList.remove('busy'); win.classList.remove('busy'); statsStop(); });
+      }
+      /* while a run is on, clicking a stage only shows its work; the run keeps going */
+      function peek(k){ if (win.classList.contains('busy')) show(k); else act(k); }
+      on(flow, 'click', function(e){ var n = e.target.closest('.ag-step'); if (n) peek(n.getAttribute('data-agent')); });
+      all('.ag-step', win).forEach(function(n){ on(n, 'keydown', keyish(function(){ peek(n.getAttribute('data-agent')); })); });
       on(document.getElementById('agmerge'), 'click', merge);
       on(document.getElementById('agmerge'), 'keydown', keyish(merge));
       on(runBtn, 'click', runAll); on(runBtn, 'keydown', keyish(runAll));
+      var brkBtn = document.getElementById('agbreak');
+      on(brkBtn, 'click', breakTest); on(brkBtn, 'keydown', keyish(breakTest));
       /* Run is yours; without motion, the pipeline runs once when it comes into view so there is something to read */
       var started = false;
       if (still){ if ('IntersectionObserver' in window) new IntersectionObserver(function(es){ es.forEach(function(en){ if (en.isIntersecting && !started){ started = true; runAll(); } }); }, { threshold: .12 }).observe(scene); else runAll(); }
-      live.agents = { run: runAll, act: act, merge: merge };
+      show('p');   /* the drawer opens on the plan, so the screen is never empty */
+      live.agents = { run: runAll, act: act, peek: peek, merge: merge, trouble: breakTest };
     })();
 
     /* ---- design: the theme panel; every control changes the preview and the whole site ---- */
@@ -3230,12 +3408,13 @@ body.book-open{overflow:hidden}
       }
       var TH = { '': ['#2F6FEB', '#EEF2FA'], lavender: ['#7A5AF0', '#F1EEFA'], mint: ['#1B9E63', '#ECF5EF'], peach: ['#E4762E', '#FBF1EA'], rose: ['#DC3E96', '#FAEDF2'], aqua: ['#0B8FA8', '#E8F5F8'] };
       function readout(){
-        var cs = getComputedStyle(root), ty = root.getAttribute('data-type') || 'sans', r = parseInt(cs.getPropertyValue('--radius'), 10) || 6, m = root.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+        var cs = getComputedStyle(root), ty = root.getAttribute('data-type') || 'sans', r = parseInt(cs.getPropertyValue('--radius'), 10) || 6, m = ds.getAttribute('data-mode') || (root.getAttribute('data-theme') === 'dark' ? 'dark' : 'light');
         var acc = cs.getPropertyValue('--blue').trim().toUpperCase(), pap = cs.getPropertyValue('--paper').trim().toUpperCase();
         var el = document.getElementById('dstok'); if (el) el.innerHTML = '{ "accent": <b>"' + acc + '"</b>, "paper": <b>"' + pap + '"</b>, "type": <b>"' + ty + '"</b>, "radius": <b>' + r + '</b>, "mode": <b>"' + m + '"</b> }';
       }
       function radius(r){ all('#dsrad button').forEach(function(b){ b.classList.toggle('on', b.getAttribute('data-r') === String(r)); }); root.style.setProperty('--radius', r + 'px'); bump(); }
-      function mode(m){ if (live.setTheme) live.setTheme(m, true); bump(); }
+      /* Mode themes the preview pane only; the site keeps whatever the visitor chose in the header */
+      function mode(m){ ds.setAttribute('data-mode', m === 'dark' ? 'dark' : 'light'); all('#dsmode button').forEach(function(b){ b.classList.toggle('on', b.getAttribute('data-m') === m); }); bump(); }
       on(ds, 'click', function(e){
         var t;
         if ((t = e.target.closest('#dsth .th'))) return theme(t.getAttribute('data-p') || '');
@@ -3246,9 +3425,8 @@ body.book-open{overflow:hidden}
       live.setThemeChip = function(name){ all('#dsth .th').forEach(function(b){ b.classList.toggle('on', (b.getAttribute('data-p') || '') === name); }); };
       live.design = { theme: theme, type: type, radius: radius, mode: mode };
       live.readout = readout;
-      /* the Mode buttons reflect the site's current theme from the start */
+      /* until someone picks a Mode here, the buttons reflect the site's current theme */
       all('#dsmode button').forEach(function(b){ b.classList.toggle('on', b.getAttribute('data-m') === (root.getAttribute('data-theme') === 'dark' ? 'dark' : 'light')); });
-      if (root.getAttribute('data-theme') === 'dark') ds.setAttribute('data-mode', 'dark');
     })();
   })();
 
@@ -3461,16 +3639,33 @@ body.book-open{overflow:hidden}
     var one = t.innerHTML; t.innerHTML = one + one; t.style.setProperty('--n', 4);
     Array.prototype.slice.call(t.children, 8).forEach(function(el){ el.setAttribute('aria-hidden', 'true'); });
   })();
+  /* the stacks: three ribbons of tiles, each doubled so the loop is seamless. Marks, not logos: each tile is a monogram in the brand's colour */
+  (function(){
+    var host = document.getElementById('stacks'); if (!host) return;
+    var D = '#101319';
+    var ROWS = [
+      [['TypeScript', 'TS', '#3178C6'], ['JavaScript', 'JS', '#F7DF1E', D], ['React', 'Re', '#61DAFB', D], ['Next.js', 'N', '#000'], ['Vue', 'V', '#42B883'], ['Nuxt', 'Nx', '#00DC82', D], ['Angular', 'A', '#DD0031'], ['Svelte', 'S', '#FF3E00'], ['Tailwind', 'Tw', '#06B6D4'], ['Node.js', 'No', '#5FA04E'], ['NestJS', 'Ne', '#E0234E'], ['Python', 'Py', '#3776AB'], ['Django', 'Dj', '#092E20'], ['FastAPI', 'FA', '#009688'], ['Go', 'Go', '#00ADD8'], ['Rust', 'Rs', '#B7410E'], ['Java', 'J', '#E76F00'], ['Spring', 'Sp', '#6DB33F'], ['Kotlin', 'Kt', '#7F52FF'], ['Swift', 'Sw', '#F05138'], ['.NET', '.N', '#512BD4'], ['C#', 'C#', '#68217A'], ['Flutter', 'Fl', '#02569B'], ['React Native', 'RN', '#20232A'], ['Expo', 'Ex', '#000'], ['PHP', 'php', '#777BB4'], ['Laravel', 'La', '#FF2D20'], ['Rails', 'Ro', '#CC0000']],
+      [['PostgreSQL', 'Pg', '#4169E1'], ['MySQL', 'My', '#00758F'], ['MongoDB', 'Mg', '#47A248'], ['Redis', 'Rd', '#DC382D'], ['GraphQL', 'GQ', '#E10098'], ['Prisma', 'Pr', '#2D3748'], ['Supabase', 'Sb', '#3ECF8E', D], ['Firebase', 'Fb', '#FFCA28', D], ['Docker', 'Dk', '#2496ED'], ['Kubernetes', 'K8', '#326CE5'], ['Terraform', 'Tf', '#7B42BC'], ['AWS', 'AWS', '#FF9900', D], ['Google Cloud', 'GC', '#4285F4'], ['Azure', 'Az', '#0078D4'], ['Vercel', 'Vc', '#000'], ['Cloudflare', 'Cf', '#F38020'], ['GitHub', 'GH', '#181717'], ['GitLab', 'GL', '#FC6D26'], ['Playwright', 'Pw', '#2EAD33'], ['Figma', 'Fg', '#F24E1E'], ['Stripe', 'St', '#635BFF'], ['Twilio', 'Tw', '#F22F46'], ['Shopify', 'Sh', '#96BF48', D], ['Salesforce', 'SF', '#00A1E0'], ['SAP', 'SAP', '#0FAAFF'], ['ServiceNow', 'SN', '#62D84E', D], ['OpenAI', 'OA', '#000'], ['Anthropic', 'An', '#D97757']],
+      [['Snowflake', 'Sf', '#29B5E8'], ['Databricks', 'Db', '#FF3621'], ['Kafka', 'Kf', '#231F20'], ['Airflow', 'Af', '#017CEE'], ['dbt', 'dbt', '#FF694B'], ['Elasticsearch', 'Es', '#005571'], ['Hugging Face', 'HF', '#FFD21E', D], ['LangChain', 'LC', '#1C3C3C'], ['Pinecone', 'Pc', '#000'], ['Grafana', 'Gf', '#F46800'], ['Datadog', 'Dd', '#632CA6'], ['Sentry', 'Se', '#362D59'], ['Power BI', 'BI', '#F2C811', D], ['Tableau', 'Tb', '#E97627'], ['Jira', 'Ji', '#0052CC'], ['Slack', 'Sl', '#4A154B'], ['Notion', 'Nt', '#000'], ['Zapier', 'Zp', '#FF4A00'], ['WordPress', 'WP', '#21759B'], ['Webflow', 'Wf', '#4353FF'], ['Sanity', 'Sa', '#F03E2F'], ['Auth0', 'A0', '#EB5424'], ['Okta', 'Ok', '#007DC1'], ['Electron', 'El', '#47848F'], ['Android', 'An', '#3DDC84', D], ['iOS', 'iOS', '#1C1C1E'], ['Unity', 'Un', '#222C37'], ['n8n', 'n8n', '#EA4B71']]
+    ];
+    ROWS.forEach(function(row, ri){
+      var track = document.createElement('div'); track.className = 'stack-track' + (ri === 1 ? ' rev' : '');
+      track.style.setProperty('--dur', Math.round(row.length * (ri === 1 ? 3.1 : 2.7)) + 's');
+      var one = row.map(function(t){ return '<span class="tk" title="' + t[0] + '"><i style="--bc:' + t[2] + (t[3] ? ';--fc:' + t[3] : '') + '">' + t[1] + '</i>' + t[0] + '</span>'; }).join('');
+      track.innerHTML = one + one.replace(/<span class="tk"/g, '<span class="tk" aria-hidden="true"');
+      host.appendChild(track);
+    });
+  })();
 
-  /* ---- 3e. light or dark: the site follows the device until you choose, and the brand kit's Mode control switches it too ---- */
+  /* ---- 3e. light or dark: the site follows the device until you choose ---- */
   (function(){
     var root = document.documentElement, btn = document.getElementById('modebtn'), mq = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
     function current(){ return root.getAttribute('data-theme') === 'dark' ? 'dark' : 'light'; }
     function apply(t){
       if (t === 'dark') root.setAttribute('data-theme', 'dark'); else root.removeAttribute('data-theme');
       if (btn){ btn.setAttribute('aria-pressed', t === 'dark' ? 'true' : 'false'); btn.setAttribute('aria-label', t === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'); }
-      Array.prototype.forEach.call(document.querySelectorAll('#dsmode button'), function(b){ b.classList.toggle('on', b.getAttribute('data-m') === t); });
-      var ds = document.getElementById('wds'); if (ds){ if (t === 'dark') ds.setAttribute('data-mode', 'dark'); else ds.removeAttribute('data-mode'); }
+      var ds = document.getElementById('wds');
+      if (ds && !ds.hasAttribute('data-mode')) Array.prototype.forEach.call(document.querySelectorAll('#dsmode button'), function(b){ b.classList.toggle('on', b.getAttribute('data-m') === t); });
       if (live.readout) live.readout();
       if (live.mobile && live.mobile.syncTheme) live.mobile.syncTheme(t);
       if (live.web && live.web.syncTheme) live.web.syncTheme(t);
@@ -3487,7 +3682,7 @@ body.book-open{overflow:hidden}
     function seq(steps){ var i = 0; return function(){ steps[i++ % steps.length](); }; }
     var TAP = {
       build: function(){ var w = live.web; if (!w) return null; return seq([
-        function(){ w.setView('trend'); }, function(){ w.setView('table'); }, function(){ w.setPage('orders'); }, function(){ w.setPage('customers'); },
+        function(){ w.flash(); }, function(){ w.setView('trend'); }, function(){ w.setPage('orders'); }, function(){ w.setPage('customers'); },
         function(){ w.setPage('integ'); }, function(){ w.sync('sap'); }, function(){ w.sync('snow'); },
         function(){ w.setPage('settings'); }, function(){ w.setPage('overview'); w.setView('bars'); w.setRange('7'); }, function(){ w.setRange('90'); w.setView('trend'); },
         function(){ w.deploy(); }, function(){ w.setRange('30'); w.setView('bars'); }]); },
@@ -3495,8 +3690,8 @@ body.book-open{overflow:hidden}
         function(){ m.setTab('track'); }, function(){ m.setTab('orders'); }, function(){ m.setTab('account'); }, function(){ m.setTab('home'); },
         function(){ m.placeOrder(); }, function(){ m.watchNext(); }, function(){ m.watchNext(); }, function(){ m.setOS(ph.getAttribute('data-os') === 'android' ? 'ios' : 'android'); }]); },
       ai: function(){ var a = live.agents, win = document.getElementById('wag'); if (!a || !win) return null; return seq([
-        function(){ a.act('p'); }, function(){ a.act('r'); }, function(){ a.act('b'); }, function(){ a.act('v'); }, function(){ a.act('o'); },
-        function(){ if (win.classList.contains('done')) a.merge(); else a.run(); }, function(){ a.run(); }]); },
+        function(){ a.run(); }, function(){ a.peek('b'); }, function(){ a.peek('v'); }, function(){ if (win.classList.contains('done')) a.merge(); else a.trouble(); },
+        function(){ a.peek('o'); }, function(){ if (win.classList.contains('done')) a.merge(); else a.run(); }]); },
       design: function(){ var d = live.design; if (!d) return null; return seq([
         function(){ d.theme('lavender'); }, function(){ d.theme('mint'); }, function(){ d.theme('peach'); }, function(){ d.theme('rose'); }, function(){ d.theme('aqua'); },
         function(){ d.mode('dark'); }, function(){ d.radius(14); }, function(){ d.type('serif'); }, function(){ d.theme(''); }, function(){ d.mode('light'); },
@@ -3526,34 +3721,43 @@ body.book-open{overflow:hidden}
   })();
 
   /* ---- 3h. nudges: one handwritten note per scene walks from control to control; do the thing and it moves on to the next.
-     The note is a button too, the control it points at lights up as the pointer gets near, and a scene nobody has touched gets a small knock now and then ---- */
+     The note is a button too, and a scene nobody has touched gets a small knock now and then ---- */
   (function(){
     var ARROW = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20c2-8 8-13 16-15"/><path d="M14 4l6 1-1 6"/></svg>';
     var hoverable = window.matchMedia('(hover:hover)').matches;
     var CTRL = 'button, a, [role="button"], .tab, .pill2, .os, .sw i, .th, .tf, .ag-step, .seg a, .side a, .isy, .dep, .ph-row, .ph-btn, .ph-set .row, .set .r, .role, .call, .wbtn, [data-toast], [data-go], .re';
-    /* two steps a scene at most, the ones with the biggest visible payoff; after that the note steps back and the scene is theirs */
+    /* two or three steps a scene, the ones with the biggest visible payoff and nothing to wait for; after that the tape steps back and the scene is theirs */
+    /* one tape a scene, on the control with the biggest payoff, worded as what will happen rather than what to do.
+       Once it has been touched the tape peels off and the corner tag keeps a plain hand-over line, so nothing sits on the screens */
     var SCENES = {
-      system: { host: '#system', stage: '#sysstage', end: 'All of this is live', steps: [
-        { t: '.sat[data-k="mobile"]', p: '.sat[data-k="mobile"] .mini', say: 'Click the phone' },
-        { t: '.dsm .sw i', p: '.dsm .sw i[data-p="mint"]', say: 'Pick a colour' } ] },
-      build: { host: '#build .scene', stage: '#build .stage', end: 'It all works. Poke around.', steps: [
-        { t: '#deploy', say: 'Press Deploy' },
-        { t: '#appside a[data-page="integ"]', say: 'Open Integrations' } ] },
-      mobile: { host: '#mobile .scene', stage: '#mobile .stage', end: 'Now it is yours', steps: [
-        { t: '#phbtn', say: 'Place the order' },
-        { t: '.os-switch .os[data-os="android"]', say: 'Switch to Android' } ] },
-      ai: { host: '#ai .scene', stage: '#ai .stage', end: 'Shipped. Poke around.', steps: [
-        { t: '#agrun', say: 'Press Run' },
-        { t: '#agmerge.ready', say: 'Merge it once it opens' } ] },
-      design: { host: '#design .scene', stage: '#design .stage', end: 'The whole page followed. Yours now.', steps: [
-        { t: '#dsmode button[data-m="dark"]', say: 'Go dark' },
-        { t: '#dsth .th', p: '#dsth .th[data-p="lavender"]', say: 'Pick a theme' } ] }
+      system: { host: '#system', stage: '#sysstage', over: '<b>Everything here works</b>', steps: [
+        { t: '.dsm .sw i', p: '.dsm .sw i[data-p="mint"]', say: 'Recolours the whole site' },
+        { t: '.sat[data-k="mobile"]', p: '.sat[data-k="mobile"] .mini', say: 'Flips through its screens' },
+        { t: '.sat[data-k="web"]', p: '.sat[data-k="web"] .mini', say: 'Changes its chart' } ] },
+      build: { host: '#build .scene', stage: '#build .stage', over: '<b>A working app</b> \u00b7 every page and button is real', steps: [
+        { t: '#flash', say: 'Orders start pouring in' },
+        { t: '#appside a[data-page="integ"]', say: 'Every order lands in SAP' },
+        { t: '#deploy', say: 'Ships a new version' } ] },
+      mobile: { host: '#mobile .scene', stage: '#mobile .stage', over: '<b>Phone and watch both work</b> \u00b7 try the tabs', steps: [
+        { t: '#phbtn', say: 'Places a real order' },
+        { t: '.os-switch .os[data-os="android"]', say: 'Folds into an Android' } ] },
+      watch: { host: '#mobile .scene', stage: '#mobile .stage', quiet: true, steps: [
+        { t: '#watch', p: '#watch .wcase', say: 'The watch is live too' } ] },
+      ai: { host: '#ai .scene', stage: '#ai .stage', over: '<b>A real pipeline</b> \u00b7 run it, break it, merge it', steps: [
+        { t: '#agrun', say: 'Runs the whole pipeline' },
+        { t: '#agbreak', say: 'A test fails \u2014 watch them fix it' },
+        { t: '.ag-step', p: '.ag-step[data-agent="b"]', say: 'Every stage shows its work' } ] },
+      design: { host: '#design .scene', stage: '#design .stage', over: '<b>Every control restyles this page</b>', steps: [
+        { t: '#dsth .th', p: '#dsth .th[data-p="lavender"]', say: 'Restyles this whole page' },
+        { t: '#dstf .tf[data-type="serif"]', say: 'Sets this page in a serif' },
+        { t: '#dsmode button[data-m="dark"]', say: 'The preview goes dark' } ] }
     };
     function all(sel, root){ try { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); } catch (e) { return []; } }
     function visible(el){ return !!el && el.getClientRects().length > 0; }
     Object.keys(SCENES).forEach(function(key){
       var sc = SCENES[key], host = document.querySelector(sc.host), stage = document.querySelector(sc.stage); if (!host || !stage) return;
       var note = document.createElement('span'); note.className = 'nudge'; note.setAttribute('aria-hidden', 'true'); note.innerHTML = '<span class="nt"></span>' + ARROW; stage.appendChild(note);
+      note.style.setProperty('--r', ({ system: '-3deg', build: '2deg', mobile: '-2.5deg', watch: '2deg', ai: '1.5deg', design: '-2deg' })[key] || '-3deg');
       var txt = note.firstChild, i = 0, pulsed = null, shown = false, okT = 0, near = [], touched = false, flashed = false, inView = false, knockT = 0, knocks = 0, moveT = 0;
       function step(){ return sc.steps[i]; }
       function anchor(){ var s = step(); if (!s) return null; return all(s.p || s.t, host).filter(visible)[0] || (s.p ? all(s.t, host).filter(visible)[0] : null) || null; }
@@ -3564,35 +3768,45 @@ body.book-open{overflow:hidden}
         if (els.length === near.length && els.every(function(n, k){ return n === near[k]; })) return;
         clearNear(); els.forEach(function(n){ n.classList.add('near'); }); near = els;
       }
+      var chrome = 0, lastEl = null;   /* the tape's width beyond its text (padding, gap, arrow), measured once while the arrow is whole */
       function place(){
         var s = step(), el = anchor();
         if (pulsed && pulsed !== el){ pulsed.classList.remove('hp'); pulsed.classList.remove('knock'); pulsed = null; clearNear(); }
-        if (!s){ txt.textContent = sc.end; note.classList.add('end'); return; }
+        if (!s){ if (!note.classList.contains('end')){ note.classList.add('end'); if (live.handOver) live.handOver(host, sc.over); } return; }
         txt.textContent = s.say;
         if (!el){ note.classList.add('lost'); return; }
         note.classList.remove('lost');
         if (pulsed !== el){ el.classList.add('hp'); pulsed = el; }
+        lastEl = el; around(el, false);
+      }
+      /* the tape sits below, left, above or right of the control, each tried centred and aligned to either edge, kept inside the stage.
+         It is clickable, so it takes the spot that covers the least of any other control */
+      function around(el, ended){
         var sr = stage.getBoundingClientRect(), k = (sr.width / stage.offsetWidth) || 1, r = el.getBoundingClientRect();
         var tx = (r.left - sr.left) / k, ty = (r.top - sr.top) / k, tw = r.width / k, th = r.height / k, W = stage.offsetWidth, H = stage.offsetHeight;
-        var nw = txt.offsetWidth + 47, nh = note.offsetHeight, gap = 12;   /* text + padding, gap and arrow: the arrow may still be growing back after a lost spell */
-        /* below, left, above or right of the control, each tried centred and aligned to either edge, kept inside the stage.
-           The note is clickable, so it takes the spot that covers the least of any other control */
-        var xs = [tx + tw / 2 - nw / 2, tx, tx + tw - nw], ys = [ty + th / 2 - nh / 2, ty, ty + th - nh], cands = [];
+        var svg = note.querySelector('svg'); if (!chrome && !ended && svg && svg.getBoundingClientRect().width / k >= 20) chrome = note.offsetWidth - txt.offsetWidth;
+        var nw = txt.offsetWidth + (chrome || 59) - (ended ? 24 : 0), nh = note.offsetHeight, gap = 12;
+        var xs = [tx + tw / 2 - nw / 2, tx, tx + tw - nw], ys = [ty + th / 2 - nh / 2, ty, ty + th - nh], sides = { below: [], left: [], above: [], right: [], corners: [] };
         function cx(x){ return Math.max(4, Math.min(W - nw - 4, x)); }
         function cy(y){ return Math.max(4, Math.min(H - nh - 4, y)); }
-        xs.forEach(function(x){ cands.push({ x: cx(x), y: ty + th + gap }); });
-        ys.forEach(function(y){ cands.push({ x: tx - nw - gap, y: cy(y) }); });
-        xs.forEach(function(x){ cands.push({ x: cx(x), y: ty - nh - gap }); });
-        ys.forEach(function(y){ cands.push({ x: tx + tw + gap, y: cy(y) }); });
-        [ty + th + gap, ty - nh - gap].forEach(function(y){ cands.push({ x: tx + tw + gap, y: y }); cands.push({ x: tx - nw - gap, y: y }); });   /* the corners */
-        var others = all(CTRL, stage).filter(function(x){ return x !== el && !el.contains(x) && !x.contains(el) && visible(x); }).map(function(x){
-          var b = x.getBoundingClientRect(); return { l: (b.left - sr.left) / k, t: (b.top - sr.top) / k, r: (b.right - sr.left) / k, b: (b.bottom - sr.top) / k }; });
+        xs.forEach(function(x){ sides.below.push({ x: cx(x), y: ty + th + gap }); });
+        ys.forEach(function(y){ sides.left.push({ x: tx - nw - gap, y: cy(y) }); });
+        xs.forEach(function(x){ sides.above.push({ x: cx(x), y: ty - nh - gap }); });
+        ys.forEach(function(y){ sides.right.push({ x: tx + tw + gap, y: cy(y) }); });
+        [ty + th + gap, ty - nh - gap].forEach(function(y){ sides.corners.push({ x: tx + tw + gap, y: y }); sides.corners.push({ x: tx - nw - gap, y: y }); });
+        var order = ['below', 'left', 'above', 'right', 'corners'], cands = [];
+        if (sc.side && sides[sc.side]) order.splice(order.indexOf(sc.side), 1), order.unshift(sc.side);   /* a scene may ask for a side first */
+        order.forEach(function(k){ cands = cands.concat(sides[k]); });
+        var others = all(CTRL, stage).concat(all('.nudge.on', stage).filter(function(n){ return n !== note && !n.classList.contains('end'); })).filter(function(x){ return x !== el && !el.contains(x) && !x.contains(el) && visible(x); }).map(function(x){
+          var b = x.getBoundingClientRect(); return { l: (b.left - sr.left) / k, t: (b.top - sr.top) / k, r: (b.right - sr.left) / k, b: (b.bottom - sr.top) / k, tape: x.classList.contains('nudge') }; });
+        var keepOff = all('.live-tag', host).filter(visible).map(function(x){ var b = x.getBoundingClientRect(); return { l: (b.left - sr.left) / k - 6, t: (b.top - sr.top) / k - 6, r: (b.right - sr.left) / k + 6, b: (b.bottom - sr.top) / k + 6 }; });   /* the corner tag is never covered */
         function lap(c, o){ return Math.max(0, Math.min(c.x + nw, o.r) - Math.max(c.x, o.l)) * Math.max(0, Math.min(c.y + nh, o.b) - Math.max(c.y, o.t)); }
         var me = { l: tx, t: ty, r: tx + tw, b: ty + th }, best = null;
         cands.forEach(function(c, n){
           c.x = cx(c.x); c.y = cy(c.y);   /* nudged inside; a spot that then lands on the control itself is out */
           if (lap(c, me) > 0) return;
-          c.cost = others.reduce(function(a, o){ return a + lap(c, o); }, 0) + n * .01;
+          if (keepOff.some(function(o){ return lap(c, o) > 0; })) return;
+          c.cost = others.reduce(function(a, o){ return a + lap(c, o) * (o.tape ? 3 : 1); }, 0) + n * .01;
           if (!best || c.cost < best.cost) best = c;
         });
         var c = best || cands[0];
@@ -3603,14 +3817,25 @@ body.book-open{overflow:hidden}
       }
       function say(text, ms){ note.classList.add('ok'); txt.textContent = text; clearTimeout(okT); okT = setTimeout(function(){ note.classList.remove('ok'); place(); }, ms); }
       function bob(){ note.classList.remove('bob'); void note.offsetWidth; note.classList.add('bob'); }
+      function matches(s, el){ return all(s.t, host).some(function(t){ return t === el || t.contains(el); }); }
+      var beat = 0;
       function hit(el){
         var s = step(); if (!s || !el || !el.closest) return false;
-        if (!all(s.t, host).some(function(t){ return t === el || t.contains(el); })) return false;
-        i++; say('Nice', 900); return true;
+        /* something a later tape was going to tease, done unprompted: no need to tease it any more */
+        for (var j = sc.steps.length - 1; j > i; j--) if (matches(sc.steps[j], el)) sc.steps.splice(j, 1);
+        if (!matches(s, el)) return false;
+        i++; note.classList.add('ok'); txt.textContent = 'Nice'; clearTimeout(okT);
+        okT = setTimeout(function(){
+          if (!step()){ note.classList.remove('ok'); place(); return; }   /* that was the last one: peel off, hand over */
+          /* the next tape comes after a beat, so it reads as a new find rather than a queue */
+          note.classList.remove('on'); beat = 1;
+          setTimeout(function(){ note.classList.remove('ok'); beat = 0; place(); note.classList.add('on'); }, 1500);
+        }, 900);
+        return true;
       }
       host.addEventListener('pointerdown', function(e){
         touched = true; clearTimeout(knockT);
-        if (hit(e.target) || flashed || note.contains(e.target)) return;
+        if (hit(e.target) || flashed || sc.quiet || !step() || note.contains(e.target) || (e.target.closest && e.target.closest('.hp'))) return;
         flashed = true; say('You\u2019re driving', 1100);   /* the first press anywhere else: the scene answered, so say so where the eyes are */
       }, true);
       host.addEventListener('keydown', function(e){ if (e.key === 'Enter' || e.key === ' ') hit(e.target); }, true);
@@ -3622,18 +3847,6 @@ body.book-open{overflow:hidden}
         if (live.ripple) live.ripple(t);
         hit(t); t.click();
       });
-      /* the control the note points at lights up as the pointer gets near it, before any click */
-      if (hoverable){
-        host.addEventListener('pointermove', function(e){
-          if (moveT) return;
-          moveT = requestAnimationFrame(function(){
-            moveT = 0; var el = pulsed; if (!el || !shown || note.classList.contains('ok')){ clearNear(); return; }
-            var r = el.getBoundingClientRect(), dx = Math.max(r.left - e.clientX, 0, e.clientX - r.right), dy = Math.max(r.top - e.clientY, 0, e.clientY - r.bottom);
-            if (dx * dx + dy * dy < 44 * 44){ var t = control(el); setNear(t && t !== el ? [el, t] : [el]); } else clearNear();
-          });
-        });
-        host.addEventListener('pointerleave', clearNear);
-      }
       /* a knock: while nobody has touched the scene, the control hops once and the note bobs, a few times, a while apart */
       function knock(){
         var el = pulsed;
@@ -3642,13 +3855,13 @@ body.book-open{overflow:hidden}
         knocks++; el.classList.remove('knock'); void el.offsetWidth; el.classList.add('knock'); bob();
         setTimeout(function(){ el.classList.remove('knock'); }, 800);
       }
-      function armKnock(ms){ clearTimeout(knockT); if (touched || still) return; knockT = setTimeout(function(){ knock(); if (knocks < 3) armKnock(9000); }, ms); }
+      function armKnock(ms){ clearTimeout(knockT); if (touched || still || sc.quiet) return; knockT = setTimeout(function(){ knock(); if (knocks < 3) armKnock(9000); }, ms); }
       function show(){ if (shown) return; shown = true; place(); requestAnimationFrame(function(){ note.classList.add('on'); }); armKnock(6000); }
       if (still) show();
       else if ('IntersectionObserver' in window) new IntersectionObserver(function(es){ es.forEach(function(en){ inView = en.isIntersecting; if (en.isIntersecting) setTimeout(show, 400); }); }, { threshold: .3 }).observe(host);
       else { inView = true; setTimeout(show, 1000); }
       /* pages open and close, buttons come and go: the note follows the control */
-      setInterval(function(){ if (shown && !note.classList.contains('ok')) place(); }, 1200);
+      setInterval(function(){ if (shown && !beat && !note.classList.contains('ok')) place(); }, 1200);
       window.addEventListener('resize', function(){ if (shown) place(); });
     });
   })();
