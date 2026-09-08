@@ -2876,11 +2876,17 @@ body.book-open{overflow:hidden}
     live.setTypeCard = function(t){ var d = sats.design; if (d) d.setAttribute('data-s', ['sans', 'serif', 'mono'].indexOf(t)); };
     live.setPal = setPal;
 
-    /* surfaces: a click changes what is on the screen, never whether it exists */
+    /* surfaces: a click changes what is on the screen, never whether it exists.
+       The design card is the colour: a click anywhere on it moves the whole site to the next palette; a swatch picks one outright */
+    var PALS = ['', 'lavender', 'mint', 'peach', 'rose', 'aqua'];
     list.forEach(function(sat){
       function next(e){
         var sw = e && e.target && e.target.closest ? e.target.closest('.sw i') : null;
-        if (sw){ setPal(sw.getAttribute('data-p') || ''); }
+        if (sat.getAttribute('data-k') === 'design'){
+          if (sw) setPal(sw.getAttribute('data-p') || '');
+          else { var cur = document.documentElement.getAttribute('data-accent') || ''; setPal(PALS[(PALS.indexOf(cur) + 1) % PALS.length]); }
+          sat.classList.remove('tap'); void sat.offsetWidth; sat.classList.add('tap');
+        }
         else cycle(sat);
         if (hint) hint.classList.add('gone');
       }
@@ -3851,7 +3857,7 @@ body.book-open{overflow:hidden}
        Once it has been touched the tape peels off and the corner tag keeps a plain hand-over line, so nothing sits on the screens */
     var SCENES = {
       system: { host: '#system', stage: '#sysstage', over: '<b>Everything here works</b>', steps: [
-        { t: '.dsm .sw i', p: '.dsm .sw i[data-p="mint"]', say: '{m}to recolour the site' },
+        { t: '.sat[data-k="design"]', p: '.sat[data-k="design"] .mini', say: '{m}to recolour the site' },
         { t: '.sat[data-k="mobile"]', p: '.sat[data-k="mobile"] .mini', say: '{m}to flip its screens' },
         { t: '.sat[data-k="web"]', p: '.sat[data-k="web"] .mini', say: '{m}to change the chart' } ] },
       build: { host: '#build .scene', stage: '#build .stage', over: '<b>A real site, and the app behind it</b>', steps: [
@@ -3864,8 +3870,7 @@ body.book-open{overflow:hidden}
       watch: { host: '#mobile .scene', stage: '#mobile .stage', quiet: true, steps: [
         { t: '#watch', p: '#watch .wcase', say: '{m}to see the watch\u2019s map' } ] },
       ai: { host: '#ai .scene', stage: '#ai .stage', over: '<b>An agent on your systems</b> \u00b7 chat or call', steps: [
-        { t: '#aqr .qr', say: '{m}to ask the agent something' },
-        { t: '.mode-switch .md[data-mode="voice"]', say: '{m}to put it on a call', side: 'left' } ] },
+        { t: '#aqr .qr', say: '{m}to ask the agent something' } ] },
       owner: { host: '#ai .scene', stage: '#ai .stage', quiet: true, steps: [
         { t: '#apprOk', say: '{m}to approve it, as the owner' } ] },
       design: { host: '#design .scene', stage: '#design .stage', over: '<b>Every control restyles this page</b>', steps: [
