@@ -590,6 +590,7 @@ const FILTERS = [
   {id:"confused", label:"Confused, call them"},
   {id:"never",    label:"Never opened the link"},
   {id:"ready",    label:"Ready to start work"},
+  {id:"notstarted", label:"Nothing started"},
 ];
 let filter = "all";
 let openRow = null;
@@ -891,8 +892,18 @@ function rowLedger(r){
 }
 
 const scoped = () => activeType === "all" ? board : board.filter(r => r.et === activeType);
-function count(f){ const b = scoped(); return f === "all" ? b.length : b.filter(r => r.tags.includes(f)).length; }
-function rows(){ const b = scoped(); return filter === "all" ? b : b.filter(r => r.tags.includes(filter)); }
+/* clients with no engagement of the chosen type — the set the board cannot
+   otherwise show, because its rows ARE engagements */
+const activeName = () => activeType === "all"
+  ? "engagement"
+  : (ENGAGEMENT_TYPES.find(t => t.id === activeType) || {name:"engagement"}).name;
+function notStarted(){
+  if(activeType === "all") return [];
+  return CLIENTS.filter(c => !board.some(r => r.name === c.name && r.et === activeType));
+}
+function count(f){ if(f === "notstarted") return notStarted().length;
+  const b = scoped(); return f === "all" ? b.length : b.filter(r => r.tags.includes(f)).length; }
+function rows(){ if(filter === "notstarted") return []; const b = scoped(); return filter === "all" ? b : b.filter(r => r.tags.includes(filter)); }
 
 function drawBoard(){
   const list = rows();
@@ -921,7 +932,30 @@ function drawBoard(){
 
     <div class="card">`;
 
-  if(!list.length){
+  if(filter === "notstarted"){
+    const ns = notStarted();
+    if(activeType === "all"){
+      html += `<div class="empty"><b>Pick an engagement type first.</b>
+        &ldquo;Nothing started&rdquo; only means something once you say started on what.
+        <div style="margin-top:12px"><button class="btn" onclick="setActiveType('tax_audit')">Show tax audits</button></div></div>`;
+    } else if(!ns.length){
+      html += `<div class="empty"><b>Everyone is under way.</b>Every client has a ${esc(activeName().toLowerCase())} started.</div>`;
+    } else {
+      ns.forEach(c => {
+        html += `<div class="brow">
+          <div class="bmain">
+            <div>
+              <div class="bname">${esc(c.name)}</div>
+              <div class="bsub">${esc(c.con)} &middot; ${esc(c.pan)} &middot; owner ${esc(c.owner)}</div>
+              <div class="bmiss" style="margin-top:8px"><span class="chip warn">No ${esc(activeName().toLowerCase())} started</span></div>
+            </div>
+            <div class="bacts">
+              <button class="btn sm primary" onclick="openChecklistFor(${c.id})">Start it</button>
+            </div>
+          </div></div>`;
+      });
+    }
+  } else if(!list.length){
     html += `<div class="empty"><b>Nothing here.</b>No client is in this state right now.
       <div style="margin-top:12px"><button class="btn" onclick="setFilter('all')">Show everyone</button></div></div>`;
   }
@@ -1335,10 +1369,8 @@ const CLIENTS = [
 ];
 
 const CFILTERS = [
-  {id:"all",    label:"Everyone"},
-  {id:"livenow",label:"Something live"},
-  {id:"none",   label:"Nothing started this season"},
-  {id:"mine",   label:"Mine"},
+  {id:"all",  label:"Everyone"},
+  {id:"mine", label:"Mine"},
 ];
 let cfilter = "all";
 let openClientId = null;
@@ -1347,22 +1379,18 @@ currentClient = CLIENTS[0];
 const CC = () => currentClient || CLIENTS[0];
 
 const inActive = c => activeType === "all" || board.some(r => r.name === c.name && r.et === activeType);
-const cmatch = (c,f) => f==="all" ? true
-  : f==="livenow" ? c.live.length>0
-  : f==="none"    ? c.live.length===0
-  : c.owner===ME;
+const cmatch = (c,f) => f === "all" ? true : c.owner === ME;
 
 function drawClients(){
   if(openClientId) return drawClientDetail();
   const list = CLIENTS.filter(c => cmatch(c,cfilter));
-  const liveN = CLIENTS.filter(c => c.live.length).length;
 
   $("#p-clients").innerHTML = `
   <div class="stack">
     <div class="row-between">
       <div>
         <h2>${CLIENTS.length} clients</h2>
-        <p class="sub">${liveN} have something running right now. ${CLIENTS.length-liveN} have nothing started this season.</p>
+        <p class="sub">Who we act for and how to reach them. Who owes what lives on the chase board.</p>
       </div>
       <button class="btn primary" onclick="startFor()">Start an engagement</button>
     </div>
@@ -1373,23 +1401,21 @@ function drawClients(){
 
     <div class="card pad">
       <table class="ctable">
-        <thead><tr><th>Client</th><th>PAN &amp; GSTIN</th><th>Live now</th><th>Owner</th><th>Last contact</th></tr></thead>
+        <thead><tr><th>Client</th><th>PAN &amp; GSTIN</th><th>Who to call</th><th>Partner</th><th>Running</th></tr></thead>
         <tbody>
         ${list.map(c => `<tr onclick="openClient(${c.id})">
           <td><div class="nm">${esc(c.name)}</div><div class="sm2">${esc(c.con)}</div></td>
           <td class="ids">${esc(c.pan)}<br>${esc(c.gstin)}</td>
-          <td><div class="live">${c.live.length
-            ? c.live.map(e => `<span class="chip ${e.d===e.n?"ok":"warn"}">${esc(e.t)} &middot; ${e.d}/${e.n}</span>`).join("")
-            : `<span class="none">&mdash; nothing started</span>`}</div></td>
+          <td><div class="nm" style="font-weight:400">${esc(c.people[0].n)}</div><div class="sm2 mono">${esc(c.people[0].p)}</div></td>
           <td>${esc(c.owner)}</td>
-          <td class="sm2">${esc(c.last)}</td>
+          <td class="sm2">${c.live.length ? `${c.live.length} engagement${c.live.length===1?"":"s"}` : "nothing running"}</td>
         </tr>`).join("")}
         </tbody>
       </table>
       ${list.length ? "" : `<div class="empty"><b>Nobody here.</b>No client is in this state.</div>`}
     </div>
 
-    <p class="sub" style="font-size:12.5px">Five columns, and that is deliberate. No column picker, no saved views, no tags, no notes. The moment this page grows those it has become a CRM, which is a different product.</p>
+    <p class="sub" style="font-size:12.5px">This is the address book, not a second status board. No progress, no chase state, no tags, no notes. Who owes what is one screen away and belongs there.</p>
   </div>`;
 }
 
