@@ -2,7 +2,7 @@
 <title>Document Chaser</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Devanagari:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:wght@600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:wght@600&display=swap">
 
 <style>
 /* Four stacked planes: chrome sits above the band, the band above the page,
@@ -39,7 +39,6 @@ button{font:inherit;color:inherit;cursor:pointer}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 .mono{font-family:"IBM Plex Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums}
-.dev{font-family:"IBM Plex Sans Devanagari","IBM Plex Sans",sans-serif}
 
 /* ---------- chrome ---------- */
 .top{padding:14px 0 14px 0;background:var(--chrome);border-left:3px solid var(--spine)}
@@ -185,12 +184,16 @@ h3{font-size:14px;margin:0;letter-spacing:-.005em}
 .ditem.pending{background:var(--warn-soft);border-left-color:var(--warn)}
 .ditem.onfile{background:var(--ok-soft);border-left-color:var(--ok)}
 .ditem.accepted{background:var(--surface-2);border-left-color:var(--rule-2)}
+.ditem.review{background:var(--accent-soft);border-left-color:var(--accent)}
+.ditem.review .dname{color:var(--accent)}
+.ditem.waived{background:var(--surface-2);border-left-color:var(--rule-3);opacity:.72}
 .ditem .dname{font-weight:500}
 .ditem.pending .dname{color:var(--warn)}
 .bmain{display:grid;grid-template-columns:1fr auto;gap:16px;align-items:start}
 .bname{font-weight:500;letter-spacing:-.004em}
 .bsub{color:var(--ink-3);font-size:12.5px;margin-top:1px}
 .od{color:var(--bad);font-weight:500}
+.soft{color:var(--ink-3);font-size:11.5px;margin-left:6px}
 .bar{height:5px;background:var(--surface-3);border-radius:0;overflow:hidden;margin:8px 0 6px;max-width:300px;border:1px solid var(--rule-2)}
 .bar i{display:block;height:100%;background:var(--ok);border-radius:0}
 .bmiss{font-size:12.5px;color:var(--ink-2)}
@@ -217,7 +220,9 @@ h3{font-size:14px;margin:0;letter-spacing:-.005em}
 .firmline{display:flex;align-items:center;gap:9px}
 .avatar{width:34px;height:34px;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font-weight:600;flex:none;font-size:13px}
 .pbar{height:9px;background:var(--surface-3);border-radius:99px;overflow:hidden;margin:11px 0 6px}
-.pbar i{display:block;height:100%;background:var(--ok);border-radius:99px}
+.pbar{display:flex}
+.pbar i{display:block;height:100%;background:var(--ok);border-radius:99px 0 0 99px}
+.pbar u{display:block;height:100%;background:var(--warn-line)}
 .ccard{border:1px solid var(--rule);border-radius:9px;padding:12px;margin-bottom:9px;background:var(--surface)}
 .ccard.done{background:var(--ok-soft);border-color:var(--ok-line)}
 .ccard.answered{background:var(--warn-soft);border-color:var(--warn-line)}
@@ -231,7 +236,8 @@ h3{font-size:14px;margin:0;letter-spacing:-.005em}
 .cbtn.plain{border-color:var(--rule-2);background:none;color:var(--ink-3);flex:0 0 auto;min-width:0;font-weight:400;font-size:12.5px;padding:9px 11px}
 .cbtn.plain:hover{background:var(--surface-2);color:var(--ink)}
 .parts{display:flex;gap:5px;flex-wrap:wrap;margin-top:9px}
-.part{border:1px solid var(--rule-2);border-radius:5px;padding:2px 8px;font-size:11.5px;color:var(--ink-3);font-family:"IBM Plex Mono",monospace}
+.part{border:1px solid var(--rule-2);border-radius:5px;padding:7px 10px;min-width:44px;font-size:11.5px;color:var(--ink-2);font-family:"IBM Plex Mono",monospace;background:var(--surface)}
+.part:hover{border-color:var(--accent);color:var(--accent)}
 .part.on{background:var(--ok-soft);border-color:var(--ok-line);color:var(--ok)}
 .pfoot{border-top:1px solid var(--rule);padding:12px 15px;background:var(--band)}
 .gate{width:100%;justify-content:center;padding:12px;border-radius:8px;font-weight:500;border:1px solid var(--rule-2);background:var(--surface);color:var(--ink-2);display:inline-flex;align-items:center;gap:7px}
@@ -375,7 +381,7 @@ h3{font-size:14px;margin:0;letter-spacing:-.005em}
 <nav class="tabs" role="tablist">
   <div class="frame">
   <button class="tab" role="tab" id="t-clients" aria-selected="false" onclick="goClients()">Clients<small>everyone we act for</small></button>
-  <button class="tab" role="tab" id="t-list"  aria-selected="true"  onclick="go('list')">Document checklist<small>pick what to ask for</small></button>
+  <button class="tab" role="tab" id="t-list"  aria-selected="false"  onclick="go('list')">Document checklist<small>pick what to ask for</small></button>
   <button class="tab" role="tab" id="t-board" aria-selected="false" onclick="go('board')">Chase board<small>who hasn't sent</small></button>
   <button class="tab" role="tab" id="t-client" aria-selected="false" onclick="go('client')">Client's page<small>upload &amp; the gate</small></button>
 </nav>
@@ -384,7 +390,7 @@ h3{font-size:14px;margin:0;letter-spacing:-.005em}
 
 <main>
   <section class="panel" id="p-clients" hidden></section>
-  <section class="panel" id="p-list"></section>
+  <section class="panel" id="p-list" hidden></section>
   <section class="panel" id="p-board" hidden></section>
   <section class="panel" id="p-client" hidden></section>
 </main>
@@ -614,13 +620,13 @@ let TOGGLES = [
 let board = [
   {id:1, et:"tax_audit", name:"Sharma Textiles Pvt Ltd", type:"Tax Audit FY 25-26", missIds:["stock","msme","c40","rpt","loan"], owner:"Priya Shetty", chased:4, reads:true, tags:["mine","due"]},
   {id:2, et:"tax_audit", name:"Gupta Hardware Stores", type:"Tax Audit FY 25-26", missIds:["tb","cash","sales","purch","fa","stock","msme","c40","rpt","loan"], owner:"Faisal Qureshi", chased:2, promised:"said Tuesday, never came", tags:["promised","due"]},
-  {id:3, et:"tax_audit", name:"Venkatesh Iyer & Associates LLP", type:"Tax Audit FY 25-26", missIds:["stock"], owner:"Deepa Menon", chased:6, tags:["oneleft","due"]},
+  {id:3, et:"tax_audit", states:{tds:"received"}, name:"Venkatesh Iyer & Associates LLP", type:"Tax Audit FY 25-26", missIds:["stock"], owner:"Deepa Menon", chased:6, tags:["oneleft","due"]},
   {id:4, et:"tax_audit", name:"Bharat Auto Components Pvt Ltd", type:"Tax Audit FY 25-26", missIds:["fa","rpt"], owner:"Deepa Menon", chased:1, stuck:"opened 4 times, uploaded nothing", tags:["stuck","due"]},
   {id:5, et:"gst_monthly", name:"Meenakshi Enterprises", type:"GST August 2026", missIds:["g1","g2","g3","g4","g5","g6","g7","g8","g9"], owner:"Priya Shetty", chased:3, never:true, tags:["never","mine"]},
   {id:6, et:"tax_audit", name:"Rakesh Deshmukh", type:"Tax Audit FY 25-26", missIds:["tb","cash","stock","sales","purch","fa","loan","tds","msme","c40","rpt","fin"], owner:"Faisal Qureshi", chased:5, confused:"asked what a trial balance is", tags:["confused"]},
   {id:7, et:"tax_audit", name:"Sunita Rao", type:"Tax Audit FY 25-26", missIds:["bank","tds","msme","c40","rpt","stock","loan","fa"], owner:"Anil Rao", chased:7, tags:["silent","due"]},
   {id:8, et:"gst_monthly", name:"Al-Hind Trading Co", type:"GST August 2026", missIds:[], owner:"Priya Shetty", chased:2, tags:["ready","mine"]},
-  {id:9, et:"gst_monthly", name:"Naveen Chandra Textiles", type:"GST August 2026", missIds:["g3","g7","g8","g9"], owner:"Faisal Qureshi", chased:1, review:2, tags:["review"]},
+  {id:9, et:"gst_monthly", states:{g3:"received", g7:"received"}, name:"Naveen Chandra Textiles", type:"GST August 2026", missIds:["g3","g7","g8","g9"], owner:"Faisal Qureshi", chased:1, review:2, tags:["review"]},
 ];
 
 const FILTERS = [
@@ -630,9 +636,12 @@ const FILTERS = [
   {id:"stuck",    label:"Opened but stuck"},
   {id:"confused", label:"Confused, call them"},
   {id:"never",    label:"Never opened the link"},
+  {id:"review",   label:"Needs your review"},
   {id:"ready",    label:"Ready to start work"},
   {id:"notstarted", label:"Nothing started"},
 ];
+let ownerFilter = "all";
+const OWNERS = () => [...new Set(board.map(r => r.owner))];
 let filter = "all";
 let openRow = null;
 
@@ -650,7 +659,6 @@ const CLIENT = {
   get initials(){ return CC().owner.split(" ").map(w => w[0]).join("").slice(0,2); },
   get phone(){ return CC().people[0].p; },
 };
-let lang = "en";
 let cstate = "partial";
 
 /* state: pending | done | promised | na | thirdparty | confused | redo */
@@ -669,13 +677,6 @@ function buildCards(){
     return c;
   });
 }
-
-const HI = {
-  title:"नमस्ते शर्मा जी",
-  line:"आपके टैक्स ऑडिट के लिए हमें ये दस्तावेज़ चाहिए।",
-  by:"कृपया 30 सितंबर तक भेज दें।",
-  call:"प्रिया को फ़ोन करें",
-};
 
 /* =======================================================================
    HELPERS
@@ -834,7 +835,7 @@ function drawList(){
         </div>
         <div class="inline">
           <button class="btn" onclick="preview()">Preview the WhatsApp</button>
-          <button class="btn" onclick="toast('Saved. Nothing sent to the client.')">Save, don't send</button>
+          <button class="btn" onclick="saveDraft()">${savedAt ? `Saved ${esc(savedAt)}` : "Save, don't send"}</button>
           <button class="btn primary" onclick="sendReq()">Send request</button>
         </div>
       </div>
@@ -845,6 +846,7 @@ function drawList(){
 }
 
 function tick(id){
+  savedAt = null;
   const i = items.find(x => x.id === id);
   i.on = !i.on;
   drawList();
@@ -852,6 +854,7 @@ function tick(id){
 }
 
 function setNeed(id, v){
+  savedAt = null;
   const i = items.find(x => x.id === id);
   const was = i.need; i.need = v;
   drawList();
@@ -860,6 +863,7 @@ function setNeed(id, v){
 }
 
 function flip(tid){
+  savedAt = null;
   const t = TOGGLES.find(x => x.id === tid);
   t.on = !t.on;
   const hit = items.filter(i => i.tag === tid);
@@ -869,6 +873,24 @@ function flip(tid){
   toast(`${t.on ? "+" : "−"}${hit.length} item${hit.length===1?"":"s"} (${esc(t.label.toLowerCase())})`,
         () => { t.on = !t.on; hit.forEach((i,n) => i.on = before[n]); drawList(); });
 }
+
+function editTurnaround(){
+  const t = activeType === "all" ? "tax_audit" : activeType;
+  const name = (ENGAGEMENT_TYPES.find(x=>x.id===t)||{}).name;
+  modal("How long do we need after the last document lands?",
+    `<p class="sub">Documents are not due when the return is due. They are due on the last day
+      they can arrive and still leave your staff time to do the work. That is what the board chases to.</p>
+     <p class="sub" style="margin-top:11px"><b>${esc(name)}</b> currently assumes
+      <b>${TURNAROUND[t]} working days</b>, which puts documents in by <b>${esc(inByLabel(t))}</b>.</p>
+     <div class="inline" style="margin-top:12px">
+       ${[2,4,6,8,10,12,15].map(n => `<button class="btn sm" onclick="setTurnaround('${t}',${n})">${n} days</button>`).join("")}
+     </div>
+     <p class="sub" style="margin-top:14px;padding-top:12px;border-top:1px solid var(--rule);font-size:12.5px">
+       These numbers are assumptions, not the firm's. A partner should set each one.
+       Sundays are the only non-working day counted.</p>`,
+    `<button class="btn" onclick="closeModal()">Leave it</button>`);
+}
+function setTurnaround(t, n){ TURNAROUND[t] = n; closeModal(); drawBoard(); drawTypeBar(); }
 
 function editDue(){
   modal("Change the due date",
@@ -925,11 +947,17 @@ const rowType   = r => ENGAGEMENT_TYPES.find(t => t.id === r.et) || ENGAGEMENT_T
 const DAYS_LEFT = {"30 September 2026":18,"31 October 2026":49,"11 September 2026":-1,
                    "31 December 2026":110,"30 October 2026":48,"31 July 2026":-43};
 const daysFor = due => DAYS_LEFT.hasOwnProperty(due) ? DAYS_LEFT[due] : null;
-function dueLine(due){
-  const d = daysFor(due);
-  if(d === null) return "Due " + esc(due);
-  if(d < 0) return "Due " + esc(due) + ' &middot; <b class="od">overdue</b>';
-  return "Due " + esc(due) + " &middot; " + d + " days left";
+/* The board chases to the IN-BY date, not the filing date. */
+function inByLine(typeId){
+  const d = inByFor(typeId);
+  const t = ENGAGEMENT_TYPES.find(x => x.id === typeId) || {};
+  if(!d) return "Due " + esc(t.due || "on request");
+  const n = daysFromToday(d);
+  const state = n < 0 ? `<b class="od">${-n} days past</b>`
+              : n === 0 ? `<b class="od">today</b>`
+              : `<b${n<=5?' class="od"':''}>${n} days</b>`;
+  return `Documents in by <b>${esc(fmtDate(d))}</b> &middot; ${state}
+    <span class="soft">filing ${esc(t.due)}, ${TURNAROUND[typeId]||0} working days to do the work</span>`;
 }
 /* The gate was locked by items that are not Required, which contradicts the
    whole point of having three necessity levels. */
@@ -941,16 +969,66 @@ const docName  = (r, id) => (rowDocs(r).find(i => i.id === id) || {name:id}).nam
 const rowMiss  = r => r.missIds.map(id => docName(r, id));
 
 /* every document in this engagement, with the state the firm sees */
+/* Five real states, not three derived ones. "received" is the one that was
+   missing: a document can be in and still not checked, which is the whole
+   review queue the board already claimed to have. */
+function itemState(r, i){
+  if(r.states && r.states[i.id]) return r.states[i.id];
+  return r.missIds.includes(i.id) ? "pending" : (i.have ? "onfile" : "accepted");
+}
 function rowLedger(r){
   return rowDocs(r).map(i => ({
-    name: i.name,
-    state: r.missIds.includes(i.id) ? "pending" : (i.have ? "onfile" : "accepted"),
-    note:  i.have || "",
-    need:  i.need,
+    id: i.id, name: i.name, state: itemState(r, i),
+    note: (r.notes && r.notes[i.id]) || i.have || "", need: i.need,
   }));
 }
+function setItemState(id, itemId, st, note){
+  const r = board.find(x => x.id === id);
+  r.states = r.states || {}; r.notes = r.notes || {};
+  r.states[itemId] = st;
+  if(note) r.notes[itemId] = note;
+  if(st === "pending"){ if(!r.missIds.includes(itemId)) r.missIds.push(itemId); }
+  else r.missIds = r.missIds.filter(x => x !== itemId);
+  closeModal(); drawBoard(); drawTypeBar();
+}
+const needsReview = r => rowLedger(r).some(d => d.state === "received");
 
-const scoped = () => activeType === "all" ? board : board.filter(r => r.et === activeType);
+/* Documents arrive the way documents actually arrive: in someone's WhatsApp. */
+function markReceived(id, itemId, name){
+  modal("Mark received",
+    `<p class="sub" style="margin-bottom:12px">${esc(name)}</p>
+     <p class="sub" style="margin-bottom:10px">How did it reach you? It goes into the ledger the
+       same way a portal upload does, so the board stops chasing it and the provenance is recorded.</p>
+     ${["On WhatsApp","By email","In person","Over the phone"].map(ch =>
+       `<button class="opt" onclick="setItemState(${id},'${itemId}','received','Received ${esc(ch.toLowerCase())}, 12 Sep')"><b>${esc(ch)}</b><span>Goes to your review queue, not straight to accepted.</span></button>`).join("")}`,
+    `<button class="btn" onclick="closeModal()">Cancel</button>`);
+}
+function waiveItem(id, itemId, name){
+  modal("Waive this document",
+    `<p class="sub" style="margin-bottom:12px">${esc(name)}</p>
+     <p class="sub">A waiver is a partner saying we will proceed without it. It is logged with your
+       name and the reason, and it opens the Start work gate for this item.</p>
+     <div style="margin-top:12px">
+       ${["Client genuinely does not have it","Not material to the opinion","Obtained another way","Client is exempt"].map(rsn =>
+         `<button class="opt" onclick="setItemState(${id},'${itemId}','waived','Waived by a partner — ${esc(rsn.toLowerCase())}')"><b>${esc(rsn)}</b></button>`).join("")}
+     </div>`,
+    `<button class="btn" onclick="closeModal()">Cancel</button>`);
+}
+function rejectItem(id, itemId, name){
+  modal("Send it back",
+    `<p class="sub" style="margin-bottom:12px">${esc(name)}</p>
+     <p class="sub">Only this item re-opens. The client is never asked to resend everything.</p>
+     <div style="margin-top:12px">
+       ${["Photo is blurry","Page is cut off","Wrong period","Wrong document","Cannot read the amounts","File is password protected"].map(rsn =>
+         `<button class="opt" onclick="setItemState(${id},'${itemId}','pending','Sent back — ${esc(rsn.toLowerCase())}')"><b>${esc(rsn)}</b></button>`).join("")}
+     </div>`,
+    `<button class="btn" onclick="closeModal()">Cancel</button>`);
+}
+
+const scoped = () => board
+  .filter(r => activeType === "all" || r.et === activeType)
+  .filter(r => ownerFilter === "all" || r.owner === ownerFilter);
+function setOwnerFilter(v){ ownerFilter = v; openRow = null; drawBoard(); }
 /* clients with no engagement of the chosen type — the set the board cannot
    otherwise show, because its rows ARE engagements */
 const activeName = () => activeType === "all"
@@ -961,8 +1039,10 @@ function notStarted(){
   return CLIENTS.filter(c => !board.some(r => r.name === c.name && r.et === activeType));
 }
 function count(f){ if(f === "notstarted") return notStarted().length;
-  const b = scoped(); return f === "all" ? b.length : b.filter(r => r.tags.includes(f)).length; }
-function rows(){ if(filter === "notstarted") return []; const b = scoped(); return filter === "all" ? b : b.filter(r => r.tags.includes(filter)); }
+  const b = scoped();
+  if(f === "review") return b.filter(needsReview).length; return f === "all" ? b.length : b.filter(r => r.tags.includes(f)).length; }
+function rows(){ if(filter === "notstarted") return []; const b = scoped(); if(filter === "review") return b.filter(needsReview);
+  return filter === "all" ? b : b.filter(r => r.tags.includes(filter)); }
 
 function drawBoard(){
   const list = rows();
@@ -975,16 +1055,25 @@ function drawBoard(){
     <div class="row-between">
       <div>
         <h2>${esc(tname)}</h2>
-        <p class="sub">${activeType==="all" ? "Mixed deadlines" : dueLine(rowType({et:activeType}).due)} &middot; ${scoped().length} clients &middot; <b>${outstanding}</b> still owe documents &middot; ${ready} ready to start</p>
+        <p class="sub">${activeType==="all" ? "Mixed deadlines" : inByLine(activeType)} &middot; ${scoped().length} clients &middot; <b>${outstanding}</b> still owe documents &middot; ${ready} ready to start</p>
       </div>
       <div class="inline">
+        <button class="btn" onclick="editTurnaround()">How long we need</button>
         <button class="btn" onclick="editDue()">Deadline moved?</button>
         <button class="btn primary" onclick="bulk()">Remind all ${outstanding}</button>
       </div>
     </div>
 
+    <div class="row-between" style="margin-bottom:9px">
+      <span class="eyebrow">Show me &mdash; pick one</span>
+      <label class="sub" style="font-size:12.5px">Whose clients
+        <select class="need" style="margin-left:6px" onchange="setOwnerFilter(this.value)">
+          <option value="all" ${ownerFilter==="all"?"selected":""}>Everyone</option>
+          ${OWNERS().map(o=>`<option value="${esc(o)}" ${ownerFilter===o?"selected":""}>${esc(o)}${o===ME?" (mine)":""}</option>`).join("")}
+        </select>
+      </label>
+    </div>
     <div>
-    <div class="eyebrow" style="margin-bottom:7px">Show me &mdash; pick one</div>
     <div class="filters">
       ${FILTERS.map(f => `<button class="toggle" aria-pressed="${filter===f.id}" onclick="setFilter('${f.id}')">${esc(f.label)} <b class="mono">${count(f.id)}</b></button>`).join("")}
     </div></div>
@@ -1029,7 +1118,7 @@ function drawBoard(){
       <div class="bmain">
         <div>
           <div class="bname">${esc(r.name)}</div>
-          <div class="bsub">${esc(r.type)} &middot; owner ${esc(r.owner)} &middot; ${dueLine(rowType(r).due)}</div>
+          <div class="bsub">${esc(r.type)} &middot; owner ${esc(r.owner)} &middot; ${inByLine(r.et)}</div>
           <div class="bar"><i style="width:${pct}%"></i></div>
           <div class="bmiss">
             <span class="mono">${got} of ${total}</span>
@@ -1043,12 +1132,13 @@ function drawBoard(){
             ${r.confused ? `<span class="chip violet">${esc(r.confused)}</span>` : ""}
             ${r.never ? `<span class="chip bad">Link never opened</span>` : ""}
             ${r.review ? `<span class="chip acc">${r.review} waiting for your review</span>` : ""}
+            ${rowClient(r).last ? `<span class="chip">${esc(rowClient(r).last)}</span>` : ""}
           </div>
         </div>
         <div class="bacts" onclick="event.stopPropagation()">
           ${r.confused
             ? `<a class="btn sm" style="border-color:var(--violet-line);color:var(--violet);text-decoration:none" href="tel:${rowClient(r).people[0].p.replace(/ /g,"")}">Call ${esc(rowClient(r).people[0].n.split(" ")[0])}</a>`
-            : `<button class="btn sm" onclick="chase(${r.id})">Send reminder</button>`}
+            : `<button class="btn sm" onclick="confirmChase(${r.id})">Send reminder</button>`}
           ${done
             ? `<button class="btn sm primary" onclick="toast('Work started for ${esc(r.name)}.')">Start work</button>`
             : `<button class="btn sm locked" onclick="why(${r.id})">Start work</button>`}
@@ -1064,16 +1154,25 @@ function drawBoard(){
           <button class="btn sm" onclick="editAsk('${r.et}',${r.id})">Change what we ask for</button>
         </div>`;
       led.forEach(d => {
+        const nm = `<span class="dname">${esc(d.name)}</span>`;
+        const note = d.note ? `<span class="bsub">${esc(d.note)}</span>` : "";
         if(d.state === "pending"){
-          html += `<div class="ditem pending"><span><span class="chip warn">Not sent</span> <span class="dname">${esc(d.name)}</span>${d.need!=="Required"?` <span class="chip">${esc(d.need)}</span>`:""}</span>
-            <span class="inline"><button class="btn sm" onclick="toast()">Chase just this</button>
-            <button class="btn sm" onclick="toast()">Waive</button></span></div>`;
+          html += `<div class="ditem pending"><span><span class="chip warn">Not sent</span> ${nm}${d.need!=="Required"?` <span class="chip">${esc(d.need)}</span>`:""} ${note}</span>
+            <span class="inline"><button class="btn sm" onclick="markReceived(${r.id},'${d.id}',${JSON.stringify(d.name).replace(/"/g,"&quot;")})">Mark received</button>
+            <button class="btn sm" onclick="confirmChase(${r.id})">Chase this</button>
+            <button class="btn sm" onclick="waiveItem(${r.id},'${d.id}',${JSON.stringify(d.name).replace(/"/g,"&quot;")})">Waive</button></span></div>`;
+        } else if(d.state === "received"){
+          html += `<div class="ditem review"><span><span class="chip acc">Needs your review</span> ${nm} ${note}</span>
+            <span class="inline"><button class="btn sm primary" onclick="setItemState(${r.id},'${d.id}','accepted')">Accept</button>
+            <button class="btn sm" onclick="rejectItem(${r.id},'${d.id}',${JSON.stringify(d.name).replace(/"/g,"&quot;")})">Send back</button></span></div>`;
+        } else if(d.state === "waived"){
+          html += `<div class="ditem waived"><span><span class="chip">Waived</span> <span class="dname" style="text-decoration:line-through">${esc(d.name)}</span> ${note}</span>
+            <button class="btn sm" onclick="setItemState(${r.id},'${d.id}','pending')">Un-waive</button></div>`;
         } else if(d.state === "onfile"){
-          html += `<div class="ditem onfile"><span><span class="chip ok">Already on file</span> <span class="dname">${esc(d.name)}</span>
-            <span class="bsub">${esc(d.note)} &middot; never asked for, never chased</span></span></div>`;
+          html += `<div class="ditem onfile"><span><span class="chip ok">Already on file</span> ${nm} ${note} &middot; never asked for, never chased</span></div>`;
         } else {
-          html += `<div class="ditem accepted"><span><span class="chip ok">In and checked</span> <span class="dname">${esc(d.name)}</span></span>
-            <button class="btn sm" onclick="toast()">Reject this one</button></div>`;
+          html += `<div class="ditem accepted"><span><span class="chip ok">In and checked</span> ${nm}</span>
+            <button class="btn sm" onclick="rejectItem(${r.id},'${d.id}',${JSON.stringify(d.name).replace(/"/g,"&quot;")})">Send back</button></div>`;
         }
       });
       html += `</div>`;
@@ -1094,6 +1193,30 @@ function editAsk(et, rowId){
 function setFilter(f){ filter = f; openRow = null; drawBoard(); }
 function toggleRow(id){ openRow = openRow === id ? null : id; drawBoard(); }
 
+/* Nothing leaves the building without the sender seeing it, whether it is one
+   message or twenty-nine. */
+function confirmChase(id){
+  const r = board.find(x => x.id === id);
+  const c = rowClient(r), miss = rowLedger(r).filter(d => d.state === "pending");
+  const held = r.since === 0;
+  const body = `Hello ${c.people[0].n}, this is ${FIRM} (Chartered Accountants).\n\n`
+    + `For your ${rowType(r).name} ${rowType(r).period}, we still need ${miss.length} document(s):\n`
+    + miss.slice(0,4).map(d => "\u2022 " + d.name).join("\n")
+    + (miss.length > 4 ? `\n\u2022 and ${miss.length-4} more` : "")
+    + `\n\nPlease upload here:\nhttps://docs.example.com/u/7fK2mQ\n\n`
+    + `Please send them by ${inByLabel(r.et)}. Reply here if you have a question.`;
+  modal(`Remind ${esc(c.people[0].n.split(" ")[0])}`,
+    `<div class="wa">${esc(body)}</div>
+     <table class="tbl" style="margin-top:12px">
+       <tr><td>Going by</td><td>WhatsApp</td></tr>
+       <tr><td>Chased so far</td><td>${r.chased||0} time${(r.chased||0)===1?"":"s"}</td></tr>
+       <tr><td>Last contact</td><td>${esc(rowClient(r).last)}</td></tr>
+       <tr><td><b>Cost, estimated</b></td><td><b>₹0.15 + GST</b></td></tr>
+     </table>
+     ${held ? `<p class="sub" style="margin-top:11px"><span class="chip warn">Held</span> Messaged today already, so the 48-hour rule would suppress this.</p>` : ""}`,
+    `<button class="btn" onclick="closeModal()">Cancel</button>
+     <button class="btn primary" onclick="closeModal();chase(${id})">${held?"Send anyway":"Send it"}</button>`);
+}
 function chase(id){
   const r = board.find(x => x.id === id);
   r.chased = (r.chased || 0) + 1;
@@ -1192,7 +1315,6 @@ function cardLook(c){
 }
 
 function drawClient(){
-  const L = lang === "hi";
   let body = "";
 
   cards.forEach(c => {
@@ -1208,13 +1330,14 @@ function drawClient(){
       ${c.why ? `<div class="chint" style="color:var(--bad);margin-top:6px">${esc(c.why)}</div>` : ""}`;
 
     if(c.parts){
-      body += `<div class="parts">${c.parts.map(p => `<span class="part ${c.got.includes(p)?"on":""}">${p}</span>`).join("")}</div>
-        <div class="chint" style="margin-top:6px">${c.got.length} of 12 months in. ${c.parts.filter(p=>!c.got.includes(p)).join(" and ") || "All done"}${c.got.length<12?" still missing.":""}</div>`;
+      body += `<div class="parts">${c.parts.map(p => `<button class="part ${c.got.includes(p)?"on":""}" onclick="uploadPart('${c.id}','${p}')">${p}</button>`).join("")}</div>
+        <div class="chint" style="margin-top:6px">${c.got.length} of ${c.parts.length} in. ${c.parts.filter(p=>!c.got.includes(p)).join(", ") || "All done"}${c.got.length<c.parts.length?" still to send. Tap one to add it.":""}</div>`;
     }
 
     if(c.st === "pending" || c.st === "redo"){
       body += `<div class="cbtns">
         <button class="cbtn" onclick="upload('${c.id}')">${c.kind === "figure" ? "Type the figure" : "📷 Take photo or upload"}</button>
+        <button class="cbtn plain" onclick="sendOnWhatsApp('${c.id}')">Send on WhatsApp</button>
         <button class="cbtn plain" onclick="hatch('${c.id}')">I don't have this</button>
       </div>`;
     }
@@ -1250,18 +1373,20 @@ function drawClient(){
               </div>
             </div>
             <div class="inline" style="gap:5px">
-              <button class="btn sm" onclick="lang='${L?"en":"hi"}';drawClient()">${L ? "EN" : "हि"}</button>
               <button class="btn sm" onclick="toast('Calling Priya on ${CLIENT.phone}. Logged as a defect in this page, not a client failure.')">Call</button>
             </div>
           </div>
         </div>
         <div class="pbody">
-          <h3 class="${L?"dev":""}" style="font-size:16px">${L ? HI.title : "Namaste " + esc(CLIENT.greet)}</h3>
-          <p class="sub ${L?"dev":""}" style="margin-top:4px">${L ? HI.line : `${esc(FIRM)} need ${cards.length} things for your ${esc(ET().name.toLowerCase())}.`}</p>
-          <div class="pbar"><i style="width:${Math.round(accepted()/cards.length*100)}%"></i></div>
+          <h3 style="font-size:16px">Namaste ${esc(CLIENT.greet)}</h3>
+          <p class="sub" style="margin-top:4px">${esc(FIRM)} need ${cards.length} things for your ${esc(ET().name.toLowerCase())}.</p>
+          <div class="pbar">
+            <i style="width:${Math.round(accepted()/cards.length*100)}%"></i>
+            <u style="width:${Math.round(cards.filter(c=>c.st!=="pending"&&c.st!=="redo"&&c.st!=="done").length/cards.length*100)}%"></u>
+          </div>
           <div class="row-between">
-            <b class="mono" style="font-size:13px">${accepted()} of ${cards.length} done</b>
-            <span class="chint ${L?"dev":""}">${L ? HI.by : "Please finish by Wednesday 30 September."}</span>
+            <b class="mono" style="font-size:13px">${accepted()} of ${cards.length} sent${cards.length-accepted()-pending()>0?`, ${cards.length-accepted()-pending()} answered`:""}</b>
+            <span class="chint">Please send them by ${esc(inByLabel())}.</span>
           </div>
           <div style="margin-top:14px">${body}</div>
           <div class="mini" style="margin-top:4px">
@@ -1270,9 +1395,14 @@ function drawClient(){
           </div>
         </div>
         <div class="pfoot">
-          <button class="gate ${gateLive?"live":""}" onclick="gateTap()">
-            ${gateLive ? `Tell ${esc(CC().owner.split(" ")[0])} I am done` : `${left} thing${left===1?"":"s"} still open — tap to see`}
-          </button>
+          ${clientDone
+            ? `<div class="gate live" style="cursor:default;flex-direction:column;gap:2px">
+                 <span>Sent to ${esc(CC().owner.split(" ")[0])}, ${esc(clientDone)}</span>
+                 <span style="font-weight:400;font-size:12px;opacity:.9">She will call you if anything is missing</span>
+               </div>`
+            : `<button class="gate ${gateLive?"live":""}" onclick="gateTap()">
+                 ${gateLive ? `Tell ${esc(CC().owner.split(" ")[0])} I am done` : `${left} thing${left===1?"":"s"} still open — tap to see`}
+               </button>`}
         </div>
       </div>
 
@@ -1311,6 +1441,13 @@ function drawClient(){
   </div>`;
 }
 
+function uploadPart(id, part){
+  const c = cards.find(x => x.id === id);
+  if(c.got.includes(part)) return;
+  c.got.push(part);
+  if(c.got.length === c.parts.length) c.st = "done";
+  drawClient();
+}
 function upload(id){
   const c = cards.find(x => x.id === id);
   if(c.parts){
@@ -1328,6 +1465,19 @@ function upload(id){
   toast(`“${esc(c.name)}” uploaded and saved.`, () => { c.st = was; drawClient(); });
 }
 
+/* The camera often will not open inside WhatsApp's own browser on Android.
+   A route back to WhatsApp is the fallback that actually gets the document. */
+function sendOnWhatsApp(id){
+  const c = cards.find(x => x.id === id);
+  modal("Send it on WhatsApp instead",
+    `<p class="sub">If the camera will not open here, send it straight to the office on WhatsApp.
+      The message is pre-filled with the document name so nobody has to guess what it is.</p>
+     <div class="wa" style="margin-top:12px">Sending: ${esc(c.name)}</div>
+     <p class="sub" style="margin-top:12px;font-size:12.5px">It lands beside the same item on
+       ${esc(CC().owner.split(" ")[0])}'s board and she marks it received.</p>`,
+    `<button class="btn" onclick="closeModal()">Back</button>
+     <button class="btn primary" onclick="closeModal();answer('${id}','thirdparty','Sending on WhatsApp')">Open WhatsApp</button>`);
+}
 function hatch(id){
   const c = cards.find(x => x.id === id);
   modal("I don't have this",
@@ -1344,12 +1494,19 @@ function answer(id, st, msg){
   toast(msg + ".", () => { c.st = was; drawClient(); });
 }
 
+let clientDone = null;
 function gateTap(){
   if(allAnswered()){
+    clientDone = "4:12pm";
+    drawClient();
+    return;
+  }
+  if(false){
     toast("${esc(CC().owner.split(' ')[0])} has been told you are done.");
     return;
   }
   const first = cards.find(c => c.st === "pending" || c.st === "redo");
+  if(!first) return;
   const el = document.getElementById("c-" + first.id);
   el.scrollIntoView({block:"center", behavior:"smooth"});
   el.animate([{boxShadow:"0 0 0 0 rgba(21,69,110,.55)"},{boxShadow:"0 0 0 9px rgba(21,69,110,0)"}], {duration:900, iterations:2});
@@ -1387,6 +1544,34 @@ const ENGAGEMENT_TYPES = [
   {id:"roc", group:"Compliance", name:"ROC annual (AOC-4)", items:0, disabled:"Needs the AGM date"},
 ];
 ENGAGEMENT_TYPES.forEach(t => { if(DOCS[t.id]) t.items = DOCS[t.id].items.length; });
+/* WORKING DAYS THE FIRM NEEDS AFTER THE LAST DOCUMENT LANDS.
+   These are assumptions and are shown on screen as assumptions, because a wrong
+   number here is worse than none: the board would chase confidently to a fiction.
+   A partner sets the real ones. Sundays are the only non-working day assumed. */
+const TURNAROUND = {tax_audit:8, stat_audit:10, llp_audit:6, trust_audit:8,
+                    society_audit:6, gst_monthly:2, gstr9:10, form15cb:1, networth:2};
+const DUE_ISO = {tax_audit:"2026-09-30", stat_audit:"2026-09-30", llp_audit:"2026-10-30",
+                 trust_audit:"2026-09-30", society_audit:"2026-07-31", gst_monthly:"2026-09-11",
+                 gstr9:"2026-12-31"};
+const TODAY = new Date(2026, 8, 12);
+const MONTHS_LONG = ["January","February","March","April","May","June","July",
+                     "August","September","October","November","December"];
+const fmtDate = d => `${d.getDate()} ${MONTHS_LONG[d.getMonth()]} ${d.getFullYear()}`;
+
+function inByFor(typeId){
+  const iso = DUE_ISO[typeId];
+  if(!iso) return null;
+  const d = new Date(iso + "T00:00:00");
+  let left = TURNAROUND[typeId] || 0;
+  while(left > 0){ d.setDate(d.getDate() - 1); if(d.getDay() !== 0) left--; }
+  return d;
+}
+const daysFromToday = d => Math.round((d - TODAY) / 86400000);
+function inByLabel(typeId){
+  const d = inByFor(typeId || currentType);
+  return d ? fmtDate(d) : (ENGAGEMENT_TYPES.find(t => t.id === (typeId||currentType))||{}).due;
+}
+
 let currentType = "tax_audit";
 let currentClient = null;   // set after CLIENTS is defined
 const ET = () => ENGAGEMENT_TYPES.find(t => t.id === currentType);
@@ -1545,6 +1730,8 @@ function drawClientDetail(){
 let typeChosen  = true;   // false = the picker owns the screen
 let engagementSent = false;   // true once the client has the link
 let pickerOpen  = false;
+let savedAt = null;
+function saveDraft(){ savedAt = "14:32"; drawList(); }
 
 function startFor(clientId){
   const c = clientId ? CLIENTS.find(x => x.id === clientId) : null;
@@ -1590,7 +1777,7 @@ function drawTypeBar(){
 
   const tilesFor = g => ENGAGEMENT_TYPES.filter(t => t.group === g).map(t =>
     pill(t.id, t.name,
-         t.disabled ? t.disabled : (live.has(t.id) ? `${typeCounts(t.id)} owing` : `${t.items} items`),
+         t.disabled ? t.disabled : (live.has(t.id) ? `${typeCounts(t.id)} owing · in by ${inByFor(t.id) ? fmtDate(inByFor(t.id)).replace(/ \d{4}$/,'') : '—'}` : `${t.items} items`),
          t.disabled || "")
   ).join("");
 
@@ -1655,5 +1842,5 @@ document.addEventListener("keydown", e => {
 });
 
 
-drawTypeBar(); drawClients(); drawList(); drawBoard(); applyState("partial");
+drawTypeBar(); drawClients(); drawList(); drawBoard(); applyState("partial"); go("board");
 </script>
