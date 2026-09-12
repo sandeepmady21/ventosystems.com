@@ -272,6 +272,14 @@ h3{font-size:14px;margin:0;letter-spacing:-.005em}
 .ccard.answered{background:var(--warn-soft);border-color:var(--warn-line)}
 .ccard.redo{background:var(--bad-soft);border-color:var(--bad-line)}
 .ccard.confused{background:var(--violet-soft);border-color:var(--violet-line)}
+.wvbanner{
+  display:flex;flex-direction:column;gap:5px;background:var(--warn-soft);
+  border:1px solid var(--warn-line);border-left:3px solid var(--warn);
+  border-radius:8px;padding:11px 12px;margin-bottom:13px;
+}
+.wvbanner b{color:var(--warn);font-size:13.5px;font-weight:500}
+.wvbanner span{font-size:12.5px;color:var(--ink-2)}
+.wvbanner .btn{align-self:flex-start;margin-top:4px}
 .ccard.queried{background:var(--violet-soft);border-color:var(--violet-line);border-left:3px solid var(--violet)}
 .qbox{width:100%;border:1px solid var(--rule-2);border-radius:7px;padding:10px;font:inherit;font-size:13px;margin-top:9px;min-height:64px;background:var(--surface)}
 .cname{font-weight:500;font-size:13.5px}
@@ -1584,7 +1592,7 @@ function drawClient(){
         </div>
         ${badge}
       </div>
-      ${c.why ? `<div class="chint" style="color:var(--bad);margin-top:6px">${esc(c.why)}</div>` : ""}`;
+      ${c.why && c.st !== "query" ? `<div class="chint" style="color:var(--bad);margin-top:6px">${esc(c.why)}</div>` : ""}`;
 
     if(c.parts){
       body += `<div class="parts">${c.parts.map(p => `<button class="part ${c.got.includes(p)?"on":""}" onclick="uploadPart('${c.id}','${p}')">${p}</button>`).join("")}</div>
@@ -1603,7 +1611,6 @@ function drawClient(){
     } else if(c.st === "pending" || c.st === "redo"){
       body += `<div class="cbtns">
         <button class="cbtn" onclick="upload('${c.id}')">${c.kind === "figure" ? "Type the figure" : "📷 Take photo or upload"}</button>
-        <button class="cbtn plain" onclick="sendOnWhatsApp('${c.id}')">Send on WhatsApp</button>
         <button class="cbtn plain" onclick="hatch('${c.id}')">I don't have this</button>
       </div>`;
     }
@@ -1623,7 +1630,8 @@ function drawClient(){
       <div class="demobar">
         <span class="tag">Demo</span>
         <span class="lbl">See it at a different point:</span>
-        <span class="opts">${STATES.map(s => `<button aria-pressed="${cstate===s.id}" onclick="applyState('${s.id}')">${esc(s.label)}</button>`).join("")}</span>
+        <span class="opts">${STATES.map(s => `<button aria-pressed="${cstate===s.id}" onclick="applyState('${s.id}')">${esc(s.label)}</button>`).join("")}
+          <button aria-pressed="${inWebview}" onclick="toggleWebview()">Opened inside WhatsApp</button></span>
       </div>
     </div>
 
@@ -1644,6 +1652,12 @@ function drawClient(){
           </div>
         </div>
         <div class="pbody">
+          ${inWebview ? `<div class="wvbanner">
+            <b>Open this in Chrome first</b>
+            <span>Tap the three dots at the top right of this window, then Open in Chrome.
+              The camera often will not open inside WhatsApp.</span>
+            <button class="btn sm" onclick="toast()">Copy the link</button>
+          </div>` : ""}
           <h3 style="font-size:16px">Namaste ${esc(CLIENT.greet)}</h3>
           <p class="sub" style="margin-top:4px">${esc(FIRM)} need ${cards.length} things for your ${esc(ET().name.toLowerCase())}.</p>
           <div class="pbar">
@@ -1736,19 +1750,6 @@ function upload(id){
   toast(`“${esc(c.name)}” uploaded and saved.`, () => { c.st = was; drawClient(); });
 }
 
-/* The camera often will not open inside WhatsApp's own browser on Android.
-   A route back to WhatsApp is the fallback that actually gets the document. */
-function sendOnWhatsApp(id){
-  const c = cards.find(x => x.id === id);
-  modal("Send it on WhatsApp instead",
-    `<p class="sub">If the camera will not open here, send it straight to the office on WhatsApp.
-      The message is pre-filled with the document name so nobody has to guess what it is.</p>
-     <div class="wa" style="margin-top:12px">Sending: ${esc(c.name)}</div>
-     <p class="sub" style="margin-top:12px;font-size:12.5px">It lands beside the same item on
-       ${esc(CC().owner.split(" ")[0])}'s board and she marks it received.</p>`,
-    `<button class="btn" onclick="closeModal()">Back</button>
-     <button class="btn primary" onclick="closeModal();answer('${id}','thirdparty','Sending on WhatsApp')">Open WhatsApp</button>`);
-}
 function hatch(id){
   const c = cards.find(x => x.id === id);
   modal("I don't have this",
@@ -1766,6 +1767,10 @@ function answer(id, st, msg){
 }
 
 let clientDone = null;
+/* Real build: detect WhatsApp's in-app browser from the user agent. Here it is a
+   demo switch, because the prototype is never actually inside one. */
+let inWebview = false;
+function toggleWebview(){ inWebview = !inWebview; drawClient(); }
 function gateTap(){
   if(allAnswered()){
     clientDone = "4:12pm";
