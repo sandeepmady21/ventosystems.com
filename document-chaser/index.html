@@ -272,6 +272,25 @@ h3{font-size:14px;margin:0;letter-spacing:-.005em}
 .grouplbl{font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3);font-weight:500;margin:12px 0 0}
 .prov{font-size:12.5px;color:var(--ink-3);margin-top:4px}
 .prov b{color:var(--ink-2);font-weight:500}
+
+/* ---------- demo-only controls, never part of the product ---------- */
+.demobar{
+  display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  border:1px dashed var(--rule-2);border-radius:8px;padding:8px 11px;background:var(--surface-2);
+}
+.demobar .tag{
+  font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);font-weight:500;
+  border:1px solid var(--rule-2);border-radius:4px;padding:2px 6px;background:var(--surface);flex:none;
+}
+.demobar .lbl{font-size:12.5px;color:var(--ink-3);flex:none}
+.demobar .opts{display:flex;gap:4px;flex-wrap:wrap}
+.demobar button{
+  border:1px solid transparent;background:none;border-radius:5px;padding:4px 9px;
+  font-size:12.5px;color:var(--ink-2);
+}
+.demobar button:hover{background:var(--surface-3);color:var(--ink)}
+.demobar button[aria-pressed="true"]{background:var(--surface);border-color:var(--rule-2);color:var(--ink);font-weight:500}
+.tickhint{font-size:12.5px;color:var(--ink-3);margin:0 0 8px}
 </style>
 
 <header class="top">
@@ -501,11 +520,11 @@ function drawList(){
     </div>
 
     <div class="card pad">
-      <div class="eyebrow" style="margin-bottom:9px">Tell us about the client, the list follows</div>
+      <div class="eyebrow" style="margin-bottom:4px">About this client</div>
+      <p class="tickhint">Tick any that apply. Each one adds or removes a bundle of documents below.</p>
       <div class="presets">
-        ${TOGGLES.map(t => `<button class="toggle" aria-pressed="${t.on}" onclick="flip('${t.id}')">${esc(t.label)}</button>`).join("")}
+        ${TOGGLES.map(t => `<button class="toggle" aria-pressed="${t.on}" onclick="flip('${t.id}')">${t.on ? "✓ " : ""}${esc(t.label)}</button>`).join("")}
       </div>
-      <p class="sub" style="margin-top:10px;font-size:12.5px">Each one adds or removes a bundle. Everything stays editable underneath.</p>
     </div>
 
     <div class="card pad">`;
@@ -665,9 +684,11 @@ function drawBoard(){
       </div>
     </div>
 
+    <div>
+    <div class="eyebrow" style="margin-bottom:7px">Show me &mdash; pick one</div>
     <div class="filters">
       ${FILTERS.map(f => `<button class="toggle" aria-pressed="${filter===f.id}" onclick="setFilter('${f.id}')">${esc(f.label)} <b class="mono">${count(f.id)}</b></button>`).join("")}
-    </div>
+    </div></div>
 
     <div class="card">`;
 
@@ -862,8 +883,10 @@ function drawClient(){
         <h2>What Sharma-ji sees on his phone</h2>
         <p class="sub">No login, no password, no app. One link from WhatsApp. Every file saves the moment he picks it.</p>
       </div>
-      <div class="statebar">
-        ${STATES.map(s => `<button class="toggle" aria-pressed="${cstate===s.id}" onclick="applyState('${s.id}')">${esc(s.label)}</button>`).join("")}
+      <div class="demobar">
+        <span class="tag">Demo</span>
+        <span class="lbl">See it at a different point:</span>
+        <span class="opts">${STATES.map(s => `<button aria-pressed="${cstate===s.id}" onclick="applyState('${s.id}')">${esc(s.label)}</button>`).join("")}</span>
       </div>
     </div>
 
@@ -1221,9 +1244,13 @@ function setLState(id){
   drawList();
 }
 function lstateBar(){
-  return `<div class="statebar">${LSTATES.map(x =>
-    `<button class="toggle" aria-pressed="${lstate===x.id}" onclick="setLState('${x.id}')">${esc(x.label)}</button>`
-  ).join("")}</div>`;
+  return `<div class="demobar">
+    <span class="tag">Demo</span>
+    <span class="lbl">See this screen at a different point:</span>
+    <span class="opts">${LSTATES.map(x =>
+      `<button aria-pressed="${lstate===x.id}" onclick="setLState('${x.id}')">${esc(x.label)}</button>`
+    ).join("")}</span>
+  </div>`;
 }
 
 function pickerHTML(switching){
