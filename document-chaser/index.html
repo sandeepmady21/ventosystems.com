@@ -446,6 +446,50 @@ h3{font-size:14px;margin:0;letter-spacing:-.005em}
 /* ---------- persistent engagement-type strip ---------- */
 .typebar{background:var(--band);border-bottom:1px solid var(--rule)}
 .typebar[hidden]{display:none}
+.typebar .inner{max-width:1180px;margin:0 auto;padding:9px 22px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.typebar .lbl{font-size:10px;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-3);font-weight:500;flex:none}
+.tpill{
+  border:1px solid var(--rule-2);background:var(--surface);border-radius:6px;
+  padding:5px 11px;white-space:nowrap;display:flex;align-items:baseline;gap:7px;
+}
+.tpill:hover:not([disabled]):not([aria-pressed="true"]){border-color:var(--accent);color:var(--accent)}
+.tpill b{font-weight:500;font-size:13px;letter-spacing:-.004em}
+.tpill span{font-size:11px;color:var(--ink-3);font-family:"IBM Plex Mono",monospace}
+.tpill[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.tpill[aria-pressed="true"] span{color:var(--accent-ink);opacity:.8}
+.tpill[disabled]{opacity:.5;border-style:dashed;cursor:not-allowed}
+.tmore{border:1px dashed var(--rule-2);background:none;border-radius:6px;padding:5px 11px;
+  font-size:12.5px;color:var(--ink-3);white-space:nowrap}
+.tmore:hover{border-color:var(--accent);color:var(--accent)}
+.tdrawer{border-top:1px solid var(--rule);background:var(--surface-2)}
+.tdrawer .inner{max-width:1180px;margin:0 auto;padding:12px 22px;display:flex;gap:26px;flex-wrap:wrap}
+.tgroup{display:flex;flex-direction:column;gap:6px;min-width:0}
+.grouplbl{font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3);font-weight:500;margin:12px 0 0}
+.prov{font-size:12.5px;color:var(--ink-3);margin-top:4px}
+.prov b{color:var(--ink-2);font-weight:500}
+
+/* ---------- demo-only controls, never part of the product ---------- */
+.demobar{
+  display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  border:1px dashed var(--rule-2);border-radius:8px;padding:8px 11px;background:var(--band);
+}
+.demobar .tag{
+  font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);font-weight:500;
+  border:1px solid var(--rule-2);border-radius:4px;padding:2px 6px;background:var(--surface);flex:none;
+}
+.demobar .lbl{font-size:12.5px;color:var(--ink-3);flex:none}
+.demobar .opts{display:flex;gap:4px;flex-wrap:wrap}
+.demobar button{
+  border:1px solid transparent;background:none;border-radius:5px;padding:4px 9px;
+  font-size:12.5px;color:var(--ink-2);
+}
+.demobar button:hover{background:var(--surface-3);color:var(--ink)}
+.demobar button[aria-pressed="true"]{background:var(--surface);border-color:var(--rule-2);color:var(--ink);font-weight:500}
+.tickhint{font-size:12.5px;color:var(--ink-3);margin:0 0 8px}
+
+/* ---------- persistent engagement-type strip ---------- */
+.typebar{background:var(--band);border-bottom:1px solid var(--rule)}
+.typebar[hidden]{display:none}
 .typebar .inner{
   max-width:1180px;margin:0 auto;padding:14px 22px;
   display:flex;align-items:flex-start;gap:30px;flex-wrap:wrap;
@@ -2291,31 +2335,38 @@ function drawWhoAmI(){
   const initials = ME.split(" ").map(w => w[0]).join("").slice(0,2);
   $("#whoami").innerHTML = `<span class="av">${initials}</span><span>Signed in as <b>${esc(ME)}</b></span>`;
 }
+let typesOpen = false;
+function toggleTypes(){ typesOpen = !typesOpen; drawTypeBar(); }
+
 function drawTypeBar(){
   const live = new Set(board.map(r => r.et));
-  const pill = (id, name, sub, dis) =>
-    `<button class="tpill" aria-pressed="${activeType===id}" ${dis?`disabled title="${esc(dis)}"`:`onclick="setActiveType('${id}')"`}>
-       <b>${esc(name)}</b><span>${esc(sub)}</span></button>`;
+  const pill = t => `<button class="tpill" aria-pressed="${activeType===t.id}" ${t.disabled?`disabled title="${esc(t.disabled)}"`:`onclick="setActiveType('${t.id}')"`}>
+      <b>${esc(t.name)}</b><span>${t.disabled ? esc(t.disabled)
+        : live.has(t.id) ? `${typeCounts(t.id)} owing` : `${t.items} items`}</span></button>`;
 
-  const group = (label, tiles) => tiles.trim()
-    ? `<div class="tgroup"><span class="glabel">${esc(label)}</span><div class="trow">${tiles}</div></div>` : "";
+  /* Inline: everything, whatever has live work, and whatever you have selected.
+     The other nine are a catalogue and sit behind one disclosure. */
+  const inline = ENGAGEMENT_TYPES.filter(t => live.has(t.id) || t.id === activeType);
+  const rest   = ENGAGEMENT_TYPES.filter(t => !inline.includes(t));
 
-  const tilesFor = g => ENGAGEMENT_TYPES.filter(t => t.group === g).map(t =>
-    pill(t.id, t.name,
-         t.disabled ? t.disabled : (live.has(t.id) ? `${typeCounts(t.id)} owing · in by ${inByFor(t.id) ? fmtDate(inByFor(t.id)).replace(/ \d{4}$/,'') : '—'}` : `${t.items} items`),
-         t.disabled || "")
-  ).join("");
-
-  $("#typebar").innerHTML = `<div class="inner">`
-    + group("Everything", pill("all","All engagements",`${typeCounts("all")} owing`))
-    + group("Audit",         tilesFor("Audit"))
-    + group("Compliance",    tilesFor("Compliance"))
-    + group("Certification", tilesFor("Certification"))
-    + `</div>`;
+  $("#typebar").innerHTML = `<div class="inner">
+      <span class="lbl">Working on</span>
+      <button class="tpill" aria-pressed="${activeType==="all"}" onclick="setActiveType('all')">
+        <b>Everything</b><span>${typeCounts("all")} owing</span></button>
+      ${inline.map(pill).join("")}
+      ${rest.length ? `<button class="tmore" onclick="toggleTypes()">${typesOpen ? "Fewer" : `${rest.length} more`} &middot; ${typesOpen ? "&#9652;" : "&#9662;"}</button>` : ""}
+    </div>
+    ${typesOpen ? `<div class="tdrawer"><div class="inner">
+      ${["Audit","Compliance","Certification"].map(g => {
+        const mine = rest.filter(t => t.group === g);
+        return mine.length ? `<div class="tgroup"><span class="lbl">${g}</span>
+          <div class="trow" style="display:flex;gap:6px;flex-wrap:wrap">${mine.map(pill).join("")}</div></div>` : "";
+      }).join("")}
+    </div></div>` : ""}`;
 }
 
 function setActiveType(id){
-  activeType = id;
+  activeType = id; typesOpen = false;
   if(id !== "all" && loadType(id)) typeChosen = true;
   filter = "all"; cfilter = "all"; openRow = null; pickerOpen = false;
   drawTypeBar(); drawClients(); drawList(); drawBoard();
