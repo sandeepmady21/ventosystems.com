@@ -1,3 +1,4 @@
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <title>Document Chaser</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -40,7 +41,9 @@ body{
   font-size:14px; line-height:1.5; -webkit-font-smoothing:antialiased;
 }
 button{font:inherit;color:inherit;cursor:pointer}
-:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+/* clip-path clips an outline, so the chevrons need the ring inside them */
+.pipe button:focus-visible{outline:none;box-shadow:inset 0 0 0 2px var(--accent)}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 .mono{font-family:"IBM Plex Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums}
 
@@ -66,13 +69,12 @@ button{font:inherit;color:inherit;cursor:pointer}
   color:var(--ink-2);font-weight:500;white-space:nowrap;font-size:13.5px;
 }
 .tab:hover:not([aria-selected="true"]){background:rgba(255,255,255,.4);color:var(--ink)}
-.tab small{color:var(--ink-2);opacity:.75}
 .tab[aria-selected="true"]{
   background:var(--band);border-color:var(--rule-2);border-top-color:var(--accent);
   color:var(--accent);font-weight:600;
 }
 .tab[aria-selected="true"] small{color:var(--accent);opacity:.8}
-.tab small{display:block;font-size:11px;color:var(--ink-3);font-weight:400}
+.tab small{display:block;font-size:11px;color:var(--ink-2);font-weight:400}
 .tab[aria-selected="true"] small{color:var(--accent)}
 .frame{max-width:1180px;margin-inline:auto;padding-inline:22px;width:100%;
   display:flex;align-items:center;gap:16px;flex-wrap:wrap}
@@ -91,7 +93,7 @@ h3{font-size:14px;margin:0;letter-spacing:-.005em}
   display:inline-flex;align-items:center;gap:6px;border:1px solid var(--rule-2);
   background:var(--surface-2);color:var(--ink-2);border-radius:999px;padding:3px 10px;font-size:12px;white-space:nowrap;
 }
-.chip.ok,.chip.warn,.chip.bad,.chip.violet,.chip.acc{
+.chip.ok,.chip.warn,.chip.bad,.chip.violet,.chip.acc,.chip.filed{
   border-radius:3px;padding:2px 7px;font-size:10.5px;font-weight:500;
   letter-spacing:.08em;text-transform:uppercase;border-width:1px;
 }
@@ -155,7 +157,7 @@ h3{font-size:14px;margin:0;letter-spacing:-.005em}
 }
 .item:last-child{border-bottom:0}
 .item:hover{background:var(--surface-2)}
-.item.off{opacity:.5}
+.item.off .iname{color:var(--ink-3)}
 .item.off .iname{text-decoration:line-through}
 .item.have{background:var(--filed-soft);border-left-color:var(--filed)}
 .item.have:hover{background:var(--filed-soft)}
@@ -225,8 +227,8 @@ h3{font-size:14px;margin:0;letter-spacing:-.005em}
 
 .pipe button.client{background:#E7D4A8;color:#4E3908}
 .pipe button.firm  {background:#BFD3E6;color:#0F3352}
-.pipe button.client.empty{background:#F2E8D2;color:#8A7742}
-.pipe button.firm.empty  {background:#DCE7F1;color:#5D7B99}
+.pipe button.client.empty{background:#F2E8D2;color:#6E5D2E}
+.pipe button.firm.empty  {background:#DCE7F1;color:#3F5F7C}
 .pipe button.client:hover:not([aria-pressed="true"]){background:#DFC894}
 .pipe button.firm:hover:not([aria-pressed="true"]){background:#AEC7DD}
 .pipe button.client[aria-pressed="true"]{background:#5E4108;color:#FBF3E0}
@@ -234,8 +236,7 @@ h3{font-size:14px;margin:0;letter-spacing:-.005em}
 
 .pipe .pn{display:block;font-family:"IBM Plex Mono",monospace;font-size:22px;font-weight:500;line-height:1;letter-spacing:-.02em}
 .pipe .pl{display:block;font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;font-weight:500;
-  margin-top:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;opacity:.72}
-.pipe button[aria-pressed="true"] .pl{opacity:.8}
+  margin-top:5px;white-space:normal;line-height:1.2}
 .filters .toggle{padding:6px 12px}
 .filters .toggle b{font-family:"IBM Plex Mono",monospace;font-weight:500;opacity:.75;margin-left:3px}
 .brow{border-bottom:1px solid var(--rule);padding:11px 16px 11px 14px;border-left:3px solid transparent}
@@ -488,8 +489,6 @@ h3{font-size:14px;margin:0;letter-spacing:-.005em}
    ======================================================================= */
 const FIRM = "Example & Co";
 
-let due = "30 September 2026";
-let dueDays = 18;
 
 /* --- the checklist for Sharma Textiles, Tax Audit 44AB FY 2025-26 --- */
 /* =======================================================================
@@ -793,17 +792,6 @@ let board = [
   {id:9, et:"gst_monthly", states:{g3:"received", g7:"received"}, name:"Naveen Chandra Textiles", type:"GST August 2026", missIds:["g3","g7","g8","g9"], owner:"Faisal Qureshi", chased:1, tags:[]},
 ];
 
-const FILTERS = [
-  {id:"all",      label:"Everyone"},
-  {id:"promised", label:"Said they'd send it, didn't"},
-  {id:"oneleft",  label:"One item left"},
-  {id:"stuck",    label:"Opened but stuck"},
-  {id:"confused", label:"Confused, call them"},
-  {id:"never",    label:"Never opened the link"},
-  {id:"review",   label:"Needs your review"},
-  {id:"ready",    label:"Ready to start work"},
-  {id:"notstarted", label:"Nothing started"},
-];
 let ownerFilter = "all";
 const OWNERS = () => [...new Set(board.map(r => r.owner))];
 let stage = "chasing";   // the board opens where the work is
@@ -1046,7 +1034,7 @@ function tick(id){
   if(i.on){ offReason(id); return; }     // turning OFF asks why
   i.on = true; i.offWhy = null;
   drawList();
-  toast(`${i.on ? "Asking for" : "Not asking for"} “${esc(i.name)}”`, () => { i.on = !i.on; drawList(); });
+  toast();
 }
 
 /* "on: false" is an absence. A year later nobody can say why the team decided
@@ -1072,8 +1060,7 @@ function setNeed(id, v){
   const i = items.find(x => x.id === id);
   const was = i.need; i.need = v;
   drawList();
-  toast(`“${esc(i.name)}” is now ${v.toLowerCase()}. ${v === "Required" ? "It blocks Start work." : "It does not block Start work."}`,
-        () => { i.need = was; drawList(); });
+  toast();
 }
 
 /* Cycles yes → no → not asked. The answer lives on the CLIENT, so next year's
@@ -1092,8 +1079,7 @@ function _oldFlip(tid){
   const before = hit.map(i => i.on);
   hit.forEach(i => i.on = t.on);
   drawList();
-  toast(`${t.on ? "+" : "−"}${hit.length} item${hit.length===1?"":"s"} (${esc(t.label.toLowerCase())})`,
-        () => { t.on = !t.on; hit.forEach((i,n) => i.on = before[n]); drawList(); });
+  toast();
 }
 
 function editTurnaround(){
@@ -1115,19 +1101,21 @@ function editTurnaround(){
 function setTurnaround(t, n){ TURNAROUND[t] = n; closeModal(); drawBoard(); drawTypeBar(); }
 
 function editDue(){
-  modal("Change the due date",
-    `<p class="sub" style="margin-bottom:12px">Tax audit for FY 2025-26. A representation to move this to 31 October is pending, so treat it as data, not a constant.</p>
+  modal("Change the filing date",
+    `<p class="sub" style="margin-bottom:12px">${esc(ET().name)} for ${esc(ET().period)}. A representation to move this to 31 October is pending, so treat it as data, not a constant.</p>
      <div class="inline">
-       <button class="btn" onclick="setDue('30 September 2026',18)">30 September 2026</button>
-       <button class="btn" onclick="setDue('31 October 2026',49)">31 October 2026</button>
+       <button class="btn" onclick="setDue('2026-09-30','30 September 2026')">30 September 2026</button>
+       <button class="btn" onclick="setDue('2026-10-31','31 October 2026')">31 October 2026</button>
      </div>
      <p class="sub" style="margin-top:14px;padding-top:12px;border-top:1px solid var(--rule)">
-       Changing this re-dates every reminder for all 41 tax audit clients, and writes a line to the audit log.</p>`);
+       Changing this moves the in-by date with it and re-dates every reminder for every
+       ${esc(ET().name.toLowerCase())} client.</p>`);
 }
-function setDue(d, n){
-  due = d; dueDays = n;
-  closeModal(); drawList(); drawBoard();
-  toast(`Due date is now ${d}. 41 clients re-dated, reminders rescheduled.`);
+function setDue(iso, label){
+  DUE_ISO[currentType] = iso;                    // what every rendered date reads from
+  const t = ENGAGEMENT_TYPES.find(x => x.id === currentType);
+  if(t) t.due = label;
+  closeModal(); drawTypeBar(); drawList(); drawBoard();
 }
 
 function waText(){
@@ -1170,9 +1158,6 @@ function sendReq(){
    ======================================================================= */
 const rowClient = r => CLIENTS.find(c => c.name === r.name) || CLIENTS[0];
 const rowType   = r => ENGAGEMENT_TYPES.find(t => t.id === r.et) || ENGAGEMENT_TYPES[0];
-const DAYS_LEFT = {"30 September 2026":18,"31 October 2026":49,"11 September 2026":-1,
-                   "31 December 2026":110,"30 October 2026":48,"31 July 2026":-43};
-const daysFor = due => DAYS_LEFT.hasOwnProperty(due) ? DAYS_LEFT[due] : null;
 /* The board chases to the IN-BY date, not the filing date. */
 function inByLine(typeId){
   const d = inByFor(typeId);
@@ -1190,7 +1175,10 @@ function inByLine(typeId){
 const rowBlocking = r => rowLedger(r).filter(d => (d.state === "pending" || d.state === "query") && d.need === "Required").length;
 const rowDocs  = r => (DOCS[r.et] || DOCS.tax_audit).items.filter(i => i.on);
 const rowTotal = r => rowDocs(r).length;
-const rowDone  = r => rowTotal(r) - r.missIds.length;
+const rowWaived = r => rowLedger(r).filter(d => d.state === "waived").length;
+/* Waived is not received. It used to count as done, so waiving a document moved
+   a row to 14 of 14 and turned Start work green with nothing in the file. */
+const rowDone  = r => rowLedger(r).filter(d => d.state === "accepted" || d.state === "onfile").length;
 const docName  = (r, id) => (rowDocs(r).find(i => i.id === id) || {name:id}).name;
 const rowMiss  = r => r.missIds.map(id => docName(r, id));
 
@@ -1214,7 +1202,13 @@ function setItemState(id, itemId, st, note){
   r.states = r.states || {}; r.notes = r.notes || {};
   r.states[itemId] = st;
   if(note) r.notes[itemId] = note;
-  if(st === "pending"){ if(!r.missIds.includes(itemId)) r.missIds.push(itemId); }
+  if(st === "pending"){
+    if(!r.missIds.includes(itemId)) r.missIds.push(itemId);
+    /* A send-back is a handover in the other direction. Without this the row sits
+       under "Being prepared" forever with a required document missing. */
+    const side = (STAGES.find(x => x.id === stageOf(r)) || {}).side;
+    if(side === "firm") delete r.stage;
+  }
   else r.missIds = r.missIds.filter(x => x !== itemId);
   closeModal(); drawBoard(); drawTypeBar();
 }
@@ -1337,8 +1331,8 @@ function setStage(id){ stage = id; filter = "all"; openRow = null; drawBoard(); 
 
 function drawBoard(){
   const list = rows();
-  const outstanding = scoped().filter(r => r.missIds.length).length;
-  const ready = scoped().filter(r => !r.missIds.length).length;
+  const outstanding = scoped().filter(r => stageOf(r) === "chasing").length;
+  const ready = scoped().filter(r => stageOf(r) === "ready").length;
   const tname = activeType === "all" ? "Tax audit and GST" : ENGAGEMENT_TYPES.find(t => t.id === activeType).name;
 
   let html = `
@@ -1346,12 +1340,12 @@ function drawBoard(){
     <div class="row-between">
       <div>
         <h2>${esc(tname)}</h2>
-        <p class="sub">${activeType==="all" ? "Mixed deadlines" : inByLine(activeType)} &middot; ${scoped().length} clients &middot; <b>${outstanding}</b> still owe documents &middot; ${ready} ready to start</p>
+        <p class="sub">${activeType==="all" ? "Mixed deadlines" : inByLine(activeType)} &middot; ${scoped().length} engagements &middot; <b>${outstanding}</b> being chased &middot; ${ready} ready to start</p>
       </div>
       <div class="inline">
         <button class="btn" onclick="editTurnaround()">How long we need</button>
         <button class="btn" onclick="editDue()">Deadline moved?</button>
-        <button class="btn primary" onclick="bulk()">Remind all ${outstanding}</button>
+        <button class="btn primary" onclick="bulk()">Remind all ${rows().filter(r => rowBlocking(r) > 0 && r.since !== 0).length}</button>
       </div>
     </div>
 
@@ -1421,7 +1415,7 @@ function drawBoard(){
     const blocking = rowBlocking(r);
     const done = blocking === 0;
     const opened = openRow === r.id;
-    html += `<div class="brow ${opened?"open":""}" onclick="toggleRow(${r.id})">
+    html += `<div class="brow ${opened?"open":""}" role="button" tabindex="0" onclick="toggleRow(${r.id})" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleRow(${r.id})}">
       <div class="bmain">
         <div>
           <div class="bname">${esc(r.name)}</div>
@@ -1473,7 +1467,7 @@ function drawBoard(){
         if(d.state === "pending"){
           html += `<div class="ditem pending"><span><span class="chip warn">Not sent</span> ${nm}${d.need!=="Required"?` <span class="chip">${esc(d.need)}</span>`:""}${d.third?` <span class="chip warn">Outside party</span>`:""} ${note}</span>
             <span class="inline"><button class="btn sm" onclick="markReceived(${r.id},'${d.id}',${JSON.stringify(d.name).replace(/"/g,"&quot;")})">Mark received</button>
-            <button class="btn sm" onclick="confirmChase(${r.id})">Chase this</button>
+            <button class="btn sm" onclick="confirmChase(${r.id},'${d.id}')">Chase this one</button>
             <button class="btn sm" onclick="waiveItem(${r.id},'${d.id}',${JSON.stringify(d.name).replace(/"/g,"&quot;")})">Waive</button></span></div>`;
         } else if(d.state === "received"){
           html += `<div class="ditem review"><span><span class="chip acc">Needs your review</span> ${nm} ${note}</span>
@@ -1484,7 +1478,7 @@ function drawBoard(){
           html += `<div class="ditem query"><span><span class="chip violet">Question open</span> ${nm}
             <span class="bsub">${esc(d.note)}</span></span>
             <span class="inline"><button class="btn sm primary" onclick="setItemState(${r.id},'${d.id}','accepted')">Answered, accept</button>
-            <button class="btn sm" onclick="confirmChase(${r.id})">Chase the answer</button></span></div>`;
+            <button class="btn sm" onclick="confirmChase(${r.id},'${d.id}')">Chase the answer</button></span></div>`;
         } else if(d.state === "waived"){
           html += `<div class="ditem waived"><span><span class="chip">Waived</span> <span class="dname" style="text-decoration:line-through">${esc(d.name)}</span> ${note}</span>
             <button class="btn sm" onclick="setItemState(${r.id},'${d.id}','pending')">Un-waive</button></div>`;
@@ -1528,9 +1522,12 @@ function moveStage(id, st, owner){
   r.stage = st; r.idle = 0; if(owner) r.owner = owner;
   closeModal(); stage = st; filter = "all"; drawBoard();
 }
-function confirmChase(id){
+function confirmChase(id, itemId){
   const r = board.find(x => x.id === id);
-  const c = rowClient(r), miss = rowLedger(r).filter(d => d.state === "pending");
+  const c = rowClient(r);
+  const led = rowLedger(r);
+  const one = itemId ? led.find(d => d.id === itemId) : null;
+  const miss = one ? [one] : led.filter(d => d.state === "pending");
   const held = r.since === 0;
   const body = `Hello ${c.people[0].n}, this is ${FIRM} (Chartered Accountants).\n\n`
     + `For your ${rowType(r).name} ${rowType(r).period}, we still need ${miss.length} document(s):\n`
@@ -1568,23 +1565,29 @@ function why(id){
 }
 
 function bulk(){
-  const out = scoped().filter(r => r.missIds.length);
-  const held = 1, going = out.length - held;
+  /* Was scoped(), which ignores the diagnosis filter, minus hardcoded constants
+     that went negative on any small selection. */
+  const out   = rows().filter(r => rowBlocking(r) > 0);
+  const heldR = out.filter(r => r.since === 0);
+  const send  = out.filter(r => r.since !== 0);
+  const noOptIn = send.filter((_, k) => k % 4 === 3);
+  const going = send.length;
   modal(`Remind ${out.length} clients`,
     `<div class="wa">${esc(waText())}</div>
      <p class="sub" style="margin:12px 0 8px">Rendered with Sharma Textiles' real values. Every client gets only their own missing items.</p>
      <table class="tbl">
-       <tr><td>Going by WhatsApp</td><td>${going - 2}</td></tr>
-       <tr><td>Going by email, no WhatsApp opt-in</td><td>2</td></tr>
-       <tr><td>Held, messaged under 48 hours ago</td><td>${held}</td></tr>
-       <tr><td>Held, client replied, a human answers first</td><td>1</td></tr>
+       <tr><td>Going by WhatsApp</td><td>${going - noOptIn.length}</td></tr>
+       <tr><td>Going by email, no WhatsApp opt-in</td><td>${noOptIn.length}</td></tr>
+       <tr><td>Held, messaged under 48 hours ago</td><td>${heldR.length}</td></tr>
+       <tr><td><b>Total in this view</b></td><td><b>${out.length}</b></td></tr>
      </table>
      <p class="sub" style="margin-top:12px">Nobody is messaged twice in 48 hours, nothing goes out after 9pm or on a Sunday, and chasing stops on its own once the deadline passes.</p>`,
     `<button class="btn" onclick="closeModal()">Cancel</button>
-     <button class="btn primary" onclick="closeModal();doBulk(${going})">Send ${going} reminders</button>`);
+     ${going ? `<button class="btn primary" onclick="closeModal();doBulk()">Send ${going} reminder${going===1?"":"s"}</button>` : ""}`);
 }
-function doBulk(n){
-  scoped().forEach(r => { if(r.missIds.length){ r.chased = (r.chased||0)+1; r.since = 0; } });
+function doBulk(){
+  rows().filter(r => rowBlocking(r) > 0 && r.since !== 0)
+        .forEach(r => { r.chased = (r.chased||0)+1; r.since = 0; });
   drawBoard();
   toast(`${n} reminders sent. 2 held back.`, () => toast("Send cancelled. Nothing went out."));
 }
@@ -1716,7 +1719,7 @@ function drawClient(){
               </div>
             </div>
             <div class="inline" style="gap:5px">
-              <button class="btn sm" onclick="toast('Calling Priya on ${CLIENT.phone}. Logged as a defect in this page, not a client failure.')">Call</button>
+              <a class="btn sm" style="text-decoration:none" href="tel:${CLIENT.phone.replace(/ /g,"")}">Call</a>
             </div>
           </div>
         </div>
@@ -1810,13 +1813,13 @@ function upload(id){
       c.got.push(miss[0]);
       if(!c.parts.filter(p => !c.got.includes(p)).length) c.st = "done";
       drawClient();
-      toast(`${miss[0]} statement uploaded. ${c.parts.length - c.got.length} month${c.parts.length-c.got.length===1?"":"s"} left.`);
+      toast();
       return;
     }
   }
   const was = c.st;
   c.st = "done"; drawClient();
-  toast(`“${esc(c.name)}” uploaded and saved.`, () => { c.st = was; drawClient(); });
+  toast();
 }
 
 function hatch(id){
@@ -1855,7 +1858,7 @@ function gateTap(){
   const el = document.getElementById("c-" + first.id);
   el.scrollIntoView({block:"center", behavior:"smooth"});
   el.animate([{boxShadow:"0 0 0 0 rgba(21,69,110,.55)"},{boxShadow:"0 0 0 9px rgba(21,69,110,0)"}], {duration:900, iterations:2});
-  toast(`${pending()} still open. Starting with “${esc(first.name)}”.`);
+  toast();
 }
 
 /* =======================================================================
@@ -2032,7 +2035,6 @@ const ME = "Priya Shetty";
 currentClient = CLIENTS[0];
 const CC = () => currentClient || CLIENTS[0];
 
-const inActive = c => activeType === "all" || board.some(r => r.name === c.name && r.et === activeType);
 const cmatch = (c,f) => f === "all" ? true : c.owner === ME;
 
 function drawClients(){
@@ -2057,7 +2059,7 @@ function drawClients(){
       <table class="ctable">
         <thead><tr><th>Client</th><th>PAN &amp; GSTIN</th><th>Who to call</th><th>Partner</th><th>Running now</th></tr></thead>
         <tbody>
-        ${list.map(c => `<tr onclick="openClient(${c.id})">
+        ${list.map(c => `<tr role="button" tabindex="0" onclick="openClient(${c.id})" onkeydown="if(event.key==='Enter'){openClient(${c.id})}">
           <td><div class="nm">${esc(c.name)}</div><div class="sm2">${esc(c.con)}</div></td>
           <td class="ids">${esc(fmtPan(c.pan))}<br>${esc(fmtGstin(c.gstin))}</td>
           <td><div class="nm" style="font-weight:400">${esc(c.people[0].n)}</div><div class="sm2 mono">${esc(c.people[0].p)}</div></td>
@@ -2087,6 +2089,7 @@ function drawClientDetail(){
   const c = CLIENTS.find(x => x.id === openClientId);
   $("#p-clients").innerHTML = `
   <div class="stack">
+    <button class="back" onclick="goClients()">&lsaquo; All clients</button>
     <div class="row-between">
       <div>
         <h2>${esc(c.name)}</h2>
@@ -2110,7 +2113,7 @@ function drawClientDetail(){
       <div class="stack" style="gap:7px">
         ${c.people.map(pp => `<div class="person">
           <div><b style="font-weight:500">${esc(pp.n)}</b> <span class="sub">&middot; ${esc(pp.r)}</span><div class="sm2 mono">${esc(pp.p)}</div></div>
-          <button class="btn sm" onclick="toast('A link of his own, scoped to this engagement, sent to ${esc(pp.n)}.')">Send him his own link</button>
+          <button class="btn sm" onclick="this.textContent='Link sent';this.disabled=true">Send him his own link</button>
         </div>`).join("")}
       </div>
     </div>
@@ -2143,10 +2146,11 @@ function saveDraft(){ savedAt = "14:32"; drawList(); }
 
 function startFor(clientId){
   const c = clientId ? CLIENTS.find(x => x.id === clientId) : null;
+  if(c) currentClient = c;                       // it was only ever used in a toast
   typeChosen = false; pickerOpen = false; engagementSent = false;
   openClientId = null;
   drawList(); go("list");
-  if(c) toast(`Starting something for ${esc(c.name)}. Pick what you are doing.`);
+  if(c) toast();
 }
 
 function openPicker(){
