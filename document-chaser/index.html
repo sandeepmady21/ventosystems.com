@@ -14,7 +14,7 @@
 :root{
   --chrome:#D9E3DB;  --band:#E8EEE7;  --paper:#F2F5F0;
   --surface:#FFFFFF; --surface-2:#F7FAF6; --surface-3:#E9EFE8;
-  --ink:#16211D; --ink-2:#48544E; --ink-3:#7B857F;
+  --ink:#16211D; --ink-2:#48544E; --ink-3:#5D665F;
   --rule:#D6E0D7; --rule-2:#B7C6B9; --rule-3:#9FB2A2;
   --accent:#16456B; --accent-ink:#FFFFFF; --accent-soft:#E2EBF3; --accent-line:#B2C8DC;
   --ok:#1D6B4C;    --ok-soft:#E2F0E7;     --ok-line:#A9D2BB;
@@ -29,7 +29,8 @@
 }
 *{box-sizing:border-box}
 body{
-  font-variant-numeric:tabular-nums;
+  font-variant-numeric:tabular-nums slashed-zero;
+  font-feature-settings:"zero" 1;
   margin:0; background:var(--paper); color:var(--ink);
   font-family:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
   font-size:14px; line-height:1.5; -webkit-font-smoothing:antialiased;
@@ -41,11 +42,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 .dev{font-family:"IBM Plex Sans Devanagari","IBM Plex Sans",sans-serif}
 
 /* ---------- chrome ---------- */
-.top{
-  display:flex;align-items:center;gap:16px;flex-wrap:wrap;
-  padding:14px 22px 14px 19px;background:var(--chrome);
-  border-left:3px solid var(--spine);
-}
+.top{padding:14px 0 14px 0;background:var(--chrome);border-left:3px solid var(--spine)}
 .brand{display:flex;align-items:baseline;gap:10px;margin-right:auto}
 .brand b{font-family:"IBM Plex Serif",Georgia,serif;font-weight:600;font-size:18px;letter-spacing:-.01em}
 .brand span{color:var(--ink-3);font-size:12.5px}
@@ -55,10 +52,8 @@ button{font:inherit;color:inherit;cursor:pointer}
   font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3);
   border:1px dashed var(--rule-2);padding:4px 9px;border-radius:5px;
 }
-.tabs{
-  display:flex;gap:5px;padding:0 22px;background:var(--chrome);
-  border-bottom:1px solid var(--rule);overflow-x:auto;
-}
+.tabs{background:var(--chrome);border-bottom:1px solid var(--rule)}
+.tabs .frame{gap:5px;flex-wrap:nowrap;overflow-x:auto;align-items:flex-end}
 .tab{
   background:rgba(255,255,255,.34);border:1px solid transparent;border-bottom:0;
   border-radius:9px 9px 0 0;padding:9px 16px 10px;margin-bottom:-1px;
@@ -70,7 +65,9 @@ button{font:inherit;color:inherit;cursor:pointer}
 }
 .tab small{display:block;font-size:11px;color:var(--ink-3);font-weight:400}
 .tab[aria-selected="true"] small{color:var(--accent)}
-main{padding:22px;max-width:1180px;margin:0 auto}
+.frame{max-width:1180px;margin-inline:auto;padding-inline:22px;width:100%;
+  display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+main{padding:22px 0;max-width:1180px;margin:0 auto;padding-inline:22px}
 .typebar[hidden] + main{border-top:1px solid var(--band)}
 .panel[hidden]{display:none}
 
@@ -193,6 +190,7 @@ h3{font-size:14px;margin:0;letter-spacing:-.005em}
 .bmain{display:grid;grid-template-columns:1fr auto;gap:16px;align-items:start}
 .bname{font-weight:500;letter-spacing:-.004em}
 .bsub{color:var(--ink-3);font-size:12.5px;margin-top:1px}
+.od{color:var(--bad);font-weight:500}
 .bar{height:5px;background:var(--surface-3);border-radius:0;overflow:hidden;margin:8px 0 6px;max-width:300px;border:1px solid var(--rule-2)}
 .bar i{display:block;height:100%;background:var(--ok);border-radius:0}
 .bmiss{font-size:12.5px;color:var(--ink-2)}
@@ -293,7 +291,7 @@ h3{font-size:14px;margin:0;letter-spacing:-.005em}
 .ctable tbody tr:hover{background:var(--band)}
 .ctable .nm{font-weight:500}
 .ctable .sm2{font-size:12px;color:var(--ink-3);margin-top:1px}
-.ids{font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--ink-2);line-height:1.6}
+.ids{font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--ink-2);line-height:1.7;word-spacing:.3em}
 .live{display:flex;flex-direction:column;gap:4px;align-items:flex-start}
 .none{color:var(--ink-3);font-size:12.5px}
 .back{border:0;background:none;color:var(--accent);padding:0;font-size:13px;font-weight:500}
@@ -358,10 +356,10 @@ h3{font-size:14px;margin:0;letter-spacing:-.005em}
 .tpill[aria-pressed="true"] span{color:var(--accent-ink);opacity:.8}
 .tpill[aria-pressed="true"]:hover{filter:brightness(1.12)}
 .tpill[disabled]{opacity:.45;border-style:dashed;cursor:not-allowed}
-}
 </style>
 
 <header class="top">
+  <div class="frame">
   <div class="brand">
     <b>Chaser</b>
     <span>Example &amp; Co, Chartered Accountants</span>
@@ -371,9 +369,11 @@ h3{font-size:14px;margin:0;letter-spacing:-.005em}
     <div id="sres"></div>
   </div>
   <div class="note">Demo &middot; fictional firm and clients</div>
+  </div>
 </header>
 
 <nav class="tabs" role="tablist">
+  <div class="frame">
   <button class="tab" role="tab" id="t-clients" aria-selected="false" onclick="goClients()">Clients<small>everyone we act for</small></button>
   <button class="tab" role="tab" id="t-list"  aria-selected="true"  onclick="go('list')">Document checklist<small>pick what to ask for</small></button>
   <button class="tab" role="tab" id="t-board" aria-selected="false" onclick="go('board')">Chase board<small>who hasn't sent</small></button>
@@ -681,6 +681,10 @@ const HI = {
    HELPERS
    ======================================================================= */
 const $ = s => document.querySelector(s);
+/* A CA verifies a PAN or GSTIN by group, never as a string. */
+const fmtPan   = v => /^[A-Z]{5}[0-9]{4}[A-Z]$/.test(v) ? `${v.slice(0,5)} ${v.slice(5,9)} ${v[9]}` : v;
+const fmtGstin = v => /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z][0-9][A-Z][0-9A-Z]$/.test(v)
+  ? `${v.slice(0,2)} ${v.slice(2,7)} ${v.slice(7,11)} ${v.slice(11,12)} ${v.slice(12,13)} ${v.slice(13,14)} ${v.slice(14)}` : v;
 const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 
 /* Toasts removed at the owner's request. Kept as a no-op so the ~30 call
@@ -728,7 +732,7 @@ function drawList(){
       <div class="row-between">
         <div>
           <div class="head-strip"><h2>${esc(CC().name)}</h2>
-            <span class="chip">${esc(CC().con)}</span><span class="chip mono">${esc(CC().pan)}</span></div>
+            <span class="chip">${esc(CC().con)}</span><span class="chip mono" style="word-spacing:.3em">${esc(fmtPan(CC().pan))}</span></div>
             <p class="sub">Nothing started for this client yet.</p>
         </div>
       </div>
@@ -744,7 +748,7 @@ function drawList(){
       <div class="head-strip">
         <h2>${esc(CC().name)}</h2>
         <span class="chip">${esc(CC().con)}</span>
-        <span class="chip mono">${esc(CC().pan)}</span>
+        <span class="chip mono" style="word-spacing:.3em">${esc(fmtPan(CC().pan))}</span>
         <button class="chip acc" style="cursor:pointer" onclick="openPicker()" title="${engagementSent ? "Already sent to the client" : "Change what this engagement is"}">${esc(ET().name)} &middot; ${esc(ET().period)} <span class="affd">${engagementSent ? "locked" : "change"}</span></button>
         <button class="duebtn" onclick="editDue()">Due ${due} &nbsp;✎</button>
       </div>
@@ -885,15 +889,15 @@ function setDue(d, n){
 function waText(){
   const list = items.filter(i => i.on && !i.have).slice(0,4).map(i => "• " + i.name).join("\n");
   const more = asked() - 4;
-  return `Hello Sharma Textiles Pvt Ltd, this is ${FIRM} (Chartered Accountants).
+  return `Hello ${CC().people[0].n}, this is ${FIRM} (Chartered Accountants).
 
-For your Tax Audit FY 2025-26, we still need ${asked()} documents:
+For your ${ET().name} ${ET().period}, we still need ${asked()} documents:
 ${list}${more > 0 ? `\n• and ${more} more` : ""}
 
 Please upload here:
 https://docs.example.com/u/7fK2mQ
 
-Due: ${due}. Reply here if you have a question.`;
+Due: ${ET().due}. Reply here if you have a question.`;
 }
 
 function preview(){
@@ -916,6 +920,20 @@ function sendReq(){
 /* =======================================================================
    SCREEN 2 — THE CHASE BOARD
    ======================================================================= */
+const rowClient = r => CLIENTS.find(c => c.name === r.name) || CLIENTS[0];
+const rowType   = r => ENGAGEMENT_TYPES.find(t => t.id === r.et) || ENGAGEMENT_TYPES[0];
+const DAYS_LEFT = {"30 September 2026":18,"31 October 2026":49,"11 September 2026":-1,
+                   "31 December 2026":110,"30 October 2026":48,"31 July 2026":-43};
+const daysFor = due => DAYS_LEFT.hasOwnProperty(due) ? DAYS_LEFT[due] : null;
+function dueLine(due){
+  const d = daysFor(due);
+  if(d === null) return "Due " + esc(due);
+  if(d < 0) return "Due " + esc(due) + ' &middot; <b class="od">overdue</b>';
+  return "Due " + esc(due) + " &middot; " + d + " days left";
+}
+/* The gate was locked by items that are not Required, which contradicts the
+   whole point of having three necessity levels. */
+const rowBlocking = r => rowLedger(r).filter(d => d.state === "pending" && d.need === "Required").length;
 const rowDocs  = r => (DOCS[r.et] || DOCS.tax_audit).items.filter(i => i.on);
 const rowTotal = r => rowDocs(r).length;
 const rowDone  = r => rowTotal(r) - r.missIds.length;
@@ -956,8 +974,8 @@ function drawBoard(){
   <div class="stack">
     <div class="row-between">
       <div>
-        <h2>${due} &middot; ${esc(tname)}</h2>
-        <p class="sub">${scoped().length} clients on the board &middot; <b>${outstanding}</b> still owe documents &middot; ${ready} ready to start &middot; ${dueDays} days left</p>
+        <h2>${esc(tname)}</h2>
+        <p class="sub">${activeType==="all" ? "Mixed deadlines" : dueLine(rowType({et:activeType}).due)} &middot; ${scoped().length} clients &middot; <b>${outstanding}</b> still owe documents &middot; ${ready} ready to start</p>
       </div>
       <div class="inline">
         <button class="btn" onclick="editDue()">Deadline moved?</button>
@@ -1004,21 +1022,22 @@ function drawBoard(){
   list.forEach(r => {
     const total = rowTotal(r), got = rowDone(r), missNames = rowMiss(r);
     const pct = Math.round(got / total * 100);
-    const done = r.missIds.length === 0;
+    const blocking = rowBlocking(r);
+    const done = blocking === 0;
     const opened = openRow === r.id;
     html += `<div class="brow ${opened?"open":""}" onclick="toggleRow(${r.id})">
       <div class="bmain">
         <div>
           <div class="bname">${esc(r.name)}</div>
-          <div class="bsub">${esc(r.type)} &middot; owner ${esc(r.owner)}</div>
+          <div class="bsub">${esc(r.type)} &middot; owner ${esc(r.owner)} &middot; ${dueLine(rowType(r).due)}</div>
           <div class="bar"><i style="width:${pct}%"></i></div>
           <div class="bmiss">
             <span class="mono">${got} of ${total}</span>
-            ${done ? ` &middot; <b style="color:var(--ok)">everything in</b>`
-                   : ` &middot; still missing <b>${missNames.slice(0,3).map(esc).join("</b>, <b>")}</b>${missNames.length>3?` and ${missNames.length-3} more`:""}`}
+            ${done ? ` &middot; <b style="color:var(--ok)">nothing required outstanding</b>`
+                   : ` &middot; still missing <b>${missNames.slice(0,3).map(esc).join("</b>, <b>")}</b>${missNames.length>3?` and ${missNames.length-3} more`:""}${blocking < r.missIds.length ? ` &middot; <b>${blocking} required</b>` : ""}`}
           </div>
           <div class="imeta">
-            ${r.chased ? `<span class="chip">Chased ${r.chased} time${r.chased===1?"":"s"}, last ${r.chased} days ago</span>` : ""}
+            ${r.chased ? `<span class="chip">Chased ${r.chased} time${r.chased===1?"":"s"} &middot; last ${r.since===0?"today":(r.since||r.chased)+" days ago"}</span>` : ""}
             ${r.promised ? `<span class="chip warn">${esc(r.promised)}</span>` : ""}
             ${r.stuck ? `<span class="chip bad">${esc(r.stuck)}</span>` : ""}
             ${r.confused ? `<span class="chip violet">${esc(r.confused)}</span>` : ""}
@@ -1028,7 +1047,7 @@ function drawBoard(){
         </div>
         <div class="bacts" onclick="event.stopPropagation()">
           ${r.confused
-            ? `<button class="btn sm" style="border-color:var(--violet-line);color:var(--violet)" onclick="toast('Calling ${esc(r.name)} on ${CLIENT.phone}.')">Call them</button>`
+            ? `<a class="btn sm" style="border-color:var(--violet-line);color:var(--violet);text-decoration:none" href="tel:${rowClient(r).people[0].p.replace(/ /g,"")}">Call ${esc(rowClient(r).people[0].n.split(" ")[0])}</a>`
             : `<button class="btn sm" onclick="chase(${r.id})">Send reminder</button>`}
           ${done
             ? `<button class="btn sm primary" onclick="toast('Work started for ${esc(r.name)}.')">Start work</button>`
@@ -1042,7 +1061,7 @@ function drawBoard(){
       html += `<div class="drawer" onclick="event.stopPropagation()">
         <div class="row-between" style="margin-bottom:4px">
           <span class="eyebrow">Everything we asked ${esc(r.name.split(" ")[0])} for &middot; ${n("accepted")} in, ${n("onfile")} already held, ${n("pending")} outstanding</span>
-          <button class="btn sm" onclick="editAsk('${r.et}')">Change what we ask for</button>
+          <button class="btn sm" onclick="editAsk('${r.et}',${r.id})">Change what we ask for</button>
         </div>`;
       led.forEach(d => {
         if(d.state === "pending"){
@@ -1066,7 +1085,9 @@ function drawBoard(){
   $("#p-board").innerHTML = html;
 }
 
-function editAsk(et){
+function editAsk(et, rowId){
+  const r = board.find(x => x.id === rowId);
+  if(r) currentClient = rowClient(r);
   if(loadType(et)){ activeType = et; typeChosen = true; pickerOpen = false; }
   drawTypeBar(); drawList(); go("list");
 }
@@ -1075,17 +1096,16 @@ function toggleRow(id){ openRow = openRow === id ? null : id; drawBoard(); }
 
 function chase(id){
   const r = board.find(x => x.id === id);
-  const was = r.chased;
-  r.chased = 0;
+  r.chased = (r.chased || 0) + 1;
+  r.since = 0;
   drawBoard();
-  toast();
 }
 
 function why(id){
   const r = board.find(x => x.id === id);
   modal("Why Start work is locked",
-    `<p class="sub" style="margin-bottom:12px">${esc(r.name)} still owes <b>${r.missIds.length}</b> required documents. The button unlocks the moment the last one is accepted.</p>
-     ${rowMiss(r).map(m => `<div class="ditem" style="margin-bottom:7px"><span><span class="chip warn">Not sent</span> ${esc(m)}</span></div>`).join("")}
+    `<p class="sub" style="margin-bottom:12px">${esc(r.name)} still owes <b>${rowBlocking(r)}</b> required document${rowBlocking(r)===1?"":"s"}. Items marked <i>if applicable</i> or <i>nice to have</i> never hold this button. The button unlocks the moment the last one is accepted.</p>
+     ${rowLedger(r).filter(d=>d.state==="pending"&&d.need==="Required").map(d=>d.name).map(m => `<div class="ditem" style="margin-bottom:7px"><span><span class="chip warn">Not sent</span> ${esc(m)}</span></div>`).join("")}
      <p class="sub" style="margin-top:14px;padding-top:12px;border-top:1px solid var(--rule)">
        A partner can waive any one of these with a logged reason. Items marked <i>if applicable</i> or <i>nice to have</i> never block this button.</p>`,
     `<button class="btn" onclick="closeModal()">Back</button>
@@ -1093,7 +1113,7 @@ function why(id){
 }
 
 function bulk(){
-  const out = board.filter(r => r.missIds.length);
+  const out = scoped().filter(r => r.missIds.length);
   const held = 1, going = out.length - held;
   modal(`Remind ${out.length} clients`,
     `<div class="wa">${esc(waText())}</div>
@@ -1110,7 +1130,7 @@ function bulk(){
      <button class="btn primary" onclick="closeModal();doBulk(${going})">Send ${going} reminders</button>`);
 }
 function doBulk(n){
-  board.forEach(r => { if(r.missIds.length) r.chased = 0; });
+  scoped().forEach(r => { if(r.missIds.length){ r.chased = (r.chased||0)+1; r.since = 0; } });
   drawBoard();
   toast(`${n} reminders sent. 2 held back.`, () => toast("Send cancelled. Nothing went out."));
 }
@@ -1157,7 +1177,9 @@ function applyState(st){
 function pending(){ return cards.filter(c => c.st === "pending" || c.st === "redo").length; }
 function accepted(){ return cards.filter(c => c.st === "done").length; }
 function allAnswered(){ return pending() === 0; }
-function firmClear(){ return cards.every(c => c.st === "done" || c.st === "na"); }
+/* "na" comes straight from the client with no approval. If it opened this
+   gate, the two-gate design would be a fiction. */
+function firmClear(){ return cards.every(c => c.st === "done"); }
 
 function cardLook(c){
   if(c.st === "done")       return ["done",      `<span class="chip ok">Done ✓</span>`];
@@ -1446,7 +1468,7 @@ function drawClients(){
         <tbody>
         ${list.map(c => `<tr onclick="openClient(${c.id})">
           <td><div class="nm">${esc(c.name)}</div><div class="sm2">${esc(c.con)}</div></td>
-          <td class="ids">${esc(c.pan)}<br>${esc(c.gstin)}</td>
+          <td class="ids">${esc(fmtPan(c.pan))}<br>${esc(fmtGstin(c.gstin))}</td>
           <td><div class="nm" style="font-weight:400">${esc(c.people[0].n)}</div><div class="sm2 mono">${esc(c.people[0].p)}</div></td>
           <td>${esc(c.owner)}</td>
           <td class="sm2">${c.live.length ? `${c.live.length} engagement${c.live.length===1?"":"s"}` : "nothing running"}</td>
@@ -1483,8 +1505,8 @@ function drawClientDetail(){
     <div class="card pad">
       <div class="eyebrow" style="margin-bottom:10px">Identity</div>
       <dl class="kv">
-        <dt>PAN</dt><dd class="mono">${esc(c.pan)}</dd>
-        <dt>GSTIN</dt><dd class="mono">${esc(c.gstin)}</dd>
+        <dt>PAN</dt><dd class="mono" style="word-spacing:.3em">${esc(fmtPan(c.pan))}</dd>
+        <dt>GSTIN</dt><dd class="mono" style="word-spacing:.3em">${esc(fmtGstin(c.gstin))}</dd>
         <dt>Constitution</dt><dd>${esc(c.con)}</dd>
         <dt>Partner</dt><dd>${esc(c.owner)}</dd>
       </dl>
@@ -1582,9 +1604,7 @@ function drawTypeBar(){
 
 function setActiveType(id){
   activeType = id;
-  if(id !== "all" && loadType(id)){
-    typeChosen = true; engagementSent = false;
-  }
+  if(id !== "all" && loadType(id)) typeChosen = true;
   filter = "all"; cfilter = "all"; openRow = null; pickerOpen = false;
   drawTypeBar(); drawClients(); drawList(); drawBoard();
   const n = typeCounts(id);
