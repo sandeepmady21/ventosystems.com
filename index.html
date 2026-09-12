@@ -1912,14 +1912,7 @@ html.flat .phone .fold{z-index:6}
   .ph-body > *{opacity:1;transform:none}
   .timer{display:none}
 }
-.demolist{list-style:none;margin:var(--s4) 0 0;padding:0;border-top:1px solid var(--line)}
-.demolist li{display:flex;align-items:flex-start;justify-content:space-between;gap:var(--s3);padding:1.15rem .1rem;border-bottom:1px solid var(--line)}
-.demolist h3{margin:0 0 .3rem;font-size:.9375rem;font-weight:600;letter-spacing:-.01em}
-.demolist p{margin:0;color:var(--muted);font-size:.875rem;max-width:62ch}
-.demolist a{flex:none;margin-top:.2rem;font-family:var(--mono);font-size:.72rem;letter-spacing:.04em;color:var(--blue);text-decoration:none;white-space:nowrap}
-.demolist a:hover{text-decoration:underline}
-@media (max-width:560px){.demolist li{flex-direction:column;gap:.6rem}}
-#demos .fine{margin:1rem 0 0;font-family:var(--mono);font-size:.66rem;line-height:1.6;color:var(--muted);letter-spacing:.02em}
+.demo-btns{margin:1rem 0 0;display:flex;gap:.6rem;flex-wrap:wrap}
 </style>
 </head>
 <body>
@@ -2436,21 +2429,8 @@ html.flat .phone .fold{z-index:6}
 
   <section class="section" id="demos">
     <div class="wrap">
-      <div class="section-head">
-        <p class="eyebrow">Demos</p>
-        <h2>Things you can click.</h2>
-        <p>Prototypes from real engagements, rebuilt with fictional data so they can sit in the open.</p>
-      </div>
-      <ul class="demolist">
-        <li>
-          <div>
-            <h3>Document Chaser</h3>
-            <p>A chartered accountancy practice chasing client paperwork. Partners tick what each client owes, chase the ones who have gone quiet, and the client uploads from a phone with no login.</p>
-          </div>
-          <a href="/document-chaser/">Open the demo <span aria-hidden="true">&rarr;</span></a>
-        </li>
-      </ul>
-      <p class="fine">Fictional firms and clients throughout. No real client data.</p>
+      <p class="eyebrow">Demos and prototypes</p>
+      <p class="demo-btns"><a class="btn btn-ghost" href="/document-chaser/">CA firm Document chaser</a></p>
     </div>
   </section>
 
