@@ -148,6 +148,14 @@ h3{font-size:14px;margin:0;letter-spacing:-.005em}
 .brow{border-bottom:1px solid var(--rule);padding:13px 16px}
 .brow:last-child{border-bottom:0}
 .brow:hover{background:var(--surface-2)}
+.brow{cursor:pointer}
+.brow.open{background:var(--surface-2)}
+.ditem{border-left:3px solid transparent}
+.ditem.pending{background:var(--warn-soft);border-left-color:var(--warn)}
+.ditem.onfile{background:var(--ok-soft);border-left-color:var(--ok)}
+.ditem.accepted{background:var(--surface-2);border-left-color:var(--rule-2)}
+.ditem .dname{font-weight:500}
+.ditem.pending .dname{color:var(--warn)}
 .bmain{display:grid;grid-template-columns:1fr auto;gap:16px;align-items:start}
 .bname{font-weight:500;letter-spacing:-.004em}
 .bsub{color:var(--ink-3);font-size:12.5px;margin-top:1px}
@@ -923,7 +931,7 @@ function drawBoard(){
     const pct = Math.round(got / total * 100);
     const done = r.missIds.length === 0;
     const opened = openRow === r.id;
-    html += `<div class="brow">
+    html += `<div class="brow ${opened?"open":""}" onclick="toggleRow(${r.id})">
       <div class="bmain">
         <div>
           <div class="bname">${esc(r.name)}</div>
@@ -943,8 +951,7 @@ function drawBoard(){
             ${r.review ? `<span class="chip acc">${r.review} waiting for your review</span>` : ""}
           </div>
         </div>
-        <div class="bacts">
-          <button class="btn sm" onclick="toggleRow(${r.id})">${opened ? "Hide items" : "See items"}</button>
+        <div class="bacts" onclick="event.stopPropagation()">
           ${r.confused
             ? `<button class="btn sm" style="border-color:var(--violet-line);color:var(--violet)" onclick="toast('Calling ${esc(r.name)} on ${CLIENT.phone}.')">Call them</button>`
             : `<button class="btn sm" onclick="chase(${r.id})">Send reminder</button>`}
@@ -957,21 +964,21 @@ function drawBoard(){
     if(opened){
       const led = rowLedger(r);
       const n = k => led.filter(x => x.state === k).length;
-      html += `<div class="drawer">
+      html += `<div class="drawer" onclick="event.stopPropagation()">
         <div class="row-between" style="margin-bottom:4px">
           <span class="eyebrow">Everything we asked ${esc(r.name.split(" ")[0])} for &middot; ${n("accepted")} in, ${n("onfile")} already held, ${n("pending")} outstanding</span>
           <button class="btn sm" onclick="editAsk('${r.et}')">Change what we ask for</button>
         </div>`;
       led.forEach(d => {
         if(d.state === "pending"){
-          html += `<div class="ditem"><span><span class="chip warn">Not sent</span> ${esc(d.name)}${d.need!=="Required"?` <span class="chip">${esc(d.need)}</span>`:""}</span>
+          html += `<div class="ditem pending"><span><span class="chip warn">Not sent</span> <span class="dname">${esc(d.name)}</span>${d.need!=="Required"?` <span class="chip">${esc(d.need)}</span>`:""}</span>
             <span class="inline"><button class="btn sm" onclick="toast()">Chase just this</button>
             <button class="btn sm" onclick="toast()">Waive</button></span></div>`;
         } else if(d.state === "onfile"){
-          html += `<div class="ditem" style="background:var(--ok-soft)"><span><span class="chip ok">Already on file</span> ${esc(d.name)}
+          html += `<div class="ditem onfile"><span><span class="chip ok">Already on file</span> <span class="dname">${esc(d.name)}</span>
             <span class="bsub">${esc(d.note)} &middot; never asked for, never chased</span></span></div>`;
         } else {
-          html += `<div class="ditem"><span><span class="chip ok">In and checked</span> ${esc(d.name)}</span>
+          html += `<div class="ditem accepted"><span><span class="chip ok">In and checked</span> <span class="dname">${esc(d.name)}</span></span>
             <button class="btn sm" onclick="toast()">Reject this one</button></div>`;
         }
       });
