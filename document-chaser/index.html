@@ -134,6 +134,7 @@ h3{font-size:14px;margin:0;letter-spacing:-.005em}
 }
 .toggle:hover{border-color:var(--accent);color:var(--accent)}
 .toggle[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.toggle.unasked{border-style:dashed;color:var(--ink-3)}
 
 .sect{border-top:1px solid var(--accent-line);padding-top:11px;margin-top:4px}
 .sect:first-of-type{border-top:0;margin-top:0;padding-top:0}
@@ -165,6 +166,12 @@ h3{font-size:14px;margin:0;letter-spacing:-.005em}
 .box[disabled]{background:var(--surface-3);border-style:dashed;cursor:not-allowed}
 .iname{font-weight:500;letter-spacing:-.004em}
 .ialias{color:var(--ink-3);font-size:12.25px;margin-top:2px;padding-left:9px;border-left:1px solid var(--rule-2)}
+/* The auditor's justification. Staff only — several of the partner's reasons are
+   adverse ("recoverability, many open imprest accounts") and a client should not
+   read the auditor's suspicion before it has been tested. */
+.why{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.02em;color:var(--accent);margin-top:4px}
+.why::before{content:"why: ";opacity:.55}
+.ditem .why{display:inline;margin:0 0 0 8px}
 .imeta{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-top:5px}
 .need{
   border:1px solid var(--rule-2);background:var(--surface);border-radius:5px;
@@ -222,6 +229,8 @@ h3{font-size:14px;margin:0;letter-spacing:-.005em}
 .ditem.review{background:var(--accent-soft);border-left-color:var(--accent)}
 .ditem.review .dname{color:var(--accent)}
 .ditem.waived{background:var(--surface-2);border-left-color:var(--rule-3);opacity:.72}
+.ditem.query{background:var(--violet-soft);border-left-color:var(--violet)}
+.ditem.query .dname{color:var(--violet)}
 .ditem .dname{font-weight:500}
 .ditem.pending .dname{color:var(--warn)}
 .bmain{display:grid;grid-template-columns:1fr auto;gap:16px;align-items:start}
@@ -263,6 +272,8 @@ h3{font-size:14px;margin:0;letter-spacing:-.005em}
 .ccard.answered{background:var(--warn-soft);border-color:var(--warn-line)}
 .ccard.redo{background:var(--bad-soft);border-color:var(--bad-line)}
 .ccard.confused{background:var(--violet-soft);border-color:var(--violet-line)}
+.ccard.queried{background:var(--violet-soft);border-color:var(--violet-line);border-left:3px solid var(--violet)}
+.qbox{width:100%;border:1px solid var(--rule-2);border-radius:7px;padding:10px;font:inherit;font-size:13px;margin-top:9px;min-height:64px;background:var(--surface)}
 .cname{font-weight:500;font-size:13.5px}
 .chint{color:var(--ink-3);font-size:12px;margin-top:2px}
 .cbtns{display:flex;gap:7px;margin-top:10px;flex-wrap:wrap}
@@ -486,30 +497,68 @@ const DOCS = {
     ]},
 
   stat_audit: {
-    sections:["Books and financials","Bank and balances","Statutory and secretarial","Payroll, dues and reporting"],
+    sections:["Books and financials","Bank and balances","Statutory and secretarial",
+              "Payroll, dues and reporting","Not in the books &mdash; you have to tell us"],
     fetched:["Form 26AS","MCA master data for the company"],
     items:[
-      {id:"s1", s:0, name:"Trial balance and full Tally backup", alias:"the accounting software export", need:"Required", on:true},
-      {id:"s2", s:0, name:"Draft financial statements", alias:"balance sheet, P&L, cash flow and notes", need:"Required", on:true},
-      {id:"s3", s:0, name:"Prior year signed financials and audit report", alias:"", need:"Required", on:true, have:"We signed this audit report last October"},
-      {id:"s4", s:0, name:"Fixed asset register with invoices for additions and deletions", alias:"", need:"Required", on:true},
-      {id:"s5", s:0, name:"Inventory statement with valuation basis", alias:"closing stock and how you valued it", need:"Required", on:true},
-      {id:"s6", s:0, name:"Debtors and creditors ageing", alias:"who owes you, and who you owe, by age", need:"Required", on:true},
-      {id:"s7", s:1, name:"Bank statements, all accounts", alias:"1 April 2025 to 31 March 2026", need:"Required", on:true, parts:12},
-      {id:"s8", s:1, name:"Bank balance confirmation letters", alias:"the bank issues these on request", need:"Required", on:true},
-      {id:"s9", s:1, name:"Loan sanction letters, statements and charge documents", alias:"", need:"Required", on:true},
-      {id:"s10",s:2, name:"Board meeting and AGM minutes", alias:"signed minutes for the year", need:"Required", on:true},
-      {id:"s11",s:2, name:"Statutory registers, in bound form", alias:"members, directors, charges", need:"Required", on:true},
-      {id:"s12",s:2, name:"MBP-1 and DIR-8 declarations from each director", alias:"", need:"Required", on:true},
-      {id:"s13",s:2, name:"Related party transaction details", alias:"dealings with directors and group companies", need:"Required", on:true},
-      {id:"s14",s:3, name:"GST returns with a books reconciliation", alias:"GSTR-1, 3B and 2B against your books", need:"Required", on:true},
-      {id:"s15",s:3, name:"TDS returns, challans and reconciliation", alias:"", need:"Required", on:true, have:"We filed all four quarters"},
-      {id:"s16",s:3, name:"PF and ESI challans and returns", alias:"", need:"Required", on:true},
-      {id:"s17",s:3, name:"MSME vendor ageing for the MSME disclosure", alias:"which suppliers are registered MSMEs, and how long unpaid", need:"Required", on:true, tag:"caro"},
-      {id:"s18",s:3, name:"CARO 2020 working papers", alias:"title deeds, physical verification, fund utilisation", need:"Required", on:true, tag:"caro"},
-      {id:"s19",s:3, name:"Internal financial controls documentation", alias:"your process notes and approval matrix", need:"Required", on:false, tag:"ifc"},
-      {id:"s20",s:3, name:"Subsidiary financials for consolidation", alias:"audited accounts of each subsidiary", need:"Required", on:false, tag:"consol"},
-      {id:"s21",s:2, name:"DSC of the signing director, with validity date", alias:"expired ones block the filing", need:"Required", on:true},
+      {id:"s1", s:0, name:"Trial balance and full Tally backup", alias:"the accounting software export", need:"Required", on:true,
+       reason:"The basis of the whole file"},
+      {id:"s2", s:0, name:"Draft financial statements", alias:"balance sheet, P&L, cash flow and notes", need:"Required", on:true,
+       reason:"Schedule III presentation"},
+      {id:"s3", s:0, name:"Prior year signed financials and audit report", alias:"", need:"Required", on:true,
+       have:"We signed this audit report last October", reason:"Opening balances"},
+      {id:"s4", s:0, name:"Fixed asset register with invoices for additions and deletions", alias:"", need:"Required", on:true,
+       reason:"Accuracy; Schedule II"},
+      {id:"s5", s:0, name:"Inventory statement with valuation basis", alias:"closing stock and how you valued it", need:"Required", on:true,
+       reason:"Existence; measurement"},
+      {id:"s6", s:0, name:"Debtors and creditors ageing", alias:"who owes you, and who you owe, by age", need:"Required", on:true,
+       reason:"Existence"},
+      {id:"s23",s:0, name:"Deferred tax working", alias:"timing differences between the books and the tax computation", need:"Required", on:true,
+       reason:"Measurement (AS 22 / Ind AS 12)"},
+      {id:"s7", s:1, name:"Bank statements, all accounts", alias:"1 April 2025 to 31 March 2026", need:"Required", on:true, parts:12,
+       reason:"Existence; cut-off"},
+      {id:"s8", s:1, name:"Bank balance confirmation letters", alias:"the bank issues these on request", need:"Required", on:true,
+       third:true, reason:"Existence"},
+      {id:"s9", s:1, name:"Loan sanction letters, statements and charge documents", alias:"", need:"Required", on:true,
+       tag:"borr", reason:"CARO (i)(c) / (ii)(b)"},
+      {id:"s10",s:2, name:"Board meeting and AGM minutes", alias:"signed minutes for the year", need:"Required", on:true,
+       reason:"Authorisation"},
+      {id:"s11",s:2, name:"Statutory registers, in bound form", alias:"members, directors, charges", need:"Required", on:true,
+       reason:"Companies Act record-keeping"},
+      {id:"s12",s:2, name:"MBP-1 and DIR-8 declarations from each director", alias:"", need:"Required", on:true,
+       reason:"Sec 184 / 164 disclosures"},
+      {id:"s13",s:2, name:"Related party transaction details", alias:"dealings with directors and group companies", need:"Required", on:true,
+       reason:"Sec 186/188; CARO (iii)"},
+      {id:"s21",s:2, name:"DSC of the signing director, with validity date", alias:"expired ones block the filing", need:"Required", on:true,
+       reason:"Filing mechanics"},
+      {id:"s22",s:3, name:"Actuarial valuation report &mdash; gratuity and leave encashment", alias:"with the assumptions: discount rate, attrition, salary escalation", need:"Required", on:true,
+       third:true, reason:"Measurement (AS 15 / Ind AS 19; OCI split under Ind AS)"},
+      {id:"s16",s:3, name:"PF and ESI monthly challans and returns", alias:"with the dates you actually deposited", need:"Required", on:true,
+       reason:"Completeness; timely deposit; CARO (vii)(a) arrears"},
+      {id:"s29",s:3, name:"Professional Tax and NPS challans", alias:"state PT returns and the NPS contribution statement", need:"Required", on:true,
+       reason:"Completeness; timely deposit"},
+      {id:"s14",s:3, name:"GST returns with a books reconciliation", alias:"GSTR-1, 3B and 2B against your books", need:"Required", on:true,
+       reason:"Completeness; ITC eligibility"},
+      {id:"s15",s:3, name:"TDS returns, challans and reconciliation", alias:"", need:"Required", on:true,
+       have:"We filed all four quarters", reason:"Completeness; 40(a) disallowance; CARO (vii)(a)"},
+      {id:"s28",s:3, name:"Form 26AS and AIS reconciliation", alias:"the credits on the portal against your books", need:"Required", on:true,
+       reason:"Existence; completeness of credits"},
+      {id:"s17",s:3, name:"Vendor-wise MSME status and ageing beyond 45 days", alias:"Udyam registration or a declaration from each supplier", need:"Required", on:true,
+       tag:"caro", reason:"Sec 43B(h) disallowance"},
+      {id:"s18",s:3, name:"CARO 2020 clause-wise data pack", alias:"title deeds, physical verification, arrears of statutory dues, fund utilisation", need:"Required", on:true,
+       tag:"caro", reason:"Companies Act audit and CARO 2020 reporting"},
+      {id:"s19",s:3, name:"Internal financial controls documentation", alias:"your process notes and approval matrix", need:"Required", on:false,
+       tag:"ifc", reason:"Sec 143(3)(i) reporting"},
+      {id:"s20",s:3, name:"Subsidiary financials for consolidation", alias:"audited accounts of each subsidiary", need:"Required", on:false,
+       tag:"cfs", third:true, reason:"Consolidation"},
+      {id:"s24",s:4, name:"Guarantees, letters of credit and capital commitments", alias:"anything you have promised that is not in the accounts", need:"Required", on:true,
+       reason:"Off-balance-sheet; contingent disclosure"},
+      {id:"s25",s:4, name:"Litigation and demands, with lawyer confirmations", alias:"tax and legal cases, assessment orders, and your lawyer's view", need:"Required", on:true,
+       third:true, reason:"Contingent liabilities; provisioning"},
+      {id:"s26",s:4, name:"Charges created and title-deed holder confirmation", alias:"ROC charge search and who physically holds the title deeds", need:"Required", on:true,
+       tag:"borr", reason:"CARO; security verification"},
+      {id:"s27",s:4, name:"Subsequent events and the management representation letter", alias:"anything that happened after 31 March that we should know", need:"Required", on:true,
+       reason:"Standard closing audit evidence"},
     ]},
 
   llp_audit: {
@@ -639,24 +688,19 @@ function loadType(id){
   SECTIONS = d.sections;
   FETCHED  = d.fetched;
   items    = d.items.map(x => ({...x}));
-  TOGGLES  = t.toggles.map(x => ({...x}));
+  if(typeof applyProfile === "function") applyProfile();
   if(typeof buildCards === "function") applyState(cstate);
   return true;
 }
 
 /* --- profile toggles that move a bundle of items at once --- */
-let TOGGLES = [
-  {id:"cash",    label:"Cash-intensive business", on:true},
-  {id:"loans",   label:"Has bank loans",          on:true},
-  {id:"foreign", label:"Pays vendors abroad",     on:false},
-];
 
 /* --- the chase board --- */
 let board = [
   {id:1, et:"tax_audit", name:"Sharma Textiles Pvt Ltd", type:"Tax Audit FY 25-26", missIds:["stock","msme","c40","rpt","loan"], owner:"Priya Shetty", chased:4, reads:true, tags:["mine","due"]},
   {id:2, et:"tax_audit", name:"Gupta Hardware Stores", type:"Tax Audit FY 25-26", missIds:["tb","cash","sales","purch","fa","stock","msme","c40","rpt","loan"], owner:"Faisal Qureshi", chased:2, promised:"said Tuesday, never came", tags:["promised","due"]},
   {id:3, et:"tax_audit", states:{tds:"received"}, name:"Venkatesh Iyer & Associates LLP", type:"Tax Audit FY 25-26", missIds:["stock"], owner:"Deepa Menon", chased:6, tags:["due"]},
-  {id:4, et:"tax_audit", name:"Bharat Auto Components Pvt Ltd", type:"Tax Audit FY 25-26", missIds:["fa","rpt"], owner:"Deepa Menon", chased:1, stuck:"opened 4 times, uploaded nothing", tags:["stuck","due"]},
+  {id:4, et:"tax_audit", states:{gst:"query"}, notes:{gst:"Why is the October 3B turnover 40 lakh below the books?"}, name:"Bharat Auto Components Pvt Ltd", type:"Tax Audit FY 25-26", missIds:["fa","rpt"], owner:"Deepa Menon", chased:1, stuck:"opened 4 times, uploaded nothing", tags:["stuck","due"]},
   {id:5, et:"gst_monthly", name:"Meenakshi Enterprises", type:"GST August 2026", missIds:["g1","g2","g3","g4","g5","g6","g7","g8","g9"], owner:"Priya Shetty", chased:3, never:true, tags:["never","mine"]},
   {id:6, et:"tax_audit", name:"Rakesh Deshmukh", type:"Tax Audit FY 25-26", missIds:["tb","cash","stock","sales","purch","fa","loan","tds","msme","c40","rpt","fin"], owner:"Faisal Qureshi", chased:5, confused:"asked what a trial balance is", tags:["confused"]},
   {id:7, et:"tax_audit", name:"Sunita Rao", type:"Tax Audit FY 25-26", missIds:["bank","tds","msme","c40","rpt","stock","loan","fa"], owner:"Anil Rao", chased:7, tags:["silent","due"]},
@@ -824,13 +868,38 @@ function drawList(){
 
     <div class="card pad">
       <div class="eyebrow" style="margin-bottom:4px">About this client</div>
-      <p class="tickhint">Tick any that apply. Each one adds or removes a bundle of documents below.</p>
+      <p class="tickhint">These are facts about the client, not about this engagement, so they carry over
+        to next year and to every other job. Click to cycle yes, no, not asked. Anything not asked stays
+        on the list and is flagged, never silently dropped.</p>
       <div class="presets">
-        ${TOGGLES.map(t => `<button class="toggle" aria-pressed="${t.on}" onclick="flip('${t.id}')">${t.on ? "✓ " : ""}${esc(t.label)}</button>`).join("")}
+        ${(ET().toggles||[]).map(code => {
+          const a = profileOf()[code];
+          const mark = a === true ? "✓ " : a === false ? "✕ " : "? ";
+          return `<button class="toggle ${a===undefined?"unasked":""}" aria-pressed="${a===true}"
+            title="${a===undefined?"Not asked yet — items stay on the list, flagged":"Click to change"}"
+            onclick="flip('${code}')">${mark}${esc(PROFILE_Q[code]||code)}</button>`;
+        }).join("")}
       </div>
     </div>
 
     <div class="card pad">`;
+
+  /* Chasing the client harder for an actuarial report achieves nothing. These
+     go to the top so they are started in week one, not week four. */
+  const outside = items.filter(i => i.third && i.on);
+  if(outside.length){
+    html += `<div class="card pad" style="border-left:3px solid var(--warn)">
+      <div class="eyebrow" style="margin-bottom:4px">Start these now &mdash; someone outside has to produce them</div>
+      <p class="tickhint">Your client cannot simply send these. An actuary, a bank or a lawyer has to
+        be asked, and that takes weeks. Chasing harder will not move them.</p>
+      <div class="items">${outside.map(i => `<div class="item">
+        <button class="box" role="checkbox" aria-checked="true" onclick="tick('${i.id}')"></button>
+        <div><div class="iname">${i.name}</div>
+          ${i.alias ? `<div class="ialias">Client sees: &ldquo;${esc(i.alias)}&rdquo;</div>` : ""}
+          ${i.reason ? `<div class="why">${i.reason}</div>` : ""}</div>
+        <span class="chip warn">Outside party</span></div>`).join("")}</div>
+    </div>`;
+  }
 
   SECTIONS.forEach((sec, si) => {
     const rows = items.filter(i => i.s === si);
@@ -844,10 +913,14 @@ function drawList(){
         <div>
           <div class="iname">${esc(i.name)}</div>
           ${i.alias ? `<div class="ialias">Client sees: &ldquo;${esc(i.alias)}&rdquo;</div>` : ""}
+          ${i.reason ? `<div class="why">${i.reason}</div>` : ""}
           <div class="imeta">
             ${i.have ? `<span class="chip filed">Already on file</span><span class="ialias" style="margin:0">${esc(i.have)} &middot; we will not ask again</span>` : ""}
             ${i.parts ? `<span class="chip">${i.parts} months expected</span>` : ""}
+            ${i.third ? `<span class="chip warn">Outside party &mdash; start this early</span>` : ""}
             ${i.flag ? `<span class="chip warn">Check the basis</span>` : ""}
+            ${!i.on && i.offWhy ? `<span class="chip">Not asked &mdash; ${esc(i.offWhy)}</span>` : ""}
+            ${i.unsure ? `<span class="chip warn">Nobody has said whether this applies</span>` : ""}
           </div>
         </div>
         <select class="need" aria-label="How necessary" onchange="setNeed('${i.id}',this.value)">
@@ -894,11 +967,30 @@ function drawList(){
 function tick(id){
   savedAt = null;
   const i = items.find(x => x.id === id);
-  i.on = !i.on;
+  if(i.on){ offReason(id); return; }     // turning OFF asks why
+  i.on = true; i.offWhy = null;
   drawList();
   toast(`${i.on ? "Asking for" : "Not asking for"} “${esc(i.name)}”`, () => { i.on = !i.on; drawList(); });
 }
 
+/* "on: false" is an absence. A year later nobody can say why the team decided
+   title deeds did not apply, and a peer reviewer will ask. */
+function offReason(id){
+  const i = items.find(x => x.id === id);
+  modal("Why are we not asking for this?",
+    `<p class="sub" style="margin-bottom:4px">${i.name}</p>
+     ${i.reason ? `<p class="why" style="margin-bottom:12px">${i.reason}</p>` : ""}
+     <p class="sub" style="margin-bottom:11px">It stays on the list, struck through, with your reason
+       against it. That is what makes the decision defensible next year.</p>
+     ${["Does not apply this year","Covered by another item","Client genuinely does not have it","Partner's call"]
+       .map(r => `<button class="opt" onclick="setOff('${id}','${r}')"><b>${r}</b></button>`).join("")}`,
+    `<button class="btn" onclick="closeModal()">Keep asking for it</button>`);
+}
+function setOff(id, why){
+  const i = items.find(x => x.id === id);
+  i.on = false; i.offWhy = why;
+  closeModal(); drawList();
+}
 function setNeed(id, v){
   savedAt = null;
   const i = items.find(x => x.id === id);
@@ -908,9 +1000,17 @@ function setNeed(id, v){
         () => { i.need = was; drawList(); });
 }
 
-function flip(tid){
+/* Cycles yes → no → not asked. The answer lives on the CLIENT, so next year's
+   engagement and every other engagement type inherit it. */
+function flip(code){
   savedAt = null;
-  const t = TOGGLES.find(x => x.id === tid);
+  const p = profileOf();
+  p[code] = p[code] === true ? false : p[code] === false ? undefined : true;
+  applyProfile();
+  drawList();
+}
+function _oldFlip(tid){
+  const t = (ET().toggles||[]).find(x => x === tid);
   t.on = !t.on;
   const hit = items.filter(i => i.tag === tid);
   const before = hit.map(i => i.on);
@@ -955,13 +1055,17 @@ function setDue(d, n){
 }
 
 function waText(){
-  const list = items.filter(i => i.on && !i.have).slice(0,4).map(i => "• " + i.name).join("\n");
+  const askable = items.filter(i => i.on && !i.have);
+  const outside  = askable.filter(i => i.third);
+  const list = askable.filter(i => !i.third).slice(0,4).map(i => "• " + i.name).join("\n");
   const more = asked() - 4;
   return `Hello ${CC().people[0].n}, this is ${FIRM} (Chartered Accountants).
 
 For your ${ET().name} ${ET().period}, we still need ${asked()} documents:
 ${list}${more > 0 ? `\n• and ${more} more` : ""}
 
+${outside.length ? `\nThese need someone outside your office, so please start them now:\n`
+   + outside.map(i => "• " + i.name).join("\n") + "\n" : ""}
 Please upload here:
 https://docs.example.com/u/7fK2mQ
 
@@ -1007,7 +1111,7 @@ function inByLine(typeId){
 }
 /* The gate was locked by items that are not Required, which contradicts the
    whole point of having three necessity levels. */
-const rowBlocking = r => rowLedger(r).filter(d => d.state === "pending" && d.need === "Required").length;
+const rowBlocking = r => rowLedger(r).filter(d => (d.state === "pending" || d.state === "query") && d.need === "Required").length;
 const rowDocs  = r => (DOCS[r.et] || DOCS.tax_audit).items.filter(i => i.on);
 const rowTotal = r => rowDocs(r).length;
 const rowDone  = r => rowTotal(r) - r.missIds.length;
@@ -1025,6 +1129,7 @@ function itemState(r, i){
 function rowLedger(r){
   return rowDocs(r).map(i => ({
     id: i.id, name: i.name, state: itemState(r, i),
+    reason: i.reason || "", third: !!i.third,
     note: (r.notes && r.notes[i.id]) || i.have || "", need: i.need,
   }));
 }
@@ -1089,8 +1194,10 @@ function markReceived(id, itemId, name){
     `<button class="btn" onclick="closeModal()">Cancel</button>`);
 }
 function waiveItem(id, itemId, name){
+  const d = rowLedger(board.find(x=>x.id===id)).find(x => x.id === itemId) || {};
   modal("Waive this document",
-    `<p class="sub" style="margin-bottom:12px">${esc(name)}</p>
+    `<p class="sub" style="margin-bottom:4px">${name}</p>
+     ${d.reason ? `<p class="why" style="margin-bottom:12px">${d.reason}</p>` : ""}
      <p class="sub">A waiver is a partner saying we will proceed without it. It is logged with your
        name and the reason, and it opens the Start work gate for this item.</p>
      <div style="margin-top:12px">
@@ -1099,9 +1206,24 @@ function waiveItem(id, itemId, name){
      </div>`,
     `<button class="btn" onclick="closeModal()">Cancel</button>`);
 }
+/* A returned file needs a file. A query needs an answer. They are different
+   asks, they need different chase wording, and only one of them means the
+   document was wrong. */
+function askAbout(id, itemId, name){
+  modal("Ask the client about this",
+    `<p class="sub" style="margin-bottom:11px">${name}</p>
+     <p class="sub" style="margin-bottom:11px">The document is fine. You have a question about what
+       is in it. The item stays received, it does not go back to not-sent, and the chase message
+       carries the question rather than asking for the file again.</p>
+     ${["Why is this balance still open?","What is this amount for?","Can you explain the movement?","Who is the counterparty?"]
+       .map(q => `<button class="opt" onclick="setItemState(${id},'${itemId}','query','${q}')"><b>${q}</b></button>`).join("")}`,
+    `<button class="btn" onclick="closeModal()">Cancel</button>`);
+}
 function rejectItem(id, itemId, name){
+  const d = rowLedger(board.find(x=>x.id===id)).find(x => x.id === itemId) || {};
   modal("Send it back",
-    `<p class="sub" style="margin-bottom:12px">${esc(name)}</p>
+    `<p class="sub" style="margin-bottom:4px">${name}</p>
+     ${d.reason ? `<p class="why" style="margin-bottom:12px">${d.reason}</p>` : ""}
      <p class="sub">Only this item re-opens. The client is never asked to resend everything.</p>
      <div style="margin-top:12px">
        ${["Photo is blurry","Page is cut off","Wrong period","Wrong document","Cannot read the amounts","File is password protected"].map(rsn =>
@@ -1267,17 +1389,23 @@ function drawBoard(){
           <button class="btn sm" onclick="editAsk('${r.et}',${r.id})">Change what we ask for</button>
         </div>`;
       led.forEach(d => {
-        const nm = `<span class="dname">${esc(d.name)}</span>`;
+        const nm = `<span class="dname">${d.name}</span>${d.reason?`<span class="why">${d.reason}</span>`:""}`;
         const note = d.note ? `<span class="bsub">${esc(d.note)}</span>` : "";
         if(d.state === "pending"){
-          html += `<div class="ditem pending"><span><span class="chip warn">Not sent</span> ${nm}${d.need!=="Required"?` <span class="chip">${esc(d.need)}</span>`:""} ${note}</span>
+          html += `<div class="ditem pending"><span><span class="chip warn">Not sent</span> ${nm}${d.need!=="Required"?` <span class="chip">${esc(d.need)}</span>`:""}${d.third?` <span class="chip warn">Outside party</span>`:""} ${note}</span>
             <span class="inline"><button class="btn sm" onclick="markReceived(${r.id},'${d.id}',${JSON.stringify(d.name).replace(/"/g,"&quot;")})">Mark received</button>
             <button class="btn sm" onclick="confirmChase(${r.id})">Chase this</button>
             <button class="btn sm" onclick="waiveItem(${r.id},'${d.id}',${JSON.stringify(d.name).replace(/"/g,"&quot;")})">Waive</button></span></div>`;
         } else if(d.state === "received"){
           html += `<div class="ditem review"><span><span class="chip acc">Needs your review</span> ${nm} ${note}</span>
             <span class="inline"><button class="btn sm primary" onclick="setItemState(${r.id},'${d.id}','accepted')">Accept</button>
+            <button class="btn sm" onclick="askAbout(${r.id},'${d.id}',${JSON.stringify(d.name).replace(/"/g,"&quot;")})">Ask about it</button>
             <button class="btn sm" onclick="rejectItem(${r.id},'${d.id}',${JSON.stringify(d.name).replace(/"/g,"&quot;")})">Send back</button></span></div>`;
+        } else if(d.state === "query"){
+          html += `<div class="ditem query"><span><span class="chip violet">Question open</span> ${nm}
+            <span class="bsub">${esc(d.note)}</span></span>
+            <span class="inline"><button class="btn sm primary" onclick="setItemState(${r.id},'${d.id}','accepted')">Answered, accept</button>
+            <button class="btn sm" onclick="confirmChase(${r.id})">Chase the answer</button></span></div>`;
         } else if(d.state === "waived"){
           html += `<div class="ditem waived"><span><span class="chip">Waived</span> <span class="dname" style="text-decoration:line-through">${esc(d.name)}</span> ${note}</span>
             <button class="btn sm" onclick="setItemState(${r.id},'${d.id}','pending')">Un-waive</button></div>`;
@@ -1407,6 +1535,8 @@ function applyState(st){
     if(part){ part.got = part.parts.filter((_,k) => k !== 4 && k !== 7); part.st = "pending"; }
     const redo = cards.find(c => c.st === "pending" && !c.parts);
     if(redo){ redo.st = "redo"; redo.why = "Page 2 was cut off. Just that one page again, please."; }
+    const q = cards.find(c => c.st === "done");
+    if(q){ q.st = "query"; q.why = "We have this, thank you. Why is the October figure 40 lakh below the books?"; }
   }
 
   if(st === "answered"){
@@ -1423,7 +1553,7 @@ function applyState(st){
   drawClient();
 }
 
-function pending(){ return cards.filter(c => c.st === "pending" || c.st === "redo").length; }
+function pending(){ return cards.filter(c => c.st === "pending" || c.st === "redo" || c.st === "query").length; }
 function accepted(){ return cards.filter(c => c.st === "done").length; }
 function allAnswered(){ return pending() === 0; }
 /* "na" comes straight from the client with no approval. If it opened this
@@ -1437,6 +1567,7 @@ function cardLook(c){
   if(c.st === "na")         return ["answered",  `<span class="chip warn">Doesn't apply, ${esc(CC().owner.split(" ")[0])} is checking</span>`];
   if(c.st === "thirdparty") return ["answered",  `<span class="chip warn">Your bank has it</span>`];
   if(c.st === "confused")   return ["confused",  `<span class="chip violet">${esc(CC().owner.split(" ")[0])} will call you today</span>`];
+  if(c.st === "query")      return ["queried",   `<span class="chip violet">${esc(CC().owner.split(" ")[0])} has a question</span>`];
   return ["", `<span class="chip">Not sent yet</span>`];
 }
 
@@ -1460,7 +1591,16 @@ function drawClient(){
         <div class="chint" style="margin-top:6px">${c.got.length} of ${c.parts.length} in. ${c.parts.filter(p=>!c.got.includes(p)).join(", ") || "All done"}${c.got.length<c.parts.length?" still to send. Tap one to add it.":""}</div>`;
     }
 
-    if(c.st === "pending" || c.st === "redo"){
+    if(c.st === "query"){
+      /* The document is fine. They are being asked about what is in it, so this
+         card asks for words, not a file. */
+      body += `<div class="chint" style="color:var(--violet);margin-top:7px"><b>${esc(c.why || "")}</b></div>
+        <textarea class="qbox" placeholder="Type your answer here"></textarea>
+        <div class="cbtns">
+          <button class="cbtn" onclick="answerQuery('${c.id}')">Send this answer</button>
+          <button class="cbtn plain" onclick="toast()">Call instead</button>
+        </div>`;
+    } else if(c.st === "pending" || c.st === "redo"){
       body += `<div class="cbtns">
         <button class="cbtn" onclick="upload('${c.id}')">${c.kind === "figure" ? "Type the figure" : "📷 Take photo or upload"}</button>
         <button class="cbtn plain" onclick="sendOnWhatsApp('${c.id}')">Send on WhatsApp</button>
@@ -1574,6 +1714,11 @@ function uploadPart(id, part){
   if(c.got.length === c.parts.length) c.st = "done";
   drawClient();
 }
+function answerQuery(id){
+  const c = cards.find(x => x.id === id);
+  c.st = "done"; c.why = null;
+  drawClient();
+}
 function upload(id){
   const c = cards.find(x => x.id === id);
   if(c.parts){
@@ -1648,23 +1793,23 @@ function gateTap(){
    ======================================================================= */
 const ENGAGEMENT_TYPES = [
   {id:"tax_audit", group:"Audit", name:"Tax audit 44AB", items:14, period:"FY 2025-26", due:"30 September 2026",
-   toggles:[{id:"cash",label:"Cash-intensive business",on:true},{id:"loans",label:"Has bank loans",on:true},{id:"foreign",label:"Pays vendors abroad",on:false}]},
+   toggles:["cash","loans","foreign"]},
   {id:"stat_audit", group:"Audit", name:"Statutory audit", items:22, period:"FY 2025-26", due:"30 September 2026",
-   toggles:[{id:"caro",label:"CARO 2020 applies",on:true},{id:"ifc",label:"IFC / ICFR reporting",on:false},{id:"consol",label:"Consolidation required",on:false}]},
+   toggles:["caro","ifc","cfs","borr"]},
   {id:"llp_audit", group:"Audit", name:"LLP audit", items:13, period:"FY 2025-26", due:"30 October 2026",
-   toggles:[{id:"cash",label:"Cash-intensive business",on:false},{id:"loans",label:"Has bank loans",on:true},{id:"foreign",label:"Pays vendors abroad",on:false}]},
+   toggles:["cash","loans","foreign"]},
   {id:"trust_audit", group:"Audit", name:"Trust / NGO audit", items:20, period:"FY 2025-26", due:"30 September 2026",
-   toggles:[{id:"fcra",label:"FCRA registered",on:false},{id:"g80",label:"80G approved",on:true},{id:"accum",label:"Accumulation claimed",on:false}]},
+   toggles:["fcra","g80","accum"]},
   {id:"society_audit", group:"Audit", name:"Housing society audit", items:19, period:"FY 2025-26", due:"31 July 2026",
-   toggles:[{id:"lift",label:"Has lift / sinking fund",on:true},{id:"redev",label:"Redevelopment underway",on:false},{id:"cash",label:"Collects cash",on:true}]},
+   toggles:["lift","redev","cash"]},
   {id:"gst_monthly", group:"Compliance", name:"GST monthly", items:6, period:"August 2026", due:"11 September 2026",
-   toggles:[{id:"qrmp",label:"QRMP scheme",on:false},{id:"eway",label:"Generates e-way bills",on:true},{id:"rcm",label:"Reverse charge applies",on:true}]},
+   toggles:["qrmp","eway","rcm"]},
   {id:"gstr9", group:"Compliance", name:"GSTR-9 / 9C annual", items:12, period:"FY 2025-26", due:"31 December 2026",
-   toggles:[{id:"c5",label:"Turnover above ₹5 cr (9C)",on:true},{id:"multi",label:"Multiple GSTINs",on:false},{id:"exp",label:"Exports / SEZ",on:false}]},
+   toggles:["c5","multi","exp"]},
   {id:"form15cb", group:"Certification", name:"Form 15CB", items:6, period:"On request", due:"Before remittance",
-   toggles:[{id:"trc",label:"Payee has a TRC",on:true},{id:"pe",label:"No permanent establishment",on:true},{id:"dtaa",label:"Treaty benefit claimed",on:true}]},
+   toggles:["trc","pe","dtaa"]},
   {id:"networth", group:"Certification", name:"Net worth certificate", items:5, period:"On request", due:"On request",
-   toggles:[{id:"biz",label:"Includes business assets",on:true},{id:"prop",label:"Includes property",on:true},{id:"loan",label:"For a loan application",on:false}]},
+   toggles:["biz","prop","loan"]},
   {id:"tds", group:"Compliance", name:"TDS quarterly", items:0, disabled:"No list seeded yet"},
   {id:"itr", group:"Compliance", name:"ITR — individual", items:0, disabled:"Opens 15 June"},
   {id:"roc", group:"Compliance", name:"ROC annual (AOC-4)", items:0, disabled:"Needs the AGM date"},
@@ -1698,6 +1843,54 @@ function inByLabel(typeId){
   return d ? fmtDate(d) : (ENGAGEMENT_TYPES.find(t => t.id === (typeId||currentType))||{}).due;
 }
 
+/* Facts about the CLIENT, not about the engagement. Answered once, reused by
+   every engagement type and every year. Three states: yes, no, and not asked —
+   and not-asked must INCLUDE the item, because silently dropping a document
+   because nobody filled a chip is the failure that costs an audit. */
+const PROFILE_Q = {
+  cash:   "Cash-intensive business",
+  loans:  "Has bank loans",
+  borr:   "Borrowings from banks or financial institutions",
+  foreign:"Pays vendors abroad",
+  exp:    "Exports, or has foreign customers",
+  ae:     "Deals with associated enterprises",
+  prop:   "Owns immovable property",
+  caro:   "CARO 2020 applies",
+  ifc:    "IFC / ICFR reporting applies",
+  cfs:    "Has a subsidiary, associate or JV",
+  consol: "Consolidation required",
+  fcra:   "FCRA registered",
+  g80:    "80G approved",
+  accum:  "Accumulation claimed",
+  lift:   "Has a lift or sinking fund",
+  redev:  "Redevelopment underway",
+  qrmp:   "On the QRMP scheme",
+  eway:   "Generates e-way bills",
+  rcm:    "Reverse charge applies",
+  c5:     "Turnover above ₹5 cr",
+  multi:  "Multiple GSTINs",
+  trc:    "Payee has a TRC",
+  pe:     "No permanent establishment",
+  dtaa:   "Treaty benefit claimed",
+  biz:    "Includes business assets",
+  loan:   "For a loan application",
+};
+const profileOf = () => (CC().profile = CC().profile || {});
+
+/* An answer of "no" turns items off; "yes" turns them on; not asked leaves them
+   ON and flagged, because a company that took a loan this year has a BORR answer
+   from last year that is now a lie. */
+function applyProfile(){
+  const p = profileOf();
+  items.forEach(i => {
+    if(!i.tag) return;
+    const a = p[i.tag];
+    if(a === true)       { i.on = true;  i.unsure = false; i.offWhy = null; }
+    else if(a === false) { i.on = false; i.unsure = false; i.offWhy = "Client profile says no"; }
+    else                 { i.on = true;  i.unsure = true;  i.offWhy = null; }
+  });
+}
+
 let currentType = "tax_audit";
 let currentClient = null;   // set after CLIENTS is defined
 const ET = () => ENGAGEMENT_TYPES.find(t => t.id === currentType);
@@ -1706,10 +1899,10 @@ const ET = () => ENGAGEMENT_TYPES.find(t => t.id === currentType);
    CLIENTS
    ======================================================================= */
 const CLIENTS = [
-  {id:1, name:"Sharma Textiles Pvt Ltd", con:"Pvt Ltd", pan:"AALCS4821K", gstin:"27AALCS4821K1ZP", owner:"Priya Shetty", last:"chased 4 days ago",
+  {id:1, name:"Sharma Textiles Pvt Ltd", con:"Pvt Ltd", pan:"AALCS4821K", gstin:"27AALCS4821K1ZP", owner:"Priya Shetty", last:"chased 4 days ago", profile:{cash:true, loans:true, foreign:false, caro:true, ifc:false},
    people:[{n:"Ramesh Sharma",r:"director",p:"+91 99999 00001"},{n:"Ajay Sharma",r:"son, actually sends the documents",p:"+91 99999 00002"}],
    live:[{t:"Tax audit FY 25-26",d:9,n:14}], onfile:["Bank statements FY 2025-26 — received 4 Sep, from the GST August request"]},
-  {id:2, name:"Gupta Hardware Stores", con:"Proprietor", pan:"AFZPG7621M", gstin:"27AFZPG7621M1Z4", owner:"Faisal Qureshi", last:"promised Tuesday, never came",
+  {id:2, name:"Gupta Hardware Stores", con:"Proprietor", pan:"AFZPG7621M", gstin:"27AFZPG7621M1Z4", owner:"Faisal Qureshi", last:"promised Tuesday, never came", profile:{cash:true, loans:false},
    people:[{n:"Mahesh Gupta",r:"proprietor",p:"+91 99999 00003"}],
    live:[{t:"Tax audit FY 25-26",d:4,n:9},{t:"GST August 2026",d:2,n:6}], onfile:[]},
   {id:3, name:"Venkatesh Iyer & Associates LLP", con:"LLP", pan:"AAHFV2210Q", gstin:"27AAHFV2210Q1ZD", owner:"Deepa Menon", last:"uploaded 10 Sep",
