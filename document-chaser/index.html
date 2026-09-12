@@ -180,17 +180,25 @@ h3{font-size:14px;margin:0;letter-spacing:-.005em}
 
 /* ---------- chase board ---------- */
 .filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
-.pipe{display:flex;border:1px solid var(--rule-2);border-radius:7px;overflow:hidden;background:var(--surface);margin-bottom:4px}
-.pipe button{flex:1;min-width:0;border:0;border-right:1px solid var(--rule);background:none;padding:9px 10px;text-align:left;line-height:1.25}
+/* THE SEAM. Everything left of it is the client's move, everything right is ours.
+   Each side gets its own ground so the split reads before any label does. */
+.pipe{display:flex;border:1px solid var(--rule-2);border-radius:7px;overflow:hidden;margin-bottom:4px}
+.pipe button{flex:1;min-width:0;border:0;border-right:1px solid rgba(22,33,29,.09);padding:10px;text-align:left;line-height:1.25}
+.pipe button.client{background:#FBF3E0}
+.pipe button.firm{background:#E6EEF6}
 .pipe button:last-child{border-right:0}
-.pipe button:hover:not([aria-pressed="true"]){background:var(--surface-2)}
+.pipe button.client:hover:not([aria-pressed="true"]){background:#F6E9CA}
+.pipe button.firm:hover:not([aria-pressed="true"]){background:#D7E4F0}
 .pipe button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
-.pipe .pn{display:block;font-family:"IBM Plex Mono",monospace;font-size:19px;font-weight:500;line-height:1}
-.pipe .pl{display:block;font-size:11px;color:var(--ink-3);margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pipe .pn{display:block;font-family:"IBM Plex Mono",monospace;font-size:20px;font-weight:500;line-height:1}
+.pipe .pl{display:block;font-size:11px;color:var(--ink-2);margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .pipe button[aria-pressed="true"] .pl{color:var(--accent-ink);opacity:.85}
-.pipe .seam{border-right:2px solid var(--accent)}
-.pipe button.empty .pn{color:var(--ink-3);opacity:.5}
-.sides{display:flex;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);margin-bottom:5px}
+.pipe .seam{border-right:3px solid var(--ink-2)}
+.pipe button.empty .pn{opacity:.4}
+.sides{display:flex;margin-bottom:0;gap:0}
+.sides b{font-size:10px;letter-spacing:.11em;text-transform:uppercase;font-weight:500;padding:5px 11px;border-radius:6px 6px 0 0;border:1px solid var(--rule-2);border-bottom:0}
+.sides .s-client{background:#FBF3E0;color:#7A5A12}
+.sides .s-firm{background:#E6EEF6;color:var(--accent)}
 .filters .toggle{padding:6px 12px}
 .filters .toggle b{font-family:"IBM Plex Mono",monospace;font-weight:500;opacity:.75;margin-left:3px}
 .brow{border-bottom:1px solid var(--rule);padding:11px 16px 11px 14px;border-left:3px solid transparent}
@@ -1151,13 +1159,13 @@ function drawBoard(){
 
     <div>
       <div class="sides">
-        <span style="flex:0 0 28.57%">Waiting on the client</span>
-        <span>Waiting on us</span>
+        <b class="s-client" style="flex:0 0 28.57%">Waiting on the client &middot; ${STAGES.filter(x=>x.side==="client").reduce((a,x)=>a+stageCount(x.id),0)}</b>
+        <b class="s-firm" style="flex:1">Waiting on us &middot; ${STAGES.filter(x=>x.side==="firm").reduce((a,x)=>a+stageCount(x.id),0)}</b>
       </div>
       <div class="pipe">
         ${STAGES.map((st,k) => {
           const n = stageCount(st.id);
-          return `<button aria-pressed="${stage===st.id}" class="${n?"":"empty"}${k===1?" seam":""}" onclick="setStage('${st.id}')">
+          return `<button aria-pressed="${stage===st.id}" class="${st.side}${n?"":" empty"}${k===1?" seam":""}" onclick="setStage('${st.id}')">
             <span class="pn">${n}</span><span class="pl">${esc(st.label)}</span></button>`;
         }).join("")}
       </div>
