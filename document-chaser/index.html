@@ -187,42 +187,52 @@ h3{font-size:14px;margin:0;letter-spacing:-.005em}
 
 /* ---------- chase board ---------- */
 .filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
-/* THE SEAM AND THE FLOW.
-   Chevrons point the way work travels, so the bar reads as a sequence rather
-   than as seven filters. Each side has its own ground, dark enough to hold as
-   a territory, and the client's stages come first because the work does. */
-.pipe{display:flex;gap:3px;margin-bottom:4px}
+/* THE PIPELINE.
+   Two territories, each owning its label and its own chevrons. The chevrons
+   point the way work travels; the gap between the sides is the handover. */
+.pipeline{display:flex;align-items:stretch;gap:12px;margin-bottom:6px}
+.side{display:flex;flex-direction:column;min-width:0}
+.side > b{
+  font-size:10px;letter-spacing:.12em;text-transform:uppercase;font-weight:600;
+  padding:6px 12px;border-radius:7px 7px 0 0;
+}
+.side .pipe{display:flex;gap:2px;flex:1}
+.side.client > b{background:#E7D4A8;color:#4E3908}
+.side.firm   > b{background:#BFD3E6;color:#0F3352}
+
 .pipe button{
-  flex:1;min-width:0;border:0;padding:11px 10px 11px 24px;text-align:left;line-height:1.25;
-  margin-left:-13px;position:relative;
-  clip-path:polygon(0 0, calc(100% - 13px) 0, 100% 50%, calc(100% - 13px) 100%, 0 100%, 13px 50%);
+  flex:1;min-width:0;border:0;padding:12px 12px 12px 26px;text-align:left;
+  margin-left:-14px;transition:background var(--t,120ms) ease;
 }
-.pipe button:first-child{
-  margin-left:0;padding-left:13px;border-radius:6px 0 0 6px;
-  clip-path:polygon(0 0, calc(100% - 13px) 0, 100% 50%, calc(100% - 13px) 100%, 0 100%);
+.pipe button:first-child{margin-left:0;padding-left:14px}
+.side.client .pipe button{
+  clip-path:polygon(0 0, calc(100% - 14px) 0, 100% 50%, calc(100% - 14px) 100%, 0 100%, 14px 50%);
 }
-.pipe button:last-child{
-  border-radius:0 6px 6px 0;
-  clip-path:polygon(0 0, 100% 0, 100% 100%, 0 100%, 13px 50%);
+.side.client .pipe button:first-child{
+  border-radius:0 0 0 7px;
+  clip-path:polygon(0 0, calc(100% - 14px) 0, 100% 50%, calc(100% - 14px) 100%, 0 100%);
 }
-.pipe button.client{background:#EEDFBC;color:#5A420C}
-.pipe button.firm{background:#C9DAEA;color:#123A5C}
-.pipe button.client:hover:not([aria-pressed="true"]){background:#E6D2A5}
-.pipe button.firm:hover:not([aria-pressed="true"]){background:#B5CCE2}
-.pipe button.client[aria-pressed="true"]{background:#6E4F0F;color:#FCF5E6}
-.pipe button.firm[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
-.pipe .pn{display:block;font-family:"IBM Plex Mono",monospace;font-size:20px;font-weight:500;line-height:1}
-.pipe .pl{display:block;font-size:11px;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;opacity:.78}
-.pipe button[aria-pressed="true"] .pl{opacity:.85}
-.pipe button.empty{opacity:.62}
-.pipe .seam{margin-right:9px}
-.sides{display:flex;margin-bottom:0;gap:0}
-.sides b{
-  font-size:10px;letter-spacing:.11em;text-transform:uppercase;font-weight:600;
-  padding:5px 12px;border-radius:6px 6px 0 0;
+.side.firm .pipe button{
+  clip-path:polygon(0 0, calc(100% - 14px) 0, 100% 50%, calc(100% - 14px) 100%, 0 100%, 14px 50%);
 }
-.sides .s-client{background:#EEDFBC;color:#5A420C}
-.sides .s-firm{background:#C9DAEA;color:#123A5C}
+.side.firm .pipe button:last-child{
+  border-radius:0 0 7px 0;
+  clip-path:polygon(0 0, 100% 0, 100% 100%, 0 100%, 14px 50%);
+}
+
+.pipe button.client{background:#E7D4A8;color:#4E3908}
+.pipe button.firm  {background:#BFD3E6;color:#0F3352}
+.pipe button.client.empty{background:#F2E8D2;color:#8A7742}
+.pipe button.firm.empty  {background:#DCE7F1;color:#5D7B99}
+.pipe button.client:hover:not([aria-pressed="true"]){background:#DFC894}
+.pipe button.firm:hover:not([aria-pressed="true"]){background:#AEC7DD}
+.pipe button.client[aria-pressed="true"]{background:#5E4108;color:#FBF3E0}
+.pipe button.firm[aria-pressed="true"]{background:#123A5C;color:#FFFFFF}
+
+.pipe .pn{display:block;font-family:"IBM Plex Mono",monospace;font-size:22px;font-weight:500;line-height:1;letter-spacing:-.02em}
+.pipe .pl{display:block;font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;font-weight:500;
+  margin-top:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;opacity:.72}
+.pipe button[aria-pressed="true"] .pl{opacity:.8}
 .filters .toggle{padding:6px 12px}
 .filters .toggle b{font-family:"IBM Plex Mono",monospace;font-weight:500;opacity:.75;margin-left:3px}
 .brow{border-bottom:1px solid var(--rule);padding:11px 16px 11px 14px;border-left:3px solid transparent}
@@ -1341,15 +1351,18 @@ function drawBoard(){
     </div>
 
     <div>
-      <div class="sides">
-        <b class="s-client" style="flex:0 0 28.57%">Waiting on the client &middot; ${STAGES.filter(x=>x.side==="client").reduce((a,x)=>a+stageCount(x.id),0)}</b>
-        <b class="s-firm" style="flex:1">Waiting on us &middot; ${STAGES.filter(x=>x.side==="firm").reduce((a,x)=>a+stageCount(x.id),0)}</b>
-      </div>
-      <div class="pipe">
-        ${STAGES.map((st,k) => {
-          const n = stageCount(st.id);
-          return `<button aria-pressed="${stage===st.id}" class="${st.side}${n?"":" empty"}${k===1?" seam":""}" onclick="setStage('${st.id}')">
-            <span class="pn">${n}</span><span class="pl">${esc(st.label)}</span></button>`;
+      <div class="pipeline">
+        ${["client","firm"].map(side => {
+          const mine = STAGES.filter(x => x.side === side);
+          const total = mine.reduce((a,x) => a + stageCount(x.id), 0);
+          return `<div class="side ${side}" style="flex:${mine.length}">
+            <b>${side==="client" ? "Waiting on the client" : "Waiting on us"} &middot; ${total}</b>
+            <div class="pipe">${mine.map(st => {
+              const n = stageCount(st.id);
+              return `<button aria-pressed="${stage===st.id}" class="${side}${n?"":" empty"}" onclick="setStage('${st.id}')">
+                <span class="pn">${n}</span><span class="pl">${esc(st.label)}</span></button>`;
+            }).join("")}</div>
+          </div>`;
         }).join("")}
       </div>
     </div>
