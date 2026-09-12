@@ -22,6 +22,9 @@
   --bad:#A32A1C;   --bad-soft:#FAE6E2;    --bad-line:#E7B4AB;
   --violet:#57458C;--violet-soft:#EFEAF8; --violet-line:#C8BCE6;
   --spine:#8C2B22;   /* the red cloth spine of a bound register */
+  /* Already on file is not the same fact as in and checked, so it is not the
+     same colour. This is the tone of paper that was in the register already. */
+  --filed:#6B5B45; --filed-soft:#F2EDE2; --filed-line:#D9CDB4;
   --shadow-1:0 1px 1px rgba(22,33,29,.05);
   --shadow-2:0 1px 2px rgba(22,33,29,.06), 0 12px 28px -18px rgba(22,33,29,.28);
   --r:7px;
@@ -89,6 +92,7 @@ h3{font-size:14px;margin:0;letter-spacing:-.005em}
   letter-spacing:.08em;text-transform:uppercase;border-width:1px;
 }
 .chip.ok{background:var(--ok-soft);border-color:var(--ok-line);color:var(--ok)}
+.chip.filed{background:var(--filed-soft);border-color:var(--filed-line);color:var(--filed)}
 .chip.warn{background:var(--warn-soft);border-color:var(--warn-line);color:var(--warn)}
 .chip.bad{background:var(--bad-soft);border-color:var(--bad-line);color:var(--bad)}
 .chip.violet{background:var(--violet-soft);border-color:var(--violet-line);color:var(--violet)}
@@ -148,8 +152,8 @@ h3{font-size:14px;margin:0;letter-spacing:-.005em}
 .item:hover{background:var(--surface-2)}
 .item.off{opacity:.5}
 .item.off .iname{text-decoration:line-through}
-.item.have{background:var(--ok-soft);border-left-color:var(--ok)}
-.item.have:hover{background:var(--ok-soft)}
+.item.have{background:var(--filed-soft);border-left-color:var(--filed)}
+.item.have:hover{background:var(--filed-soft)}
 .item.locked{background:var(--surface-2);border-left-color:var(--rule-3)}
 .box{
   width:18px;height:18px;margin-top:2px;border:1.5px solid var(--rule-2);border-radius:4px;
@@ -184,8 +188,16 @@ h3{font-size:14px;margin:0;letter-spacing:-.005em}
 .brow.open{background:var(--accent-soft);border-left-color:var(--accent)}
 .ditem{border-left:3px solid transparent}
 .drawer .eyebrow,.drawer .row-between{padding:9px 11px;border-bottom:1px solid var(--rule-2);background:var(--band)}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:11.5px;color:var(--ink-3)}
+.legend .lg{font-family:"IBM Plex Mono",monospace;font-weight:500;margin-right:3px;
+  padding:1px 5px;border-radius:3px;border:1px solid}
+.lg.pending{color:var(--warn);background:var(--warn-soft);border-color:var(--warn-line)}
+.lg.review{color:var(--accent);background:var(--accent-soft);border-color:var(--accent-line)}
+.lg.accepted{color:var(--ok);background:var(--ok-soft);border-color:var(--ok-line)}
+.lg.filed{color:var(--filed);background:var(--filed-soft);border-color:var(--filed-line)}
 .ditem.pending{background:var(--warn-soft);border-left-color:var(--warn)}
-.ditem.onfile{background:var(--ok-soft);border-left-color:var(--ok)}
+.ditem.onfile{background:var(--filed-soft);border-left-color:var(--filed)}
+.ditem.onfile .dname{color:var(--filed)}
 .ditem.accepted{background:var(--surface-2);border-left-color:var(--rule-2)}
 .ditem.review{background:var(--accent-soft);border-left-color:var(--accent)}
 .ditem.review .dname{color:var(--accent)}
@@ -762,8 +774,8 @@ function drawList(){
 
     ${pickerOpen ? pickerHTML(true) : ""}
 
-    ${onFile() ? `<div class="banner" style="background:var(--ok-soft);border-color:var(--ok-line)">
-      <span class="dot" style="background:var(--ok)"></span>
+    ${onFile() ? `<div class="banner" style="background:var(--filed-soft);border-color:var(--filed-line)">
+      <span class="dot" style="background:var(--filed)"></span>
       <div style="flex:1">
         <h3>${onFile()} of these we already have</h3>
         <p class="sub" style="margin-top:3px">Documents we filed, issued or collected for this client before. They stay on the list so you can see the full picture, they are marked green, and they are left out of the message and out of the chasing.</p>
@@ -802,7 +814,7 @@ function drawList(){
           <div class="iname">${esc(i.name)}</div>
           ${i.alias ? `<div class="ialias">Client sees: &ldquo;${esc(i.alias)}&rdquo;</div>` : ""}
           <div class="imeta">
-            ${i.have ? `<span class="chip ok">Already on file</span><span class="ialias" style="margin:0">${esc(i.have)} &middot; we will not ask again</span>` : ""}
+            ${i.have ? `<span class="chip filed">Already on file</span><span class="ialias" style="margin:0">${esc(i.have)} &middot; we will not ask again</span>` : ""}
             ${i.parts ? `<span class="chip">${i.parts} months expected</span>` : ""}
             ${i.flag ? `<span class="chip warn">Check the basis</span>` : ""}
           </div>
@@ -1160,7 +1172,13 @@ function drawBoard(){
       const n = k => led.filter(x => x.state === k).length;
       html += `<div class="drawer" onclick="event.stopPropagation()">
         <div class="row-between" style="margin-bottom:4px">
-          <span class="eyebrow">Everything we asked ${esc(r.name.split(" ")[0])} for &middot; ${n("accepted")} in, ${n("onfile")} already held, ${n("pending")} outstanding</span>
+          <span class="eyebrow">Everything we asked ${esc(r.name.split(" ")[0])} for</span>
+          <span class="legend">
+            <b class="lg pending">${n("pending")}</b> outstanding
+            <b class="lg review">${n("received")}</b> to review
+            <b class="lg accepted">${n("accepted")}</b> in and checked
+            <b class="lg filed">${n("onfile")}</b> we already had
+          </span>
           <button class="btn sm" onclick="editAsk('${r.et}',${r.id})">Change what we ask for</button>
         </div>`;
       led.forEach(d => {
@@ -1179,7 +1197,7 @@ function drawBoard(){
           html += `<div class="ditem waived"><span><span class="chip">Waived</span> <span class="dname" style="text-decoration:line-through">${esc(d.name)}</span> ${note}</span>
             <button class="btn sm" onclick="setItemState(${r.id},'${d.id}','pending')">Un-waive</button></div>`;
         } else if(d.state === "onfile"){
-          html += `<div class="ditem onfile"><span><span class="chip ok">Already on file</span> ${nm} ${note} &middot; never asked for, never chased</span></div>`;
+          html += `<div class="ditem onfile"><span><span class="chip filed">Already on file</span> ${nm} ${note} &middot; never asked for, never chased</span></div>`;
         } else {
           html += `<div class="ditem accepted"><span><span class="chip ok">In and checked</span> ${nm}</span>
             <button class="btn sm" onclick="rejectItem(${r.id},'${d.id}',${JSON.stringify(d.name).replace(/"/g,"&quot;")})">Send back</button></div>`;
