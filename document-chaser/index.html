@@ -187,27 +187,42 @@ h3{font-size:14px;margin:0;letter-spacing:-.005em}
 
 /* ---------- chase board ---------- */
 .filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
-/* THE SEAM. Everything left of it is the client's move, everything right is ours.
-   Each side gets its own ground so the split reads before any label does. */
-.pipe{display:flex;border:1px solid var(--rule-2);border-radius:7px;overflow:hidden;margin-bottom:4px}
-.pipe button{flex:1;min-width:0;border:0;border-right:1px solid rgba(22,33,29,.09);padding:10px;text-align:left;line-height:1.25}
-.pipe button.client{background:#FBF3E0}
-.pipe button.firm{background:#E6EEF6}
-.pipe button:last-child{border-right:0}
-.pipe button.client:hover:not([aria-pressed="true"]){background:#F6E9CA}
-.pipe button.firm:hover:not([aria-pressed="true"]){background:#D7E4F0}
+/* THE SEAM AND THE FLOW.
+   Chevrons point the way work travels, so the bar reads as a sequence rather
+   than as seven filters. Each side has its own ground, dark enough to hold as
+   a territory, and the client's stages come first because the work does. */
+.pipe{display:flex;gap:3px;margin-bottom:4px}
+.pipe button{
+  flex:1;min-width:0;border:0;padding:11px 10px 11px 24px;text-align:left;line-height:1.25;
+  margin-left:-13px;position:relative;
+  clip-path:polygon(0 0, calc(100% - 13px) 0, 100% 50%, calc(100% - 13px) 100%, 0 100%, 13px 50%);
+}
+.pipe button:first-child{
+  margin-left:0;padding-left:13px;border-radius:6px 0 0 6px;
+  clip-path:polygon(0 0, calc(100% - 13px) 0, 100% 50%, calc(100% - 13px) 100%, 0 100%);
+}
+.pipe button:last-child{
+  border-radius:0 6px 6px 0;
+  clip-path:polygon(0 0, 100% 0, 100% 100%, 0 100%, 13px 50%);
+}
+.pipe button.client{background:#EEDFBC;color:#5A420C}
+.pipe button.firm{background:#C9DAEA;color:#123A5C}
+.pipe button.client:hover:not([aria-pressed="true"]){background:#E6D2A5}
+.pipe button.firm:hover:not([aria-pressed="true"]){background:#B5CCE2}
 .pipe button.client[aria-pressed="true"]{background:#6E4F0F;color:#FCF5E6}
 .pipe button.firm[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
 .pipe .pn{display:block;font-family:"IBM Plex Mono",monospace;font-size:20px;font-weight:500;line-height:1}
-.pipe .pl{display:block;font-size:11px;color:var(--ink-2);margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.pipe button.client[aria-pressed="true"] .pl{color:#FCF5E6;opacity:.8}
-.pipe button.firm[aria-pressed="true"] .pl{color:var(--accent-ink);opacity:.85}
-.pipe .seam{border-right:3px solid var(--ink-2)}
-.pipe button.empty .pn{opacity:.4}
+.pipe .pl{display:block;font-size:11px;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;opacity:.78}
+.pipe button[aria-pressed="true"] .pl{opacity:.85}
+.pipe button.empty{opacity:.62}
+.pipe .seam{margin-right:9px}
 .sides{display:flex;margin-bottom:0;gap:0}
-.sides b{font-size:10px;letter-spacing:.11em;text-transform:uppercase;font-weight:500;padding:5px 11px;border-radius:6px 6px 0 0;border:1px solid var(--rule-2);border-bottom:0}
-.sides .s-client{background:#FBF3E0;color:#7A5A12}
-.sides .s-firm{background:#E6EEF6;color:var(--accent)}
+.sides b{
+  font-size:10px;letter-spacing:.11em;text-transform:uppercase;font-weight:600;
+  padding:5px 12px;border-radius:6px 6px 0 0;
+}
+.sides .s-client{background:#EEDFBC;color:#5A420C}
+.sides .s-firm{background:#C9DAEA;color:#123A5C}
 .filters .toggle{padding:6px 12px}
 .filters .toggle b{font-family:"IBM Plex Mono",monospace;font-weight:500;opacity:.75;margin-left:3px}
 .brow{border-bottom:1px solid var(--rule);padding:11px 16px 11px 14px;border-left:3px solid transparent}
@@ -638,6 +653,42 @@ const DOCS = {
       {id:"h17",s:2, name:"Property tax and water charge receipts", alias:"", need:"Required", on:true},
       {id:"h18",s:2, name:"Redevelopment agreement and related resolutions", alias:"", need:"Required", on:false, tag:"redev"},
       {id:"h19",s:2, name:"TDS challans and returns", alias:"on contractor and security payments", need:"Required", on:true},
+    ]},
+
+  tds: {
+    sections:["Salary TDS (24Q)","Other payments (26Q)","Non-resident payments (27Q)","Challans and defaults"],
+    fetched:["Form 26AS","TRACES default and late-fee notices"],
+    items:[
+      {id:"t1", s:0, name:"Employee master with PAN", alias:"every employee, with their PAN", need:"Required", on:true,
+       tag:"emp", reason:"PAN missing means 20% deduction"},
+      {id:"t2", s:0, name:"Monthly salary and perquisite breakup", alias:"the payroll register for the quarter", need:"Required", on:true,
+       tag:"emp", reason:"Completeness of deduction"},
+      {id:"t3", s:0, name:"Each employee's regime election", alias:"old or new regime, employee by employee", need:"Required", on:true,
+       tag:"emp", reason:"Decides the deduction rate under 115BAC"},
+      {id:"t4", s:0, name:"Investment declarations and proofs", alias:"what staff declared, and the proofs they produced", need:"Required", on:true,
+       tag:"emp", reason:"Old-regime deductions; Q4 verification"},
+      {id:"t5", s:0, name:"Previous employer income, Form 12B", alias:"for anyone who joined mid-year", need:"If applicable", on:true,
+       tag:"emp", reason:"Short deduction if ignored"},
+      {id:"t6", s:1, name:"Party-wise payment ledger with PAN and section code", alias:"who you paid, how much, and under which TDS section", need:"Required", on:true,
+       reason:"Completeness; correct section"},
+      {id:"t7", s:1, name:"List of payees without PAN", alias:"anyone you could not get a PAN from", need:"Required", on:true,
+       reason:"20% rate under section 206AA"},
+      {id:"t8", s:1, name:"Form 15G and 15H collected", alias:"declarations from payees asking for no deduction", need:"If applicable", on:true,
+       reason:"Nil deduction; quarterly upload"},
+      {id:"t9", s:1, name:"Lower or nil deduction certificates, section 197", alias:"Form 13 certificates your payees gave you", need:"Required", on:false,
+       tag:"lower", reason:"Certificate number must be quoted in the return"},
+      {id:"t10",s:2, name:"Payee Tax Residency Certificate", alias:"issued by their own tax authority", need:"Required", on:false,
+       tag:"foreign", third:true, reason:"Treaty rate; without it, rate reverts"},
+      {id:"t11",s:2, name:"Form 10F and no permanent establishment declaration", alias:"signed by the overseas payee", need:"Required", on:false,
+       tag:"foreign", third:true, reason:"Treaty benefit"},
+      {id:"t12",s:2, name:"Form 15CA and 15CB for each remittance", alias:"", need:"Required", on:false,
+       tag:"foreign", reason:"Rule 37BB"},
+      {id:"t13",s:3, name:"Challans with BSR code, serial number and date", alias:"proof of every TDS payment for the quarter", need:"Required", on:true,
+       reason:"Challan matching; 234E late fee"},
+      {id:"t14",s:3, name:"Prior-quarter TRACES notices you received", alias:"default or late-fee intimations, even if you ignored them", need:"Required", on:true,
+       reason:"Unactioned defaults compound"},
+      {id:"t15",s:3, name:"Annexure II full-year computation", alias:"only for the last quarter of the year", need:"If applicable", on:false,
+       reason:"Q4 24Q requirement"},
     ]},
 
   gstr9: {
@@ -1817,7 +1868,8 @@ const ENGAGEMENT_TYPES = [
    toggles:["trc","pe","dtaa"]},
   {id:"networth", group:"Certification", name:"Net worth certificate", items:5, period:"On request", due:"On request",
    toggles:["biz","prop","loan"]},
-  {id:"tds", group:"Compliance", name:"TDS quarterly", items:0, disabled:"No list seeded yet"},
+  {id:"tds", group:"Compliance", name:"TDS quarterly", items:0, period:"Q2 FY 2026-27", due:"31 October 2026",
+   toggles:["emp","foreign","lower"]},
   {id:"itr", group:"Compliance", name:"ITR — individual", items:0, disabled:"Opens 15 June"},
   {id:"roc", group:"Compliance", name:"ROC annual (AOC-4)", items:0, disabled:"Needs the AGM date"},
 ];
@@ -1827,8 +1879,8 @@ ENGAGEMENT_TYPES.forEach(t => { if(DOCS[t.id]) t.items = DOCS[t.id].items.length
    number here is worse than none: the board would chase confidently to a fiction.
    A partner sets the real ones. Sundays are the only non-working day assumed. */
 const TURNAROUND = {tax_audit:8, stat_audit:10, llp_audit:6, trust_audit:8,
-                    society_audit:6, gst_monthly:2, gstr9:10, form15cb:1, networth:2};
-const DUE_ISO = {tax_audit:"2026-09-30", stat_audit:"2026-09-30", llp_audit:"2026-10-30",
+                    society_audit:6, gst_monthly:2, gstr9:10, form15cb:1, networth:2, tds:3};
+const DUE_ISO = {tax_audit:"2026-09-30", stat_audit:"2026-09-30", llp_audit:"2026-10-30", tds:"2026-10-31",
                  trust_audit:"2026-09-30", society_audit:"2026-07-31", gst_monthly:"2026-09-11",
                  gstr9:"2026-12-31"};
 const TODAY = new Date(2026, 8, 12);
@@ -1857,6 +1909,8 @@ function inByLabel(typeId){
 const PROFILE_Q = {
   cash:   "Cash-intensive business",
   loans:  "Has bank loans",
+  emp:    "Has employees on payroll",
+  lower:  "Payees hold lower or nil deduction certificates",
   borr:   "Borrowings from banks or financial institutions",
   foreign:"Pays vendors abroad",
   exp:    "Exports, or has foreign customers",
