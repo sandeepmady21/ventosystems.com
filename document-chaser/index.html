@@ -550,6 +550,7 @@ function loadType(id){
   FETCHED  = d.fetched;
   items    = d.items.map(x => ({...x}));
   TOGGLES  = t.toggles.map(x => ({...x}));
+  if(typeof buildCards === "function") applyState(cstate);
   return true;
 }
 
@@ -586,28 +587,38 @@ let filter = "all";
 let openRow = null;
 
 /* --- the client's own page: Sharma Textiles --- */
-const CLIENT = {name:"Sharma Textiles Pvt Ltd", greet:"Sharma-ji", staff:"Priya Shetty", initials:"PS", phone:"+91 98204 41821"};
+/* Derived, never hardcoded — this is also what keeps a real-looking phone number
+   out of the file. Every number lives in CLIENTS and is a 99999 test series. */
+const CLIENT = {
+  get name(){ return CC().name; },
+  get greet(){
+    // skip initials like "K." so "K. Anand" greets as "Anand-ji"
+    const parts = CC().people[0].n.split(" ").filter(w => !/^[A-Z]\.?$/.test(w));
+    return (parts[0] || CC().people[0].n) + "-ji";
+  },
+  get staff(){ return CC().owner; },
+  get initials(){ return CC().owner.split(" ").map(w => w[0]).join("").slice(0,2); },
+  get phone(){ return CC().people[0].p; },
+};
 let lang = "en";
 let cstate = "partial";
 
 /* state: pending | done | promised | na | thirdparty | confused | redo */
-let cards = [
-  {id:"tb",   name:"Trial balance", hint:"The Tally export for the full year", st:"done"},
-  {id:"fin",  name:"Signed financial statements FY 2024-25", hint:"Last year's signed balance sheet and P&L", st:"done"},
-  {id:"sales",name:"Sales register", hint:"The list of all your sales bills, Tally or Excel", st:"done"},
-  {id:"purch",name:"Purchase register", hint:"The list of all bills you received", st:"done"},
-  {id:"bank", name:"Bank statements, all accounts", hint:"1 April 2025 to 31 March 2026", st:"pending",
-   parts:["Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec","Jan","Feb","Mar"], got:["Apr","May","Jun","Jul","Sep","Oct","Dec","Jan","Feb","Mar"]},
-  {id:"cash", name:"Cash book", hint:"Your daily cash receipts and payments", st:"done"},
-  {id:"fa",   name:"Fixed asset register", hint:"Machinery, vehicles, computers bought this year", st:"pending"},
-  {id:"stock",name:"Stock valuation statement", hint:"Closing stock value and how you worked it out", st:"pending"},
-  {id:"gst",  name:"GSTR-1, 3B and 2B, all 12 months", hint:"Downloads from the GST portal", st:"redo", why:"Page 2 was cut off. Just that one page again, please."},
-  {id:"tds",  name:"TDS challans and Form 26Q acknowledgements", hint:"Proof of the TDS you deposited", st:"pending"},
-  {id:"msme", name:"MSME vendor confirmation", hint:"Which of your suppliers are registered MSMEs", st:"pending"},
-  {id:"cash40",name:"Cash payments above ₹10,000", hint:"A signed note listing them, or saying there are none", st:"pending"},
-  {id:"rpt",  name:"Related party transaction list", hint:"Dealings with directors, relatives or sister concerns", st:"pending"},
-  {id:"turn", name:"Expected turnover, Oct 2026 to Mar 2027", hint:"A rough figure is fine", st:"pending", kind:"figure"},
-];
+/* The client only ever sees what we are actually ASKING for: ticked, and not
+   already on file. That is the same rule the WhatsApp message uses. */
+const MONTHS = ["Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec","Jan","Feb","Mar"];
+const ACCOUNTS = ["HDFC","ICICI","Baroda"];
+let cards = [];
+
+function buildCards(){
+  cards = items.filter(i => i.on && !i.have).map(i => {
+    const c = {id:i.id, name:i.name, hint:i.alias || "", st:"pending"};
+    if(i.parts === 12){ c.parts = MONTHS.slice(); c.got = []; }
+    else if(i.parts){ c.parts = ACCOUNTS.slice(0, i.parts); c.got = []; }
+    if(/turnover|estimate|figure/i.test(i.name)) c.kind = "figure";
+    return c;
+  });
+}
 
 const HI = {
   title:"नमस्ते शर्मा जी",
@@ -666,8 +677,8 @@ function drawList(){
     $("#p-list").innerHTML = `<div class="stack">
       <div class="row-between">
         <div>
-          <div class="head-strip"><h2>Sharma Textiles Pvt Ltd</h2>
-            <span class="chip">Pvt Ltd</span><span class="chip">Turnover ₹14.2 cr</span></div>
+          <div class="head-strip"><h2>${esc(CC().name)}</h2>
+            <span class="chip">${esc(CC().con)}</span><span class="chip mono">${esc(CC().pan)}</span></div>
             <p class="sub">Nothing started for this client yet.</p>
         </div>
       </div>
@@ -681,13 +692,13 @@ function drawList(){
     <div class="row-between">
       <div>
       <div class="head-strip">
-        <h2>Sharma Textiles Pvt Ltd</h2>
-        <span class="chip">Pvt Ltd</span>
-        <span class="chip">Turnover ₹14.2 cr</span>
+        <h2>${esc(CC().name)}</h2>
+        <span class="chip">${esc(CC().con)}</span>
+        <span class="chip mono">${esc(CC().pan)}</span>
         <button class="chip acc" style="cursor:pointer" onclick="openPicker()" title="${engagementSent ? "Already sent to the client" : "Change what this engagement is"}">${esc(ET().name)} &middot; ${esc(ET().period)} &nbsp;${engagementSent ? "🔒 locked" : "▾ change"}</button>
         <button class="duebtn" onclick="editDue()">Due ${due} &nbsp;✎</button>
       </div>
-      <p class="sub">Owner: Priya Shetty &middot; last year's list was ${items.length} items, we started you from it.</p>
+      <p class="sub">Owner: ${esc(CC().owner)} &middot; last year's list was ${items.length} items, we started you from it.</p>
       </div>
     </div>
 
@@ -1032,25 +1043,32 @@ const STATES = [
   {id:"complete", label:"All accepted"},
 ];
 
-function applyState(s){
-  cstate = s;
-  cards.forEach(c => {
-    if(s === "empty")    c.st = "pending";
-    if(s === "complete") c.st = "done";
-  });
-  if(s === "partial"){
-    const done = ["tb","fin","sales","purch","cash"];
-    cards.forEach(c => c.st = done.includes(c.id) ? "done" : (c.id === "gst" ? "redo" : "pending"));
-    const b = cards.find(c => c.id === "bank"); b.got = ["Apr","May","Jun","Jul","Sep","Oct","Dec","Jan","Feb","Mar"];
+function applyState(st){
+  cstate = st;
+  buildCards();
+  const n = cards.length, fill = c => { if(c.parts) c.got = c.parts.slice(); c.st = "done"; };
+
+  if(st === "empty") { /* everything left pending */ }
+
+  if(st === "partial"){
+    cards.slice(0, Math.floor(n * 0.4)).forEach(fill);
+    const part = cards.find(c => c.parts && c.st === "done");
+    if(part){ part.got = part.parts.filter((_,k) => k !== 4 && k !== 7); part.st = "pending"; }
+    const redo = cards.find(c => c.st === "pending" && !c.parts);
+    if(redo){ redo.st = "redo"; redo.why = "Page 2 was cut off. Just that one page again, please."; }
   }
-  if(s === "answered"){
-    cards.forEach(c => c.st = "done");
-    cards.find(c => c.id === "stock").st = "promised";
-    cards.find(c => c.id === "rpt").st = "na";
-    cards.find(c => c.id === "msme").st = "thirdparty";
-    cards.find(c => c.id === "tds").st = "confused";
+
+  if(st === "answered"){
+    cards.forEach(fill);
+    const pick = k => cards[Math.min(k, n - 1)];
+    if(n > 3) pick(n-1).st = "promised";
+    if(n > 4) pick(n-2).st = "na";
+    if(n > 5) pick(n-3).st = "thirdparty";
+    if(n > 6) pick(n-4).st = "confused";
   }
-  if(s === "complete"){ const b = cards.find(c => c.id === "bank"); b.got = [...b.parts]; }
+
+  if(st === "complete") cards.forEach(fill);
+
   drawClient();
 }
 
@@ -1063,9 +1081,9 @@ function cardLook(c){
   if(c.st === "done")       return ["done",      `<span class="chip ok">Done ✓</span>`];
   if(c.st === "redo")       return ["redo",      `<span class="chip bad">Please send again</span>`];
   if(c.st === "promised")   return ["answered",  `<span class="chip warn">You said Tuesday</span>`];
-  if(c.st === "na")         return ["answered",  `<span class="chip warn">Doesn't apply, Priya is checking</span>`];
+  if(c.st === "na")         return ["answered",  `<span class="chip warn">Doesn't apply, ${esc(CC().owner.split(" ")[0])} is checking</span>`];
   if(c.st === "thirdparty") return ["answered",  `<span class="chip warn">Your bank has it</span>`];
-  if(c.st === "confused")   return ["confused",  `<span class="chip violet">Priya will call you today</span>`];
+  if(c.st === "confused")   return ["confused",  `<span class="chip violet">${esc(CC().owner.split(" ")[0])} will call you today</span>`];
   return ["", `<span class="chip">Not sent yet</span>`];
 }
 
@@ -1106,7 +1124,7 @@ function drawClient(){
   <div class="stack">
     <div class="row-between">
       <div>
-        <h2>What Sharma-ji sees on his phone</h2>
+        <h2>What ${esc(CLIENT.greet)} sees on the phone</h2>
         <p class="sub">No login, no password, no app. One link from WhatsApp. Every file saves the moment he picks it.</p>
       </div>
       <div class="demobar">
@@ -1135,7 +1153,7 @@ function drawClient(){
         </div>
         <div class="pbody">
           <h3 class="${L?"dev":""}" style="font-size:16px">${L ? HI.title : "Namaste " + esc(CLIENT.greet)}</h3>
-          <p class="sub ${L?"dev":""}" style="margin-top:4px">${L ? HI.line : `${esc(FIRM)} need ${cards.length} things for your tax audit.`}</p>
+          <p class="sub ${L?"dev":""}" style="margin-top:4px">${L ? HI.line : `${esc(FIRM)} need ${cards.length} things for your ${esc(ET().name.toLowerCase())}.`}</p>
           <div class="pbar"><i style="width:${Math.round(accepted()/cards.length*100)}%"></i></div>
           <div class="row-between">
             <b class="mono" style="font-size:13px">${accepted()} of ${cards.length} done</b>
@@ -1149,7 +1167,7 @@ function drawClient(){
         </div>
         <div class="pfoot">
           <button class="gate ${gateLive?"live":""}" onclick="gateTap()">
-            ${gateLive ? "Tell Priya I'm done" : `${left} thing${left===1?"":"s"} still open — tap to see`}
+            ${gateLive ? `Tell ${esc(CC().owner.split(" ")[0])} I am done` : `${left} thing${left===1?"":"s"} still open — tap to see`}
           </button>
         </div>
       </div>
@@ -1174,7 +1192,7 @@ function drawClient(){
           <div class="eyebrow">The firm's Start work button</div>
           <p class="sub" style="margin-top:5px">
             ${firmClear()
-              ? "<b>Unlocked.</b> Every required document is in and accepted. Priya can start."
+              ? `<b>Unlocked.</b> Every required document is in and accepted. ${esc(CC().owner.split(' ')[0])} can start.`
               : `<b>Locked.</b> ${cards.filter(c=>c.st!=="done"&&c.st!=="na").length} required document${cards.filter(c=>c.st!=="done"&&c.st!=="na").length===1?" is":"s are"} not in yet. A promise is not a document.`}
           </p>
           <div style="margin-top:9px"><button class="btn sm" onclick="go('board')">Open the chase board</button></div>
@@ -1224,7 +1242,7 @@ function answer(id, st, msg){
 
 function gateTap(){
   if(allAnswered()){
-    toast("Priya has been told you're done. She'll call if anything else comes up.");
+    toast("${esc(CC().owner.split(' ')[0])} has been told you are done.");
     return;
   }
   const first = cards.find(c => c.st === "pending" || c.st === "redo");
@@ -1266,6 +1284,7 @@ const ENGAGEMENT_TYPES = [
 ];
 ENGAGEMENT_TYPES.forEach(t => { if(DOCS[t.id]) t.items = DOCS[t.id].items.length; });
 let currentType = "tax_audit";
+let currentClient = null;   // set after CLIENTS is defined
 const ET = () => ENGAGEMENT_TYPES.find(t => t.id === currentType);
 
 /* =======================================================================
@@ -1317,6 +1336,8 @@ const CFILTERS = [
 let cfilter = "all";
 let openClientId = null;
 const ME = "Priya Shetty";
+currentClient = CLIENTS[0];
+const CC = () => currentClient || CLIENTS[0];
 
 const inActive = c => activeType === "all" || board.some(r => r.name === c.name && r.et === activeType);
 const cmatch = (c,f) => f==="all" ? true
@@ -1365,6 +1386,10 @@ function drawClients(){
   </div>`;
 }
 
+function openChecklistFor(id){
+  currentClient = CLIENTS.find(c => c.id === id) || CC();
+  openClientId = null; drawList(); go("list");
+}
 function goClients(){ openClientId = null; drawClients(); go("clients"); }
 function setCFilter(f){ cfilter = f; drawClients(); }
 function openClient(id){ openClientId = id; drawClients(); go("clients"); }
@@ -1405,7 +1430,7 @@ function drawClientDetail(){
       <div class="eyebrow" style="margin-bottom:10px">Running now</div>
       ${c.live.length ? c.live.map(e => `<div class="person" style="margin-bottom:7px">
           <div><b style="font-weight:500">${esc(e.t)}</b><div class="sm2">${e.d} of ${e.n} documents in</div></div>
-          <span class="inline"><button class="btn sm" onclick="go('list')">Open checklist</button><button class="btn sm" onclick="go('board')">Open on the board</button></span>
+          <span class="inline"><button class="btn sm" onclick="openChecklistFor(${c.id})">Open checklist</button><button class="btn sm" onclick="go('board')">Open on the board</button></span>
         </div>`).join("")
       : `<p class="sub">Nothing running. This is the client the chase board cannot show you, because the board only lists engagements that exist.</p>`}
     </div>
@@ -1499,7 +1524,7 @@ function pickerHTML(switching){
   return `<div class="card pad">
     <div class="row-between" style="margin-bottom:4px">
       <div>
-        <h3>${switching ? "Change what this engagement is" : "What are you doing for Sharma Textiles?"}</h3>
+        <h3>${switching ? "Change what this engagement is" : `What are you doing for ${esc(CC().name)}?`}</h3>
         <p class="sub" style="margin-top:3px">${switching
           ? "Nothing has been sent yet, so this is free. The list and the questions underneath both change."
           : "Pick one. The document list writes itself, and you edit it underneath."}</p>
