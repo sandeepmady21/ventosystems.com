@@ -460,10 +460,13 @@ function drawList(){
 
   if(!typeChosen){
     $("#p-list").innerHTML = `<div class="stack">
-      <div>
-        <div class="head-strip"><h2>Sharma Textiles Pvt Ltd</h2>
-          <span class="chip">Pvt Ltd</span><span class="chip">Turnover ₹14.2 cr</span></div>
-        <p class="sub">Nothing started for this client yet.</p>
+      <div class="row-between">
+        <div>
+          <div class="head-strip"><h2>Sharma Textiles Pvt Ltd</h2>
+            <span class="chip">Pvt Ltd</span><span class="chip">Turnover ₹14.2 cr</span></div>
+          <p class="sub">Nothing started for this client yet.</p>
+        </div>
+        ${lstateBar()}
       </div>
       ${pickerHTML(false)}
     </div>`;
@@ -472,15 +475,18 @@ function drawList(){
 
   let html = `
   <div class="stack">
-    <div>
+    <div class="row-between">
+      <div>
       <div class="head-strip">
         <h2>Sharma Textiles Pvt Ltd</h2>
         <span class="chip">Pvt Ltd</span>
         <span class="chip">Turnover ₹14.2 cr</span>
-        <button class="chip acc" style="cursor:pointer" onclick="openPicker()" title="${engagementSent ? "Already sent to the client" : "Change what this engagement is"}">${esc(ET().name)} &middot; ${esc(ET().period)} &nbsp;${engagementSent ? "🔒" : "▾"}</button>
+        <button class="chip acc" style="cursor:pointer" onclick="openPicker()" title="${engagementSent ? "Already sent to the client" : "Change what this engagement is"}">${esc(ET().name)} &middot; ${esc(ET().period)} &nbsp;${engagementSent ? "🔒 locked" : "▾ change"}</button>
         <button class="duebtn" onclick="editDue()">Due ${due} &nbsp;✎</button>
       </div>
       <p class="sub">Owner: Priya Shetty &middot; last year's list was 16 items, we started you from it.</p>
+      </div>
+      ${lstateBar()}
     </div>
 
     ${pickerOpen ? pickerHTML(true) : ""}
@@ -1198,6 +1204,26 @@ function chooseType(id){
   drawList();
   toast(`${esc(t.name)} — ${t.items} items pre-ticked. Nothing sent to the client yet.`,
         () => { currentType = wasType; TOGGLES = wasToggles; typeChosen = wasChosen; drawList(); });
+}
+
+const LSTATES = [
+  {id:"new",     label:"Nothing started yet"},
+  {id:"choosing",label:"Changing the type"},
+  {id:"working", label:"Working on the list"},
+  {id:"sent",    label:"Request already sent"},
+];
+let lstate = "working";
+function setLState(id){
+  lstate = id;
+  typeChosen     = id !== "new";
+  pickerOpen     = id === "choosing";
+  engagementSent = id === "sent";
+  drawList();
+}
+function lstateBar(){
+  return `<div class="statebar">${LSTATES.map(x =>
+    `<button class="toggle" aria-pressed="${lstate===x.id}" onclick="setLState('${x.id}')">${esc(x.label)}</button>`
+  ).join("")}</div>`;
 }
 
 function pickerHTML(switching){
