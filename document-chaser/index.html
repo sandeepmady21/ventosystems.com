@@ -562,24 +562,15 @@ let TOGGLES = [
 
 /* --- the chase board --- */
 let board = [
-  {id:1, et:"tax_audit", name:"Sharma Textiles Pvt Ltd", type:"Tax Audit FY 25-26", done:9, total:14, owner:"Priya Shetty",
-   miss:["bank statements (3 a/cs)","MSME vendor confirmation","stock valuation"], chased:4, reads:true, tags:["mine","due"]},
-  {id:2, et:"tax_audit", name:"Gupta Hardware Stores", type:"Tax Audit FY 25-26", done:4, total:9, owner:"Faisal Qureshi",
-   miss:["cash book","sales register","e-way bill summary"], chased:2, promised:"said Tuesday, never came", tags:["promised","due"]},
-  {id:3, et:"tax_audit", name:"Venkatesh Iyer & Associates LLP", type:"Tax Audit FY 25-26", done:13, total:14, owner:"Deepa Menon",
-   miss:["stock valuation statement"], chased:6, tags:["oneleft","due"]},
-  {id:4, et:"tax_audit", name:"Bharat Auto Components Pvt Ltd", type:"Tax Audit FY 25-26", done:12, total:14, owner:"Deepa Menon",
-   miss:["fixed asset register","related party list"], chased:1, stuck:"opened 4 times, uploaded nothing", tags:["stuck","due"]},
-  {id:5, et:"gst_monthly", name:"Meenakshi Enterprises", type:"GST August 2026", done:0, total:6, owner:"Priya Shetty",
-   miss:["sales register","purchase register","bank statement"], chased:3, never:true, tags:["never","mine"]},
-  {id:6, et:"tax_audit", name:"Rakesh Deshmukh", type:"Tax Audit FY 25-26", done:2, total:11, owner:"Faisal Qureshi",
-   miss:["trial balance","cash book","stock valuation"], chased:5, confused:"asked what a trial balance is", tags:["confused"]},
-  {id:7, et:"tax_audit", name:"Sunita Rao", type:"Tax Audit FY 25-26", done:6, total:14, owner:"Anil Rao",
-   miss:["bank statements","TDS challans","MSME confirmation"], chased:7, tags:["silent","due"]},
-  {id:8, et:"gst_monthly", name:"Al-Hind Trading Co", type:"GST August 2026", done:9, total:9, owner:"Priya Shetty",
-   miss:[], chased:2, tags:["ready","mine"]},
-  {id:9, et:"gst_monthly", name:"Naveen Chandra Textiles", type:"GST August 2026", done:5, total:9, owner:"Faisal Qureshi",
-   miss:["credit and debit notes","reverse charge details"], chased:1, review:2, tags:["review"]},
+  {id:1, et:"tax_audit", name:"Sharma Textiles Pvt Ltd", type:"Tax Audit FY 25-26", missIds:["stock","msme","c40","rpt","loan"], owner:"Priya Shetty", chased:4, reads:true, tags:["mine","due"]},
+  {id:2, et:"tax_audit", name:"Gupta Hardware Stores", type:"Tax Audit FY 25-26", missIds:["tb","cash","sales","purch","fa","stock","msme","c40","rpt","loan"], owner:"Faisal Qureshi", chased:2, promised:"said Tuesday, never came", tags:["promised","due"]},
+  {id:3, et:"tax_audit", name:"Venkatesh Iyer & Associates LLP", type:"Tax Audit FY 25-26", missIds:["stock"], owner:"Deepa Menon", chased:6, tags:["oneleft","due"]},
+  {id:4, et:"tax_audit", name:"Bharat Auto Components Pvt Ltd", type:"Tax Audit FY 25-26", missIds:["fa","rpt"], owner:"Deepa Menon", chased:1, stuck:"opened 4 times, uploaded nothing", tags:["stuck","due"]},
+  {id:5, et:"gst_monthly", name:"Meenakshi Enterprises", type:"GST August 2026", missIds:["g1","g2","g3","g4","g5","g6","g7","g8","g9"], owner:"Priya Shetty", chased:3, never:true, tags:["never","mine"]},
+  {id:6, et:"tax_audit", name:"Rakesh Deshmukh", type:"Tax Audit FY 25-26", missIds:["tb","cash","stock","sales","purch","fa","loan","tds","msme","c40","rpt","fin"], owner:"Faisal Qureshi", chased:5, confused:"asked what a trial balance is", tags:["confused"]},
+  {id:7, et:"tax_audit", name:"Sunita Rao", type:"Tax Audit FY 25-26", missIds:["bank","tds","msme","c40","rpt","stock","loan","fa"], owner:"Anil Rao", chased:7, tags:["silent","due"]},
+  {id:8, et:"gst_monthly", name:"Al-Hind Trading Co", type:"GST August 2026", missIds:[], owner:"Priya Shetty", chased:2, tags:["ready","mine"]},
+  {id:9, et:"gst_monthly", name:"Naveen Chandra Textiles", type:"GST August 2026", missIds:["g3","g7","g8","g9"], owner:"Faisal Qureshi", chased:1, review:2, tags:["review"]},
 ];
 
 const FILTERS = [
@@ -864,14 +855,30 @@ function sendReq(){
 /* =======================================================================
    SCREEN 2 — THE CHASE BOARD
    ======================================================================= */
+const rowDocs  = r => (DOCS[r.et] || DOCS.tax_audit).items.filter(i => i.on);
+const rowTotal = r => rowDocs(r).length;
+const rowDone  = r => rowTotal(r) - r.missIds.length;
+const docName  = (r, id) => (rowDocs(r).find(i => i.id === id) || {name:id}).name;
+const rowMiss  = r => r.missIds.map(id => docName(r, id));
+
+/* every document in this engagement, with the state the firm sees */
+function rowLedger(r){
+  return rowDocs(r).map(i => ({
+    name: i.name,
+    state: r.missIds.includes(i.id) ? "pending" : (i.have ? "onfile" : "accepted"),
+    note:  i.have || "",
+    need:  i.need,
+  }));
+}
+
 const scoped = () => activeType === "all" ? board : board.filter(r => r.et === activeType);
 function count(f){ const b = scoped(); return f === "all" ? b.length : b.filter(r => r.tags.includes(f)).length; }
 function rows(){ const b = scoped(); return filter === "all" ? b : b.filter(r => r.tags.includes(filter)); }
 
 function drawBoard(){
   const list = rows();
-  const outstanding = scoped().filter(r => r.done < r.total).length;
-  const ready = scoped().filter(r => r.done === r.total).length;
+  const outstanding = scoped().filter(r => r.missIds.length).length;
+  const ready = scoped().filter(r => !r.missIds.length).length;
   const tname = activeType === "all" ? "Tax audit and GST" : ENGAGEMENT_TYPES.find(t => t.id === activeType).name;
 
   let html = `
@@ -901,8 +908,9 @@ function drawBoard(){
   }
 
   list.forEach(r => {
-    const pct = Math.round(r.done / r.total * 100);
-    const done = r.done === r.total;
+    const total = rowTotal(r), got = rowDone(r), missNames = rowMiss(r);
+    const pct = Math.round(got / total * 100);
+    const done = r.missIds.length === 0;
     const opened = openRow === r.id;
     html += `<div class="brow">
       <div class="bmain">
@@ -911,9 +919,9 @@ function drawBoard(){
           <div class="bsub">${esc(r.type)} &middot; owner ${esc(r.owner)}</div>
           <div class="bar"><i style="width:${pct}%"></i></div>
           <div class="bmiss">
-            <span class="mono">${r.done} of ${r.total}</span>
+            <span class="mono">${got} of ${total}</span>
             ${done ? ` &middot; <b style="color:var(--ok)">everything in</b>`
-                   : ` &middot; still missing <b>${r.miss.slice(0,3).map(esc).join("</b>, <b>")}</b>${r.miss.length>3?` and ${r.miss.length-3} more`:""}`}
+                   : ` &middot; still missing <b>${missNames.slice(0,3).map(esc).join("</b>, <b>")}</b>${missNames.length>3?` and ${missNames.length-3} more`:""}`}
           </div>
           <div class="imeta">
             ${r.chased ? `<span class="chip">Chased ${r.chased} time${r.chased===1?"":"s"}, last ${r.chased} days ago</span>` : ""}
@@ -936,15 +944,27 @@ function drawBoard(){
       </div>`;
 
     if(opened){
-      html += `<div class="drawer">`;
-      r.miss.forEach(m => {
-        html += `<div class="ditem"><span><span class="chip warn">Not sent</span> ${esc(m)}</span>
-          <span class="inline"><button class="btn sm" onclick="toast('Chasing only &ldquo;${esc(m)}&rdquo;.')">Chase just this</button>
-          <button class="btn sm" onclick="toast('Waived by a partner. Reason logged.')">Waive</button></span></div>`;
+      const led = rowLedger(r);
+      const n = k => led.filter(x => x.state === k).length;
+      html += `<div class="drawer">
+        <div class="row-between" style="margin-bottom:4px">
+          <span class="eyebrow">Everything we asked ${esc(r.name.split(" ")[0])} for &middot; ${n("accepted")} in, ${n("onfile")} already held, ${n("pending")} outstanding</span>
+          <button class="btn sm" onclick="editAsk('${r.et}')">Change what we ask for</button>
+        </div>`;
+      led.forEach(d => {
+        if(d.state === "pending"){
+          html += `<div class="ditem"><span><span class="chip warn">Not sent</span> ${esc(d.name)}${d.need!=="Required"?` <span class="chip">${esc(d.need)}</span>`:""}</span>
+            <span class="inline"><button class="btn sm" onclick="toast()">Chase just this</button>
+            <button class="btn sm" onclick="toast()">Waive</button></span></div>`;
+        } else if(d.state === "onfile"){
+          html += `<div class="ditem" style="background:var(--ok-soft)"><span><span class="chip ok">Already on file</span> ${esc(d.name)}
+            <span class="bsub">${esc(d.note)} &middot; never asked for, never chased</span></span></div>`;
+        } else {
+          html += `<div class="ditem"><span><span class="chip ok">In and checked</span> ${esc(d.name)}</span>
+            <button class="btn sm" onclick="toast()">Reject this one</button></div>`;
+        }
       });
-      html += `<div class="ditem"><span><span class="chip ok">Accepted</span> ${r.done} item${r.done===1?"":"s"} already checked and filed</span>
-        <button class="btn sm" onclick="toast('Reject re-opens one item only, never the whole list.')">Reject one</button></div>
-      </div>`;
+      html += `</div>`;
     }
     html += `</div>`;
   });
@@ -953,6 +973,10 @@ function drawBoard(){
   $("#p-board").innerHTML = html;
 }
 
+function editAsk(et){
+  if(loadType(et)){ activeType = et; typeChosen = true; pickerOpen = false; }
+  drawTypeBar(); drawList(); go("list");
+}
 function setFilter(f){ filter = f; openRow = null; drawBoard(); }
 function toggleRow(id){ openRow = openRow === id ? null : id; drawBoard(); }
 
@@ -961,15 +985,14 @@ function chase(id){
   const was = r.chased;
   r.chased = 0;
   drawBoard();
-  toast(`Reminder sent to ${esc(r.name)}, listing ${r.total - r.done} missing items.`,
-        () => { r.chased = was; drawBoard(); });
+  toast();
 }
 
 function why(id){
   const r = board.find(x => x.id === id);
   modal("Why Start work is locked",
-    `<p class="sub" style="margin-bottom:12px">${esc(r.name)} still owes <b>${r.total - r.done}</b> required documents. The button unlocks the moment the last one is accepted.</p>
-     ${r.miss.map(m => `<div class="ditem" style="margin-bottom:7px"><span><span class="chip warn">Not sent</span> ${esc(m)}</span></div>`).join("")}
+    `<p class="sub" style="margin-bottom:12px">${esc(r.name)} still owes <b>${r.missIds.length}</b> required documents. The button unlocks the moment the last one is accepted.</p>
+     ${rowMiss(r).map(m => `<div class="ditem" style="margin-bottom:7px"><span><span class="chip warn">Not sent</span> ${esc(m)}</span></div>`).join("")}
      <p class="sub" style="margin-top:14px;padding-top:12px;border-top:1px solid var(--rule)">
        A partner can waive any one of these with a logged reason. Items marked <i>if applicable</i> or <i>nice to have</i> never block this button.</p>`,
     `<button class="btn" onclick="closeModal()">Back</button>
@@ -977,7 +1000,7 @@ function why(id){
 }
 
 function bulk(){
-  const out = board.filter(r => r.done < r.total);
+  const out = board.filter(r => r.missIds.length);
   const held = 1, going = out.length - held;
   modal(`Remind ${out.length} clients`,
     `<div class="wa">${esc(waText())}</div>
@@ -994,7 +1017,7 @@ function bulk(){
      <button class="btn primary" onclick="closeModal();doBulk(${going})">Send ${going} reminders</button>`);
 }
 function doBulk(n){
-  board.forEach(r => { if(r.done < r.total) r.chased = 0; });
+  board.forEach(r => { if(r.missIds.length) r.chased = 0; });
   drawBoard();
   toast(`${n} reminders sent. 2 held back.`, () => toast("Send cancelled. Nothing went out."));
 }
@@ -1432,7 +1455,7 @@ let activeType = "all";   // the global "what am I working in" context
 
 function typeCounts(id){
   const rows = id === "all" ? board : board.filter(r => r.et === id);
-  return rows.filter(r => r.done < r.total).length;
+  return rows.filter(r => r.missIds.length).length;
 }
 
 function drawTypeBar(){
