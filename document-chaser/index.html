@@ -325,7 +325,7 @@ h3{font-size:14px;margin:0;letter-spacing:-.005em}
 </header>
 
 <nav class="tabs" role="tablist">
-  <button class="tab" role="tab" id="t-clients" aria-selected="false" onclick="go('clients')">Clients<small>everyone we act for</small></button>
+  <button class="tab" role="tab" id="t-clients" aria-selected="false" onclick="goClients()">Clients<small>everyone we act for</small></button>
   <button class="tab" role="tab" id="t-list"  aria-selected="true"  onclick="go('list')">Document checklist<small>pick what to ask for</small></button>
   <button class="tab" role="tab" id="t-board" aria-selected="false" onclick="go('board')">Chase board<small>who hasn't sent</small></button>
   <button class="tab" role="tab" id="t-client" aria-selected="false" onclick="go('client')">Client's page<small>upload &amp; the gate</small></button>
@@ -1332,15 +1332,14 @@ function drawClients(){
   </div>`;
 }
 
+function goClients(){ openClientId = null; drawClients(); go("clients"); }
 function setCFilter(f){ cfilter = f; drawClients(); }
 function openClient(id){ openClientId = id; drawClients(); go("clients"); }
-function backToClients(){ openClientId = null; drawClients(); }
 
 function drawClientDetail(){
   const c = CLIENTS.find(x => x.id === openClientId);
   $("#p-clients").innerHTML = `
   <div class="stack">
-    <button class="back" onclick="backToClients()">&lsaquo; All clients</button>
     <div class="row-between">
       <div>
         <h2>${esc(c.name)}</h2>
