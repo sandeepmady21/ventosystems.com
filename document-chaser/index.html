@@ -344,23 +344,23 @@ let TOGGLES = [
 
 /* --- the chase board --- */
 let board = [
-  {id:1, name:"Sharma Textiles Pvt Ltd", type:"Tax Audit FY 25-26", done:9, total:14, owner:"Priya Shetty",
+  {id:1, et:"tax_audit", name:"Sharma Textiles Pvt Ltd", type:"Tax Audit FY 25-26", done:9, total:14, owner:"Priya Shetty",
    miss:["bank statements (3 a/cs)","MSME vendor confirmation","stock valuation"], chased:4, reads:true, tags:["mine","due"]},
-  {id:2, name:"Gupta Hardware Stores", type:"Tax Audit FY 25-26", done:4, total:9, owner:"Faisal Qureshi",
+  {id:2, et:"tax_audit", name:"Gupta Hardware Stores", type:"Tax Audit FY 25-26", done:4, total:9, owner:"Faisal Qureshi",
    miss:["cash book","sales register","e-way bill summary"], chased:2, promised:"said Tuesday, never came", tags:["promised","due"]},
-  {id:3, name:"Venkatesh Iyer & Associates LLP", type:"Tax Audit FY 25-26", done:13, total:14, owner:"Deepa Menon",
+  {id:3, et:"tax_audit", name:"Venkatesh Iyer & Associates LLP", type:"Tax Audit FY 25-26", done:13, total:14, owner:"Deepa Menon",
    miss:["stock valuation statement"], chased:6, tags:["oneleft","due"]},
-  {id:4, name:"Bharat Auto Components Pvt Ltd", type:"Tax Audit FY 25-26", done:12, total:14, owner:"Deepa Menon",
+  {id:4, et:"tax_audit", name:"Bharat Auto Components Pvt Ltd", type:"Tax Audit FY 25-26", done:12, total:14, owner:"Deepa Menon",
    miss:["fixed asset register","related party list"], chased:1, stuck:"opened 4 times, uploaded nothing", tags:["stuck","due"]},
-  {id:5, name:"Meenakshi Enterprises", type:"GST August 2026", done:0, total:6, owner:"Priya Shetty",
+  {id:5, et:"gst_monthly", name:"Meenakshi Enterprises", type:"GST August 2026", done:0, total:6, owner:"Priya Shetty",
    miss:["sales register","purchase register","bank statement"], chased:3, never:true, tags:["never","mine"]},
-  {id:6, name:"Rakesh Deshmukh", type:"Tax Audit FY 25-26", done:2, total:11, owner:"Faisal Qureshi",
+  {id:6, et:"tax_audit", name:"Rakesh Deshmukh", type:"Tax Audit FY 25-26", done:2, total:11, owner:"Faisal Qureshi",
    miss:["trial balance","cash book","stock valuation"], chased:5, confused:"asked what a trial balance is", tags:["confused"]},
-  {id:7, name:"Sunita Rao", type:"Tax Audit FY 25-26", done:6, total:14, owner:"Anil Rao",
+  {id:7, et:"tax_audit", name:"Sunita Rao", type:"Tax Audit FY 25-26", done:6, total:14, owner:"Anil Rao",
    miss:["bank statements","TDS challans","MSME confirmation"], chased:7, tags:["silent","due"]},
-  {id:8, name:"Al-Hind Trading Co", type:"GST August 2026", done:9, total:9, owner:"Priya Shetty",
+  {id:8, et:"gst_monthly", name:"Al-Hind Trading Co", type:"GST August 2026", done:9, total:9, owner:"Priya Shetty",
    miss:[], chased:2, tags:["ready","mine"]},
-  {id:9, name:"Naveen Chandra Textiles", type:"GST August 2026", done:5, total:9, owner:"Faisal Qureshi",
+  {id:9, et:"gst_monthly", name:"Naveen Chandra Textiles", type:"GST August 2026", done:5, total:9, owner:"Faisal Qureshi",
    miss:["credit and debit notes","reverse charge details"], chased:1, review:2, tags:["review"]},
 ];
 
@@ -458,6 +458,18 @@ function drawList(){
   const flagged = items.filter(i => i.flag && i.on);
   const off = items.filter(i => !i.on).length;
 
+  if(!typeChosen){
+    $("#p-list").innerHTML = `<div class="stack">
+      <div>
+        <div class="head-strip"><h2>Sharma Textiles Pvt Ltd</h2>
+          <span class="chip">Pvt Ltd</span><span class="chip">Turnover ₹14.2 cr</span></div>
+        <p class="sub">Nothing started for this client yet.</p>
+      </div>
+      ${pickerHTML(false)}
+    </div>`;
+    return;
+  }
+
   let html = `
   <div class="stack">
     <div>
@@ -465,11 +477,13 @@ function drawList(){
         <h2>Sharma Textiles Pvt Ltd</h2>
         <span class="chip">Pvt Ltd</span>
         <span class="chip">Turnover ₹14.2 cr</span>
-        <span class="chip acc">${esc(ET().name)} &middot; ${esc(ET().period)}</span>
+        <button class="chip acc" style="cursor:pointer" onclick="openPicker()" title="${engagementSent ? "Already sent to the client" : "Change what this engagement is"}">${esc(ET().name)} &middot; ${esc(ET().period)} &nbsp;${engagementSent ? "🔒" : "▾"}</button>
         <button class="duebtn" onclick="editDue()">Due ${due} &nbsp;✎</button>
       </div>
       <p class="sub">Owner: Priya Shetty &middot; last year's list was 16 items, we started you from it.</p>
     </div>
+
+    ${pickerOpen ? pickerHTML(true) : ""}
 
     <div class="banner">
       <span class="dot"></span>
@@ -616,6 +630,7 @@ function preview(){
 }
 
 function sendReq(){
+  engagementSent = true; pickerOpen = false; drawList();
   toast(`Request sent to Sharma Textiles. ${asked()} items, WhatsApp and email.`, () => toast("Send cancelled."));
   go("board");
 }
@@ -672,11 +687,11 @@ function drawBoard(){
           </div>
           <div class="imeta">
             ${r.chased ? `<span class="chip">Chased ${r.chased} time${r.chased===1?"":"s"}, last ${r.chased} days ago</span>` : ""}
-            ${r.promised  ? `<span class="chip warn">${esc(r.promised)}</span>` : ""}
-            ${r.stuck     ? `<span class="chip bad">${esc(r.stuck)}</span>` : ""}
-            ${r.confused  ? `<span class="chip violet">${esc(r.confused)}</span>` : ""}
-            ${r.never     ? `<span class="chip bad">Link never opened</span>` : ""}
-            ${r.review    ? `<span class="chip acc">${r.review} waiting for your review</span>` : ""}
+            ${r.promised ? `<span class="chip warn">${esc(r.promised)}</span>` : ""}
+            ${r.stuck ? `<span class="chip bad">${esc(r.stuck)}</span>` : ""}
+            ${r.confused ? `<span class="chip violet">${esc(r.confused)}</span>` : ""}
+            ${r.never ? `<span class="chip bad">Link never opened</span>` : ""}
+            ${r.review ? `<span class="chip acc">${r.review} waiting for your review</span>` : ""}
           </div>
         </div>
         <div class="bacts">
@@ -694,7 +709,7 @@ function drawBoard(){
       html += `<div class="drawer">`;
       r.miss.forEach(m => {
         html += `<div class="ditem"><span><span class="chip warn">Not sent</span> ${esc(m)}</span>
-          <span class="inline"><button class="btn sm" onclick="toast('Chasing only “${esc(m)}”.')">Chase just this</button>
+          <span class="inline"><button class="btn sm" onclick="toast('Chasing only &ldquo;${esc(m)}&rdquo;.')">Chase just this</button>
           <button class="btn sm" onclick="toast('Waived by a partner. Reason logged.')">Waive</button></span></div>`;
       });
       html += `<div class="ditem"><span><span class="chip ok">Accepted</span> ${r.done} item${r.done===1?"":"s"} already checked and filed</span>
@@ -1064,7 +1079,7 @@ function drawClients(){
         <h2>${CLIENTS.length} clients</h2>
         <p class="sub">${liveN} have something running right now. ${CLIENTS.length-liveN} have nothing started this season.</p>
       </div>
-      <button class="btn primary" onclick="startEngagement()">Start an engagement</button>
+      <button class="btn primary" onclick="startFor()">Start an engagement</button>
     </div>
 
     <div class="filters">
@@ -1107,7 +1122,7 @@ function drawClientDetail(){
         <h2>${esc(c.name)}</h2>
         <p class="sub">${esc(c.con)} &middot; owner ${esc(c.owner)}</p>
       </div>
-      <button class="btn primary" onclick="startEngagement(${c.id})">Start an engagement</button>
+      <button class="btn primary" onclick="startFor(${c.id})">Start an engagement</button>
     </div>
 
     <div class="card pad">
@@ -1150,40 +1165,63 @@ function drawClientDetail(){
 /* =======================================================================
    START AN ENGAGEMENT  —  the tiles
    ======================================================================= */
-let pickedType = null;
-function startEngagement(clientId){
-  pickedType = null;
+let typeChosen  = true;   // false = the picker owns the screen
+let engagementSent = false;   // true once the client has the link
+let pickerOpen  = false;
+
+function startFor(clientId){
   const c = clientId ? CLIENTS.find(x => x.id === clientId) : null;
-  const groups = ["Audit","Compliance","Certification"];
-  modal("Start an engagement",
-    `<p class="sub" style="margin-bottom:4px">${c ? "For <b>"+esc(c.name)+"</b>" : "Pick a client, then what you are doing for them."}</p>
-     ${groups.map(g => `<p class="grouplbl">${g}</p>
-       <div class="tiles">${ENGAGEMENT_TYPES.filter(t => t.group===g).map(t =>
-         t.disabled
-           ? `<button class="tile" disabled title="${esc(t.disabled)}"><b>${esc(t.name)}</b><span>${esc(t.disabled)}</span></button>`
-           : `<button class="tile" aria-pressed="false" onclick="pickType('${t.id}')"><b>${esc(t.name)}</b><span>${t.items} items</span></button>`
-       ).join("")}</div>`).join("")}
-     <p class="sub" style="font-size:12.5px;padding-top:12px;border-top:1px solid var(--rule)">
-       <b>No internal audit tile, deliberately.</b> Its scope is set per engagement by the board, the requests arrive during fieldwork once a sample is picked, and no two clients look alike. There is nothing to pre-tick. It needs a running request log, not this screen.</p>`,
-    `<button class="btn" onclick="closeModal()">Cancel</button>
-     <button class="btn primary" id="mkbtn" onclick="createEngagement()">Create and open the checklist</button>`);
+  typeChosen = false; pickerOpen = false; engagementSent = false;
+  openClientId = null;
+  drawList(); go("list");
+  if(c) toast(`Starting something for ${esc(c.name)}. Pick what you are doing.`);
 }
 
-function pickType(id){
-  pickedType = id;
-  document.querySelectorAll(".tile").forEach(b => b.setAttribute("aria-pressed","false"));
-  event.currentTarget.setAttribute("aria-pressed","true");
+function openPicker(){
+  if(engagementSent){
+    modal("The client already has this link",
+      `<p class="sub">You cannot switch this engagement to a different type now. Sharma-ji has the link and two documents are already in.</p>
+       <p class="sub" style="margin-top:11px">Cancel this engagement and start a new one instead. Anything already received stays on file, and the new checklist will show it as already satisfied rather than asking again.</p>`,
+      `<button class="btn" onclick="closeModal()">Leave it as it is</button>
+       <button class="btn primary" onclick="closeModal();startFor()">Cancel and start again</button>`);
+    return;
+  }
+  pickerOpen = true; drawList();
 }
 
-function createEngagement(){
-  if(!pickedType){ toast("Pick what you are doing for them first."); return; }
-  const t = ENGAGEMENT_TYPES.find(x => x.id === pickedType);
-  const was = currentType;
-  currentType = t.id;
+function chooseType(id){
+  const t = ENGAGEMENT_TYPES.find(x => x.id === id);
+  const wasType = currentType, wasChosen = typeChosen, wasToggles = TOGGLES;
+  currentType = id;
   TOGGLES = t.toggles.map(x => ({...x}));
-  closeModal(); drawList(); go("list");
-  toast(`${esc(t.name)} started. ${t.items} items pre-ticked. Nothing sent to the client yet.`,
-        () => { currentType = was; TOGGLES = ET().toggles.map(x=>({...x})); drawList(); });
+  typeChosen = true; pickerOpen = false;
+  drawList();
+  toast(`${esc(t.name)} — ${t.items} items pre-ticked. Nothing sent to the client yet.`,
+        () => { currentType = wasType; TOGGLES = wasToggles; typeChosen = wasChosen; drawList(); });
+}
+
+function pickerHTML(switching){
+  const groups = ["Audit","Compliance","Certification"];
+  return `<div class="card pad">
+    <div class="row-between" style="margin-bottom:4px">
+      <div>
+        <h3>${switching ? "Change what this engagement is" : "What are you doing for Sharma Textiles?"}</h3>
+        <p class="sub" style="margin-top:3px">${switching
+          ? "Nothing has been sent yet, so this is free. The list and the questions underneath both change."
+          : "Pick one. The document list writes itself, and you edit it underneath."}</p>
+      </div>
+      ${switching ? `<button class="btn sm" onclick="pickerOpen=false;drawList()">Keep ${esc(ET().name)}</button>` : ""}
+    </div>
+    ${groups.map(g => `<p class="grouplbl">${g}</p>
+      <div class="tiles">${ENGAGEMENT_TYPES.filter(t => t.group===g).map(t =>
+        t.disabled
+          ? `<button class="tile" disabled><b>${esc(t.name)}</b><span>${esc(t.disabled)}</span></button>`
+          : `<button class="tile" aria-pressed="${typeChosen && currentType===t.id}" onclick="chooseType('${t.id}')">
+               <b>${esc(t.name)}</b><span>${typeChosen && currentType===t.id ? "current" : t.items + " items"}</span></button>`
+      ).join("")}</div>`).join("")}
+    <p class="sub" style="font-size:12.5px;margin-top:14px;padding-top:12px;border-top:1px solid var(--rule)">
+      <b>No internal audit here, deliberately.</b> Its scope is set per engagement by the board, and the real requests only exist once you have picked a sample. There is nothing to pre-tick, so it needs a running request log rather than a checklist.</p>
+  </div>`;
 }
 
 /* type-ahead over the whole book of business */
