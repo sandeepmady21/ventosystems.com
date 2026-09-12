@@ -179,7 +179,18 @@ h3{font-size:14px;margin:0;letter-spacing:-.005em}
 .counts span{font-size:10.5px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.07em}
 
 /* ---------- chase board ---------- */
-.filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--rule-2)}
+.filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.pipe{display:flex;border:1px solid var(--rule-2);border-radius:7px;overflow:hidden;background:var(--surface);margin-bottom:4px}
+.pipe button{flex:1;min-width:0;border:0;border-right:1px solid var(--rule);background:none;padding:9px 10px;text-align:left;line-height:1.25}
+.pipe button:last-child{border-right:0}
+.pipe button:hover:not([aria-pressed="true"]){background:var(--surface-2)}
+.pipe button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+.pipe .pn{display:block;font-family:"IBM Plex Mono",monospace;font-size:19px;font-weight:500;line-height:1}
+.pipe .pl{display:block;font-size:11px;color:var(--ink-3);margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pipe button[aria-pressed="true"] .pl{color:var(--accent-ink);opacity:.85}
+.pipe .seam{border-right:2px solid var(--accent)}
+.pipe button.empty .pn{color:var(--ink-3);opacity:.5}
+.sides{display:flex;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);margin-bottom:5px}
 .filters .toggle{padding:6px 12px}
 .filters .toggle b{font-family:"IBM Plex Mono",monospace;font-weight:500;opacity:.75;margin-left:3px}
 .brow{border-bottom:1px solid var(--rule);padding:11px 16px 11px 14px;border-left:3px solid transparent}
@@ -642,6 +653,16 @@ let board = [
   {id:6, et:"tax_audit", name:"Rakesh Deshmukh", type:"Tax Audit FY 25-26", missIds:["tb","cash","stock","sales","purch","fa","loan","tds","msme","c40","rpt","fin"], owner:"Faisal Qureshi", chased:5, confused:"asked what a trial balance is", tags:["confused"]},
   {id:7, et:"tax_audit", name:"Sunita Rao", type:"Tax Audit FY 25-26", missIds:["bank","tds","msme","c40","rpt","stock","loan","fa"], owner:"Anil Rao", chased:7, tags:["silent","due"]},
   {id:8, et:"gst_monthly", name:"Al-Hind Trading Co", type:"GST August 2026", missIds:[], owner:"Priya Shetty", chased:2, tags:["mine"]},
+  {id:10, et:"tax_audit", stage:"preparing", idle:2, name:"Shree Ganesh Traders", type:"Tax Audit FY 25-26",
+   owner:"Priya Shetty", missIds:[], chased:3, since:9, tags:[]},
+  {id:11, et:"tax_audit", stage:"preparing", idle:6, name:"Deccan Polymers Pvt Ltd", type:"Tax Audit FY 25-26",
+   owner:"Faisal Qureshi", missIds:[], chased:4, since:14, tags:[]},
+  {id:12, et:"tax_audit", stage:"partner", idle:3, name:"Kaveri Exports LLP", type:"Tax Audit FY 25-26",
+   owner:"Anil Rao", missIds:[], chased:2, since:18, tags:[]},
+  {id:13, et:"tax_audit", stage:"filed", idle:0, name:"Nandi Motors Pvt Ltd", type:"Tax Audit FY 25-26",
+   owner:"Deepa Menon", missIds:[], chased:2, since:22, tags:[]},
+  {id:14, et:"gst_monthly", stage:"filed", idle:0, name:"Konkan Seafoods", type:"GST August 2026",
+   owner:"Priya Shetty", missIds:[], chased:1, since:11, tags:[]},
   {id:9, et:"gst_monthly", states:{g3:"received", g7:"received"}, name:"Naveen Chandra Textiles", type:"GST August 2026", missIds:["g3","g7","g8","g9"], owner:"Faisal Qureshi", chased:1, tags:[]},
 ];
 
@@ -658,6 +679,7 @@ const FILTERS = [
 ];
 let ownerFilter = "all";
 const OWNERS = () => [...new Set(board.map(r => r.owner))];
+let stage = "chasing";   // the board opens where the work is
 let filter = "all";
 let openRow = null;
 
@@ -1011,10 +1033,41 @@ const reviewCount = r => rowLedger(r).filter(d => d.state === "received").length
 const needsReview = r => reviewCount(r) > 0;
 /* Three of the filter tags are facts about the ledger, not narrative, so they
    are computed. The rest describe what a human observed and stay as data. */
+/* THE PIPELINE.
+   A row sits in exactly one stage, and the stage is derived wherever it can be.
+   Left of the seam the client owes the next move; right of it, a person here does. */
+const STAGES = [
+  {id:"notstarted", label:"Not started",   side:"client"},
+  {id:"chasing",    label:"Chasing",       side:"client"},
+  {id:"review",     label:"To review",     side:"firm"},
+  {id:"ready",      label:"Ready to start",side:"firm"},
+  {id:"preparing",  label:"Being prepared",side:"firm"},
+  {id:"partner",    label:"With the partner", side:"firm"},
+  {id:"filed",      label:"Filed",         side:"firm"},
+];
+function stageOf(r){
+  if(r.stage) return r.stage;                  // set by a handover, never guessed
+  if(needsReview(r))       return "review";
+  if(rowBlocking(r) > 0)   return "chasing";
+  return "ready";
+}
+/* Diagnoses explain why a row is stuck. They only exist where they can apply,
+   which is what stops fifteen chips sitting in one row. */
+const DIAGNOSES = {
+  chasing:   [{id:"promised",label:"Said they'd send it, didn't"},
+              {id:"oneleft", label:"One item left"},
+              {id:"stuck",   label:"Opened but stuck"},
+              {id:"confused",label:"Confused, call them"},
+              {id:"never",   label:"Never opened the link"}],
+  ready:     [{id:"idle", label:"Untouched 5 days or more"}],
+  preparing: [{id:"idle", label:"Untouched 5 days or more"}],
+  partner:   [{id:"idle", label:"Untouched 5 days or more"}],
+};
 const hasTag = (r, t) =>
     t === "oneleft" ? r.missIds.length === 1
   : t === "ready"   ? r.missIds.length === 0
   : t === "review"  ? needsReview(r)
+  : t === "idle"    ? (r.idle || 0) >= 5
   : r.tags.includes(t);
 
 /* Documents arrive the way documents actually arrive: in someone's WhatsApp. */
@@ -1062,11 +1115,19 @@ function notStarted(){
   if(activeType === "all") return [];
   return CLIENTS.filter(c => !board.some(r => r.name === c.name && r.et === activeType));
 }
-function count(f){ if(f === "notstarted") return notStarted().length;
-  const b = scoped();
+function count(f){ const b = scoped().filter(inStage);
   return f === "all" ? b.length : b.filter(r => hasTag(r, f)).length; }
-function rows(){ if(filter === "notstarted") return []; const b = scoped();
-  return filter === "all" ? b : b.filter(r => hasTag(r, filter)); }
+function inStage(r){ return stageOf(r) === stage; }
+function rows(){
+  if(stage === "notstarted") return [];
+  const b = scoped().filter(inStage);
+  return filter === "all" ? b : b.filter(r => hasTag(r, filter));
+}
+function stageCount(id){
+  if(id === "notstarted") return notStarted().length;
+  return scoped().filter(r => stageOf(r) === id).length;
+}
+function setStage(id){ stage = id; filter = "all"; openRow = null; drawBoard(); }
 
 function drawBoard(){
   const list = rows();
@@ -1088,8 +1149,22 @@ function drawBoard(){
       </div>
     </div>
 
+    <div>
+      <div class="sides">
+        <span style="flex:0 0 28.57%">Waiting on the client</span>
+        <span>Waiting on us</span>
+      </div>
+      <div class="pipe">
+        ${STAGES.map((st,k) => {
+          const n = stageCount(st.id);
+          return `<button aria-pressed="${stage===st.id}" class="${n?"":"empty"}${k===1?" seam":""}" onclick="setStage('${st.id}')">
+            <span class="pn">${n}</span><span class="pl">${esc(st.label)}</span></button>`;
+        }).join("")}
+      </div>
+    </div>
+
     <div class="row-between" style="margin-bottom:9px">
-      <span class="eyebrow">Show me &mdash; pick one</span>
+      <span class="eyebrow">${(DIAGNOSES[stage]||[]).length ? "Why is it stuck?" : "&nbsp;"}</span>
       <label class="sub" style="font-size:12.5px">Whose clients
         <select class="need" style="margin-left:6px" onchange="setOwnerFilter(this.value)">
           <option value="all" ${ownerFilter==="all"?"selected":""}>Everyone</option>
@@ -1097,14 +1172,14 @@ function drawBoard(){
         </select>
       </label>
     </div>
-    <div>
-    <div class="filters">
-      ${FILTERS.map(f => `<button class="toggle" aria-pressed="${filter===f.id}" onclick="setFilter('${f.id}')">${esc(f.label)} <b class="mono">${count(f.id)}</b></button>`).join("")}
-    </div></div>
+    ${(DIAGNOSES[stage]||[]).length ? `<div class="filters">
+      <button class="toggle" aria-pressed="${filter==="all"}" onclick="setFilter('all')">Everything here <b class="mono">${count("all")}</b></button>
+      ${DIAGNOSES[stage].map(f => `<button class="toggle" aria-pressed="${filter===f.id}" onclick="setFilter('${f.id}')">${esc(f.label)} <b class="mono">${count(f.id)}</b></button>`).join("")}
+    </div>` : ""}
 
     <div class="card">`;
 
-  if(filter === "notstarted"){
+  if(stage === "notstarted"){
     const ns = notStarted();
     if(activeType === "all"){
       html += `<div class="empty"><b>Pick an engagement type first.</b>
@@ -1128,8 +1203,7 @@ function drawBoard(){
       });
     }
   } else if(!list.length){
-    html += `<div class="empty"><b>Nothing here.</b>No client is in this state right now.
-      <div style="margin-top:12px"><button class="btn" onclick="setFilter('all')">Show everyone</button></div></div>`;
+    html += `<div class="empty"><b>Nothing here.</b>No engagement is at this stage right now.</div>`;
   }
 
   list.forEach(r => {
@@ -1150,7 +1224,9 @@ function drawBoard(){
                    : ` &middot; still missing <b>${missNames.slice(0,3).map(esc).join("</b>, <b>")}</b>${missNames.length>3?` and ${missNames.length-3} more`:""}${blocking < r.missIds.length ? ` &middot; <b>${blocking} required</b>` : ""}`}
           </div>
           <div class="imeta">
-            ${r.chased ? `<span class="chip">Chased ${r.chased} time${r.chased===1?"":"s"} &middot; last ${r.since===0?"today":(r.since||r.chased)+" days ago"}</span>` : ""}
+            ${STAGES.find(x=>x.id===stageOf(r)).side === "firm" && stageOf(r) !== "review"
+              ? `<span class="chip ${(r.idle||0)>=5?"bad":""}">On ${esc(r.owner.split(" ")[0])}'s desk ${r.idle===0?"since today":`${r.idle} day${r.idle===1?"":"s"}`}</span>`
+              : r.chased ? `<span class="chip">Chased ${r.chased} time${r.chased===1?"":"s"} &middot; last ${r.since===0?"today":(r.since||r.chased)+" days ago"}</span>` : ""}
             ${r.promised ? `<span class="chip warn">${esc(r.promised)}</span>` : ""}
             ${r.stuck ? `<span class="chip bad">${esc(r.stuck)}</span>` : ""}
             ${r.confused ? `<span class="chip violet">${esc(r.confused)}</span>` : ""}
@@ -1163,7 +1239,7 @@ function drawBoard(){
             ? `<a class="btn sm" style="border-color:var(--violet-line);color:var(--violet);text-decoration:none" href="tel:${rowClient(r).people[0].p.replace(/ /g,"")}">Call ${esc(rowClient(r).people[0].n.split(" ")[0])}</a>`
             : `<button class="btn sm" onclick="confirmChase(${r.id})">Send reminder</button>`}
           ${done
-            ? `<button class="btn sm primary" onclick="toast('Work started for ${esc(r.name)}.')">Start work</button>`
+            ? `<button class="btn sm primary" onclick="handover(${r.id})">Start work</button>`
             : `<button class="btn sm locked" onclick="why(${r.id})">Start work</button>`}
         </div>
       </div>`;
@@ -1224,6 +1300,19 @@ function toggleRow(id){ openRow = openRow === id ? null : id; drawBoard(); }
 
 /* Nothing leaves the building without the sender seeing it, whether it is one
    message or twenty-nine. */
+/* Start work hands the row from the client to a person. It is the seam. */
+function handover(id){
+  const r = board.find(x => x.id === id);
+  modal("Who is picking this up?",
+    `<p class="sub" style="margin-bottom:12px">${esc(r.name)} &middot; every required document is in.</p>
+     ${OWNERS().map(o => `<button class="opt" onclick="moveStage(${id},'preparing','${esc(o)}')"><b>${esc(o)}</b><span>Moves to Being prepared, and the clock starts today.</span></button>`).join("")}`,
+    `<button class="btn" onclick="closeModal()">Not yet</button>`);
+}
+function moveStage(id, st, owner){
+  const r = board.find(x => x.id === id);
+  r.stage = st; r.idle = 0; if(owner) r.owner = owner;
+  closeModal(); stage = st; filter = "all"; drawBoard();
+}
 function confirmChase(id){
   const r = board.find(x => x.id === id);
   const c = rowClient(r), miss = rowLedger(r).filter(d => d.state === "pending");
@@ -1641,6 +1730,16 @@ const CLIENTS = [
    people:[{n:"P. Joshi",r:"honorary secretary",p:"+91 99999 00012"}], live:[], onfile:["Managing committee resolution — on file"]},
   {id:11, name:"Anand Charitable Trust", con:"Trust", pan:"AAATA8890D", gstin:"—", owner:"Anil Rao", last:"never",
    people:[{n:"K. Anand",r:"honorary treasurer",p:"+91 99999 00013"}], live:[], onfile:[]},
+  {id:13, name:"Shree Ganesh Traders", con:"Partnership", pan:"AAFFS6612J", gstin:"27AAFFS6612J1ZT", owner:"Priya Shetty", last:"all documents in 9 Sep",
+   people:[{n:"Ganesh Pai",r:"partner",p:"+91 99999 00015"}], live:[{t:"Tax audit FY 25-26",d:14,n:14}], onfile:[]},
+  {id:14, name:"Deccan Polymers Pvt Ltd", con:"Pvt Ltd", pan:"AAECD4471P", gstin:"27AAECD4471P1ZK", owner:"Faisal Qureshi", last:"all documents in 5 Sep",
+   people:[{n:"S. Deshpande",r:"director",p:"+91 99999 00016"}], live:[{t:"Tax audit FY 25-26",d:14,n:14}], onfile:[]},
+  {id:15, name:"Kaveri Exports LLP", con:"LLP", pan:"AAGFK7790C", gstin:"27AAGFK7790C1ZR", owner:"Anil Rao", last:"with the partner since 9 Sep",
+   people:[{n:"Latha Kaveri",r:"designated partner",p:"+91 99999 00017"}], live:[{t:"Tax audit FY 25-26",d:14,n:14}], onfile:[]},
+  {id:16, name:"Nandi Motors Pvt Ltd", con:"Pvt Ltd", pan:"AABCN2218L", gstin:"27AABCN2218L1ZE", owner:"Deepa Menon", last:"filed 10 Sep",
+   people:[{n:"R. Nandi",r:"director",p:"+91 99999 00018"}], live:[], onfile:[]},
+  {id:17, name:"Konkan Seafoods", con:"Proprietor", pan:"AKQPK3345N", gstin:"27AKQPK3345N1ZB", owner:"Priya Shetty", last:"filed 8 Sep",
+   people:[{n:"Suresh Konkani",r:"proprietor",p:"+91 99999 00019"}], live:[], onfile:[]},
   {id:12, name:"Pioneer Ceramics Pvt Ltd", con:"Pvt Ltd", pan:"AACCP4412N", gstin:"27AACCP4412N1ZM", owner:"Priya Shetty", last:"signed up 2 Sep, nothing started",
    people:[{n:"R. Bhatt",r:"director",p:"+91 99999 00014"}], live:[], onfile:[]},
 ];
