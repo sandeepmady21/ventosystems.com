@@ -7,23 +7,29 @@
 <style>
 /* Four stacked planes: chrome sits above the band, the band above the page,
    cards float on the page. Each is a pastel, each is a step lighter. */
+/* THE LEDGER
+   Four planes, all drawn from green-ruled account paper rather than from white.
+   Rules do the dividing, not gaps. Red is scarce and means arrears, as it does
+   in a real ledger. */
 :root{
-  --chrome:#DCE5EE;  --band:#EBF0F4;  --paper:#F4F6F3;
-  --surface:#FFFFFF; --surface-2:#F8FAF8; --surface-3:#EDF1EE;
-  --ink:#141A18; --ink-2:#4A5450; --ink-3:#79837E;
-  --rule:#DCE3DE; --rule-2:#C4CCC6;
-  --accent:#15456E; --accent-ink:#FFFFFF; --accent-soft:#E4EDF7; --accent-line:#BBD0E6;
-  --ok:#1B6B4A;    --ok-soft:#E4F2EA;     --ok-line:#B5DCC6;
-  --warn:#8A5A0F;  --warn-soft:#FBF1DC;   --warn-line:#E6CE97;
-  --bad:#A32C1F;   --bad-soft:#FBE8E4;    --bad-line:#EBBAB1;
-  --violet:#57458C;--violet-soft:#F0ECFA; --violet-line:#CCC0EA;
-  --shadow-1:0 1px 2px rgba(20,28,25,.06);
-  --shadow-2:0 2px 6px rgba(20,28,25,.06), 0 14px 32px -18px rgba(20,28,25,.3);
-  --r:9px;
+  --chrome:#D9E3DB;  --band:#E8EEE7;  --paper:#F2F5F0;
+  --surface:#FFFFFF; --surface-2:#F7FAF6; --surface-3:#E9EFE8;
+  --ink:#16211D; --ink-2:#48544E; --ink-3:#7B857F;
+  --rule:#D6E0D7; --rule-2:#B7C6B9; --rule-3:#9FB2A2;
+  --accent:#16456B; --accent-ink:#FFFFFF; --accent-soft:#E2EBF3; --accent-line:#B2C8DC;
+  --ok:#1D6B4C;    --ok-soft:#E2F0E7;     --ok-line:#A9D2BB;
+  --warn:#8A5A0F;  --warn-soft:#FAF0DA;   --warn-line:#E2C88E;
+  --bad:#A32A1C;   --bad-soft:#FAE6E2;    --bad-line:#E7B4AB;
+  --violet:#57458C;--violet-soft:#EFEAF8; --violet-line:#C8BCE6;
+  --spine:#8C2B22;   /* the red cloth spine of a bound register */
+  --shadow-1:0 1px 1px rgba(22,33,29,.05);
+  --shadow-2:0 1px 2px rgba(22,33,29,.06), 0 12px 28px -18px rgba(22,33,29,.28);
+  --r:7px;
   color-scheme:light;
 }
 *{box-sizing:border-box}
 body{
+  font-variant-numeric:tabular-nums;
   margin:0; background:var(--paper); color:var(--ink);
   font-family:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
   font-size:14px; line-height:1.5; -webkit-font-smoothing:antialiased;
@@ -37,7 +43,8 @@ button{font:inherit;color:inherit;cursor:pointer}
 /* ---------- chrome ---------- */
 .top{
   display:flex;align-items:center;gap:16px;flex-wrap:wrap;
-  padding:14px 22px;background:var(--chrome);
+  padding:14px 22px 14px 19px;background:var(--chrome);
+  border-left:3px solid var(--spine);
 }
 .brand{display:flex;align-items:baseline;gap:10px;margin-right:auto}
 .brand b{font-family:"IBM Plex Serif",Georgia,serif;font-weight:600;font-size:18px;letter-spacing:-.01em}
@@ -78,11 +85,19 @@ h3{font-size:14px;margin:0;letter-spacing:-.005em}
   display:inline-flex;align-items:center;gap:6px;border:1px solid var(--rule-2);
   background:var(--surface-2);color:var(--ink-2);border-radius:999px;padding:3px 10px;font-size:12px;white-space:nowrap;
 }
+.chip.ok,.chip.warn,.chip.bad,.chip.violet,.chip.acc{
+  border-radius:3px;padding:2px 7px;font-size:10.5px;font-weight:500;
+  letter-spacing:.08em;text-transform:uppercase;border-width:1px;
+}
 .chip.ok{background:var(--ok-soft);border-color:var(--ok-line);color:var(--ok)}
 .chip.warn{background:var(--warn-soft);border-color:var(--warn-line);color:var(--warn)}
 .chip.bad{background:var(--bad-soft);border-color:var(--bad-line);color:var(--bad)}
 .chip.violet{background:var(--violet-soft);border-color:var(--violet-line);color:var(--violet)}
 .chip.acc{background:var(--accent-soft);border-color:var(--accent-line);color:var(--accent)}
+.affd{
+  text-transform:none;letter-spacing:0;font-size:11.5px;font-weight:400;
+  margin-left:7px;padding-left:7px;border-left:1px solid currentColor;opacity:.72;
+}
 .btn{
   display:inline-flex;align-items:center;gap:7px;border:1px solid var(--rule-2);background:var(--surface);
   color:var(--ink);border-radius:7px;padding:7px 13px;font-weight:500;font-size:13px;
@@ -110,26 +125,33 @@ h3{font-size:14px;margin:0;letter-spacing:-.005em}
 .banner .dot{width:7px;height:7px;border-radius:50%;background:var(--accent);margin-top:7px;flex:none}
 .presets{display:flex;gap:7px;flex-wrap:wrap}
 .toggle{
-  border:1px solid var(--rule-2);background:var(--surface);border-radius:999px;
-  padding:6px 13px;font-size:12.5px;color:var(--ink-2);font-weight:500;
+  border:1px solid var(--rule-2);background:var(--surface);border-radius:5px;
+  padding:6px 12px;font-size:12.5px;color:var(--ink-2);font-weight:500;
 }
 .toggle:hover{border-color:var(--accent);color:var(--accent)}
 .toggle[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
 
 .sect{border-top:1px solid var(--accent-line);padding-top:11px;margin-top:4px}
 .sect:first-of-type{border-top:0;margin-top:0;padding-top:0}
-.sect-h{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:5px}
+.sect-h{
+  display:flex;align-items:baseline;justify-content:space-between;gap:10px;
+  margin-bottom:6px;padding-bottom:5px;border-bottom:2px solid var(--rule-3);
+}
+.sect-h h3{text-transform:uppercase;letter-spacing:.07em;font-size:11.5px;color:var(--ink-2)}
 .items{display:flex;flex-direction:column}
+.items{border-top:1px solid var(--rule)}
 .item{
   display:grid;grid-template-columns:22px 1fr auto;gap:12px;align-items:start;
-  padding:9px 8px;border-radius:7px;border:1px solid transparent;
+  padding:10px 8px;border-bottom:1px solid var(--rule);
+  border-left:2px solid transparent;
 }
+.item:last-child{border-bottom:0}
 .item:hover{background:var(--surface-2)}
 .item.off{opacity:.5}
 .item.off .iname{text-decoration:line-through}
-.item.have{background:var(--ok-soft);border-color:var(--ok-line)}
+.item.have{background:var(--ok-soft);border-left-color:var(--ok)}
 .item.have:hover{background:var(--ok-soft)}
-.item.locked{background:var(--surface-2);border-color:var(--rule)}
+.item.locked{background:var(--surface-2);border-left-color:var(--rule-3)}
 .box{
   width:18px;height:18px;margin-top:2px;border:1.5px solid var(--rule-2);border-radius:4px;
   background:var(--surface);display:grid;place-items:center;flex:none;padding:0;
@@ -138,7 +160,7 @@ h3{font-size:14px;margin:0;letter-spacing:-.005em}
 .box[aria-checked="true"]::after{content:"";width:5px;height:9px;border:solid var(--accent-ink);border-width:0 2px 2px 0;transform:rotate(42deg) translate(-1px,-1px)}
 .box[disabled]{background:var(--surface-3);border-style:dashed;cursor:not-allowed}
 .iname{font-weight:500;letter-spacing:-.004em}
-.ialias{color:var(--ink-3);font-size:12.5px;margin-top:1px}
+.ialias{color:var(--ink-3);font-size:12.25px;margin-top:2px;padding-left:9px;border-left:1px solid var(--rule-2)}
 .imeta{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-top:5px}
 .need{
   border:1px solid var(--rule-2);background:var(--surface);border-radius:5px;
@@ -149,19 +171,20 @@ h3{font-size:14px;margin:0;letter-spacing:-.005em}
   border:1px solid var(--rule);border-radius:var(--r);padding:12px 16px;box-shadow:var(--shadow-2);
 }
 .counts{display:flex;gap:18px;flex-wrap:wrap}
-.counts b{font-family:"IBM Plex Mono",monospace;font-size:17px;font-weight:500;display:block;line-height:1.2}
-.counts span{font-size:11.5px;color:var(--ink-3)}
+.counts b{font-family:"IBM Plex Mono",monospace;font-size:19px;font-weight:500;display:block;line-height:1.15;color:var(--ink)}
+.counts span{font-size:10.5px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.07em}
 
 /* ---------- chase board ---------- */
-.filters{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px}
+.filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--rule-2)}
 .filters .toggle{padding:6px 12px}
 .filters .toggle b{font-family:"IBM Plex Mono",monospace;font-weight:500;opacity:.75;margin-left:3px}
-.brow{border-bottom:1px solid var(--rule);padding:13px 16px}
+.brow{border-bottom:1px solid var(--rule);padding:11px 16px 11px 14px;border-left:3px solid transparent}
 .brow:last-child{border-bottom:0}
 .brow:hover{background:var(--surface-2)}
 .brow{cursor:pointer}
-.brow.open{background:var(--accent-soft)}
+.brow.open{background:var(--accent-soft);border-left-color:var(--accent)}
 .ditem{border-left:3px solid transparent}
+.drawer .eyebrow,.drawer .row-between{padding:9px 11px;border-bottom:1px solid var(--rule-2);background:var(--band)}
 .ditem.pending{background:var(--warn-soft);border-left-color:var(--warn)}
 .ditem.onfile{background:var(--ok-soft);border-left-color:var(--ok)}
 .ditem.accepted{background:var(--surface-2);border-left-color:var(--rule-2)}
@@ -170,13 +193,17 @@ h3{font-size:14px;margin:0;letter-spacing:-.005em}
 .bmain{display:grid;grid-template-columns:1fr auto;gap:16px;align-items:start}
 .bname{font-weight:500;letter-spacing:-.004em}
 .bsub{color:var(--ink-3);font-size:12.5px;margin-top:1px}
-.bar{height:6px;background:var(--surface-3);border-radius:99px;overflow:hidden;margin:9px 0 7px;max-width:340px}
-.bar i{display:block;height:100%;background:var(--ok);border-radius:99px}
+.bar{height:5px;background:var(--surface-3);border-radius:0;overflow:hidden;margin:8px 0 6px;max-width:300px;border:1px solid var(--rule-2)}
+.bar i{display:block;height:100%;background:var(--ok);border-radius:0}
 .bmiss{font-size:12.5px;color:var(--ink-2)}
 .bmiss b{font-weight:500;color:var(--ink)}
 .bacts{display:flex;gap:7px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
-.drawer{background:var(--band);border:1px solid var(--rule);border-radius:8px;margin-top:12px;padding:12px;display:grid;gap:7px}
-.ditem{display:flex;align-items:center;gap:10px;justify-content:space-between;padding:6px 9px;background:var(--surface-2);border-radius:6px;font-size:13px}
+.drawer{background:var(--surface);border:1px solid var(--rule-2);border-radius:5px;margin-top:11px;padding:0;display:block}
+.ditem{
+  display:flex;align-items:center;gap:10px;justify-content:space-between;
+  padding:7px 11px;border-bottom:1px solid var(--rule);font-size:13px;
+}
+.ditem:last-child{border-bottom:0}
 .empty{text-align:center;padding:46px 20px;color:var(--ink-2)}
 .empty b{display:block;font-size:16px;color:var(--ink);margin-bottom:4px}
 
@@ -263,7 +290,7 @@ h3{font-size:14px;margin:0;letter-spacing:-.005em}
 .ctable td{padding:11px 12px;border-bottom:1px solid var(--rule);vertical-align:top}
 .ctable tr:last-child td{border-bottom:0}
 .ctable tbody tr{cursor:pointer}
-.ctable tbody tr:hover{background:var(--surface-2)}
+.ctable tbody tr:hover{background:var(--band)}
 .ctable .nm{font-weight:500}
 .ctable .sm2{font-size:12px;color:var(--ink-3);margin-top:1px}
 .ids{font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--ink-2);line-height:1.6}
@@ -718,7 +745,7 @@ function drawList(){
         <h2>${esc(CC().name)}</h2>
         <span class="chip">${esc(CC().con)}</span>
         <span class="chip mono">${esc(CC().pan)}</span>
-        <button class="chip acc" style="cursor:pointer" onclick="openPicker()" title="${engagementSent ? "Already sent to the client" : "Change what this engagement is"}">${esc(ET().name)} &middot; ${esc(ET().period)} &nbsp;${engagementSent ? "🔒 locked" : "▾ change"}</button>
+        <button class="chip acc" style="cursor:pointer" onclick="openPicker()" title="${engagementSent ? "Already sent to the client" : "Change what this engagement is"}">${esc(ET().name)} &middot; ${esc(ET().period)} <span class="affd">${engagementSent ? "locked" : "change"}</span></button>
         <button class="duebtn" onclick="editDue()">Due ${due} &nbsp;✎</button>
       </div>
       <p class="sub">Owner: ${esc(CC().owner)} &middot; last year's list was ${items.length} items, we started you from it.</p>
