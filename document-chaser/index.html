@@ -12,7 +12,7 @@
    Rules do the dividing, not gaps. Red is scarce and means arrears, as it does
    in a real ledger. */
 :root{
-  --chrome:#D9E3DB;  --band:#E8EEE7;  --paper:#F2F5F0;
+  --chrome:#C5D3C8;  --band:#EDF2EB;  --paper:#F2F5F0;
   --surface:#FFFFFF; --surface-2:#F7FAF6; --surface-3:#E9EFE8;
   --ink:#16211D; --ink-2:#48544E; --ink-3:#5D665F;
   --rule:#D6E0D7; --rule-2:#B7C6B9; --rule-3:#9FB2A2;
@@ -54,14 +54,17 @@ button{font:inherit;color:inherit;cursor:pointer}
 .tabs{background:var(--chrome);border-bottom:1px solid var(--rule)}
 .tabs .frame{gap:5px;flex-wrap:nowrap;overflow-x:auto;align-items:flex-end}
 .tab{
-  background:rgba(255,255,255,.34);border:1px solid transparent;border-bottom:0;
-  border-radius:9px 9px 0 0;padding:9px 16px 10px;margin-bottom:-1px;
+  background:transparent;border:1px solid transparent;border-bottom:0;border-top:2px solid transparent;
+  border-radius:8px 8px 0 0;padding:8px 16px 10px;margin-bottom:-1px;
   color:var(--ink-2);font-weight:500;white-space:nowrap;font-size:13.5px;
 }
-.tab:hover{background:rgba(255,255,255,.66);color:var(--ink)}
+.tab:hover:not([aria-selected="true"]){background:rgba(255,255,255,.4);color:var(--ink)}
+.tab small{color:var(--ink-2);opacity:.75}
 .tab[aria-selected="true"]{
-  background:var(--band);border-color:var(--rule);color:var(--accent);
+  background:var(--band);border-color:var(--rule-2);border-top-color:var(--accent);
+  color:var(--accent);font-weight:600;
 }
+.tab[aria-selected="true"] small{color:var(--accent);opacity:.8}
 .tab small{display:block;font-size:11px;color:var(--ink-3);font-weight:400}
 .tab[aria-selected="true"] small{color:var(--accent)}
 .frame{max-width:1180px;margin-inline:auto;padding-inline:22px;width:100%;
@@ -620,13 +623,13 @@ let TOGGLES = [
 let board = [
   {id:1, et:"tax_audit", name:"Sharma Textiles Pvt Ltd", type:"Tax Audit FY 25-26", missIds:["stock","msme","c40","rpt","loan"], owner:"Priya Shetty", chased:4, reads:true, tags:["mine","due"]},
   {id:2, et:"tax_audit", name:"Gupta Hardware Stores", type:"Tax Audit FY 25-26", missIds:["tb","cash","sales","purch","fa","stock","msme","c40","rpt","loan"], owner:"Faisal Qureshi", chased:2, promised:"said Tuesday, never came", tags:["promised","due"]},
-  {id:3, et:"tax_audit", states:{tds:"received"}, name:"Venkatesh Iyer & Associates LLP", type:"Tax Audit FY 25-26", missIds:["stock"], owner:"Deepa Menon", chased:6, tags:["oneleft","due"]},
+  {id:3, et:"tax_audit", states:{tds:"received"}, name:"Venkatesh Iyer & Associates LLP", type:"Tax Audit FY 25-26", missIds:["stock"], owner:"Deepa Menon", chased:6, tags:["due"]},
   {id:4, et:"tax_audit", name:"Bharat Auto Components Pvt Ltd", type:"Tax Audit FY 25-26", missIds:["fa","rpt"], owner:"Deepa Menon", chased:1, stuck:"opened 4 times, uploaded nothing", tags:["stuck","due"]},
   {id:5, et:"gst_monthly", name:"Meenakshi Enterprises", type:"GST August 2026", missIds:["g1","g2","g3","g4","g5","g6","g7","g8","g9"], owner:"Priya Shetty", chased:3, never:true, tags:["never","mine"]},
   {id:6, et:"tax_audit", name:"Rakesh Deshmukh", type:"Tax Audit FY 25-26", missIds:["tb","cash","stock","sales","purch","fa","loan","tds","msme","c40","rpt","fin"], owner:"Faisal Qureshi", chased:5, confused:"asked what a trial balance is", tags:["confused"]},
   {id:7, et:"tax_audit", name:"Sunita Rao", type:"Tax Audit FY 25-26", missIds:["bank","tds","msme","c40","rpt","stock","loan","fa"], owner:"Anil Rao", chased:7, tags:["silent","due"]},
-  {id:8, et:"gst_monthly", name:"Al-Hind Trading Co", type:"GST August 2026", missIds:[], owner:"Priya Shetty", chased:2, tags:["ready","mine"]},
-  {id:9, et:"gst_monthly", states:{g3:"received", g7:"received"}, name:"Naveen Chandra Textiles", type:"GST August 2026", missIds:["g3","g7","g8","g9"], owner:"Faisal Qureshi", chased:1, review:2, tags:["review"]},
+  {id:8, et:"gst_monthly", name:"Al-Hind Trading Co", type:"GST August 2026", missIds:[], owner:"Priya Shetty", chased:2, tags:["mine"]},
+  {id:9, et:"gst_monthly", states:{g3:"received", g7:"received"}, name:"Naveen Chandra Textiles", type:"GST August 2026", missIds:["g3","g7","g8","g9"], owner:"Faisal Qureshi", chased:1, tags:[]},
 ];
 
 const FILTERS = [
@@ -991,7 +994,15 @@ function setItemState(id, itemId, st, note){
   else r.missIds = r.missIds.filter(x => x !== itemId);
   closeModal(); drawBoard(); drawTypeBar();
 }
-const needsReview = r => rowLedger(r).some(d => d.state === "received");
+const reviewCount = r => rowLedger(r).filter(d => d.state === "received").length;
+const needsReview = r => reviewCount(r) > 0;
+/* Three of the filter tags are facts about the ledger, not narrative, so they
+   are computed. The rest describe what a human observed and stay as data. */
+const hasTag = (r, t) =>
+    t === "oneleft" ? r.missIds.length === 1
+  : t === "ready"   ? r.missIds.length === 0
+  : t === "review"  ? needsReview(r)
+  : r.tags.includes(t);
 
 /* Documents arrive the way documents actually arrive: in someone's WhatsApp. */
 function markReceived(id, itemId, name){
@@ -1040,9 +1051,9 @@ function notStarted(){
 }
 function count(f){ if(f === "notstarted") return notStarted().length;
   const b = scoped();
-  if(f === "review") return b.filter(needsReview).length; return f === "all" ? b.length : b.filter(r => r.tags.includes(f)).length; }
-function rows(){ if(filter === "notstarted") return []; const b = scoped(); if(filter === "review") return b.filter(needsReview);
-  return filter === "all" ? b : b.filter(r => r.tags.includes(filter)); }
+  return f === "all" ? b.length : b.filter(r => hasTag(r, f)).length; }
+function rows(){ if(filter === "notstarted") return []; const b = scoped();
+  return filter === "all" ? b : b.filter(r => hasTag(r, filter)); }
 
 function drawBoard(){
   const list = rows();
@@ -1131,8 +1142,7 @@ function drawBoard(){
             ${r.stuck ? `<span class="chip bad">${esc(r.stuck)}</span>` : ""}
             ${r.confused ? `<span class="chip violet">${esc(r.confused)}</span>` : ""}
             ${r.never ? `<span class="chip bad">Link never opened</span>` : ""}
-            ${r.review ? `<span class="chip acc">${r.review} waiting for your review</span>` : ""}
-            ${rowClient(r).last ? `<span class="chip">${esc(rowClient(r).last)}</span>` : ""}
+            ${reviewCount(r) ? `<span class="chip acc">${reviewCount(r)} waiting for your review</span>` : ""}
           </div>
         </div>
         <div class="bacts" onclick="event.stopPropagation()">
