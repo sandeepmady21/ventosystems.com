@@ -1,0 +1,946 @@
+<title>Document Chaser</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Devanagari:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:wght@600&display=swap">
+
+<style>
+:root{
+  --paper:#F1F2F0; --surface:#FFFFFF; --surface-2:#F7F8F6; --surface-3:#EBEDEA;
+  --ink:#151B19; --ink-2:#4A5450; --ink-3:#79837E;
+  --rule:#DDE2DE; --rule-2:#C6CDC7;
+  --accent:#15456E; --accent-ink:#FFFFFF; --accent-soft:#E3EDF5; --accent-line:#B6CCE0;
+  --ok:#1B6B4A;   --ok-soft:#E1F0E8;  --ok-line:#AFD6C3;
+  --warn:#8F5E10; --warn-soft:#F7EEDC; --warn-line:#E0C58C;
+  --bad:#A32C1F;  --bad-soft:#F8E5E2;  --bad-line:#E4B3AB;
+  --violet:#57458C; --violet-soft:#ECE8F7; --violet-line:#C3B7E2;
+  --shadow-1:0 1px 2px rgba(20,28,25,.07);
+  --shadow-2:0 2px 6px rgba(20,28,25,.07), 0 14px 32px -18px rgba(20,28,25,.35);
+  --r:9px;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#0F1413; --surface:#171D1B; --surface-2:#1C2321; --surface-3:#242C2A;
+    --ink:#E8ECE9; --ink-2:#A6B0AB; --ink-3:#7B857F;
+    --rule:#2A3230; --rule-2:#3A4340;
+    --accent:#86B6E2; --accent-ink:#0A1621; --accent-soft:#16293A; --accent-line:#2C4A66;
+    --ok:#74D0A6;   --ok-soft:#123026;  --ok-line:#255140;
+    --warn:#E2B268; --warn-soft:#31260F; --warn-line:#584312;
+    --bad:#F09483;  --bad-soft:#391A15;  --bad-line:#5F2E25;
+    --violet:#B6A6E9; --violet-soft:#221D36; --violet-line:#3E3560;
+    --shadow-1:0 1px 2px rgba(0,0,0,.4);
+    --shadow-2:0 2px 6px rgba(0,0,0,.4), 0 14px 32px -18px rgba(0,0,0,.8);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0F1413; --surface:#171D1B; --surface-2:#1C2321; --surface-3:#242C2A;
+  --ink:#E8ECE9; --ink-2:#A6B0AB; --ink-3:#7B857F;
+  --rule:#2A3230; --rule-2:#3A4340;
+  --accent:#86B6E2; --accent-ink:#0A1621; --accent-soft:#16293A; --accent-line:#2C4A66;
+  --ok:#74D0A6;   --ok-soft:#123026;  --ok-line:#255140;
+  --warn:#E2B268; --warn-soft:#31260F; --warn-line:#584312;
+  --bad:#F09483;  --bad-soft:#391A15;  --bad-line:#5F2E25;
+  --violet:#B6A6E9; --violet-soft:#221D36; --violet-line:#3E3560;
+  --shadow-1:0 1px 2px rgba(0,0,0,.4);
+  --shadow-2:0 2px 6px rgba(0,0,0,.4), 0 14px 32px -18px rgba(0,0,0,.8);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-size:14px; line-height:1.5; -webkit-font-smoothing:antialiased;
+}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums}
+.dev{font-family:"IBM Plex Sans Devanagari","IBM Plex Sans",sans-serif}
+
+/* ---------- chrome ---------- */
+.top{
+  display:flex;align-items:center;gap:16px;flex-wrap:wrap;
+  padding:14px 22px;background:var(--surface);border-bottom:1px solid var(--rule);
+}
+.brand{display:flex;align-items:baseline;gap:10px;margin-right:auto}
+.brand b{font-family:"IBM Plex Serif",Georgia,serif;font-weight:600;font-size:18px;letter-spacing:-.01em}
+.brand span{color:var(--ink-3);font-size:12.5px}
+.brand span::before{content:"";display:inline-block;width:1px;height:11px;background:var(--rule-2);margin-right:10px;vertical-align:-1px}
+.note{
+  font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3);
+  border:1px dashed var(--rule-2);padding:4px 9px;border-radius:5px;
+}
+.tabs{display:flex;gap:2px;padding:0 22px;background:var(--surface);border-bottom:1px solid var(--rule);overflow-x:auto}
+.tab{
+  background:none;border:0;border-bottom:2px solid transparent;
+  padding:11px 15px;color:var(--ink-2);font-weight:500;white-space:nowrap;font-size:13.5px;
+}
+.tab:hover{color:var(--ink)}
+.tab[aria-selected="true"]{color:var(--accent);border-bottom-color:var(--accent)}
+.tab small{display:block;font-size:11px;color:var(--ink-3);font-weight:400}
+.tab[aria-selected="true"] small{color:var(--accent)}
+main{padding:22px;max-width:1180px;margin:0 auto}
+.panel[hidden]{display:none}
+
+/* ---------- shared bits ---------- */
+.card{background:var(--surface);border:1px solid var(--rule);border-radius:var(--r);box-shadow:var(--shadow-1)}
+.pad{padding:16px 18px}
+.eyebrow{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);font-weight:500}
+h2{font-size:19px;margin:0;letter-spacing:-.01em;text-wrap:balance}
+h3{font-size:14px;margin:0;letter-spacing:-.005em}
+.sub{color:var(--ink-2);font-size:13px;margin:0}
+.chip{
+  display:inline-flex;align-items:center;gap:6px;border:1px solid var(--rule-2);
+  background:var(--surface-2);color:var(--ink-2);border-radius:999px;padding:3px 10px;font-size:12px;white-space:nowrap;
+}
+.chip.ok{background:var(--ok-soft);border-color:var(--ok-line);color:var(--ok)}
+.chip.warn{background:var(--warn-soft);border-color:var(--warn-line);color:var(--warn)}
+.chip.bad{background:var(--bad-soft);border-color:var(--bad-line);color:var(--bad)}
+.chip.violet{background:var(--violet-soft);border-color:var(--violet-line);color:var(--violet)}
+.chip.acc{background:var(--accent-soft);border-color:var(--accent-line);color:var(--accent)}
+.btn{
+  display:inline-flex;align-items:center;gap:7px;border:1px solid var(--rule-2);background:var(--surface);
+  color:var(--ink);border-radius:7px;padding:7px 13px;font-weight:500;font-size:13px;
+}
+.btn:hover{background:var(--surface-2)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.primary:hover{filter:brightness(1.12)}
+.btn.quiet{border-color:transparent;background:none;color:var(--accent);padding:7px 8px}
+.btn.quiet:hover{background:var(--accent-soft)}
+.btn.locked{background:var(--surface-2);color:var(--ink-3);border-style:dashed;cursor:help}
+.btn.sm{padding:5px 10px;font-size:12.5px}
+.row-between{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.stack{display:flex;flex-direction:column;gap:14px}
+.inline{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+
+/* ---------- checklist ---------- */
+.head-strip{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:3px}
+.head-strip h2{margin-right:2px}
+.duebtn{border:1px dashed var(--rule-2);background:var(--surface-2);border-radius:6px;padding:3px 9px;font-size:12.5px;color:var(--ink-2)}
+.duebtn:hover{border-color:var(--accent);color:var(--accent)}
+.banner{
+  display:flex;gap:12px;align-items:flex-start;background:var(--accent-soft);
+  border:1px solid var(--accent-line);border-radius:var(--r);padding:13px 15px;
+}
+.banner .dot{width:7px;height:7px;border-radius:50%;background:var(--accent);margin-top:7px;flex:none}
+.presets{display:flex;gap:7px;flex-wrap:wrap}
+.toggle{
+  border:1px solid var(--rule-2);background:var(--surface);border-radius:999px;
+  padding:6px 13px;font-size:12.5px;color:var(--ink-2);font-weight:500;
+}
+.toggle:hover{border-color:var(--accent);color:var(--accent)}
+.toggle[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+
+.sect{border-top:1px solid var(--rule);padding-top:11px;margin-top:4px}
+.sect:first-of-type{border-top:0;margin-top:0;padding-top:0}
+.sect-h{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:5px}
+.items{display:flex;flex-direction:column}
+.item{
+  display:grid;grid-template-columns:22px 1fr auto;gap:12px;align-items:start;
+  padding:9px 8px;border-radius:7px;border:1px solid transparent;
+}
+.item:hover{background:var(--surface-2)}
+.item.off{opacity:.5}
+.item.off .iname{text-decoration:line-through}
+.item.have{background:var(--ok-soft);border-color:var(--ok-line)}
+.item.have:hover{background:var(--ok-soft)}
+.item.locked{background:var(--surface-2);border-color:var(--rule)}
+.box{
+  width:18px;height:18px;margin-top:2px;border:1.5px solid var(--rule-2);border-radius:4px;
+  background:var(--surface);display:grid;place-items:center;flex:none;padding:0;
+}
+.box[aria-checked="true"]{background:var(--accent);border-color:var(--accent)}
+.box[aria-checked="true"]::after{content:"";width:5px;height:9px;border:solid var(--accent-ink);border-width:0 2px 2px 0;transform:rotate(42deg) translate(-1px,-1px)}
+.box[disabled]{background:var(--surface-3);border-style:dashed;cursor:not-allowed}
+.iname{font-weight:500;letter-spacing:-.004em}
+.ialias{color:var(--ink-3);font-size:12.5px;margin-top:1px}
+.imeta{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-top:5px}
+.need{
+  border:1px solid var(--rule-2);background:var(--surface);border-radius:5px;
+  font-size:11.5px;padding:2px 6px;color:var(--ink-2);font-family:inherit;
+}
+.foot{
+  position:sticky;bottom:0;margin-top:16px;background:var(--surface);
+  border:1px solid var(--rule);border-radius:var(--r);padding:12px 16px;box-shadow:var(--shadow-2);
+}
+.counts{display:flex;gap:18px;flex-wrap:wrap}
+.counts b{font-family:"IBM Plex Mono",monospace;font-size:17px;font-weight:500;display:block;line-height:1.2}
+.counts span{font-size:11.5px;color:var(--ink-3)}
+
+/* ---------- chase board ---------- */
+.filters{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px}
+.filters .toggle{padding:6px 12px}
+.filters .toggle b{font-family:"IBM Plex Mono",monospace;font-weight:500;opacity:.75;margin-left:3px}
+.brow{border-bottom:1px solid var(--rule);padding:13px 16px}
+.brow:last-child{border-bottom:0}
+.brow:hover{background:var(--surface-2)}
+.bmain{display:grid;grid-template-columns:1fr auto;gap:16px;align-items:start}
+.bname{font-weight:500;letter-spacing:-.004em}
+.bsub{color:var(--ink-3);font-size:12.5px;margin-top:1px}
+.bar{height:6px;background:var(--surface-3);border-radius:99px;overflow:hidden;margin:9px 0 7px;max-width:340px}
+.bar i{display:block;height:100%;background:var(--ok);border-radius:99px}
+.bmiss{font-size:12.5px;color:var(--ink-2)}
+.bmiss b{font-weight:500;color:var(--ink)}
+.bacts{display:flex;gap:7px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+.drawer{border-top:1px dashed var(--rule-2);margin-top:12px;padding-top:12px;display:grid;gap:7px}
+.ditem{display:flex;align-items:center;gap:10px;justify-content:space-between;padding:6px 9px;background:var(--surface-2);border-radius:6px;font-size:13px}
+.empty{text-align:center;padding:46px 20px;color:var(--ink-2)}
+.empty b{display:block;font-size:16px;color:var(--ink);margin-bottom:4px}
+
+/* ---------- client page ---------- */
+.split{display:grid;grid-template-columns:auto 1fr;gap:22px;align-items:start}
+@media (max-width:900px){.split{grid-template-columns:1fr}}
+.phone{
+  width:390px;max-width:100%;border:10px solid #20282B;border-radius:32px;background:var(--surface);
+  overflow:hidden;box-shadow:var(--shadow-2);
+}
+:root[data-theme="dark"] .phone{border-color:#39433F}
+.phead{background:var(--surface-2);border-bottom:1px solid var(--rule);padding:13px 15px}
+.pbody{height:600px;overflow-y:auto;padding:15px}
+.firmline{display:flex;align-items:center;gap:9px}
+.avatar{width:34px;height:34px;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font-weight:600;flex:none;font-size:13px}
+.pbar{height:9px;background:var(--surface-3);border-radius:99px;overflow:hidden;margin:11px 0 6px}
+.pbar i{display:block;height:100%;background:var(--ok);border-radius:99px}
+.ccard{border:1px solid var(--rule);border-radius:9px;padding:12px;margin-bottom:9px;background:var(--surface)}
+.ccard.done{background:var(--ok-soft);border-color:var(--ok-line)}
+.ccard.answered{background:var(--warn-soft);border-color:var(--warn-line)}
+.ccard.redo{background:var(--bad-soft);border-color:var(--bad-line)}
+.ccard.confused{background:var(--violet-soft);border-color:var(--violet-line)}
+.cname{font-weight:500;font-size:13.5px}
+.chint{color:var(--ink-3);font-size:12px;margin-top:2px}
+.cbtns{display:flex;gap:7px;margin-top:10px;flex-wrap:wrap}
+.cbtn{flex:1;min-width:120px;justify-content:center;border:1px solid var(--accent-line);background:var(--accent-soft);color:var(--accent);border-radius:7px;padding:9px;font-weight:500;font-size:13px;display:inline-flex;align-items:center;gap:6px}
+.cbtn:hover{background:var(--accent);color:var(--accent-ink)}
+.cbtn.plain{border-color:var(--rule-2);background:none;color:var(--ink-3);flex:0 0 auto;min-width:0;font-weight:400;font-size:12.5px;padding:9px 11px}
+.cbtn.plain:hover{background:var(--surface-2);color:var(--ink)}
+.parts{display:flex;gap:5px;flex-wrap:wrap;margin-top:9px}
+.part{border:1px solid var(--rule-2);border-radius:5px;padding:2px 8px;font-size:11.5px;color:var(--ink-3);font-family:"IBM Plex Mono",monospace}
+.part.on{background:var(--ok-soft);border-color:var(--ok-line);color:var(--ok)}
+.pfoot{border-top:1px solid var(--rule);padding:12px 15px;background:var(--surface-2)}
+.gate{width:100%;justify-content:center;padding:12px;border-radius:8px;font-weight:500;border:1px solid var(--rule-2);background:var(--surface);color:var(--ink-2);display:inline-flex;align-items:center;gap:7px}
+.gate.live{background:var(--ok);border-color:var(--ok);color:var(--surface)}
+:root[data-theme="dark"] .gate.live{color:#0A1F17}
+.gate:hover{filter:brightness(1.06)}
+.statebar{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.mini{border:1px solid var(--rule);border-left:3px solid var(--ink-3);border-radius:7px;padding:11px 13px;background:var(--surface-2)}
+.mini.blocked{border-left-color:var(--bad)}
+.mini.clear{border-left-color:var(--ok)}
+
+/* ---------- overlays ---------- */
+#toasts{position:fixed;left:50%;transform:translateX(-50%);bottom:22px;display:flex;flex-direction:column;gap:8px;z-index:60;align-items:center}
+.toast{
+  background:var(--ink);color:var(--paper);border-radius:8px;padding:10px 15px;font-size:13px;
+  box-shadow:var(--shadow-2);display:flex;align-items:center;gap:13px;max-width:min(92vw,520px);
+}
+.toast button{background:none;border:0;color:var(--accent);font-weight:500;text-decoration:underline;padding:0}
+:root[data-theme="dark"] .toast{background:var(--surface-3);color:var(--ink);border:1px solid var(--rule-2)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .toast{background:var(--surface-3);color:var(--ink);border:1px solid var(--rule-2)}}
+#modal{position:fixed;inset:0;background:rgba(12,18,16,.5);display:grid;place-items:center;padding:20px;z-index:70}
+#modal[hidden]{display:none}
+.sheet{background:var(--surface);border:1px solid var(--rule);border-radius:13px;box-shadow:var(--shadow-2);max-width:520px;width:100%;max-height:86vh;overflow:auto}
+.sheet header{padding:15px 18px;border-bottom:1px solid var(--rule);display:flex;justify-content:space-between;align-items:center;gap:12px}
+.sheet .body{padding:18px}
+.sheet footer{padding:13px 18px;border-top:1px solid var(--rule);display:flex;gap:9px;justify-content:flex-end;background:var(--surface-2);border-radius:0 0 13px 13px}
+.wa{background:#E7F0E4;border:1px solid #C6D9C0;border-radius:9px;padding:13px;color:#14261B;font-size:13px;line-height:1.55;white-space:pre-wrap;word-break:break-word}
+:root[data-theme="dark"] .wa{background:#16251C;border-color:#2C4636;color:#D6E5DA}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .wa{background:#16251C;border-color:#2C4636;color:#D6E5DA}}
+.opt{display:block;width:100%;text-align:left;border:1px solid var(--rule-2);background:var(--surface);border-radius:9px;padding:13px;margin-bottom:9px}
+.opt:hover{border-color:var(--accent);background:var(--accent-soft)}
+.opt b{display:block;font-weight:500}
+.opt span{font-size:12.5px;color:var(--ink-3)}
+.opt.friendly{border-color:var(--violet-line);background:var(--violet-soft)}
+.opt.friendly b{color:var(--violet)}
+.tbl{width:100%;border-collapse:collapse;font-size:13px}
+.tbl td{padding:6px 0;border-bottom:1px solid var(--rule)}
+.tbl td:last-child{text-align:right;font-family:"IBM Plex Mono",monospace}
+.tbl tr:last-child td{border-bottom:0}
+</style>
+
+<header class="top">
+  <div class="brand">
+    <b>Chaser</b>
+    <span>Example &amp; Co, Chartered Accountants</span>
+  </div>
+  <div class="note">Demo &middot; fictional firm and clients</div>
+</header>
+
+<nav class="tabs" role="tablist">
+  <button class="tab" role="tab" id="t-list"  aria-selected="true"  onclick="go('list')">Document checklist<small>pick what to ask for</small></button>
+  <button class="tab" role="tab" id="t-board" aria-selected="false" onclick="go('board')">Chase board<small>who hasn't sent</small></button>
+  <button class="tab" role="tab" id="t-client" aria-selected="false" onclick="go('client')">Client's page<small>upload &amp; the gate</small></button>
+</nav>
+
+<main>
+  <section class="panel" id="p-list"></section>
+  <section class="panel" id="p-board" hidden></section>
+  <section class="panel" id="p-client" hidden></section>
+</main>
+
+<div id="toasts"></div>
+<div id="modal" hidden onclick="if(event.target.id==='modal')closeModal()"></div>
+
+<script>
+/* =======================================================================
+   DATA
+   ======================================================================= */
+const FIRM = "Example & Co";
+
+let due = "30 September 2026";
+let dueDays = 18;
+
+/* --- the checklist for Sharma Textiles, Tax Audit 44AB FY 2025-26 --- */
+const SECTIONS = ["Books and financials","Bank and cash","GST and TDS","Form 3CD declarations"];
+
+let items = [
+  {id:"tb",   s:0, name:"Trial balance", alias:"the Tally export for the full year", need:"Required", on:true},
+  {id:"fin",  s:0, name:"Signed financial statements FY 2024-25", alias:"last year's signed balance sheet and P&L", need:"Required", on:true},
+  {id:"sales",s:0, name:"Sales register", alias:"the list of all your sales bills", need:"Required", on:true},
+  {id:"purch",s:0, name:"Purchase register", alias:"the list of all bills you received", need:"Required", on:true},
+  {id:"fa",   s:0, name:"Fixed asset register with purchase invoices", alias:"machinery, vehicles, computers bought this year", need:"Required", on:true},
+  {id:"stock",s:0, name:"Stock valuation statement with basis", alias:"closing stock value and how you worked it out", need:"Required", on:true, flag:"Method changed last year. Confirm the basis."},
+  {id:"bank", s:1, name:"Bank statements, all accounts", alias:"1 April 2025 to 31 March 2026", need:"Required", on:true, have:"Received 4 Sep with the GST August request", parts:12},
+  {id:"cash", s:1, name:"Cash book", alias:"your daily cash receipts and payments", need:"Required", on:true, tag:"cash"},
+  {id:"loan", s:1, name:"Loan sanction letters and loan account statements", alias:"from the bank, for every loan running", need:"Required", on:true, tag:"loans"},
+  {id:"gst",  s:2, name:"GSTR-1, 3B and 2B for all 12 months", alias:"we can pull these if you share portal access", need:"Required", on:true},
+  {id:"tds",  s:2, name:"TDS challans and Form 26Q/24Q acknowledgements", alias:"proof of the TDS you deposited", need:"Required", on:true},
+  {id:"msme", s:3, name:"MSME vendor confirmation, section 43B(h)", alias:"which of your suppliers are registered MSMEs", need:"Required", on:true},
+  {id:"cash40",s:3,name:"Cash payments above ₹10,000 declaration, section 40A(3)", alias:"a signed note listing them, or saying there are none", need:"Required", on:true, tag:"cash"},
+  {id:"rpt",  s:3, name:"Related party transaction list", alias:"dealings with directors, relatives or sister concerns", need:"If applicable", on:true},
+  {id:"fa15", s:3, name:"Foreign remittance details, Form 15CA/15CB", alias:"only if you paid anyone outside India", need:"If applicable", on:false, tag:"foreign"},
+  {id:"prior",s:3, name:"Prior year's audit working paper index", alias:"", need:"Nice to have", on:false},
+];
+const FETCHED = ["Form 26AS","Annual Information Statement (AIS)"];
+
+/* --- profile toggles that move a bundle of items at once --- */
+const TOGGLES = [
+  {id:"cash",    label:"Cash-intensive business", on:true},
+  {id:"loans",   label:"Has bank loans",          on:true},
+  {id:"foreign", label:"Pays vendors abroad",     on:false},
+];
+
+/* --- the chase board --- */
+let board = [
+  {id:1, name:"Sharma Textiles Pvt Ltd", type:"Tax Audit FY 25-26", done:9, total:14, owner:"Priya Shetty",
+   miss:["bank statements (3 a/cs)","MSME vendor confirmation","stock valuation"], chased:4, reads:true, tags:["mine","due"]},
+  {id:2, name:"Gupta Hardware Stores", type:"Tax Audit FY 25-26", done:4, total:9, owner:"Faisal Qureshi",
+   miss:["cash book","sales register","e-way bill summary"], chased:2, promised:"said Tuesday, never came", tags:["promised","due"]},
+  {id:3, name:"Venkatesh Iyer & Associates LLP", type:"Tax Audit FY 25-26", done:13, total:14, owner:"Deepa Menon",
+   miss:["stock valuation statement"], chased:6, tags:["oneleft","due"]},
+  {id:4, name:"Bharat Auto Components Pvt Ltd", type:"Tax Audit FY 25-26", done:12, total:14, owner:"Deepa Menon",
+   miss:["fixed asset register","related party list"], chased:1, stuck:"opened 4 times, uploaded nothing", tags:["stuck","due"]},
+  {id:5, name:"Meenakshi Enterprises", type:"GST August 2026", done:0, total:6, owner:"Priya Shetty",
+   miss:["sales register","purchase register","bank statement"], chased:3, never:true, tags:["never","mine"]},
+  {id:6, name:"Rakesh Deshmukh", type:"Tax Audit FY 25-26", done:2, total:11, owner:"Faisal Qureshi",
+   miss:["trial balance","cash book","stock valuation"], chased:5, confused:"asked what a trial balance is", tags:["confused"]},
+  {id:7, name:"Sunita Rao", type:"Tax Audit FY 25-26", done:6, total:14, owner:"Anil Rao",
+   miss:["bank statements","TDS challans","MSME confirmation"], chased:7, tags:["silent","due"]},
+  {id:8, name:"Al-Hind Trading Co", type:"GST August 2026", done:9, total:9, owner:"Priya Shetty",
+   miss:[], chased:2, tags:["ready","mine"]},
+  {id:9, name:"Naveen Chandra Textiles", type:"GST August 2026", done:5, total:9, owner:"Faisal Qureshi",
+   miss:["credit and debit notes","reverse charge details"], chased:1, review:2, tags:["review"]},
+];
+
+const FILTERS = [
+  {id:"all",      label:"Everyone"},
+  {id:"promised", label:"Said they'd send it, didn't"},
+  {id:"oneleft",  label:"One item left"},
+  {id:"stuck",    label:"Opened but stuck"},
+  {id:"confused", label:"Confused, call them"},
+  {id:"never",    label:"Never opened the link"},
+  {id:"ready",    label:"Ready to start work"},
+];
+let filter = "all";
+let openRow = null;
+
+/* --- the client's own page: Sharma Textiles --- */
+const CLIENT = {name:"Sharma Textiles Pvt Ltd", greet:"Sharma-ji", staff:"Priya Shetty", initials:"PS", phone:"+91 99999 00000"};
+let lang = "en";
+let cstate = "partial";
+
+/* state: pending | done | promised | na | thirdparty | confused | redo */
+let cards = [
+  {id:"tb",   name:"Trial balance", hint:"The Tally export for the full year", st:"done"},
+  {id:"fin",  name:"Signed financial statements FY 2024-25", hint:"Last year's signed balance sheet and P&L", st:"done"},
+  {id:"sales",name:"Sales register", hint:"The list of all your sales bills, Tally or Excel", st:"done"},
+  {id:"purch",name:"Purchase register", hint:"The list of all bills you received", st:"done"},
+  {id:"bank", name:"Bank statements, all accounts", hint:"1 April 2025 to 31 March 2026", st:"pending",
+   parts:["Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec","Jan","Feb","Mar"], got:["Apr","May","Jun","Jul","Sep","Oct","Dec","Jan","Feb","Mar"]},
+  {id:"cash", name:"Cash book", hint:"Your daily cash receipts and payments", st:"done"},
+  {id:"fa",   name:"Fixed asset register", hint:"Machinery, vehicles, computers bought this year", st:"pending"},
+  {id:"stock",name:"Stock valuation statement", hint:"Closing stock value and how you worked it out", st:"pending"},
+  {id:"gst",  name:"GSTR-1, 3B and 2B, all 12 months", hint:"Downloads from the GST portal", st:"redo", why:"Page 2 was cut off. Just that one page again, please."},
+  {id:"tds",  name:"TDS challans and Form 26Q acknowledgements", hint:"Proof of the TDS you deposited", st:"pending"},
+  {id:"msme", name:"MSME vendor confirmation", hint:"Which of your suppliers are registered MSMEs", st:"pending"},
+  {id:"cash40",name:"Cash payments above ₹10,000", hint:"A signed note listing them, or saying there are none", st:"pending"},
+  {id:"rpt",  name:"Related party transaction list", hint:"Dealings with directors, relatives or sister concerns", st:"pending"},
+  {id:"turn", name:"Expected turnover, Oct 2026 to Mar 2027", hint:"A rough figure is fine", st:"pending", kind:"figure"},
+];
+
+const HI = {
+  title:"नमस्ते शर्मा जी",
+  line:"आपके टैक्स ऑडिट के लिए हमें ये दस्तावेज़ चाहिए।",
+  by:"कृपया 30 सितंबर तक भेज दें।",
+  call:"प्रिया को फ़ोन करें",
+};
+
+/* =======================================================================
+   HELPERS
+   ======================================================================= */
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+function toast(msg, undo){
+  const el = document.createElement("div");
+  el.className = "toast";
+  el.innerHTML = `<span>${msg}</span>`;
+  if(undo){
+    const b = document.createElement("button");
+    b.textContent = "Undo";
+    b.onclick = () => { undo(); el.remove(); };
+    el.appendChild(b);
+  }
+  $("#toasts").appendChild(el);
+  setTimeout(() => el.remove(), 5000);
+}
+
+function modal(title, body, footer){
+  $("#modal").innerHTML =
+    `<div class="sheet" role="dialog" aria-modal="true" aria-label="${esc(title)}">
+       <header><h3>${title}</h3><button class="btn sm" onclick="closeModal()">Close</button></header>
+       <div class="body">${body}</div>
+       ${footer ? `<footer>${footer}</footer>` : ""}
+     </div>`;
+  $("#modal").hidden = false;
+}
+function closeModal(){ $("#modal").hidden = true; }
+document.addEventListener("keydown", e => {
+  if(e.key === "Escape"){ closeModal(); if(openRow){ openRow = null; drawBoard(); } }
+});
+
+function go(tab){
+  ["list","board","client"].forEach(t => {
+    $("#p-" + t).hidden = (t !== tab);
+    $("#t-" + t).setAttribute("aria-selected", String(t === tab));
+  });
+  window.scrollTo({top:0, behavior:"instant"});
+}
+
+/* =======================================================================
+   SCREEN 1 — THE CHECKLIST
+   ======================================================================= */
+function asked(){ return items.filter(i => i.on).length; }
+
+function drawList(){
+  const flagged = items.filter(i => i.flag && i.on);
+  const off = items.filter(i => !i.on).length;
+
+  let html = `
+  <div class="stack">
+    <div>
+      <div class="head-strip">
+        <h2>Sharma Textiles Pvt Ltd</h2>
+        <span class="chip">Pvt Ltd</span>
+        <span class="chip">Turnover ₹14.2 cr</span>
+        <span class="chip acc">Tax Audit 44AB &middot; FY 2025-26</span>
+        <button class="duebtn" onclick="editDue()">Due ${due} &nbsp;✎</button>
+      </div>
+      <p class="sub">Owner: Priya Shetty &middot; last year's list was 16 items, we started you from it.</p>
+    </div>
+
+    <div class="banner">
+      <span class="dot"></span>
+      <div style="flex:1">
+        <h3>Started from last year's list</h3>
+        <p class="sub" style="margin-top:3px">${items.length} items carried forward. ${flagged.length} need${flagged.length===1?"s":""} a look before you send.</p>
+        ${flagged.map(f => `<p class="sub" style="margin-top:6px"><span class="chip warn">Check</span> <b>${esc(f.name)}</b> &mdash; ${esc(f.flag)}</p>`).join("")}
+      </div>
+    </div>
+
+    <div class="card pad">
+      <div class="eyebrow" style="margin-bottom:9px">Tell us about the client, the list follows</div>
+      <div class="presets">
+        ${TOGGLES.map(t => `<button class="toggle" aria-pressed="${t.on}" onclick="flip('${t.id}')">${esc(t.label)}</button>`).join("")}
+      </div>
+      <p class="sub" style="margin-top:10px;font-size:12.5px">Each one adds or removes a bundle. Everything stays editable underneath.</p>
+    </div>
+
+    <div class="card pad">`;
+
+  SECTIONS.forEach((sec, si) => {
+    const rows = items.filter(i => i.s === si);
+    html += `<div class="sect">
+      <div class="sect-h"><h3>${esc(sec)}</h3><span class="eyebrow mono">${rows.filter(r=>r.on).length} of ${rows.length}</span></div>
+      <div class="items">`;
+    rows.forEach(i => {
+      const cls = i.have && i.on ? "have" : (i.on ? "" : "off");
+      html += `<div class="item ${cls}">
+        <button class="box" role="checkbox" aria-checked="${i.on}" aria-label="${esc(i.name)}" onclick="tick('${i.id}')"></button>
+        <div>
+          <div class="iname">${esc(i.name)}</div>
+          ${i.alias ? `<div class="ialias">Client sees: &ldquo;${esc(i.alias)}&rdquo;</div>` : ""}
+          <div class="imeta">
+            ${i.have ? `<span class="chip ok">Already have this &middot; ${esc(i.have)}</span>` : ""}
+            ${i.parts ? `<span class="chip">${i.parts} months expected</span>` : ""}
+            ${i.flag ? `<span class="chip warn">Check the basis</span>` : ""}
+          </div>
+        </div>
+        <select class="need" aria-label="How necessary" onchange="setNeed('${i.id}',this.value)">
+          ${["Required","If applicable","Nice to have"].map(n => `<option ${n===i.need?"selected":""}>${n}</option>`).join("")}
+        </select>
+      </div>`;
+    });
+    html += `</div></div>`;
+  });
+
+  html += `
+      <div class="sect">
+        <div class="sect-h"><h3>We fetch these ourselves</h3><span class="eyebrow">client never sees them</span></div>
+        <div class="items">
+          ${FETCHED.map(f => `<div class="item locked">
+            <button class="box" role="checkbox" aria-checked="true" disabled title="We fetch this from the portal. It cannot be put on the client's list."></button>
+            <div><div class="iname">${esc(f)}</div><div class="ialias">Pulled from the portal by Priya. Not on the client's page.</div></div>
+            <span class="chip">We fetch</span>
+          </div>`).join("")}
+        </div>
+      </div>
+    </div>
+
+    <div class="foot">
+      <div class="row-between">
+        <div class="counts">
+          <div><b>${asked()}</b><span>asked of the client</span></div>
+          <div><b>${FETCHED.length}</b><span>we fetch</span></div>
+          <div><b>${off}</b><span>not needed</span></div>
+        </div>
+        <div class="inline">
+          <button class="btn" onclick="preview()">Preview the WhatsApp</button>
+          <button class="btn" onclick="toast('Saved. Nothing sent to the client.')">Save, don't send</button>
+          <button class="btn primary" onclick="sendReq()">Send request</button>
+        </div>
+      </div>
+    </div>
+  </div>`;
+
+  $("#p-list").innerHTML = html;
+}
+
+function tick(id){
+  const i = items.find(x => x.id === id);
+  i.on = !i.on;
+  drawList();
+  toast(`${i.on ? "Asking for" : "Not asking for"} “${esc(i.name)}”`, () => { i.on = !i.on; drawList(); });
+}
+
+function setNeed(id, v){
+  const i = items.find(x => x.id === id);
+  const was = i.need; i.need = v;
+  drawList();
+  toast(`“${esc(i.name)}” is now ${v.toLowerCase()}. ${v === "Required" ? "It blocks Start work." : "It does not block Start work."}`,
+        () => { i.need = was; drawList(); });
+}
+
+function flip(tid){
+  const t = TOGGLES.find(x => x.id === tid);
+  t.on = !t.on;
+  const hit = items.filter(i => i.tag === tid);
+  const before = hit.map(i => i.on);
+  hit.forEach(i => i.on = t.on);
+  drawList();
+  toast(`${t.on ? "+" : "−"}${hit.length} item${hit.length===1?"":"s"} (${esc(t.label.toLowerCase())})`,
+        () => { t.on = !t.on; hit.forEach((i,n) => i.on = before[n]); drawList(); });
+}
+
+function editDue(){
+  modal("Change the due date",
+    `<p class="sub" style="margin-bottom:12px">Tax audit for FY 2025-26. A representation to move this to 31 October is pending, so treat it as data, not a constant.</p>
+     <div class="inline">
+       <button class="btn" onclick="setDue('30 September 2026',18)">30 September 2026</button>
+       <button class="btn" onclick="setDue('31 October 2026',49)">31 October 2026</button>
+     </div>
+     <p class="sub" style="margin-top:14px;padding-top:12px;border-top:1px solid var(--rule)">
+       Changing this re-dates every reminder for all 41 tax audit clients, and writes a line to the audit log.</p>`);
+}
+function setDue(d, n){
+  due = d; dueDays = n;
+  closeModal(); drawList(); drawBoard();
+  toast(`Due date is now ${d}. 41 clients re-dated, reminders rescheduled.`);
+}
+
+function waText(){
+  const list = items.filter(i => i.on).slice(0,4).map(i => "• " + i.name).join("\n");
+  const more = asked() - 4;
+  return `Hello Sharma Textiles Pvt Ltd, this is ${FIRM} (Chartered Accountants).
+
+For your Tax Audit FY 2025-26, we still need ${asked()} documents:
+${list}${more > 0 ? `\n• and ${more} more` : ""}
+
+Please upload here:
+https://docs.example.com/u/7fK2mQ
+
+Due: ${due}. Reply here if you have a question.`;
+}
+
+function preview(){
+  modal("This is what Sharma-ji receives",
+    `<div class="wa">${esc(waText())}</div>
+     <p class="sub" style="margin-top:13px">The link sits in the message body as plain text, not as a tap-button. Button links open WhatsApp's own browser, where the camera often will not open on Android.</p>
+     <div class="inline" style="margin-top:10px">
+       <span class="chip">Utility template</span><span class="chip">English</span><span class="chip mono">₹0.145 per message</span>
+     </div>`,
+    `<button class="btn" onclick="closeModal()">Back</button>
+     <button class="btn primary" onclick="closeModal();sendReq()">Send it</button>`);
+}
+
+function sendReq(){
+  toast(`Request sent to Sharma Textiles. ${asked()} items, WhatsApp and email.`, () => toast("Send cancelled."));
+  go("board");
+}
+
+/* =======================================================================
+   SCREEN 2 — THE CHASE BOARD
+   ======================================================================= */
+function count(f){ return f === "all" ? board.length : board.filter(r => r.tags.includes(f)).length; }
+function rows(){ return filter === "all" ? board : board.filter(r => r.tags.includes(filter)); }
+
+function drawBoard(){
+  const list = rows();
+  const outstanding = board.filter(r => r.done < r.total).length;
+  const ready = board.filter(r => r.done === r.total).length;
+
+  let html = `
+  <div class="stack">
+    <div class="row-between">
+      <div>
+        <h2>${due} &middot; Tax audit and GST</h2>
+        <p class="sub">${board.length} clients on the board &middot; <b>${outstanding}</b> still owe documents &middot; ${ready} ready to start &middot; ${dueDays} days left</p>
+      </div>
+      <div class="inline">
+        <button class="btn" onclick="editDue()">Deadline moved?</button>
+        <button class="btn primary" onclick="bulk()">Remind all ${outstanding}</button>
+      </div>
+    </div>
+
+    <div class="filters">
+      ${FILTERS.map(f => `<button class="toggle" aria-pressed="${filter===f.id}" onclick="setFilter('${f.id}')">${esc(f.label)} <b class="mono">${count(f.id)}</b></button>`).join("")}
+    </div>
+
+    <div class="card">`;
+
+  if(!list.length){
+    html += `<div class="empty"><b>Nothing here.</b>No client is in this state right now.
+      <div style="margin-top:12px"><button class="btn" onclick="setFilter('all')">Show everyone</button></div></div>`;
+  }
+
+  list.forEach(r => {
+    const pct = Math.round(r.done / r.total * 100);
+    const done = r.done === r.total;
+    const opened = openRow === r.id;
+    html += `<div class="brow">
+      <div class="bmain">
+        <div>
+          <div class="bname">${esc(r.name)}</div>
+          <div class="bsub">${esc(r.type)} &middot; owner ${esc(r.owner)}</div>
+          <div class="bar"><i style="width:${pct}%"></i></div>
+          <div class="bmiss">
+            <span class="mono">${r.done} of ${r.total}</span>
+            ${done ? ` &middot; <b style="color:var(--ok)">everything in</b>`
+                   : ` &middot; still missing <b>${r.miss.slice(0,3).map(esc).join("</b>, <b>")}</b>${r.miss.length>3?` and ${r.miss.length-3} more`:""}`}
+          </div>
+          <div class="imeta">
+            ${r.chased ? `<span class="chip">Chased ${r.chased} time${r.chased===1?"":"s"}, last ${r.chased} days ago</span>` : ""}
+            ${r.promised  ? `<span class="chip warn">${esc(r.promised)}</span>` : ""}
+            ${r.stuck     ? `<span class="chip bad">${esc(r.stuck)}</span>` : ""}
+            ${r.confused  ? `<span class="chip violet">${esc(r.confused)}</span>` : ""}
+            ${r.never     ? `<span class="chip bad">Link never opened</span>` : ""}
+            ${r.review    ? `<span class="chip acc">${r.review} waiting for your review</span>` : ""}
+          </div>
+        </div>
+        <div class="bacts">
+          <button class="btn sm" onclick="toggleRow(${r.id})">${opened ? "Hide items" : "See items"}</button>
+          ${r.confused
+            ? `<button class="btn sm" style="border-color:var(--violet-line);color:var(--violet)" onclick="toast('Calling ${esc(r.name)} on ${CLIENT.phone}.')">Call them</button>`
+            : `<button class="btn sm" onclick="chase(${r.id})">Send reminder</button>`}
+          ${done
+            ? `<button class="btn sm primary" onclick="toast('Work started for ${esc(r.name)}.')">Start work</button>`
+            : `<button class="btn sm locked" onclick="why(${r.id})">Start work</button>`}
+        </div>
+      </div>`;
+
+    if(opened){
+      html += `<div class="drawer">`;
+      r.miss.forEach(m => {
+        html += `<div class="ditem"><span><span class="chip warn">Not sent</span> ${esc(m)}</span>
+          <span class="inline"><button class="btn sm" onclick="toast('Chasing only “${esc(m)}”.')">Chase just this</button>
+          <button class="btn sm" onclick="toast('Waived by a partner. Reason logged.')">Waive</button></span></div>`;
+      });
+      html += `<div class="ditem"><span><span class="chip ok">Accepted</span> ${r.done} item${r.done===1?"":"s"} already checked and filed</span>
+        <button class="btn sm" onclick="toast('Reject re-opens one item only, never the whole list.')">Reject one</button></div>
+      </div>`;
+    }
+    html += `</div>`;
+  });
+
+  html += `</div></div>`;
+  $("#p-board").innerHTML = html;
+}
+
+function setFilter(f){ filter = f; openRow = null; drawBoard(); }
+function toggleRow(id){ openRow = openRow === id ? null : id; drawBoard(); }
+
+function chase(id){
+  const r = board.find(x => x.id === id);
+  const was = r.chased;
+  r.chased = 0;
+  drawBoard();
+  toast(`Reminder sent to ${esc(r.name)}, listing ${r.total - r.done} missing items.`,
+        () => { r.chased = was; drawBoard(); });
+}
+
+function why(id){
+  const r = board.find(x => x.id === id);
+  modal("Why Start work is locked",
+    `<p class="sub" style="margin-bottom:12px">${esc(r.name)} still owes <b>${r.total - r.done}</b> required documents. The button unlocks the moment the last one is accepted.</p>
+     ${r.miss.map(m => `<div class="ditem" style="margin-bottom:7px"><span><span class="chip warn">Not sent</span> ${esc(m)}</span></div>`).join("")}
+     <p class="sub" style="margin-top:14px;padding-top:12px;border-top:1px solid var(--rule)">
+       A partner can waive any one of these with a logged reason. Items marked <i>if applicable</i> or <i>nice to have</i> never block this button.</p>`,
+    `<button class="btn" onclick="closeModal()">Back</button>
+     <button class="btn primary" onclick="closeModal();chase(${id})">Send a reminder instead</button>`);
+}
+
+function bulk(){
+  const out = board.filter(r => r.done < r.total);
+  const held = 1, going = out.length - held;
+  modal(`Remind ${out.length} clients`,
+    `<div class="wa">${esc(waText())}</div>
+     <p class="sub" style="margin:12px 0 8px">Rendered with Sharma Textiles' real values. Every client gets only their own missing items.</p>
+     <table class="tbl">
+       <tr><td>Going by WhatsApp</td><td>${going - 2}</td></tr>
+       <tr><td>Going by email, no WhatsApp opt-in</td><td>2</td></tr>
+       <tr><td>Held, messaged under 48 hours ago</td><td>${held}</td></tr>
+       <tr><td>Held, client replied, a human answers first</td><td>1</td></tr>
+       <tr><td><b>Cost, estimated</b></td><td><b>₹${(going*0.145).toFixed(2)} + GST</b></td></tr>
+     </table>
+     <p class="sub" style="margin-top:12px">Nobody is messaged twice in 48 hours, nothing goes out after 9pm or on a Sunday, and chasing stops on its own once the deadline passes.</p>`,
+    `<button class="btn" onclick="closeModal()">Cancel</button>
+     <button class="btn primary" onclick="closeModal();doBulk(${going})">Send ${going} reminders</button>`);
+}
+function doBulk(n){
+  board.forEach(r => { if(r.done < r.total) r.chased = 0; });
+  drawBoard();
+  toast(`${n} reminders sent. 2 held back.`, () => toast("Send cancelled. Nothing went out."));
+}
+
+/* =======================================================================
+   SCREEN 3 — THE CLIENT'S PAGE
+   ======================================================================= */
+const STATES = [
+  {id:"empty",    label:"Just opened the link"},
+  {id:"partial",  label:"Halfway through"},
+  {id:"answered", label:"Every item answered"},
+  {id:"complete", label:"All accepted"},
+];
+
+function applyState(s){
+  cstate = s;
+  cards.forEach(c => {
+    if(s === "empty")    c.st = "pending";
+    if(s === "complete") c.st = "done";
+  });
+  if(s === "partial"){
+    const done = ["tb","fin","sales","purch","cash"];
+    cards.forEach(c => c.st = done.includes(c.id) ? "done" : (c.id === "gst" ? "redo" : "pending"));
+    const b = cards.find(c => c.id === "bank"); b.got = ["Apr","May","Jun","Jul","Sep","Oct","Dec","Jan","Feb","Mar"];
+  }
+  if(s === "answered"){
+    cards.forEach(c => c.st = "done");
+    cards.find(c => c.id === "stock").st = "promised";
+    cards.find(c => c.id === "rpt").st = "na";
+    cards.find(c => c.id === "msme").st = "thirdparty";
+    cards.find(c => c.id === "tds").st = "confused";
+  }
+  if(s === "complete"){ const b = cards.find(c => c.id === "bank"); b.got = [...b.parts]; }
+  drawClient();
+}
+
+function pending(){ return cards.filter(c => c.st === "pending" || c.st === "redo").length; }
+function accepted(){ return cards.filter(c => c.st === "done").length; }
+function allAnswered(){ return pending() === 0; }
+function firmClear(){ return cards.every(c => c.st === "done" || c.st === "na"); }
+
+function cardLook(c){
+  if(c.st === "done")       return ["done",      `<span class="chip ok">Done ✓</span>`];
+  if(c.st === "redo")       return ["redo",      `<span class="chip bad">Please send again</span>`];
+  if(c.st === "promised")   return ["answered",  `<span class="chip warn">You said Tuesday</span>`];
+  if(c.st === "na")         return ["answered",  `<span class="chip warn">Doesn't apply, Priya is checking</span>`];
+  if(c.st === "thirdparty") return ["answered",  `<span class="chip warn">Your bank has it</span>`];
+  if(c.st === "confused")   return ["confused",  `<span class="chip violet">Priya will call you today</span>`];
+  return ["", `<span class="chip">Not sent yet</span>`];
+}
+
+function drawClient(){
+  const L = lang === "hi";
+  let body = "";
+
+  cards.forEach(c => {
+    const [cls, badge] = cardLook(c);
+    body += `<div class="ccard ${cls}" id="c-${c.id}">
+      <div class="row-between" style="gap:8px">
+        <div style="flex:1;min-width:0">
+          <div class="cname">${esc(c.name)}</div>
+          ${c.hint ? `<div class="chint">${esc(c.hint)}</div>` : ""}
+        </div>
+        ${badge}
+      </div>
+      ${c.why ? `<div class="chint" style="color:var(--bad);margin-top:6px">${esc(c.why)}</div>` : ""}`;
+
+    if(c.parts){
+      body += `<div class="parts">${c.parts.map(p => `<span class="part ${c.got.includes(p)?"on":""}">${p}</span>`).join("")}</div>
+        <div class="chint" style="margin-top:6px">${c.got.length} of 12 months in. ${c.parts.filter(p=>!c.got.includes(p)).join(" and ") || "All done"}${c.got.length<12?" still missing.":""}</div>`;
+    }
+
+    if(c.st === "pending" || c.st === "redo"){
+      body += `<div class="cbtns">
+        <button class="cbtn" onclick="upload('${c.id}')">${c.kind === "figure" ? "Type the figure" : "📷 Take photo or upload"}</button>
+        <button class="cbtn plain" onclick="hatch('${c.id}')">I don't have this</button>
+      </div>`;
+    }
+    body += `</div>`;
+  });
+
+  const gateLive = allAnswered();
+  const left = pending();
+
+  $("#p-client").innerHTML = `
+  <div class="stack">
+    <div class="row-between">
+      <div>
+        <h2>What Sharma-ji sees on his phone</h2>
+        <p class="sub">No login, no password, no app. One link from WhatsApp. Every file saves the moment he picks it.</p>
+      </div>
+      <div class="statebar">
+        ${STATES.map(s => `<button class="toggle" aria-pressed="${cstate===s.id}" onclick="applyState('${s.id}')">${esc(s.label)}</button>`).join("")}
+      </div>
+    </div>
+
+    <div class="split">
+      <div class="phone">
+        <div class="phead">
+          <div class="row-between">
+            <div class="firmline">
+              <span class="avatar">${CLIENT.initials}</span>
+              <div>
+                <div style="font-weight:500;font-size:13px">${esc(CLIENT.staff)}</div>
+                <div class="chint">${esc(FIRM)}</div>
+              </div>
+            </div>
+            <div class="inline" style="gap:5px">
+              <button class="btn sm" onclick="lang='${L?"en":"hi"}';drawClient()">${L ? "EN" : "हि"}</button>
+              <button class="btn sm" onclick="toast('Calling Priya on ${CLIENT.phone}. Logged as a defect in this page, not a client failure.')">Call</button>
+            </div>
+          </div>
+        </div>
+        <div class="pbody">
+          <h3 class="${L?"dev":""}" style="font-size:16px">${L ? HI.title : "Namaste " + esc(CLIENT.greet)}</h3>
+          <p class="sub ${L?"dev":""}" style="margin-top:4px">${L ? HI.line : `${esc(FIRM)} need ${cards.length} things for your tax audit.`}</p>
+          <div class="pbar"><i style="width:${Math.round(accepted()/cards.length*100)}%"></i></div>
+          <div class="row-between">
+            <b class="mono" style="font-size:13px">${accepted()} of ${cards.length} done</b>
+            <span class="chint ${L?"dev":""}">${L ? HI.by : "Please finish by Wednesday 30 September."}</span>
+          </div>
+          <div style="margin-top:14px">${body}</div>
+          <div class="mini" style="margin-top:4px">
+            <div class="eyebrow">You don't need to do anything about these</div>
+            <p class="sub" style="margin-top:4px">${esc(FIRM)} are getting your Form 26AS and AIS themselves.</p>
+          </div>
+        </div>
+        <div class="pfoot">
+          <button class="gate ${gateLive?"live":""}" onclick="gateTap()">
+            ${gateLive ? "Tell Priya I'm done" : `${left} thing${left===1?"":"s"} still open — tap to see`}
+          </button>
+        </div>
+      </div>
+
+      <div class="stack">
+        <div class="card pad">
+          <div class="eyebrow">The part worth arguing about</div>
+          <h3 style="margin-top:6px">There are two gates, not one</h3>
+          <p class="sub" style="margin-top:7px">You asked that a client not be able to submit without everything. Taken literally, the man who has four documents and not the fifth uploads nothing and goes quiet. So the gate is split.</p>
+        </div>
+
+        <div class="mini ${gateLive?"clear":"blocked"}">
+          <div class="eyebrow">The client's button</div>
+          <p class="sub" style="margin-top:5px">
+            ${gateLive
+              ? "<b>Live.</b> Every item is answered. Some are uploads, some are &ldquo;I'll get it Tuesday&rdquo; or &ldquo;my bank has it&rdquo;. He has finished his side."
+              : `<b>Not yet.</b> ${left} item${left===1?"":"s"} have had no answer of any kind. The button is never a dead grey box, it says what is left and scrolls him to it.`}
+          </p>
+        </div>
+
+        <div class="mini ${firmClear()?"clear":"blocked"}">
+          <div class="eyebrow">The firm's Start work button</div>
+          <p class="sub" style="margin-top:5px">
+            ${firmClear()
+              ? "<b>Unlocked.</b> Every required document is in and accepted. Priya can start."
+              : `<b>Locked.</b> ${cards.filter(c=>c.st!=="done"&&c.st!=="na").length} required document${cards.filter(c=>c.st!=="done"&&c.st!=="na").length===1?" is":"s are"} not in yet. A promise is not a document.`}
+          </p>
+          <div style="margin-top:9px"><button class="btn sm" onclick="go('board')">Open the chase board</button></div>
+        </div>
+
+        <div class="card pad">
+          <div class="eyebrow">Every way out is still an answer</div>
+          <p class="sub" style="margin-top:6px">Tap <b>I don't have this</b> on any card. Four options, and each one turns silence into something you can act on. The friendliest is &ldquo;I don't understand what this is&rdquo;, which rings a human instead of refusing the client.</p>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function upload(id){
+  const c = cards.find(x => x.id === id);
+  if(c.parts){
+    const miss = c.parts.filter(p => !c.got.includes(p));
+    if(miss.length){
+      c.got.push(miss[0]);
+      if(!c.parts.filter(p => !c.got.includes(p)).length) c.st = "done";
+      drawClient();
+      toast(`${miss[0]} statement uploaded. ${c.parts.length - c.got.length} month${c.parts.length-c.got.length===1?"":"s"} left.`);
+      return;
+    }
+  }
+  const was = c.st;
+  c.st = "done"; drawClient();
+  toast(`“${esc(c.name)}” uploaded and saved.`, () => { c.st = was; drawClient(); });
+}
+
+function hatch(id){
+  const c = cards.find(x => x.id === id);
+  modal("I don't have this",
+    `<p class="sub" style="margin-bottom:13px">${esc(c.name)}</p>
+     <button class="opt" onclick="answer('${id}','promised','You said you would send it')"><b>I don't have it yet, I'll get it</b><span>Pick a day. Priya sees the promise and stops chasing until then.</span></button>
+     <button class="opt" onclick="answer('${id}','na','Marked as not applicable')"><b>This doesn't apply to me</b><span>Goes to Priya to approve. Never accepted automatically.</span></button>
+     <button class="opt friendly" onclick="answer('${id}','confused','Priya has been told, she will call today')"><b>I don't understand what this is</b><span>Priya is told right now and will call you today.</span></button>
+     <button class="opt" onclick="answer('${id}','thirdparty','Noted, your bank has it')"><b>Someone else has it</b><span>My bank, my office, my broker. Tell us who and we'll ask them.</span></button>`);
+}
+function answer(id, st, msg){
+  const c = cards.find(x => x.id === id);
+  const was = c.st;
+  c.st = st; closeModal(); drawClient();
+  toast(msg + ".", () => { c.st = was; drawClient(); });
+}
+
+function gateTap(){
+  if(allAnswered()){
+    toast("Priya has been told you're done. She'll call if anything else comes up.");
+    return;
+  }
+  const first = cards.find(c => c.st === "pending" || c.st === "redo");
+  const el = document.getElementById("c-" + first.id);
+  el.scrollIntoView({block:"center", behavior:"smooth"});
+  el.animate([{boxShadow:"0 0 0 0 rgba(21,69,110,.55)"},{boxShadow:"0 0 0 9px rgba(21,69,110,0)"}], {duration:900, iterations:2});
+  toast(`${pending()} still open. Starting with “${esc(first.name)}”.`);
+}
+
+/* =======================================================================
+   BOOT
+   ======================================================================= */
+drawList(); drawBoard(); applyState("partial");
+</script>
