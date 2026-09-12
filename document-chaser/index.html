@@ -1148,7 +1148,7 @@ function preview(){
     `<div class="wa">${esc(waText())}</div>
      <p class="sub" style="margin-top:13px">The link sits in the message body as plain text, not as a tap-button. Button links open WhatsApp's own browser, where the camera often will not open on Android.</p>
      <div class="inline" style="margin-top:10px">
-       <span class="chip">Utility template</span><span class="chip">English</span><span class="chip mono">₹0.145 per message</span>
+       <span class="chip">Utility template</span><span class="chip">English</span>
      </div>`,
     `<button class="btn" onclick="closeModal()">Back</button>
      <button class="btn primary" onclick="closeModal();sendReq()">Send it</button>`);
@@ -1539,7 +1539,6 @@ function confirmChase(id){
        <tr><td>Going by</td><td>WhatsApp</td></tr>
        <tr><td>Chased so far</td><td>${r.chased||0} time${(r.chased||0)===1?"":"s"}</td></tr>
        <tr><td>Last contact</td><td>${esc(rowClient(r).last)}</td></tr>
-       <tr><td><b>Cost, estimated</b></td><td><b>₹0.15 + GST</b></td></tr>
      </table>
      ${held ? `<p class="sub" style="margin-top:11px"><span class="chip warn">Held</span> Messaged today already, so the 48-hour rule would suppress this.</p>` : ""}`,
     `<button class="btn" onclick="closeModal()">Cancel</button>
@@ -1574,7 +1573,6 @@ function bulk(){
        <tr><td>Going by email, no WhatsApp opt-in</td><td>2</td></tr>
        <tr><td>Held, messaged under 48 hours ago</td><td>${held}</td></tr>
        <tr><td>Held, client replied, a human answers first</td><td>1</td></tr>
-       <tr><td><b>Cost, estimated</b></td><td><b>₹${(going*0.145).toFixed(2)} + GST</b></td></tr>
      </table>
      <p class="sub" style="margin-top:12px">Nobody is messaged twice in 48 hours, nothing goes out after 9pm or on a Sunday, and chasing stops on its own once the deadline passes.</p>`,
     `<button class="btn" onclick="closeModal()">Cancel</button>
