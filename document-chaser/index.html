@@ -222,6 +222,56 @@ h3{font-size:14px;margin:0;letter-spacing:-.005em}
 .tbl td{padding:6px 0;border-bottom:1px solid var(--rule)}
 .tbl td:last-child{text-align:right;font-family:"IBM Plex Mono",monospace}
 .tbl tr:last-child td{border-bottom:0}
+
+/* ---------- search + clients ---------- */
+.search{
+  flex:1;min-width:180px;max-width:340px;border:1px solid var(--rule-2);background:var(--surface-2);
+  border-radius:7px;padding:7px 11px;font:inherit;font-size:13px;color:var(--ink);
+}
+.search::placeholder{color:var(--ink-3)}
+.search:focus{background:var(--surface);border-color:var(--accent);outline:none}
+.sresults{
+  position:absolute;top:100%;left:0;right:0;margin-top:5px;background:var(--surface);
+  border:1px solid var(--rule-2);border-radius:8px;box-shadow:var(--shadow-2);z-index:50;overflow:hidden;
+}
+.sbox{position:relative;flex:1;max-width:340px;display:flex}
+.sresults button{display:block;width:100%;text-align:left;border:0;background:none;padding:9px 12px;border-bottom:1px solid var(--rule)}
+.sresults button:last-child{border-bottom:0}
+.sresults button:hover{background:var(--accent-soft)}
+.sresults .m{font-size:12px;color:var(--ink-3);margin-top:1px}
+.ctable{width:100%;border-collapse:collapse}
+.ctable th{
+  text-align:left;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3);
+  font-weight:500;padding:0 12px 8px;border-bottom:1px solid var(--rule);
+}
+.ctable td{padding:11px 12px;border-bottom:1px solid var(--rule);vertical-align:top}
+.ctable tr:last-child td{border-bottom:0}
+.ctable tbody tr{cursor:pointer}
+.ctable tbody tr:hover{background:var(--surface-2)}
+.ctable .nm{font-weight:500}
+.ctable .sm2{font-size:12px;color:var(--ink-3);margin-top:1px}
+.ids{font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--ink-2);line-height:1.6}
+.live{display:flex;flex-direction:column;gap:4px;align-items:flex-start}
+.none{color:var(--ink-3);font-size:12.5px}
+.back{border:0;background:none;color:var(--accent);padding:0;font-size:13px;font-weight:500}
+.back:hover{text-decoration:underline}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:7px 16px;font-size:13px}
+.kv dt{color:var(--ink-3)}
+.kv dd{margin:0;font-weight:500}
+.person{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:9px 11px;background:var(--surface-2);border-radius:7px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin:7px 0 14px}
+.tile{
+  border:1px solid var(--rule-2);background:var(--surface);border-radius:8px;padding:11px 12px;text-align:left;
+}
+.tile:hover:not([disabled]){border-color:var(--accent);background:var(--accent-soft)}
+.tile b{display:block;font-weight:500;font-size:13px;letter-spacing:-.004em}
+.tile span{display:block;font-size:11.5px;color:var(--ink-3);margin-top:3px;font-family:"IBM Plex Mono",monospace}
+.tile[aria-pressed="true"]{border-color:var(--accent);background:var(--accent);color:var(--accent-ink)}
+.tile[aria-pressed="true"] span{color:var(--accent-ink);opacity:.8}
+.tile[disabled]{opacity:.55;border-style:dashed;cursor:not-allowed}
+.grouplbl{font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3);font-weight:500;margin:12px 0 0}
+.prov{font-size:12.5px;color:var(--ink-3);margin-top:4px}
+.prov b{color:var(--ink-2);font-weight:500}
 </style>
 
 <header class="top">
@@ -229,16 +279,22 @@ h3{font-size:14px;margin:0;letter-spacing:-.005em}
     <b>Chaser</b>
     <span>Example &amp; Co, Chartered Accountants</span>
   </div>
+  <div class="sbox">
+    <input id="q" class="search" placeholder="Find a client &mdash; name, PAN, GSTIN, phone" autocomplete="off" oninput="search(this.value)" onkeydown="if(event.key==='Escape'){this.value='';search('')}">
+    <div id="sres"></div>
+  </div>
   <div class="note">Demo &middot; fictional firm and clients</div>
 </header>
 
 <nav class="tabs" role="tablist">
+  <button class="tab" role="tab" id="t-clients" aria-selected="false" onclick="go('clients')">Clients<small>everyone we act for</small></button>
   <button class="tab" role="tab" id="t-list"  aria-selected="true"  onclick="go('list')">Document checklist<small>pick what to ask for</small></button>
   <button class="tab" role="tab" id="t-board" aria-selected="false" onclick="go('board')">Chase board<small>who hasn't sent</small></button>
   <button class="tab" role="tab" id="t-client" aria-selected="false" onclick="go('client')">Client's page<small>upload &amp; the gate</small></button>
 </nav>
 
 <main>
+  <section class="panel" id="p-clients" hidden></section>
   <section class="panel" id="p-list"></section>
   <section class="panel" id="p-board" hidden></section>
   <section class="panel" id="p-client" hidden></section>
@@ -280,7 +336,7 @@ let items = [
 const FETCHED = ["Form 26AS","Annual Information Statement (AIS)"];
 
 /* --- profile toggles that move a bundle of items at once --- */
-const TOGGLES = [
+let TOGGLES = [
   {id:"cash",    label:"Cash-intensive business", on:true},
   {id:"loans",   label:"Has bank loans",          on:true},
   {id:"foreign", label:"Pays vendors abroad",     on:false},
@@ -321,7 +377,7 @@ let filter = "all";
 let openRow = null;
 
 /* --- the client's own page: Sharma Textiles --- */
-const CLIENT = {name:"Sharma Textiles Pvt Ltd", greet:"Sharma-ji", staff:"Priya Shetty", initials:"PS", phone:"+91 99999 00000"};
+const CLIENT = {name:"Sharma Textiles Pvt Ltd", greet:"Sharma-ji", staff:"Priya Shetty", initials:"PS", phone:"+91 98204 41821"};
 let lang = "en";
 let cstate = "partial";
 
@@ -386,7 +442,7 @@ document.addEventListener("keydown", e => {
 });
 
 function go(tab){
-  ["list","board","client"].forEach(t => {
+  ["clients","list","board","client"].forEach(t => {
     $("#p-" + t).hidden = (t !== tab);
     $("#t-" + t).setAttribute("aria-selected", String(t === tab));
   });
@@ -409,7 +465,7 @@ function drawList(){
         <h2>Sharma Textiles Pvt Ltd</h2>
         <span class="chip">Pvt Ltd</span>
         <span class="chip">Turnover ₹14.2 cr</span>
-        <span class="chip acc">Tax Audit 44AB &middot; FY 2025-26</span>
+        <span class="chip acc">${esc(ET().name)} &middot; ${esc(ET().period)}</span>
         <button class="duebtn" onclick="editDue()">Due ${due} &nbsp;✎</button>
       </div>
       <p class="sub">Owner: Priya Shetty &middot; last year's list was 16 items, we started you from it.</p>
@@ -911,5 +967,242 @@ function gateTap(){
 /* =======================================================================
    BOOT
    ======================================================================= */
-drawList(); drawBoard(); applyState("partial");
+
+/* =======================================================================
+   ENGAGEMENT TYPES  —  the bundles behind the tiles
+   ======================================================================= */
+const ENGAGEMENT_TYPES = [
+  {id:"tax_audit", group:"Audit", name:"Tax audit 44AB", items:14, period:"FY 2025-26", due:"30 September 2026",
+   toggles:[{id:"cash",label:"Cash-intensive business",on:true},{id:"loans",label:"Has bank loans",on:true},{id:"foreign",label:"Pays vendors abroad",on:false}]},
+  {id:"stat_audit", group:"Audit", name:"Statutory audit", items:22, period:"FY 2025-26", due:"30 September 2026",
+   toggles:[{id:"caro",label:"CARO 2020 applies",on:true},{id:"ifc",label:"IFC / ICFR reporting",on:false},{id:"consol",label:"Consolidation required",on:false}]},
+  {id:"llp_audit", group:"Audit", name:"LLP audit", items:13, period:"FY 2025-26", due:"30 October 2026",
+   toggles:[{id:"cash",label:"Cash-intensive business",on:false},{id:"loans",label:"Has bank loans",on:true},{id:"foreign",label:"Pays vendors abroad",on:false}]},
+  {id:"trust_audit", group:"Audit", name:"Trust / NGO audit", items:20, period:"FY 2025-26", due:"30 September 2026",
+   toggles:[{id:"fcra",label:"FCRA registered",on:false},{id:"g80",label:"80G approved",on:true},{id:"accum",label:"Accumulation claimed",on:false}]},
+  {id:"society_audit", group:"Audit", name:"Housing society audit", items:19, period:"FY 2025-26", due:"31 July 2026",
+   toggles:[{id:"lift",label:"Has lift / sinking fund",on:true},{id:"redev",label:"Redevelopment underway",on:false},{id:"cash",label:"Collects cash",on:true}]},
+  {id:"gst_monthly", group:"Compliance", name:"GST monthly", items:6, period:"August 2026", due:"11 September 2026",
+   toggles:[{id:"qrmp",label:"QRMP scheme",on:false},{id:"eway",label:"Generates e-way bills",on:true},{id:"rcm",label:"Reverse charge applies",on:true}]},
+  {id:"gstr9", group:"Compliance", name:"GSTR-9 / 9C annual", items:12, period:"FY 2025-26", due:"31 December 2026",
+   toggles:[{id:"c5",label:"Turnover above ₹5 cr (9C)",on:true},{id:"multi",label:"Multiple GSTINs",on:false},{id:"exp",label:"Exports / SEZ",on:false}]},
+  {id:"form15cb", group:"Certification", name:"Form 15CB", items:6, period:"On request", due:"Before remittance",
+   toggles:[{id:"trc",label:"Payee has a TRC",on:true},{id:"pe",label:"No permanent establishment",on:true},{id:"dtaa",label:"Treaty benefit claimed",on:true}]},
+  {id:"networth", group:"Certification", name:"Net worth certificate", items:5, period:"On request", due:"On request",
+   toggles:[{id:"biz",label:"Includes business assets",on:true},{id:"prop",label:"Includes property",on:true},{id:"loan",label:"For a loan application",on:false}]},
+  {id:"tds", group:"Compliance", name:"TDS quarterly", items:0, disabled:"No list seeded yet"},
+  {id:"itr", group:"Compliance", name:"ITR — individual", items:0, disabled:"Opens 15 June"},
+  {id:"roc", group:"Compliance", name:"ROC annual (AOC-4)", items:0, disabled:"Needs the AGM date"},
+];
+let currentType = "tax_audit";
+const ET = () => ENGAGEMENT_TYPES.find(t => t.id === currentType);
+
+/* =======================================================================
+   CLIENTS
+   ======================================================================= */
+const CLIENTS = [
+  {id:1, name:"Sharma Textiles Pvt Ltd", con:"Pvt Ltd", pan:"AALCS4821K", gstin:"27AALCS4821K1ZP", owner:"Priya Shetty", last:"chased 4 days ago",
+   people:[{n:"Ramesh Sharma",r:"director",p:"+91 99999 00001"},{n:"Ajay Sharma",r:"son, actually sends the documents",p:"+91 99999 00002"}],
+   live:[{t:"Tax audit FY 25-26",d:9,n:14}], onfile:["Bank statements FY 2025-26 — received 4 Sep, from the GST August request"]},
+  {id:2, name:"Gupta Hardware Stores", con:"Proprietor", pan:"AFZPG7621M", gstin:"27AFZPG7621M1Z4", owner:"Faisal Qureshi", last:"promised Tuesday, never came",
+   people:[{n:"Mahesh Gupta",r:"proprietor",p:"+91 99999 00003"}],
+   live:[{t:"Tax audit FY 25-26",d:4,n:9},{t:"GST August 2026",d:2,n:6}], onfile:[]},
+  {id:3, name:"Venkatesh Iyer & Associates LLP", con:"LLP", pan:"AAHFV2210Q", gstin:"27AAHFV2210Q1ZD", owner:"Deepa Menon", last:"uploaded 10 Sep",
+   people:[{n:"V. Iyer",r:"designated partner",p:"+91 99999 00004"}],
+   live:[{t:"Tax audit FY 25-26",d:13,n:14}], onfile:["Partnership deed — on file since 2021, collect once"]},
+  {id:4, name:"Bharat Auto Components Pvt Ltd", con:"Pvt Ltd", pan:"AADCB9012J", gstin:"27AADCB9012J1ZB", owner:"Deepa Menon", last:"opened the link 4 times, uploaded nothing",
+   people:[{n:"S. Kulkarni",r:"director",p:"+91 99999 00005"},{n:"Anita Rane",r:"office accountant",p:"+91 99999 00006"}],
+   live:[{t:"Tax audit FY 25-26",d:12,n:14}], onfile:[]},
+  {id:5, name:"Meenakshi Enterprises", con:"Proprietor", pan:"BXLPM3390F", gstin:"27BXLPM3390F1ZQ", owner:"Priya Shetty", last:"never opened the link",
+   people:[{n:"Meenakshi Nair",r:"proprietor",p:"+91 99999 00007"}],
+   live:[{t:"GST August 2026",d:0,n:6}], onfile:[]},
+  {id:6, name:"Rakesh Deshmukh", con:"Proprietor 44AD", pan:"AWQPD1187L", gstin:"—", owner:"Faisal Qureshi", last:"asked what a trial balance is",
+   people:[{n:"Rakesh Deshmukh",r:"proprietor",p:"+91 99999 00008"}],
+   live:[{t:"Tax audit FY 25-26",d:2,n:11}], onfile:[]},
+  {id:7, name:"Sunita Rao", con:"Professional", pan:"AKRPR5540H", gstin:"—", owner:"Anil Rao", last:"silent 9 days",
+   people:[{n:"Dr Sunita Rao",r:"proprietor",p:"+91 99999 00009"}],
+   live:[{t:"Tax audit FY 25-26",d:6,n:14}], onfile:[]},
+  {id:8, name:"Al-Hind Trading Co", con:"Partnership", pan:"AAGFA7781R", gstin:"27AAGFA7781R1ZX", owner:"Priya Shetty", last:"uploaded 11 Sep",
+   people:[{n:"Imran Shaikh",r:"partner",p:"+91 99999 00010"}],
+   live:[{t:"GST August 2026",d:9,n:9}], onfile:["GST returns Apr–Aug 2026 — all on file"]},
+  {id:9, name:"Naveen Chandra Textiles", con:"Proprietor", pan:"AQTPC2298B", gstin:"27AQTPC2298B1ZG", owner:"Faisal Qureshi", last:"2 items waiting for your review",
+   people:[{n:"Naveen Chandra",r:"proprietor",p:"+91 99999 00011"}],
+   live:[{t:"GST August 2026",d:5,n:9}], onfile:[]},
+  /* the four below are the whole reason this screen exists — the chase board cannot show them */
+  {id:10, name:"Sai Krupa Co-op Housing Society", con:"Co-op society", pan:"AABAS3319C", gstin:"—", owner:"Deepa Menon", last:"filed 28 July",
+   people:[{n:"P. Joshi",r:"honorary secretary",p:"+91 99999 00012"}], live:[], onfile:["Managing committee resolution — on file"]},
+  {id:11, name:"Anand Charitable Trust", con:"Trust", pan:"AAATA8890D", gstin:"—", owner:"Anil Rao", last:"never",
+   people:[{n:"K. Anand",r:"honorary treasurer",p:"+91 99999 00013"}], live:[], onfile:[]},
+  {id:12, name:"Pioneer Ceramics Pvt Ltd", con:"Pvt Ltd", pan:"AACCP4412N", gstin:"27AACCP4412N1ZM", owner:"Priya Shetty", last:"signed up 2 Sep, nothing started",
+   people:[{n:"R. Bhatt",r:"director",p:"+91 99999 00014"}], live:[], onfile:[]},
+];
+
+const CFILTERS = [
+  {id:"all",    label:"Everyone"},
+  {id:"livenow",label:"Something live"},
+  {id:"none",   label:"Nothing started this season"},
+  {id:"mine",   label:"Mine"},
+];
+let cfilter = "all";
+let openClientId = null;
+const ME = "Priya Shetty";
+
+const cmatch = (c,f) => f==="all" ? true
+  : f==="livenow" ? c.live.length>0
+  : f==="none"    ? c.live.length===0
+  : c.owner===ME;
+
+function drawClients(){
+  if(openClientId) return drawClientDetail();
+  const list = CLIENTS.filter(c => cmatch(c,cfilter));
+  const liveN = CLIENTS.filter(c => c.live.length).length;
+
+  $("#p-clients").innerHTML = `
+  <div class="stack">
+    <div class="row-between">
+      <div>
+        <h2>${CLIENTS.length} clients</h2>
+        <p class="sub">${liveN} have something running right now. ${CLIENTS.length-liveN} have nothing started this season.</p>
+      </div>
+      <button class="btn primary" onclick="startEngagement()">Start an engagement</button>
+    </div>
+
+    <div class="filters">
+      ${CFILTERS.map(f => `<button class="toggle" aria-pressed="${cfilter===f.id}" onclick="setCFilter('${f.id}')">${esc(f.label)} <b class="mono">${CLIENTS.filter(c=>cmatch(c,f.id)).length}</b></button>`).join("")}
+    </div>
+
+    <div class="card pad">
+      <table class="ctable">
+        <thead><tr><th>Client</th><th>PAN &amp; GSTIN</th><th>Live now</th><th>Owner</th><th>Last contact</th></tr></thead>
+        <tbody>
+        ${list.map(c => `<tr onclick="openClient(${c.id})">
+          <td><div class="nm">${esc(c.name)}</div><div class="sm2">${esc(c.con)}</div></td>
+          <td class="ids">${esc(c.pan)}<br>${esc(c.gstin)}</td>
+          <td><div class="live">${c.live.length
+            ? c.live.map(e => `<span class="chip ${e.d===e.n?"ok":"warn"}">${esc(e.t)} &middot; ${e.d}/${e.n}</span>`).join("")
+            : `<span class="none">&mdash; nothing started</span>`}</div></td>
+          <td>${esc(c.owner)}</td>
+          <td class="sm2">${esc(c.last)}</td>
+        </tr>`).join("")}
+        </tbody>
+      </table>
+      ${list.length ? "" : `<div class="empty"><b>Nobody here.</b>No client is in this state.</div>`}
+    </div>
+
+    <p class="sub" style="font-size:12.5px">Five columns, and that is deliberate. No column picker, no saved views, no tags, no notes. The moment this page grows those it has become a CRM, which is a different product.</p>
+  </div>`;
+}
+
+function setCFilter(f){ cfilter = f; drawClients(); }
+function openClient(id){ openClientId = id; drawClients(); go("clients"); }
+function backToClients(){ openClientId = null; drawClients(); }
+
+function drawClientDetail(){
+  const c = CLIENTS.find(x => x.id === openClientId);
+  $("#p-clients").innerHTML = `
+  <div class="stack">
+    <button class="back" onclick="backToClients()">&lsaquo; All clients</button>
+    <div class="row-between">
+      <div>
+        <h2>${esc(c.name)}</h2>
+        <p class="sub">${esc(c.con)} &middot; owner ${esc(c.owner)}</p>
+      </div>
+      <button class="btn primary" onclick="startEngagement(${c.id})">Start an engagement</button>
+    </div>
+
+    <div class="card pad">
+      <div class="eyebrow" style="margin-bottom:10px">Identity</div>
+      <dl class="kv">
+        <dt>PAN</dt><dd class="mono">${esc(c.pan)}</dd>
+        <dt>GSTIN</dt><dd class="mono">${esc(c.gstin)}</dd>
+        <dt>Constitution</dt><dd>${esc(c.con)}</dd>
+        <dt>Partner</dt><dd>${esc(c.owner)}</dd>
+      </dl>
+    </div>
+
+    <div class="card pad">
+      <div class="eyebrow" style="margin-bottom:10px">People</div>
+      <div class="stack" style="gap:7px">
+        ${c.people.map(pp => `<div class="person">
+          <div><b style="font-weight:500">${esc(pp.n)}</b> <span class="sub">&middot; ${esc(pp.r)}</span><div class="sm2 mono">${esc(pp.p)}</div></div>
+          <button class="btn sm" onclick="toast('A link of his own, scoped to this engagement, sent to ${esc(pp.n)}.')">Send him his own link</button>
+        </div>`).join("")}
+      </div>
+    </div>
+
+    <div class="card pad">
+      <div class="eyebrow" style="margin-bottom:10px">Running now</div>
+      ${c.live.length ? c.live.map(e => `<div class="person" style="margin-bottom:7px">
+          <div><b style="font-weight:500">${esc(e.t)}</b><div class="sm2">${e.d} of ${e.n} documents in</div></div>
+          <span class="inline"><button class="btn sm" onclick="go('list')">Open checklist</button><button class="btn sm" onclick="go('board')">Open on the board</button></span>
+        </div>`).join("")
+      : `<p class="sub">Nothing running. This is the client the chase board cannot show you, because the board only lists engagements that exist.</p>`}
+    </div>
+
+    ${c.onfile.length ? `<div class="card pad">
+      <div class="eyebrow" style="margin-bottom:8px">Already on file</div>
+      ${c.onfile.map(o => `<p class="sub" style="margin-bottom:5px"><span class="chip ok">Have it</span> ${esc(o)}</p>`).join("")}
+      <p class="sub" style="font-size:12.5px;margin-top:8px">Answers &ldquo;have we already got this?&rdquo; without opening an engagement. It is what stops the same document being asked for three times.</p>
+    </div>` : ""}
+  </div>`;
+}
+
+/* =======================================================================
+   START AN ENGAGEMENT  —  the tiles
+   ======================================================================= */
+let pickedType = null;
+function startEngagement(clientId){
+  pickedType = null;
+  const c = clientId ? CLIENTS.find(x => x.id === clientId) : null;
+  const groups = ["Audit","Compliance","Certification"];
+  modal("Start an engagement",
+    `<p class="sub" style="margin-bottom:4px">${c ? "For <b>"+esc(c.name)+"</b>" : "Pick a client, then what you are doing for them."}</p>
+     ${groups.map(g => `<p class="grouplbl">${g}</p>
+       <div class="tiles">${ENGAGEMENT_TYPES.filter(t => t.group===g).map(t =>
+         t.disabled
+           ? `<button class="tile" disabled title="${esc(t.disabled)}"><b>${esc(t.name)}</b><span>${esc(t.disabled)}</span></button>`
+           : `<button class="tile" aria-pressed="false" onclick="pickType('${t.id}')"><b>${esc(t.name)}</b><span>${t.items} items</span></button>`
+       ).join("")}</div>`).join("")}
+     <p class="sub" style="font-size:12.5px;padding-top:12px;border-top:1px solid var(--rule)">
+       <b>No internal audit tile, deliberately.</b> Its scope is set per engagement by the board, the requests arrive during fieldwork once a sample is picked, and no two clients look alike. There is nothing to pre-tick. It needs a running request log, not this screen.</p>`,
+    `<button class="btn" onclick="closeModal()">Cancel</button>
+     <button class="btn primary" id="mkbtn" onclick="createEngagement()">Create and open the checklist</button>`);
+}
+
+function pickType(id){
+  pickedType = id;
+  document.querySelectorAll(".tile").forEach(b => b.setAttribute("aria-pressed","false"));
+  event.currentTarget.setAttribute("aria-pressed","true");
+}
+
+function createEngagement(){
+  if(!pickedType){ toast("Pick what you are doing for them first."); return; }
+  const t = ENGAGEMENT_TYPES.find(x => x.id === pickedType);
+  const was = currentType;
+  currentType = t.id;
+  TOGGLES = t.toggles.map(x => ({...x}));
+  closeModal(); drawList(); go("list");
+  toast(`${esc(t.name)} started. ${t.items} items pre-ticked. Nothing sent to the client yet.`,
+        () => { currentType = was; TOGGLES = ET().toggles.map(x=>({...x})); drawList(); });
+}
+
+/* type-ahead over the whole book of business */
+function search(q){
+  const box = $("#sres");
+  q = q.trim().toLowerCase();
+  if(q.length < 2){ box.innerHTML = ""; return; }
+  const hits = CLIENTS.filter(c =>
+    (c.name+" "+c.pan+" "+c.gstin+" "+c.people.map(p=>p.n+" "+p.p).join(" ")).toLowerCase().includes(q)
+  ).slice(0,8);
+  box.innerHTML = hits.length
+    ? `<div class="sresults">${hits.map(c => `<button onclick="openClient(${c.id});document.getElementById('q').value='';search('')">
+         <b style="font-weight:500">${esc(c.name)}</b><div class="m">${esc(c.con)} &middot; ${esc(c.pan)} &middot; ${c.live.length?c.live.length+" live":"nothing started"}</div></button>`).join("")}</div>`
+    : `<div class="sresults"><button onclick="document.getElementById('q').value='';search('')"><b style="font-weight:500">No client matches &ldquo;${esc(q)}&rdquo;</b><div class="m">Try a PAN, a GSTIN or a phone number</div></button></div>`;
+}
+document.addEventListener("keydown", e => {
+  if(e.key === "/" && document.activeElement.id !== "q"){ e.preventDefault(); $("#q").focus(); }
+});
+
+
+drawClients(); drawList(); drawBoard(); applyState("partial");
 </script>
