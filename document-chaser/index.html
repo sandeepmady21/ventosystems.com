@@ -291,6 +291,24 @@ h3{font-size:14px;margin:0;letter-spacing:-.005em}
 .demobar button:hover{background:var(--surface-3);color:var(--ink)}
 .demobar button[aria-pressed="true"]{background:var(--surface);border-color:var(--rule-2);color:var(--ink);font-weight:500}
 .tickhint{font-size:12.5px;color:var(--ink-3);margin:0 0 8px}
+
+/* ---------- persistent engagement-type strip ---------- */
+.typebar{
+  display:flex;align-items:center;gap:10px;padding:10px 22px;background:var(--surface-2);
+  border-bottom:1px solid var(--rule);overflow-x:auto;
+}
+.typebar .lbl{font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3);font-weight:500;flex:none}
+.typebar .row{display:flex;gap:6px}
+.tpill{
+  border:1px solid var(--rule-2);background:var(--surface);border-radius:7px;padding:5px 11px;
+  white-space:nowrap;text-align:left;line-height:1.25;
+}
+.tpill:hover{border-color:var(--accent);color:var(--accent)}
+.tpill b{display:block;font-weight:500;font-size:12.5px}
+.tpill span{display:block;font-size:10.5px;color:var(--ink-3);font-family:"IBM Plex Mono",monospace}
+.tpill[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.tpill[aria-pressed="true"] span{color:var(--accent-ink);opacity:.75}
+.tpill[disabled]{opacity:.45;border-style:dashed;cursor:not-allowed}
 </style>
 
 <header class="top">
@@ -311,6 +329,8 @@ h3{font-size:14px;margin:0;letter-spacing:-.005em}
   <button class="tab" role="tab" id="t-board" aria-selected="false" onclick="go('board')">Chase board<small>who hasn't sent</small></button>
   <button class="tab" role="tab" id="t-client" aria-selected="false" onclick="go('client')">Client's page<small>upload &amp; the gate</small></button>
 </nav>
+
+<div class="typebar" id="typebar"></div>
 
 <main>
   <section class="panel" id="p-clients" hidden></section>
@@ -483,9 +503,8 @@ function drawList(){
         <div>
           <div class="head-strip"><h2>Sharma Textiles Pvt Ltd</h2>
             <span class="chip">Pvt Ltd</span><span class="chip">Turnover ₹14.2 cr</span></div>
-          <p class="sub">Nothing started for this client yet.</p>
+            <p class="sub">Nothing started for this client yet.</p>
         </div>
-        ${lstateBar()}
       </div>
       ${pickerHTML(false)}
     </div>`;
@@ -505,7 +524,6 @@ function drawList(){
       </div>
       <p class="sub">Owner: Priya Shetty &middot; last year's list was 16 items, we started you from it.</p>
       </div>
-      ${lstateBar()}
     </div>
 
     ${pickerOpen ? pickerHTML(true) : ""}
@@ -663,20 +681,22 @@ function sendReq(){
 /* =======================================================================
    SCREEN 2 — THE CHASE BOARD
    ======================================================================= */
-function count(f){ return f === "all" ? board.length : board.filter(r => r.tags.includes(f)).length; }
-function rows(){ return filter === "all" ? board : board.filter(r => r.tags.includes(filter)); }
+const scoped = () => activeType === "all" ? board : board.filter(r => r.et === activeType);
+function count(f){ const b = scoped(); return f === "all" ? b.length : b.filter(r => r.tags.includes(f)).length; }
+function rows(){ const b = scoped(); return filter === "all" ? b : b.filter(r => r.tags.includes(filter)); }
 
 function drawBoard(){
   const list = rows();
-  const outstanding = board.filter(r => r.done < r.total).length;
-  const ready = board.filter(r => r.done === r.total).length;
+  const outstanding = scoped().filter(r => r.done < r.total).length;
+  const ready = scoped().filter(r => r.done === r.total).length;
+  const tname = activeType === "all" ? "Tax audit and GST" : ENGAGEMENT_TYPES.find(t => t.id === activeType).name;
 
   let html = `
   <div class="stack">
     <div class="row-between">
       <div>
-        <h2>${due} &middot; Tax audit and GST</h2>
-        <p class="sub">${board.length} clients on the board &middot; <b>${outstanding}</b> still owe documents &middot; ${ready} ready to start &middot; ${dueDays} days left</p>
+        <h2>${due} &middot; ${esc(tname)}</h2>
+        <p class="sub">${scoped().length} clients on the board &middot; <b>${outstanding}</b> still owe documents &middot; ${ready} ready to start &middot; ${dueDays} days left</p>
       </div>
       <div class="inline">
         <button class="btn" onclick="editDue()">Deadline moved?</button>
@@ -1091,6 +1111,7 @@ let cfilter = "all";
 let openClientId = null;
 const ME = "Priya Shetty";
 
+const inActive = c => activeType === "all" || board.some(r => r.name === c.name && r.et === activeType);
 const cmatch = (c,f) => f==="all" ? true
   : f==="livenow" ? c.live.length>0
   : f==="none"    ? c.live.length===0
@@ -1098,7 +1119,7 @@ const cmatch = (c,f) => f==="all" ? true
 
 function drawClients(){
   if(openClientId) return drawClientDetail();
-  const list = CLIENTS.filter(c => cmatch(c,cfilter));
+  const list = CLIENTS.filter(c => cmatch(c,cfilter) && inActive(c));
   const liveN = CLIENTS.filter(c => c.live.length).length;
 
   $("#p-clients").innerHTML = `
@@ -1229,28 +1250,43 @@ function chooseType(id){
         () => { currentType = wasType; TOGGLES = wasToggles; typeChosen = wasChosen; drawList(); });
 }
 
-const LSTATES = [
-  {id:"new",     label:"Nothing started yet"},
-  {id:"choosing",label:"Changing the type"},
-  {id:"working", label:"Working on the list"},
-  {id:"sent",    label:"Request already sent"},
-];
-let lstate = "working";
-function setLState(id){
-  lstate = id;
-  typeChosen     = id !== "new";
-  pickerOpen     = id === "choosing";
-  engagementSent = id === "sent";
-  drawList();
+let activeType = "all";   // the global "what am I working in" context
+
+function typeCounts(id){
+  const rows = id === "all" ? board : board.filter(r => r.et === id);
+  return rows.filter(r => r.done < r.total).length;
 }
-function lstateBar(){
-  return `<div class="demobar">
-    <span class="tag">Demo</span>
-    <span class="lbl">See this screen at a different point:</span>
-    <span class="opts">${LSTATES.map(x =>
-      `<button aria-pressed="${lstate===x.id}" onclick="setLState('${x.id}')">${esc(x.label)}</button>`
-    ).join("")}</span>
-  </div>`;
+
+function drawTypeBar(){
+  const live = [...new Set(board.map(r => r.et))];
+  const rest = ENGAGEMENT_TYPES.filter(t => !live.includes(t.id));
+  const pill = (id, name, sub, dis) =>
+    `<button class="tpill" aria-pressed="${activeType===id}" ${dis?`disabled title="${esc(dis)}"`:`onclick="setActiveType('${id}')"`}>
+       <b>${esc(name)}</b><span>${esc(sub)}</span></button>`;
+  $("#typebar").innerHTML = `
+    <span class="lbl">Working on</span>
+    <div class="row">
+      ${pill("all","Everything",`${typeCounts("all")} owing`)}
+      ${live.map(id => { const t = ENGAGEMENT_TYPES.find(x=>x.id===id);
+        return pill(id, t.name, `${typeCounts(id)} owing`); }).join("")}
+      ${rest.map(t => pill(t.id, t.name, t.disabled || `${t.items} items`, t.disabled || "")).join("")}
+    </div>`;
+}
+
+function setActiveType(id){
+  activeType = id;
+  if(id !== "all"){
+    const t = ENGAGEMENT_TYPES.find(x => x.id === id);
+    currentType = id;
+    TOGGLES = t.toggles.map(x => ({...x}));
+    typeChosen = true;
+  }
+  filter = "all"; cfilter = "all"; openRow = null; pickerOpen = false;
+  drawTypeBar(); drawClients(); drawList(); drawBoard();
+  const n = typeCounts(id);
+  toast(id === "all"
+    ? "Showing every engagement."
+    : `${esc(ENGAGEMENT_TYPES.find(x=>x.id===id).name)} — ${n} client${n===1?"":"s"} still owing documents.`);
 }
 
 function pickerHTML(switching){
@@ -1295,5 +1331,5 @@ document.addEventListener("keydown", e => {
 });
 
 
-drawClients(); drawList(); drawBoard(); applyState("partial");
+drawTypeBar(); drawClients(); drawList(); drawBoard(); applyState("partial");
 </script>
