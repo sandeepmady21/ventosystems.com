@@ -199,12 +199,6 @@ h3{font-size:14px;margin:0;letter-spacing:-.005em}
 .mini.clear{border-left-color:var(--ok)}
 
 /* ---------- overlays ---------- */
-#toasts{position:fixed;left:50%;transform:translateX(-50%);bottom:22px;display:flex;flex-direction:column;gap:8px;z-index:60;align-items:center}
-.toast{
-  background:var(--ink);color:var(--paper);border-radius:8px;padding:10px 15px;font-size:13px;
-  box-shadow:var(--shadow-2);display:flex;align-items:center;gap:13px;max-width:min(92vw,520px);
-}
-.toast button{background:none;border:0;color:var(--accent);font-weight:500;text-decoration:underline;padding:0}
 #modal{position:fixed;inset:0;background:rgba(12,18,16,.5);display:grid;place-items:center;padding:20px;z-index:70}
 #modal[hidden]{display:none}
 .sheet{background:var(--surface);border:1px solid var(--rule);border-radius:13px;box-shadow:var(--shadow-2);max-width:520px;width:100%;max-height:86vh;overflow:auto}
@@ -339,7 +333,6 @@ h3{font-size:14px;margin:0;letter-spacing:-.005em}
   <section class="panel" id="p-client" hidden></section>
 </main>
 
-<div id="toasts"></div>
 <div id="modal" hidden onclick="if(event.target.id==='modal')closeModal()"></div>
 
 <script>
@@ -452,19 +445,10 @@ const HI = {
 const $ = s => document.querySelector(s);
 const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 
-function toast(msg, undo){
-  const el = document.createElement("div");
-  el.className = "toast";
-  el.innerHTML = `<span>${msg}</span>`;
-  if(undo){
-    const b = document.createElement("button");
-    b.textContent = "Undo";
-    b.onclick = () => { undo(); el.remove(); };
-    el.appendChild(b);
-  }
-  $("#toasts").appendChild(el);
-  setTimeout(() => el.remove(), 5000);
-}
+/* Toasts removed at the owner's request. Kept as a no-op so the ~30 call
+   sites still work; the state change each one announced still happens.
+   NOTE: this also removes the Undo affordance those toasts carried. */
+function toast(){}
 
 function modal(title, body, footer){
   $("#modal").innerHTML =
