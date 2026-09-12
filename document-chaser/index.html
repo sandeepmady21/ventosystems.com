@@ -192,6 +192,14 @@ h3{font-size:14px;margin:0;letter-spacing:-.005em}
 
 /* ---------- chase board ---------- */
 .filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.desks{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-bottom:11px;
+  padding-bottom:11px;border-bottom:1px solid var(--rule)}
+.desk{border:1px solid var(--rule-2);background:var(--surface);border-radius:6px;padding:6px 11px;text-align:left;line-height:1.3}
+.desk:hover{border-color:var(--accent)}
+.desk.stuck{border-color:var(--bad-line);background:var(--bad-soft)}
+.desk b{display:block;font-weight:500;font-size:13px}
+.desk span{display:block;font-size:11px;color:var(--ink-3);font-family:"IBM Plex Mono",monospace}
+.desk.stuck span{color:var(--bad)}
 /* THE PIPELINE.
    Two territories, each owning its label and its own chevrons. The chevrons
    point the way work travels; the gap between the sides is the handover. */
@@ -781,7 +789,7 @@ let board = [
   {id:8, et:"gst_monthly", name:"Al-Hind Trading Co", type:"GST August 2026", missIds:[], owner:"Priya Shetty", chased:2, tags:["mine"]},
   {id:10, et:"tax_audit", stage:"preparing", idle:2, name:"Shree Ganesh Traders", type:"Tax Audit FY 25-26",
    owner:"Priya Shetty", missIds:[], chased:3, since:9, tags:[]},
-  {id:11, et:"tax_audit", stage:"preparing", idle:6, name:"Deccan Polymers Pvt Ltd", type:"Tax Audit FY 25-26",
+  {id:11, et:"tax_audit", stage:"preparing", idle:6, blocked:{why:"access", since:4}, name:"Deccan Polymers Pvt Ltd", type:"Tax Audit FY 25-26",
    owner:"Faisal Qureshi", missIds:[], chased:4, since:14, tags:[]},
   {id:12, et:"tax_audit", stage:"partner", idle:3, name:"Kaveri Exports LLP", type:"Tax Audit FY 25-26",
    owner:"Anil Rao", missIds:[], chased:2, since:18, tags:[]},
@@ -1243,14 +1251,19 @@ const DIAGNOSES = {
               {id:"confused",label:"Confused, call them"},
               {id:"never",   label:"Never opened the link"}],
   ready:     [{id:"idle", label:"Untouched 5 days or more"}],
-  preparing: [{id:"idle", label:"Untouched 5 days or more"}],
-  partner:   [{id:"idle", label:"Untouched 5 days or more"}],
+  review:    [{id:"idle", label:"Untouched 5 days or more"}],
+  preparing: [{id:"blocked", label:"Blocked, and we said why"},
+              {id:"unsaid",  label:"Stuck 5 days, nobody said why"}],
+  partner:   [{id:"blocked", label:"Blocked, and we said why"},
+              {id:"unsaid",  label:"Stuck 5 days, nobody said why"}],
 };
 const hasTag = (r, t) =>
     t === "oneleft" ? r.missIds.length === 1
   : t === "ready"   ? r.missIds.length === 0
   : t === "review"  ? needsReview(r)
   : t === "idle"    ? (r.idle || 0) >= 5
+  : t === "blocked" ? !!(r.blocked && r.blocked.why !== "queue")
+  : t === "unsaid"  ? (r.idle || 0) >= 5 && !r.blocked
   : r.tags.includes(t);
 
 /* Documents arrive the way documents actually arrive: in someone's WhatsApp. */
@@ -1353,7 +1366,8 @@ function drawBoard(){
       <div class="pipeline">
         ${["client","firm"].map(side => {
           const mine = STAGES.filter(x => x.side === side);
-          const total = mine.reduce((a,x) => a + stageCount(x.id), 0);
+          const total = mine.filter(x => x.id !== "filed" && x.id !== "notstarted")
+                             .reduce((a,x) => a + stageCount(x.id), 0);
           return `<div class="side ${side}" style="flex:${mine.length}">
             <b>${side==="client" ? "Waiting on the client" : "Waiting on us"} &middot; ${total}</b>
             <div class="pipe">${mine.map(st => {
@@ -1365,6 +1379,20 @@ function drawBoard(){
         }).join("")}
       </div>
     </div>
+
+    ${(STAGES.find(x=>x.id===stage)||{}).side === "firm" && stage !== "filed" ? `<div class="desks">
+      <span class="eyebrow" style="flex:none">Who is handling what</span>
+      ${OWNERS().map(o => {
+        const mine = scoped().filter(r => stageOf(r) === stage && r.owner === o);
+        if(!mine.length) return "";
+        const stuck = mine.filter(r => r.blocked && r.blocked.why !== "queue").length;
+        const oldest = Math.max(...mine.map(r => r.idle || 0));
+        return `<button class="desk ${stuck?"stuck":""}" onclick="setOwnerFilter('${esc(o)}')">
+          <b>${esc(o.split(" ")[0])}</b>
+          <span>${mine.length} here${stuck?` &middot; ${stuck} blocked`:""} &middot; oldest ${oldest}d</span>
+        </button>`;
+      }).join("")}
+    </div>` : ""}
 
     <div class="row-between" style="margin-bottom:9px">
       <span class="eyebrow">${(DIAGNOSES[stage]||[]).length ? "Why is it stuck?" : "&nbsp;"}</span>
@@ -1429,6 +1457,7 @@ function drawBoard(){
           <div class="imeta">
             ${STAGES.find(x=>x.id===stageOf(r)).side === "firm" && stageOf(r) !== "review"
               ? `<span class="chip ${(r.idle||0)>=5?"bad":""}">On ${esc(r.owner.split(" ")[0])}'s desk ${r.idle===0?"since today":`${r.idle} day${r.idle===1?"":"s"}`}</span>`
+                + (r.blocked ? `<span class="chip ${r.blocked.why==="queue"?"":"bad"}">${esc(blockerLabel(r))}</span>` : "")
               : r.chased ? `<span class="chip">Chased ${r.chased} time${r.chased===1?"":"s"} &middot; last ${r.since===0?"today":(r.since||r.chased)+" days ago"}</span>` : ""}
             ${r.promised ? `<span class="chip warn">${esc(r.promised)}</span>` : ""}
             ${r.stuck ? `<span class="chip bad">${esc(r.stuck)}</span>` : ""}
@@ -1441,9 +1470,12 @@ function drawBoard(){
           ${r.confused
             ? `<a class="btn sm" style="border-color:var(--violet-line);color:var(--violet);text-decoration:none" href="tel:${rowClient(r).people[0].p.replace(/ /g,"")}">Call ${esc(rowClient(r).people[0].n.split(" ")[0])}</a>`
             : `<button class="btn sm" onclick="confirmChase(${r.id})">Send reminder</button>`}
-          ${done
-            ? `<button class="btn sm primary" onclick="handover(${r.id})">Start work</button>`
-            : `<button class="btn sm locked" onclick="why(${r.id})">Start work</button>`}
+          ${(STAGES.find(x=>x.id===stageOf(r))||{}).side === "firm" && stageOf(r) !== "ready" && stageOf(r) !== "filed"
+            ? `<button class="btn sm" onclick="flagBlocker(${r.id})">${r.blocked ? "Change why" : "Why is it stuck?"}</button>
+               <button class="btn sm primary" onclick="advance(${r.id})">Move it on</button>`
+            : done
+              ? `<button class="btn sm primary" onclick="handover(${r.id})">Start work</button>`
+              : `<button class="btn sm locked" onclick="why(${r.id})">Start work</button>`}
         </div>
       </div>`;
 
@@ -1510,6 +1542,54 @@ function toggleRow(id){ openRow = openRow === id ? null : id; drawBoard(); }
 /* Nothing leaves the building without the sender seeing it, whether it is one
    message or twenty-nine. */
 /* Start work hands the row from the client to a person. It is the seam. */
+/* A stage says WHERE the work is. It does not say whether it is moving.
+   A row two days into preparation is in progress; six days in, something is
+   wrong, and only the person holding it knows what. */
+const BLOCKERS = [
+  {id:"query",   label:"Waiting on an answer from the client"},
+  {id:"review",  label:"Waiting for the manager to review"},
+  {id:"sign",    label:"Waiting for the partner to sign"},
+  {id:"third",   label:"Waiting on a bank, actuary or lawyer"},
+  {id:"access",  label:"Waiting on portal access or a credential"},
+  {id:"away",    label:"Whoever has it is away"},
+  {id:"queue",   label:"Not blocked, just not started"},
+];
+const blockerLabel = r => (BLOCKERS.find(b => b.id === (r.blocked||{}).why) || {}).label || "";
+
+function flagBlocker(id){
+  const r = board.find(x => x.id === id);
+  modal("What is holding this up?",
+    `<p class="sub" style="margin-bottom:4px">${esc(r.name)} &middot; ${esc(rowType(r).name)}</p>
+     <p class="sub" style="margin-bottom:12px">It has been on ${esc(r.owner.split(" ")[0])}'s desk
+       ${r.idle === 0 ? "since today" : `${r.idle} day${r.idle===1?"":"s"}`}.
+       Saying why puts it on the board so nobody has to ask.</p>
+     ${BLOCKERS.map(b => `<button class="opt" onclick="setBlocker(${id},'${b.id}')"><b>${esc(b.label)}</b></button>`).join("")}
+     ${r.blocked ? `<button class="opt" onclick="setBlocker(${id},null)"><b>It is moving again</b><span>Clears the flag.</span></button>` : ""}`,
+    `<button class="btn" onclick="closeModal()">Cancel</button>`);
+}
+function setBlocker(id, why){
+  const r = board.find(x => x.id === id);
+  if(why) r.blocked = {why, since: r.idle || 0}; else delete r.blocked;
+  closeModal(); drawBoard();
+}
+
+/* The pipeline was one-way: Start work moved a row to Being prepared and
+   nothing could ever move it on, so three of seven stages were decoration. */
+const FIRM_ORDER = ["review","ready","preparing","partner","filed"];
+function advance(id){
+  const r = board.find(x => x.id === id);
+  const here = stageOf(r);
+  const next = FIRM_ORDER[FIRM_ORDER.indexOf(here) + 1];
+  if(!next) return;
+  const label = (STAGES.find(x => x.id === next) || {}).label;
+  modal(`Move to ${label}`,
+    `<p class="sub" style="margin-bottom:12px">${esc(r.name)} &middot; who has it now?</p>
+     ${OWNERS().map(o => `<button class="opt" onclick="moveStage(${id},'${next}','${esc(o)}')">
+       <b>${esc(o)}</b><span>${esc(label)}. The clock restarts today.</span></button>`).join("")}
+     ${next === "filed" ? `<button class="opt" onclick="moveStage(${id},'filed','')"><b>Filed &mdash; nobody holds it any more</b></button>` : ""}`,
+    `<button class="btn" onclick="closeModal()">Not yet</button>`);
+}
+
 function handover(id){
   const r = board.find(x => x.id === id);
   modal("Who is picking this up?",
@@ -1519,7 +1599,7 @@ function handover(id){
 }
 function moveStage(id, st, owner){
   const r = board.find(x => x.id === id);
-  r.stage = st; r.idle = 0; if(owner) r.owner = owner;
+  r.stage = st; r.idle = 0; delete r.blocked; if(owner) r.owner = owner;
   closeModal(); stage = st; filter = "all"; drawBoard();
 }
 function confirmChase(id, itemId){
