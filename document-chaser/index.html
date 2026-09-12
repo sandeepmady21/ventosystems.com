@@ -345,27 +345,206 @@ let due = "30 September 2026";
 let dueDays = 18;
 
 /* --- the checklist for Sharma Textiles, Tax Audit 44AB FY 2025-26 --- */
-const SECTIONS = ["Books and financials","Bank and cash","GST and TDS","Form 3CD declarations"];
+/* =======================================================================
+   DOCUMENTS, PER ENGAGEMENT TYPE
+   Picking a tile loads that type's own list, sections and firm-fetched set.
+   ======================================================================= */
+const DOCS = {
+  tax_audit: {
+    sections:["Books and financials","Bank and cash","GST and TDS","Form 3CD declarations"],
+    fetched:["Form 26AS","Annual Information Statement (AIS)"],
+    items:[
+      {id:"tb",   s:0, name:"Trial balance", alias:"the Tally export for the full year", need:"Required", on:true},
+      {id:"fin",  s:0, name:"Signed financial statements FY 2024-25", alias:"last year's signed balance sheet and P&L", need:"Required", on:true},
+      {id:"sales",s:0, name:"Sales register", alias:"the list of all your sales bills", need:"Required", on:true},
+      {id:"purch",s:0, name:"Purchase register", alias:"the list of all bills you received", need:"Required", on:true},
+      {id:"fa",   s:0, name:"Fixed asset register with purchase invoices", alias:"machinery, vehicles, computers bought this year", need:"Required", on:true},
+      {id:"stock",s:0, name:"Stock valuation statement with basis", alias:"closing stock value and how you worked it out", need:"Required", on:true, flag:"Method changed last year. Confirm the basis."},
+      {id:"bank", s:1, name:"Bank statements, all accounts", alias:"1 April 2025 to 31 March 2026", need:"Required", on:true, have:"Received 4 Sep with the GST August request", parts:12},
+      {id:"cash", s:1, name:"Cash book", alias:"your daily cash receipts and payments", need:"Required", on:true, tag:"cash"},
+      {id:"loan", s:1, name:"Loan sanction letters and loan account statements", alias:"from the bank, for every loan running", need:"Required", on:true, tag:"loans"},
+      {id:"gst",  s:2, name:"GSTR-1, 3B and 2B for all 12 months", alias:"we can pull these if you share portal access", need:"Required", on:true},
+      {id:"tds",  s:2, name:"TDS challans and Form 26Q/24Q acknowledgements", alias:"proof of the TDS you deposited", need:"Required", on:true},
+      {id:"msme", s:3, name:"MSME vendor confirmation, section 43B(h)", alias:"which of your suppliers are registered MSMEs", need:"Required", on:true},
+      {id:"c40",  s:3, name:"Cash payments above ₹10,000 declaration, section 40A(3)", alias:"a signed note listing them, or saying there are none", need:"Required", on:true, tag:"cash"},
+      {id:"rpt",  s:3, name:"Related party transaction list", alias:"dealings with directors, relatives or sister concerns", need:"If applicable", on:true},
+      {id:"f15",  s:3, name:"Foreign remittance details, Form 15CA/15CB", alias:"only if you paid anyone outside India", need:"If applicable", on:false, tag:"foreign"},
+      {id:"prior",s:3, name:"Prior year's audit working paper index", alias:"", need:"Nice to have", on:false},
+    ]},
 
-let items = [
-  {id:"tb",   s:0, name:"Trial balance", alias:"the Tally export for the full year", need:"Required", on:true},
-  {id:"fin",  s:0, name:"Signed financial statements FY 2024-25", alias:"last year's signed balance sheet and P&L", need:"Required", on:true},
-  {id:"sales",s:0, name:"Sales register", alias:"the list of all your sales bills", need:"Required", on:true},
-  {id:"purch",s:0, name:"Purchase register", alias:"the list of all bills you received", need:"Required", on:true},
-  {id:"fa",   s:0, name:"Fixed asset register with purchase invoices", alias:"machinery, vehicles, computers bought this year", need:"Required", on:true},
-  {id:"stock",s:0, name:"Stock valuation statement with basis", alias:"closing stock value and how you worked it out", need:"Required", on:true, flag:"Method changed last year. Confirm the basis."},
-  {id:"bank", s:1, name:"Bank statements, all accounts", alias:"1 April 2025 to 31 March 2026", need:"Required", on:true, have:"Received 4 Sep with the GST August request", parts:12},
-  {id:"cash", s:1, name:"Cash book", alias:"your daily cash receipts and payments", need:"Required", on:true, tag:"cash"},
-  {id:"loan", s:1, name:"Loan sanction letters and loan account statements", alias:"from the bank, for every loan running", need:"Required", on:true, tag:"loans"},
-  {id:"gst",  s:2, name:"GSTR-1, 3B and 2B for all 12 months", alias:"we can pull these if you share portal access", need:"Required", on:true},
-  {id:"tds",  s:2, name:"TDS challans and Form 26Q/24Q acknowledgements", alias:"proof of the TDS you deposited", need:"Required", on:true},
-  {id:"msme", s:3, name:"MSME vendor confirmation, section 43B(h)", alias:"which of your suppliers are registered MSMEs", need:"Required", on:true},
-  {id:"cash40",s:3,name:"Cash payments above ₹10,000 declaration, section 40A(3)", alias:"a signed note listing them, or saying there are none", need:"Required", on:true, tag:"cash"},
-  {id:"rpt",  s:3, name:"Related party transaction list", alias:"dealings with directors, relatives or sister concerns", need:"If applicable", on:true},
-  {id:"fa15", s:3, name:"Foreign remittance details, Form 15CA/15CB", alias:"only if you paid anyone outside India", need:"If applicable", on:false, tag:"foreign"},
-  {id:"prior",s:3, name:"Prior year's audit working paper index", alias:"", need:"Nice to have", on:false},
-];
-const FETCHED = ["Form 26AS","Annual Information Statement (AIS)"];
+  gst_monthly: {
+    sections:["Sales and purchases","Bank, tax and confirmations"],
+    fetched:["GSTR-2B for August 2026","Last month's filed GSTR-3B"],
+    items:[
+      {id:"g1", s:0, name:"Sales register for August 2026", alias:"the Tally export, or an Excel list of your sales bills", need:"Required", on:true},
+      {id:"g2", s:0, name:"Purchase register for August 2026, GSTIN-wise", alias:"every bill you received, with your supplier's GST number", need:"Required", on:true},
+      {id:"g3", s:0, name:"Credit and debit notes issued", alias:"any bill you cancelled or corrected", need:"Required", on:true},
+      {id:"g4", s:0, name:"HSN-wise summary of outward supplies", alias:"Tally prints this one", need:"Required", on:true},
+      {id:"g5", s:0, name:"E-way bill summary for the month", alias:"download from the e-way bill portal", need:"If applicable", on:true, tag:"eway"},
+      {id:"g6", s:1, name:"Bank statement for August 2026", alias:"all current accounts", need:"Required", on:true, parts:3},
+      {id:"g7", s:1, name:"Reverse charge details", alias:"freight, legal fees, director remuneration", need:"Required", on:true, tag:"rcm"},
+      {id:"g8", s:1, name:"Blocked credit confirmation, section 17(5)", alias:"a note on car, insurance and staff welfare bills", need:"Required", on:true},
+      {id:"g9", s:1, name:"GSTR-2B accept or reject sign-off in IMS", alias:"tell us which supplier bills to accept", need:"Required", on:true},
+      {id:"g10",s:1, name:"Quarterly turnover estimate", alias:"a rough figure is fine", need:"If applicable", on:false, tag:"qrmp"},
+    ]},
+
+  stat_audit: {
+    sections:["Books and financials","Bank and balances","Statutory and secretarial","Payroll, dues and reporting"],
+    fetched:["Form 26AS","MCA master data for the company"],
+    items:[
+      {id:"s1", s:0, name:"Trial balance and full Tally backup", alias:"the accounting software export", need:"Required", on:true},
+      {id:"s2", s:0, name:"Draft financial statements", alias:"balance sheet, P&L, cash flow and notes", need:"Required", on:true},
+      {id:"s3", s:0, name:"Prior year signed financials and audit report", alias:"", need:"Required", on:true},
+      {id:"s4", s:0, name:"Fixed asset register with invoices for additions and deletions", alias:"", need:"Required", on:true},
+      {id:"s5", s:0, name:"Inventory statement with valuation basis", alias:"closing stock and how you valued it", need:"Required", on:true},
+      {id:"s6", s:0, name:"Debtors and creditors ageing", alias:"who owes you, and who you owe, by age", need:"Required", on:true},
+      {id:"s7", s:1, name:"Bank statements, all accounts", alias:"1 April 2025 to 31 March 2026", need:"Required", on:true, parts:12},
+      {id:"s8", s:1, name:"Bank balance confirmation letters", alias:"the bank issues these on request", need:"Required", on:true},
+      {id:"s9", s:1, name:"Loan sanction letters, statements and charge documents", alias:"", need:"Required", on:true},
+      {id:"s10",s:2, name:"Board meeting and AGM minutes", alias:"signed minutes for the year", need:"Required", on:true},
+      {id:"s11",s:2, name:"Statutory registers, in bound form", alias:"members, directors, charges", need:"Required", on:true},
+      {id:"s12",s:2, name:"MBP-1 and DIR-8 declarations from each director", alias:"", need:"Required", on:true},
+      {id:"s13",s:2, name:"Related party transaction details", alias:"dealings with directors and group companies", need:"Required", on:true},
+      {id:"s14",s:3, name:"GST returns with a books reconciliation", alias:"GSTR-1, 3B and 2B against your books", need:"Required", on:true},
+      {id:"s15",s:3, name:"TDS returns, challans and reconciliation", alias:"", need:"Required", on:true},
+      {id:"s16",s:3, name:"PF and ESI challans and returns", alias:"", need:"Required", on:true},
+      {id:"s17",s:3, name:"MSME vendor ageing for the MSME disclosure", alias:"which suppliers are registered MSMEs, and how long unpaid", need:"Required", on:true, tag:"caro"},
+      {id:"s18",s:3, name:"CARO 2020 working papers", alias:"title deeds, physical verification, fund utilisation", need:"Required", on:true, tag:"caro"},
+      {id:"s19",s:3, name:"Internal financial controls documentation", alias:"your process notes and approval matrix", need:"Required", on:false, tag:"ifc"},
+      {id:"s20",s:3, name:"Subsidiary financials for consolidation", alias:"audited accounts of each subsidiary", need:"Required", on:false, tag:"consol"},
+      {id:"s21",s:2, name:"DSC of the signing director, with validity date", alias:"expired ones block the filing", need:"Required", on:true},
+    ]},
+
+  llp_audit: {
+    sections:["Books and financials","Partners and filings"],
+    fetched:["MCA master data for the LLP"],
+    items:[
+      {id:"l1", s:0, name:"Trial balance and Tally backup", alias:"", need:"Required", on:true},
+      {id:"l2", s:0, name:"Draft financial statements", alias:"balance sheet and P&L", need:"Required", on:true},
+      {id:"l3", s:0, name:"Prior year signed financials", alias:"", need:"Required", on:true},
+      {id:"l4", s:0, name:"Bank statements, all accounts", alias:"1 April 2025 to 31 March 2026", need:"Required", on:true, parts:12},
+      {id:"l5", s:0, name:"Fixed asset register", alias:"with purchase invoices for the year", need:"Required", on:true},
+      {id:"l6", s:0, name:"Stock statement with valuation basis", alias:"", need:"If applicable", on:true},
+      {id:"l7", s:0, name:"Debtors and creditors ageing", alias:"", need:"Required", on:true},
+      {id:"l8", s:1, name:"LLP agreement and any supplementary agreement", alias:"collect once, we keep it on file", need:"Required", on:true},
+      {id:"l9", s:1, name:"Partners' capital and current account statements", alias:"contributions, drawings and profit share", need:"Required", on:true},
+      {id:"l10",s:1, name:"Loan sanction letters and statements", alias:"", need:"Required", on:true, tag:"loans"},
+      {id:"l11",s:1, name:"GST returns with a books reconciliation", alias:"", need:"Required", on:true},
+      {id:"l12",s:1, name:"TDS challans and returns", alias:"", need:"Required", on:true},
+      {id:"l13",s:1, name:"DSC of the designated partners", alias:"with validity dates", need:"Required", on:true},
+    ]},
+
+  trust_audit: {
+    sections:["Books and financials","Registrations and deed","Receipts and application of income"],
+    fetched:["Form 26AS","Annual Information Statement (AIS)"],
+    items:[
+      {id:"t1", s:0, name:"Trial balance and Tally backup", alias:"", need:"Required", on:true},
+      {id:"t2", s:0, name:"Receipts and payments account", alias:"everything that came in and went out", need:"Required", on:true},
+      {id:"t3", s:0, name:"Income and expenditure account and balance sheet", alias:"", need:"Required", on:true},
+      {id:"t4", s:0, name:"Prior year signed accounts and Form 10B", alias:"last year's audit report", need:"Required", on:true},
+      {id:"t5", s:0, name:"Bank statements, all accounts", alias:"1 April 2025 to 31 March 2026", need:"Required", on:true, parts:12},
+      {id:"t6", s:0, name:"Fixed asset register", alias:"", need:"Required", on:true},
+      {id:"t7", s:1, name:"Trust deed and any amendments", alias:"collect once, we keep it on file", need:"Required", on:true},
+      {id:"t8", s:1, name:"12A / 12AB registration certificate", alias:"", need:"Required", on:true},
+      {id:"t9", s:1, name:"80G approval letter", alias:"", need:"Required", on:true, tag:"g80"},
+      {id:"t10",s:1, name:"Trustee list and meeting minutes", alias:"", need:"Required", on:true},
+      {id:"t11",s:2, name:"Donation register with donor PAN", alias:"needed for every 80G receipt you issued", need:"Required", on:true, tag:"g80"},
+      {id:"t12",s:2, name:"Corpus donation details with written directions", alias:"the donor's letter saying it is corpus", need:"Required", on:true},
+      {id:"t13",s:2, name:"Anonymous donation details", alias:"collections where no donor name was recorded", need:"If applicable", on:true},
+      {id:"t14",s:2, name:"Application of income, revenue and capital", alias:"what you spent on the objects of the trust", need:"Required", on:true},
+      {id:"t15",s:2, name:"Payments to specified persons, section 13(3)", alias:"anything paid to trustees or their relatives", need:"Required", on:true},
+      {id:"t16",s:2, name:"Form 9A / Form 10 accumulation working", alias:"if income is being carried forward", need:"Required", on:false, tag:"accum"},
+      {id:"t17",s:1, name:"FCRA registration certificate and FC-4 return", alias:"", need:"Required", on:false, tag:"fcra"},
+      {id:"t18",s:1, name:"FCRA designated bank account statement", alias:"the SBI New Delhi main branch account", need:"Required", on:false, tag:"fcra"},
+      {id:"t19",s:2, name:"TDS challans and returns", alias:"", need:"Required", on:true},
+    ]},
+
+  society_audit: {
+    sections:["Books and financials","Society records","Members, dues and property"],
+    fetched:[],
+    items:[
+      {id:"h1", s:0, name:"Trial balance and Tally backup", alias:"", need:"Required", on:true},
+      {id:"h2", s:0, name:"Receipts and payments account", alias:"", need:"Required", on:true},
+      {id:"h3", s:0, name:"Income and expenditure account and balance sheet", alias:"", need:"Required", on:true},
+      {id:"h4", s:0, name:"Prior year audited accounts and rectification report", alias:"and what the committee did about last year's remarks", need:"Required", on:true},
+      {id:"h5", s:0, name:"Bank statements, all accounts", alias:"1 April 2025 to 31 March 2026", need:"Required", on:true, parts:12},
+      {id:"h6", s:0, name:"Fixed deposit certificates", alias:"", need:"Required", on:true},
+      {id:"h7", s:0, name:"Cash book and cash on hand certificate", alias:"", need:"Required", on:true, tag:"cash"},
+      {id:"h8", s:1, name:"Managing committee meeting minutes", alias:"signed minutes for the year", need:"Required", on:true},
+      {id:"h9", s:1, name:"General body meeting minutes", alias:"including the AGM", need:"Required", on:true},
+      {id:"h10",s:1, name:"Registration certificate and bye-laws", alias:"collect once, we keep it on file", need:"Required", on:true},
+      {id:"h11",s:1, name:"Register of members and share register", alias:"the I Register", need:"Required", on:true},
+      {id:"h12",s:2, name:"Member-wise maintenance dues and arrears list", alias:"who has paid and who has not", need:"Required", on:true},
+      {id:"h13",s:2, name:"Sinking fund and repair fund ledgers", alias:"", need:"Required", on:true, tag:"lift"},
+      {id:"h14",s:2, name:"Lift and equipment AMC invoices", alias:"annual maintenance contracts", need:"Required", on:true, tag:"lift"},
+      {id:"h15",s:2, name:"Vendor bills above the tender limit, with comparatives", alias:"the quotes you compared before awarding", need:"Required", on:true},
+      {id:"h16",s:2, name:"Building insurance policy", alias:"", need:"Required", on:true},
+      {id:"h17",s:2, name:"Property tax and water charge receipts", alias:"", need:"Required", on:true},
+      {id:"h18",s:2, name:"Redevelopment agreement and related resolutions", alias:"", need:"Required", on:false, tag:"redev"},
+      {id:"h19",s:2, name:"TDS challans and returns", alias:"on contractor and security payments", need:"Required", on:true},
+    ]},
+
+  gstr9: {
+    sections:["Financials","Reconciliations and disclosures"],
+    fetched:["GSTR-1, 3B and 2B for all 12 months","Annual GSTR-9 system-computed draft"],
+    items:[
+      {id:"a1", s:0, name:"Finalised financial statements FY 2025-26", alias:"", need:"Required", on:true},
+      {id:"a2", s:1, name:"Turnover reconciliation, books against GSTR-1 and 3B", alias:"", need:"Required", on:true},
+      {id:"a3", s:1, name:"ITC reconciliation, books against 3B and 2B", alias:"", need:"Required", on:true},
+      {id:"a4", s:1, name:"Amendments and credit notes in the next FY, to the cut-off", alias:"", need:"Required", on:true},
+      {id:"a5", s:1, name:"HSN-wise summary of outward supplies", alias:"", need:"Required", on:true},
+      {id:"a6", s:1, name:"HSN-wise summary of inward supplies", alias:"needed for 9C", need:"Required", on:true, tag:"c5"},
+      {id:"a7", s:1, name:"Details of ITC reversed and reclaimed", alias:"Rules 42 and 43, and the 180-day rule", need:"Required", on:true},
+      {id:"a8", s:1, name:"Supplies from composition dealers and deemed supplies", alias:"", need:"If applicable", on:true},
+      {id:"a9", s:1, name:"Demands, refunds and departmental correspondence", alias:"any notice you received during the year", need:"Required", on:true},
+      {id:"a10",s:1, name:"Goods sent on approval and job work details", alias:"", need:"If applicable", on:true},
+      {id:"a11",s:1, name:"Written confirmation of any unreconciled difference", alias:"and the reason for it", need:"Required", on:true},
+      {id:"a12",s:1, name:"Turnover split across GSTINs", alias:"", need:"Required", on:false, tag:"multi"},
+      {id:"a13",s:1, name:"Export and SEZ supply details with shipping bills", alias:"", need:"Required", on:false, tag:"exp"},
+    ]},
+
+  form15cb: {
+    sections:["The remittance","The payee"],
+    fetched:[],
+    items:[
+      {id:"c1", s:0, name:"Invoice from the overseas party", alias:"", need:"Required", on:true},
+      {id:"c2", s:0, name:"Remittance details", alias:"amount, currency and purpose of payment", need:"Required", on:true},
+      {id:"c3", s:0, name:"Bank's A2 form or request letter", alias:"your bank gives you this", need:"Required", on:true},
+      {id:"c4", s:0, name:"Agreement or contract with the payee", alias:"", need:"Required", on:true},
+      {id:"c5", s:1, name:"Tax Residency Certificate from the payee", alias:"issued by their own tax authority", need:"Required", on:true, tag:"trc"},
+      {id:"c6", s:1, name:"Form 10F from the payee", alias:"", need:"Required", on:true, tag:"trc"},
+      {id:"c7", s:1, name:"No permanent establishment declaration", alias:"a signed letter from the payee", need:"Required", on:true, tag:"pe"},
+    ]},
+
+  networth: {
+    sections:["Assets","Liabilities and purpose"],
+    fetched:["Form 26AS"],
+    items:[
+      {id:"n1", s:0, name:"Latest audited or certified financial statements", alias:"", need:"Required", on:true},
+      {id:"n2", s:0, name:"Bank statements and fixed deposit certificates", alias:"", need:"Required", on:true},
+      {id:"n3", s:0, name:"Investment statements", alias:"shares, mutual funds and bonds", need:"Required", on:true},
+      {id:"n4", s:0, name:"Property documents with current valuation", alias:"sale deed and a valuer's report", need:"Required", on:true, tag:"prop"},
+      {id:"n5", s:0, name:"Business ownership proof and capital account", alias:"", need:"Required", on:false, tag:"biz"},
+      {id:"n6", s:1, name:"Loan statements and outstanding liabilities", alias:"every loan, including personal ones", need:"Required", on:true},
+      {id:"n7", s:1, name:"Purpose letter from the bank", alias:"what the certificate is needed for", need:"If applicable", on:false, tag:"loan"},
+    ]},
+};
+
+let SECTIONS = DOCS.tax_audit.sections;
+let FETCHED  = DOCS.tax_audit.fetched;
+let items    = DOCS.tax_audit.items.map(x => ({...x}));
+
+/* load a type's own documents, sections, firm-fetched set and questions */
+function loadType(id){
+  const d = DOCS[id], t = ENGAGEMENT_TYPES.find(x => x.id === id);
+  if(!d || !t) return false;
+  currentType = id;
+  SECTIONS = d.sections;
+  FETCHED  = d.fetched;
+  items    = d.items.map(x => ({...x}));
+  TOGGLES  = t.toggles.map(x => ({...x}));
+  return true;
+}
 
 /* --- profile toggles that move a bundle of items at once --- */
 let TOGGLES = [
@@ -506,7 +685,7 @@ function drawList(){
         <button class="chip acc" style="cursor:pointer" onclick="openPicker()" title="${engagementSent ? "Already sent to the client" : "Change what this engagement is"}">${esc(ET().name)} &middot; ${esc(ET().period)} &nbsp;${engagementSent ? "🔒 locked" : "▾ change"}</button>
         <button class="duebtn" onclick="editDue()">Due ${due} &nbsp;✎</button>
       </div>
-      <p class="sub">Owner: Priya Shetty &middot; last year's list was 16 items, we started you from it.</p>
+      <p class="sub">Owner: Priya Shetty &middot; last year's list was ${items.length} items, we started you from it.</p>
       </div>
     </div>
 
@@ -516,7 +695,7 @@ function drawList(){
       <span class="dot"></span>
       <div style="flex:1">
         <h3>Started from last year's list</h3>
-        <p class="sub" style="margin-top:3px">${items.length} items carried forward. ${flagged.length} need${flagged.length===1?"s":""} a look before you send.</p>
+        <p class="sub" style="margin-top:3px">${items.length} items carried forward.${flagged.length ? ` ${flagged.length} need${flagged.length===1?"s":""} a look before you send.` : " Nothing needs your attention."}</p>
         ${flagged.map(f => `<p class="sub" style="margin-top:6px"><span class="chip warn">Check</span> <b>${esc(f.name)}</b> &mdash; ${esc(f.flag)}</p>`).join("")}
       </div>
     </div>
@@ -1042,6 +1221,7 @@ const ENGAGEMENT_TYPES = [
   {id:"itr", group:"Compliance", name:"ITR — individual", items:0, disabled:"Opens 15 June"},
   {id:"roc", group:"Compliance", name:"ROC annual (AOC-4)", items:0, disabled:"Needs the AGM date"},
 ];
+ENGAGEMENT_TYPES.forEach(t => { if(DOCS[t.id]) t.items = DOCS[t.id].items.length; });
 let currentType = "tax_audit";
 const ET = () => ENGAGEMENT_TYPES.find(t => t.id === currentType);
 
@@ -1224,14 +1404,9 @@ function openPicker(){
 }
 
 function chooseType(id){
-  const t = ENGAGEMENT_TYPES.find(x => x.id === id);
-  const wasType = currentType, wasChosen = typeChosen, wasToggles = TOGGLES;
-  currentType = id;
-  TOGGLES = t.toggles.map(x => ({...x}));
-  typeChosen = true; pickerOpen = false;
-  drawList();
-  toast(`${esc(t.name)} — ${t.items} items pre-ticked. Nothing sent to the client yet.`,
-        () => { currentType = wasType; TOGGLES = wasToggles; typeChosen = wasChosen; drawList(); });
+  if(!loadType(id)) return;
+  activeType = id; typeChosen = true; pickerOpen = false; engagementSent = false;
+  drawTypeBar(); drawList(); drawBoard(); drawClients();
 }
 
 let activeType = "all";   // the global "what am I working in" context
@@ -1259,11 +1434,8 @@ function drawTypeBar(){
 
 function setActiveType(id){
   activeType = id;
-  if(id !== "all"){
-    const t = ENGAGEMENT_TYPES.find(x => x.id === id);
-    currentType = id;
-    TOGGLES = t.toggles.map(x => ({...x}));
-    typeChosen = true;
+  if(id !== "all" && loadType(id)){
+    typeChosen = true; engagementSent = false;
   }
   filter = "all"; cfilter = "all"; openRow = null; pickerOpen = false;
   drawTypeBar(); drawClients(); drawList(); drawBoard();
