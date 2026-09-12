@@ -196,10 +196,12 @@ h3{font-size:14px;margin:0;letter-spacing:-.005em}
 .pipe button:last-child{border-right:0}
 .pipe button.client:hover:not([aria-pressed="true"]){background:#F6E9CA}
 .pipe button.firm:hover:not([aria-pressed="true"]){background:#D7E4F0}
-.pipe button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+.pipe button.client[aria-pressed="true"]{background:#6E4F0F;color:#FCF5E6}
+.pipe button.firm[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
 .pipe .pn{display:block;font-family:"IBM Plex Mono",monospace;font-size:20px;font-weight:500;line-height:1}
 .pipe .pl{display:block;font-size:11px;color:var(--ink-2);margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.pipe button[aria-pressed="true"] .pl{color:var(--accent-ink);opacity:.85}
+.pipe button.client[aria-pressed="true"] .pl{color:#FCF5E6;opacity:.8}
+.pipe button.firm[aria-pressed="true"] .pl{color:var(--accent-ink);opacity:.85}
 .pipe .seam{border-right:3px solid var(--ink-2)}
 .pipe button.empty .pn{opacity:.4}
 .sides{display:flex;margin-bottom:0;gap:0}
