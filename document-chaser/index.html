@@ -362,7 +362,7 @@ const DOCS = {
     fetched:["Form 26AS","Annual Information Statement (AIS)"],
     items:[
       {id:"tb",   s:0, name:"Trial balance", alias:"the Tally export for the full year", need:"Required", on:true},
-      {id:"fin",  s:0, name:"Signed financial statements FY 2024-25", alias:"last year's signed balance sheet and P&L", need:"Required", on:true},
+      {id:"fin",  s:0, name:"Signed financial statements FY 2024-25", alias:"last year's signed balance sheet and P&L", need:"Required", on:true, have:"We issued these ourselves in September 2025"},
       {id:"sales",s:0, name:"Sales register", alias:"the list of all your sales bills", need:"Required", on:true},
       {id:"purch",s:0, name:"Purchase register", alias:"the list of all bills you received", need:"Required", on:true},
       {id:"fa",   s:0, name:"Fixed asset register with purchase invoices", alias:"machinery, vehicles, computers bought this year", need:"Required", on:true},
@@ -370,7 +370,7 @@ const DOCS = {
       {id:"bank", s:1, name:"Bank statements, all accounts", alias:"1 April 2025 to 31 March 2026", need:"Required", on:true, have:"Received 4 Sep with the GST August request", parts:12},
       {id:"cash", s:1, name:"Cash book", alias:"your daily cash receipts and payments", need:"Required", on:true, tag:"cash"},
       {id:"loan", s:1, name:"Loan sanction letters and loan account statements", alias:"from the bank, for every loan running", need:"Required", on:true, tag:"loans"},
-      {id:"gst",  s:2, name:"GSTR-1, 3B and 2B for all 12 months", alias:"we can pull these if you share portal access", need:"Required", on:true},
+      {id:"gst",  s:2, name:"GSTR-1, 3B and 2B for all 12 months", alias:"we can pull these if you share portal access", need:"Required", on:true, have:"We filed all 12 returns for this client"},
       {id:"tds",  s:2, name:"TDS challans and Form 26Q/24Q acknowledgements", alias:"proof of the TDS you deposited", need:"Required", on:true},
       {id:"msme", s:3, name:"MSME vendor confirmation, section 43B(h)", alias:"which of your suppliers are registered MSMEs", need:"Required", on:true},
       {id:"c40",  s:3, name:"Cash payments above ₹10,000 declaration, section 40A(3)", alias:"a signed note listing them, or saying there are none", need:"Required", on:true, tag:"cash"},
@@ -388,7 +388,7 @@ const DOCS = {
       {id:"g3", s:0, name:"Credit and debit notes issued", alias:"any bill you cancelled or corrected", need:"Required", on:true},
       {id:"g4", s:0, name:"HSN-wise summary of outward supplies", alias:"Tally prints this one", need:"Required", on:true},
       {id:"g5", s:0, name:"E-way bill summary for the month", alias:"download from the e-way bill portal", need:"If applicable", on:true, tag:"eway"},
-      {id:"g6", s:1, name:"Bank statement for August 2026", alias:"all current accounts", need:"Required", on:true, parts:3},
+      {id:"g6", s:1, name:"Bank statement for August 2026", alias:"all current accounts", need:"Required", on:true, parts:3, have:"Came in on 4 Sep with the tax audit documents"},
       {id:"g7", s:1, name:"Reverse charge details", alias:"freight, legal fees, director remuneration", need:"Required", on:true, tag:"rcm"},
       {id:"g8", s:1, name:"Blocked credit confirmation, section 17(5)", alias:"a note on car, insurance and staff welfare bills", need:"Required", on:true},
       {id:"g9", s:1, name:"GSTR-2B accept or reject sign-off in IMS", alias:"tell us which supplier bills to accept", need:"Required", on:true},
@@ -401,7 +401,7 @@ const DOCS = {
     items:[
       {id:"s1", s:0, name:"Trial balance and full Tally backup", alias:"the accounting software export", need:"Required", on:true},
       {id:"s2", s:0, name:"Draft financial statements", alias:"balance sheet, P&L, cash flow and notes", need:"Required", on:true},
-      {id:"s3", s:0, name:"Prior year signed financials and audit report", alias:"", need:"Required", on:true},
+      {id:"s3", s:0, name:"Prior year signed financials and audit report", alias:"", need:"Required", on:true, have:"We signed this audit report last October"},
       {id:"s4", s:0, name:"Fixed asset register with invoices for additions and deletions", alias:"", need:"Required", on:true},
       {id:"s5", s:0, name:"Inventory statement with valuation basis", alias:"closing stock and how you valued it", need:"Required", on:true},
       {id:"s6", s:0, name:"Debtors and creditors ageing", alias:"who owes you, and who you owe, by age", need:"Required", on:true},
@@ -413,7 +413,7 @@ const DOCS = {
       {id:"s12",s:2, name:"MBP-1 and DIR-8 declarations from each director", alias:"", need:"Required", on:true},
       {id:"s13",s:2, name:"Related party transaction details", alias:"dealings with directors and group companies", need:"Required", on:true},
       {id:"s14",s:3, name:"GST returns with a books reconciliation", alias:"GSTR-1, 3B and 2B against your books", need:"Required", on:true},
-      {id:"s15",s:3, name:"TDS returns, challans and reconciliation", alias:"", need:"Required", on:true},
+      {id:"s15",s:3, name:"TDS returns, challans and reconciliation", alias:"", need:"Required", on:true, have:"We filed all four quarters"},
       {id:"s16",s:3, name:"PF and ESI challans and returns", alias:"", need:"Required", on:true},
       {id:"s17",s:3, name:"MSME vendor ageing for the MSME disclosure", alias:"which suppliers are registered MSMEs, and how long unpaid", need:"Required", on:true, tag:"caro"},
       {id:"s18",s:3, name:"CARO 2020 working papers", alias:"title deeds, physical verification, fund utilisation", need:"Required", on:true, tag:"caro"},
@@ -433,7 +433,7 @@ const DOCS = {
       {id:"l5", s:0, name:"Fixed asset register", alias:"with purchase invoices for the year", need:"Required", on:true},
       {id:"l6", s:0, name:"Stock statement with valuation basis", alias:"", need:"If applicable", on:true},
       {id:"l7", s:0, name:"Debtors and creditors ageing", alias:"", need:"Required", on:true},
-      {id:"l8", s:1, name:"LLP agreement and any supplementary agreement", alias:"collect once, we keep it on file", need:"Required", on:true},
+      {id:"l8", s:1, name:"LLP agreement and any supplementary agreement", alias:"collect once, we keep it on file", need:"Required", on:true, have:"On file since the 2021 incorporation"},
       {id:"l9", s:1, name:"Partners' capital and current account statements", alias:"contributions, drawings and profit share", need:"Required", on:true},
       {id:"l10",s:1, name:"Loan sanction letters and statements", alias:"", need:"Required", on:true, tag:"loans"},
       {id:"l11",s:1, name:"GST returns with a books reconciliation", alias:"", need:"Required", on:true},
@@ -451,8 +451,8 @@ const DOCS = {
       {id:"t4", s:0, name:"Prior year signed accounts and Form 10B", alias:"last year's audit report", need:"Required", on:true},
       {id:"t5", s:0, name:"Bank statements, all accounts", alias:"1 April 2025 to 31 March 2026", need:"Required", on:true, parts:12},
       {id:"t6", s:0, name:"Fixed asset register", alias:"", need:"Required", on:true},
-      {id:"t7", s:1, name:"Trust deed and any amendments", alias:"collect once, we keep it on file", need:"Required", on:true},
-      {id:"t8", s:1, name:"12A / 12AB registration certificate", alias:"", need:"Required", on:true},
+      {id:"t7", s:1, name:"Trust deed and any amendments", alias:"collect once, we keep it on file", need:"Required", on:true, have:"On file since 2019, no amendments since"},
+      {id:"t8", s:1, name:"12A / 12AB registration certificate", alias:"", need:"Required", on:true, have:"We handled the 12AB re-registration in 2022"},
       {id:"t9", s:1, name:"80G approval letter", alias:"", need:"Required", on:true, tag:"g80"},
       {id:"t10",s:1, name:"Trustee list and meeting minutes", alias:"", need:"Required", on:true},
       {id:"t11",s:2, name:"Donation register with donor PAN", alias:"needed for every 80G receipt you issued", need:"Required", on:true, tag:"g80"},
@@ -479,7 +479,7 @@ const DOCS = {
       {id:"h7", s:0, name:"Cash book and cash on hand certificate", alias:"", need:"Required", on:true, tag:"cash"},
       {id:"h8", s:1, name:"Managing committee meeting minutes", alias:"signed minutes for the year", need:"Required", on:true},
       {id:"h9", s:1, name:"General body meeting minutes", alias:"including the AGM", need:"Required", on:true},
-      {id:"h10",s:1, name:"Registration certificate and bye-laws", alias:"collect once, we keep it on file", need:"Required", on:true},
+      {id:"h10",s:1, name:"Registration certificate and bye-laws", alias:"collect once, we keep it on file", need:"Required", on:true, have:"On file, unchanged since 2018"},
       {id:"h11",s:1, name:"Register of members and share register", alias:"the I Register", need:"Required", on:true},
       {id:"h12",s:2, name:"Member-wise maintenance dues and arrears list", alias:"who has paid and who has not", need:"Required", on:true},
       {id:"h13",s:2, name:"Sinking fund and repair fund ledgers", alias:"", need:"Required", on:true, tag:"lift"},
@@ -495,7 +495,7 @@ const DOCS = {
     sections:["Financials","Reconciliations and disclosures"],
     fetched:["GSTR-1, 3B and 2B for all 12 months","Annual GSTR-9 system-computed draft"],
     items:[
-      {id:"a1", s:0, name:"Finalised financial statements FY 2025-26", alias:"", need:"Required", on:true},
+      {id:"a1", s:0, name:"Finalised financial statements FY 2025-26", alias:"", need:"Required", on:true, have:"From the tax audit we are finishing now"},
       {id:"a2", s:1, name:"Turnover reconciliation, books against GSTR-1 and 3B", alias:"", need:"Required", on:true},
       {id:"a3", s:1, name:"ITC reconciliation, books against 3B and 2B", alias:"", need:"Required", on:true},
       {id:"a4", s:1, name:"Amendments and credit notes in the next FY, to the cut-off", alias:"", need:"Required", on:true},
@@ -664,7 +664,8 @@ function go(tab){
 /* =======================================================================
    SCREEN 1 — THE CHECKLIST
    ======================================================================= */
-function asked(){ return items.filter(i => i.on).length; }
+function asked(){  return items.filter(i => i.on && !i.have).length; }
+function onFile(){ return items.filter(i => i.on &&  i.have).length; }
 
 function drawList(){
   const flagged = items.filter(i => i.flag && i.on);
@@ -701,6 +702,14 @@ function drawList(){
 
     ${pickerOpen ? pickerHTML(true) : ""}
 
+    ${onFile() ? `<div class="banner" style="background:var(--ok-soft);border-color:var(--ok-line)">
+      <span class="dot" style="background:var(--ok)"></span>
+      <div style="flex:1">
+        <h3>${onFile()} of these we already have</h3>
+        <p class="sub" style="margin-top:3px">Documents we filed, issued or collected for this client before. They stay on the list so you can see the full picture, they are marked green, and they are left out of the message and out of the chasing.</p>
+      </div>
+    </div>` : ""}
+
     <div class="banner">
       <span class="dot"></span>
       <div style="flex:1">
@@ -733,7 +742,7 @@ function drawList(){
           <div class="iname">${esc(i.name)}</div>
           ${i.alias ? `<div class="ialias">Client sees: &ldquo;${esc(i.alias)}&rdquo;</div>` : ""}
           <div class="imeta">
-            ${i.have ? `<span class="chip ok">Already have this &middot; ${esc(i.have)}</span>` : ""}
+            ${i.have ? `<span class="chip ok">Already on file</span><span class="ialias" style="margin:0">${esc(i.have)} &middot; we will not ask again</span>` : ""}
             ${i.parts ? `<span class="chip">${i.parts} months expected</span>` : ""}
             ${i.flag ? `<span class="chip warn">Check the basis</span>` : ""}
           </div>
@@ -763,6 +772,7 @@ function drawList(){
       <div class="row-between">
         <div class="counts">
           <div><b>${asked()}</b><span>asked of the client</span></div>
+          <div><b>${onFile()}</b><span>already on file</span></div>
           <div><b>${FETCHED.length}</b><span>we fetch</span></div>
           <div><b>${off}</b><span>not needed</span></div>
         </div>
@@ -821,7 +831,7 @@ function setDue(d, n){
 }
 
 function waText(){
-  const list = items.filter(i => i.on).slice(0,4).map(i => "• " + i.name).join("\n");
+  const list = items.filter(i => i.on && !i.have).slice(0,4).map(i => "• " + i.name).join("\n");
   const more = asked() - 4;
   return `Hello Sharma Textiles Pvt Ltd, this is ${FIRM} (Chartered Accountants).
 
