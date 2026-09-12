@@ -50,6 +50,9 @@ button{font:inherit;color:inherit;cursor:pointer}
 .brand b{font-family:"IBM Plex Serif",Georgia,serif;font-weight:600;font-size:18px;letter-spacing:-.01em}
 .brand span{color:var(--ink-3);font-size:12.5px}
 .brand span::before{content:"";display:inline-block;width:1px;height:11px;background:var(--rule-2);margin-right:10px;vertical-align:-1px}
+.whoami{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--ink-2)}
+.whoami .av{width:26px;height:26px;border-radius:50%;background:var(--accent);color:var(--accent-ink);
+  display:grid;place-items:center;font-size:11px;font-weight:600;flex:none}
 .note{
   background:rgba(255,255,255,.5);
   font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3);
@@ -455,6 +458,7 @@ h3{font-size:14px;margin:0;letter-spacing:-.005em}
     <input id="q" class="search" placeholder="Find a client &mdash; name, PAN, GSTIN, phone" autocomplete="off" oninput="search(this.value)" onkeydown="if(event.key==='Escape'){this.value='';search('')}">
     <div id="sres"></div>
   </div>
+  <div class="whoami" id="whoami"></div>
   <div class="note">Demo &middot; fictional firm and clients</div>
   </div>
 </header>
@@ -912,7 +916,8 @@ function drawList(){
         <span class="chip">${esc(CC().con)}</span>
         <span class="chip mono" style="word-spacing:.3em">${esc(fmtPan(CC().pan))}</span>
         <button class="chip acc" style="cursor:pointer" onclick="openPicker()" title="${engagementSent ? "Already sent to the client" : "Change what this engagement is"}">${esc(ET().name)} &middot; ${esc(ET().period)} <span class="affd">${engagementSent ? "locked" : "change"}</span></button>
-        <button class="duebtn" onclick="editDue()">Due ${due} &nbsp;✎</button>
+        <button class="duebtn" onclick="editDue()">In by ${esc(inByLabel())} &nbsp;✎</button>
+        <span class="sub" style="font-size:12px">filing ${esc(ET().due)}</span>
       </div>
       <p class="sub">Owner: ${esc(CC().owner)} &middot; last year's list was ${items.length} items, we started you from it.</p>
       </div>
@@ -1670,7 +1675,7 @@ function drawClient(){
         <textarea class="qbox" placeholder="Type your answer here"></textarea>
         <div class="cbtns">
           <button class="cbtn" onclick="answerQuery('${c.id}')">Send this answer</button>
-          <button class="cbtn plain" onclick="toast()">Call instead</button>
+          <a class="cbtn plain" style="text-decoration:none;text-align:center" href="tel:${CLIENT.phone.replace(/ /g,"")}">Call instead</a>
         </div>`;
     } else if(c.st === "pending" || c.st === "redo"){
       body += `<div class="cbtns">
@@ -1720,7 +1725,7 @@ function drawClient(){
             <b>Open this in Chrome first</b>
             <span>Tap the three dots at the top right of this window, then Open in Chrome.
               The camera often will not open inside WhatsApp.</span>
-            <button class="btn sm" onclick="toast()">Copy the link</button>
+            <button class="btn sm" onclick="this.textContent='Link copied'">Copy the link</button>
           </div>` : ""}
           <h3 style="font-size:16px">Namaste ${esc(CLIENT.greet)}</h3>
           <p class="sub" style="margin-top:4px">${esc(FIRM)} need ${cards.length} things for your ${esc(ET().name.toLowerCase())}.</p>
@@ -2032,7 +2037,7 @@ const cmatch = (c,f) => f === "all" ? true : c.owner === ME;
 
 function drawClients(){
   if(openClientId) return drawClientDetail();
-  const list = CLIENTS.filter(c => cmatch(c,cfilter));
+  const list = CLIENTS.filter(c => cmatch(c,cfilter)).sort((a,b) => a.name.localeCompare(b.name));
 
   $("#p-clients").innerHTML = `
   <div class="stack">
@@ -2050,14 +2055,16 @@ function drawClients(){
 
     <div class="card pad">
       <table class="ctable">
-        <thead><tr><th>Client</th><th>PAN &amp; GSTIN</th><th>Who to call</th><th>Partner</th><th>Running</th></tr></thead>
+        <thead><tr><th>Client</th><th>PAN &amp; GSTIN</th><th>Who to call</th><th>Partner</th><th>Running now</th></tr></thead>
         <tbody>
         ${list.map(c => `<tr onclick="openClient(${c.id})">
           <td><div class="nm">${esc(c.name)}</div><div class="sm2">${esc(c.con)}</div></td>
           <td class="ids">${esc(fmtPan(c.pan))}<br>${esc(fmtGstin(c.gstin))}</td>
           <td><div class="nm" style="font-weight:400">${esc(c.people[0].n)}</div><div class="sm2 mono">${esc(c.people[0].p)}</div></td>
           <td>${esc(c.owner)}</td>
-          <td class="sm2">${c.live.length ? `${c.live.length} engagement${c.live.length===1?"":"s"}` : "nothing running"}</td>
+          <td class="sm2">${c.live.length
+            ? c.live.map(e => esc(e.t)).join("<br>")
+            : `<span class="none">nothing running</span>`}</td>
         </tr>`).join("")}
         </tbody>
       </table>
@@ -2167,6 +2174,12 @@ function typeCounts(id){
   return rows.filter(r => r.missIds.length).length;
 }
 
+/* "Mine", "needs your review" and "whose clients" all point at a person the
+   interface never named. */
+function drawWhoAmI(){
+  const initials = ME.split(" ").map(w => w[0]).join("").slice(0,2);
+  $("#whoami").innerHTML = `<span class="av">${initials}</span><span>Signed in as <b>${esc(ME)}</b></span>`;
+}
 function drawTypeBar(){
   const live = new Set(board.map(r => r.et));
   const pill = (id, name, sub, dis) =>
@@ -2243,5 +2256,5 @@ document.addEventListener("keydown", e => {
 });
 
 
-drawTypeBar(); drawClients(); drawList(); drawBoard(); applyState("partial"); go("board");
+drawWhoAmI(); drawTypeBar(); drawClients(); drawList(); drawBoard(); applyState("partial"); go("board");
 </script>
