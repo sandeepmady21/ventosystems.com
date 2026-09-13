@@ -557,6 +557,19 @@ h3{font-size:14px;margin:0;letter-spacing:-.005em}
 .mx th.who{width:250px;text-align:left}
 .pbtn{display:flex;align-items:center;gap:10px;width:100%;border:0;background:none;padding:10px 12px 10px 14px;text-align:left}
 .pbtn:hover{background:var(--surface-2)}
+.dfold-h{margin:0;font-size:inherit}
+.dtoggle{width:100%;text-align:left;align-items:flex-start;justify-content:flex-start;flex-wrap:nowrap;gap:12px;border:0;border-bottom:1px solid var(--rule);color:inherit;font-weight:400}
+.dtoggle .caret{margin-top:7px}
+.dtoggle .dfold{align-self:center}
+.dtoggle:hover{background:var(--surface-3)}
+.fold.shut .dtoggle{border-bottom:0}
+.dtoggle[aria-expanded="true"] .caret{transform:rotate(90deg);border-left-color:var(--accent)}
+.dtxt{display:flex;flex-direction:column;min-width:0;flex:1}
+.dtitle{font-size:15px;font-weight:600;display:flex;align-items:center;gap:8px;letter-spacing:-.005em}
+.ddesc{font-size:12.5px;color:var(--ink-3);margin-top:2px;max-width:80ch}
+.fold.shut .ddesc{color:var(--ink-2)}
+.dfold{flex:none;font-size:12.5px;font-weight:500;color:var(--accent);padding:3px 9px;border:1px solid var(--accent-line);border-radius:6px;background:var(--surface)}
+.dtoggle:hover .dfold{border-color:var(--accent)}
 .caret{width:0;height:0;border-left:5px solid var(--ink-3);border-top:4px solid transparent;border-bottom:4px solid transparent;transition:transform .12s ease;flex:none}
 .pbtn[aria-expanded="true"] .caret{transform:rotate(90deg);border-left-color:var(--accent)}
 .pmeta{display:flex;flex-direction:column;gap:5px;min-width:0}
@@ -1764,6 +1777,14 @@ function toggleRow(id){ openRow = openRow === id ? null : id; drawBoard(); }
    ======================================================================= */
 const SOON = 14;                  // "approaching fast", in calendar days
 let openPerson = null;
+/* Which stuck lists are folded away. Remembered in this browser only. */
+let folded = {us:false, client:false};
+try { folded = Object.assign(folded, JSON.parse(localStorage.getItem("chaser.folded") || "{}")); } catch(e) {}
+function toggleFold(k){
+  folded[k] = !folded[k];
+  try { localStorage.setItem("chaser.folded", JSON.stringify(folded)); } catch(e) {}
+  drawDashboard();
+}
 const WEEKDAYS = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
 const fmtShort = d => `${d.getDate()} ${MONTHS_LONG[d.getMonth()].slice(0,3)}`;
 const firstName = n => String(n).split(" ")[0];
@@ -1838,7 +1859,11 @@ function openOnBoard(owner, st, id){
 }
 function togglePerson(o){ openPerson = openPerson === o ? null : o; drawDashboard(); }
 function showPerson(o){ openPerson = o; drawDashboard(); }
-function jumpTo(id){ const el = document.getElementById(id); if(el) el.scrollIntoView({behavior:"smooth", block:"start"}); }
+function jumpTo(id){
+  const k = id === "d-us" ? "us" : id === "d-client" ? "client" : null;
+  if(k && folded[k]) toggleFold(k);          // a headline figure never lands on a closed list
+  const el = document.getElementById(id); if(el) el.scrollIntoView({behavior:"smooth", block:"start"});
+}
 
 /* Handing work to someone else is the fix for "whoever has it is away". */
 function reassign(id){
@@ -2057,6 +2082,24 @@ function runwayHTML(){
   return h + `</div></div>`;
 }
 
+/* A section that folds to its header. Folded, the header still names who is in it,
+   so closing the list never hides the fact that something is stuck. */
+function foldSection(k, id, title, n, desc, names, body){
+  const shut = folded[k];
+  const peek = names.length
+    ? names.slice(0, 3).join(" &middot; ") + (names.length > 3 ? ` &middot; and ${names.length - 3} more` : "")
+    : "Nothing here.";
+  return `<section class="card dsec fold${shut ? " shut" : ""}" id="${id}">
+    <h3 class="dfold-h"><button class="dhead dtoggle" aria-expanded="${!shut}" aria-controls="${id}-list" onclick="toggleFold('${k}')">
+      <span class="caret" aria-hidden="true"></span>
+      <span class="dtxt"><span class="dtitle">${title} <span class="cnt">${n}</span></span>
+        <span class="ddesc">${shut ? peek : desc}</span></span>
+      <span class="dfold">${shut ? "Show" : "Hide"}</span>
+    </button></h3>
+    <div class="sl" id="${id}-list"${shut ? " hidden" : ""}>${body}</div>
+  </section>`;
+}
+
 function drawDashboard(){
   const el = $("#p-dashboard");
   if(!el) return;
@@ -2087,8 +2130,8 @@ function drawDashboard(){
     <div class="kpis">
       ${kpi("bad", late.length, "Late", late.length ? names(late) : "Nothing past its date", "d-due")}
       ${kpi("warn", soon.length, `Due within ${SOON} days`, soon.length ? names(soon) : "Nothing in the next two weeks", "d-due")}
-      ${kpi("bad", us.length, "Stuck on our side", us.length ? `${usWhy} with a known blocker &middot; ${us.length - usWhy} unexplained` : "Everything with us is moving", "d-stuck")}
-      ${kpi("client", chasing.length, "Waiting on clients", `${quiet.length} not responding`, "d-stuck")}
+      ${kpi("bad", us.length, "Stuck on our side", us.length ? `${usWhy} with a known blocker &middot; ${us.length - usWhy} unexplained` : "Everything with us is moving", "d-us")}
+      ${kpi("client", chasing.length, "Waiting on clients", `${quiet.length} not responding`, "d-client")}
     </div>
 
     <section class="card dsec" id="d-people">
@@ -2101,16 +2144,12 @@ function drawDashboard(){
     </section>
 
     <div class="dgrid2" id="d-stuck">
-      <section class="card dsec">
-        <div class="dhead"><div><h3>Stuck on our side <span class="cnt">${us.length}</span></h3>
-          <p>Something is blocking it, or it has sat five days and nobody has said what. Days on the desk, longest first.</p></div></div>
-        <div class="sl">${stuckUsHTML()}</div>
-      </section>
-      <section class="card dsec">
-        <div class="dhead"><div><h3>Stuck on the client's side <span class="cnt">${quiet.length}</span></h3>
-          <p>Being chased and not responding. Never opened the link first, then confused, then broken promises.</p></div></div>
-        <div class="sl">${stuckClientHTML()}</div>
-      </section>
+      ${foldSection("us", "d-us", "Stuck on our side", us.length,
+          "Something is blocking it, or it has sat five days and nobody has said what. Days on the desk, longest first.",
+          us.map(r => `${esc(r.name)}, ${plural(r.idle || 0, "day")}`), stuckUsHTML())}
+      ${foldSection("client", "d-client", "Stuck on the client&rsquo;s side", quiet.length,
+          "Being chased and not responding. Never opened the link first, then confused, then broken promises.",
+          quiet.map(r => esc(r.name)), stuckClientHTML())}
     </div>
 
     <section class="card dsec" id="d-due">
