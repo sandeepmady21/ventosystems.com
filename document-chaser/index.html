@@ -195,14 +195,6 @@ h3{font-size:14px;margin:0;letter-spacing:-.005em}
 
 /* ---------- chase board ---------- */
 .filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
-.desks{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-bottom:11px;
-  padding-bottom:11px;border-bottom:1px solid var(--rule)}
-.desk{border:1px solid var(--rule-2);background:var(--surface);border-radius:6px;padding:6px 11px;text-align:left;line-height:1.3}
-.desk:hover{border-color:var(--accent)}
-.desk.stuck{border-color:var(--bad-line);background:var(--bad-soft)}
-.desk b{display:block;font-weight:500;font-size:13px}
-.desk span{display:block;font-size:11px;color:var(--ink-3);font-family:"IBM Plex Mono",monospace}
-.desk.stuck span{color:var(--bad)}
 /* THE PIPELINE.
    Two territories, each owning its label and its own chevrons. The chevrons
    point the way work travels; the gap between the sides is the handover. */
@@ -544,6 +536,170 @@ h3{font-size:14px;margin:0;letter-spacing:-.005em}
 .tpill[aria-pressed="true"] span{color:var(--accent-ink);opacity:.8}
 .tpill[aria-pressed="true"]:hover{filter:brightness(1.12)}
 .tpill[disabled]{opacity:.45;border-style:dashed;cursor:not-allowed}
+
+/* ---------- dashboard ---------- */
+/* The dashboard answers three questions in the order a partner asks them.
+   Headline figures first, because here the figures are the point. */
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.kpi{
+  display:flex;flex-direction:column;align-items:flex-start;gap:1px;text-align:left;
+  background:var(--surface);border:1px solid var(--rule);border-top:3px solid var(--rule-2);
+  border-radius:var(--r);padding:12px 15px 13px;box-shadow:var(--shadow-1);min-width:0;
+}
+.kpi:hover{box-shadow:var(--shadow-2)}
+.kpi .n{font-family:"IBM Plex Mono",monospace;font-size:32px;font-weight:500;line-height:1.05;letter-spacing:-.03em}
+.kpi .l{font-weight:600;font-size:13.5px;margin-top:3px}
+.kpi .s{font-size:12px;color:var(--ink-3);line-height:1.35}
+.kpi.bad{border-top-color:var(--bad)}      .kpi.bad .n{color:var(--bad)}
+.kpi.warn{border-top-color:#C9961F}        .kpi.warn .n{color:var(--warn)}
+.kpi.client{border-top-color:#C9A95E}      .kpi.client .n{color:#5E4108}
+.kpi.zero{border-top-color:var(--ok-line)} .kpi.zero .n{color:var(--ok)}
+
+.dsec{overflow:hidden}
+.dhead{display:flex;align-items:flex-end;justify-content:space-between;gap:10px 18px;flex-wrap:wrap;
+  padding:13px 16px 11px;border-bottom:1px solid var(--rule);background:var(--surface-2)}
+.dhead h3{font-size:15px;display:flex;align-items:center;gap:8px}
+.dhead p{font-size:12.5px;color:var(--ink-3);margin:2px 0 0;max-width:68ch}
+.dhead .cnt{font-family:"IBM Plex Mono",monospace;font-size:12px;font-weight:500;color:var(--ink-2);
+  background:var(--surface-3);border-radius:4px;padding:0 6px}
+.dlegend{display:flex;gap:4px 13px;flex-wrap:wrap;font-size:12px;color:var(--ink-2)}
+.dlegend span{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.dlegend i{display:inline-block;width:11px;height:11px;border-radius:2px}
+.lg-c{background:#E7D4A8}.lg-f{background:#BFD3E6}.lg-s{background:var(--bad-soft);box-shadow:inset 0 0 0 1px var(--bad-line)}
+.lg-late{background:#A32A1C}.lg-soon{background:#C9961F}.lg-later{background:#5E7A8F}
+.lg-win{background:#DCE7F1;box-shadow:inset 0 0 0 1px #B2C8DC}
+.dlegend i.lg-in{width:8px;height:8px;border-radius:1px;transform:rotate(45deg);background:var(--surface);box-shadow:inset 0 0 0 2px var(--ink)}
+.dlegend i.lg-file{width:2px;height:13px;border-radius:0;background:var(--ink)}
+.dempty{padding:26px 18px;color:var(--ink-2);text-align:center}
+.dempty b{display:block;color:var(--ink);font-weight:500}
+
+/* stage marker: a territory swatch and a word, not a chip */
+.stg{display:inline-flex;align-items:center;gap:6px;white-space:nowrap;color:var(--ink-2)}
+.stg i{width:9px;height:9px;border-radius:2px;flex:none}
+.stg.client i{background:#D9BF82}
+.stg.firm i{background:#8FB0CF}
+
+/* the people × stage matrix */
+.mxwrap{overflow-x:auto}
+.mx{width:100%;min-width:900px;border-collapse:separate;border-spacing:0}
+.mx th,.mx td{border-bottom:1px solid var(--rule);padding:0;text-align:center}
+.mx .band th{font-size:10px;letter-spacing:.12em;text-transform:uppercase;font-weight:600;padding:6px 8px;border-bottom:0;border-left:3px solid var(--surface)}
+.mx .band th.who{border-left:0;background:var(--surface)}
+.mx .band .bc{background:#E7D4A8;color:#4E3908}
+.mx .band .bf{background:#BFD3E6;color:#0F3352}
+.mx .band .bs{background:var(--bad-soft);color:var(--bad)}
+.mx .band .bd{background:var(--filed-soft);color:var(--filed)}
+.mx .cols th{font-size:11.5px;font-weight:500;color:var(--ink-2);padding:7px 6px;line-height:1.25;vertical-align:bottom;background:var(--surface)}
+.mx .cols th.who{text-align:left;padding-left:16px}
+.mx .cols th.kc{background:#FBF5E8}.mx .cols th.kf{background:#EFF4F9}.mx .cols th.ks{background:#FDF4F2}.mx .cols th.kd{background:#EEF5EF}
+/* a hairline gap where one territory hands over to the next */
+.mx .cols th:nth-child(2),.mx .cols th:nth-child(4),.mx .cols th:nth-child(8),.mx .cols th:nth-child(10),
+.mx .prow td:nth-child(2),.mx .prow td:nth-child(4),.mx .prow td:nth-child(8),.mx .prow td:nth-child(10){border-left:3px solid var(--surface)}
+.mx th.who{width:250px;text-align:left}
+.pbtn{display:flex;align-items:center;gap:10px;width:100%;border:0;background:none;padding:10px 12px 10px 14px;text-align:left}
+.pbtn:hover{background:var(--surface-2)}
+.caret{width:0;height:0;border-left:5px solid var(--ink-3);border-top:4px solid transparent;border-bottom:4px solid transparent;transition:transform .12s ease;flex:none}
+.pbtn[aria-expanded="true"] .caret{transform:rotate(90deg);border-left-color:var(--accent)}
+.pmeta{display:flex;flex-direction:column;gap:5px;min-width:0}
+.pname{font-weight:500;font-size:13.5px;white-space:nowrap}
+.pname em{font-style:normal;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-left:4px}
+.pload{display:flex;align-items:center;gap:8px}
+.lbar{display:flex;gap:2px;height:7px}
+.lbar i{display:block;height:7px}
+.lbar i:first-child{border-radius:2px 0 0 2px}.lbar i:last-child{border-radius:0 3px 3px 0}
+.lbar i:only-child{border-radius:2px 3px 3px 2px}
+.lc{background:#D9BF82}.lf{background:#7FA3C6}
+.lnum{font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--ink-3);white-space:nowrap}
+.prow.open th,.prow.open td{border-bottom-color:transparent}
+.prow.open .pbtn{background:var(--accent-soft)}
+
+.cell{height:58px;min-width:78px}
+.cell > button{width:100%;height:100%;min-height:58px;border:0;background:transparent;
+  font-family:"IBM Plex Mono",monospace;font-size:17px;font-weight:500;color:inherit}
+.cell > button:hover{box-shadow:inset 0 0 0 2px var(--accent);position:relative}
+.cell > span{color:var(--rule-3);font-size:13px}
+.cell.c.h1{background:#F6EDD8;color:#4E3908}.cell.c.h2{background:#EEDDB5;color:#4E3908}.cell.c.h3{background:#E2C98D;color:#3E2D06}
+.cell.f.h1{background:#E6EEF6;color:#0F3352}.cell.f.h2{background:#CCDCEB;color:#0F3352}.cell.f.h3{background:#A9C3DC;color:#0A2742}
+.cell.s.h1,.cell.s.h2,.cell.s.h3{background:var(--bad-soft);color:var(--bad)}
+.cell.d.h1,.cell.d.h2,.cell.d.h3{background:var(--filed-soft);color:var(--filed)}
+.cell.age{min-width:108px}
+.cell.age > button{font-size:13px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;line-height:1.2}
+.cell.age small{font-family:"IBM Plex Sans",sans-serif;font-size:11px;color:var(--ink-3);font-weight:400}
+.cell.age.hot{background:var(--bad-soft);color:var(--bad)}
+
+.pdetail td{background:var(--band);text-align:left;padding:4px 14px 10px 36px}
+.dlr{display:grid;grid-template-columns:minmax(190px,1.3fr) 140px minmax(200px,2fr) 120px 172px;gap:14px;align-items:center;
+  padding:9px 0;border-bottom:1px solid var(--rule)}
+.dlr:last-child{border-bottom:0}
+.dlr .rowstate{margin:0}
+.dlr .stg{font-size:12.5px}
+.dlr .bacts{justify-content:flex-end}
+.dl-name,.dl-with{display:flex;flex-direction:column;min-width:0}
+.dl-name b,.dl-with b{font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dl-name small,.dl-with small{font-size:12px;color:var(--ink-3)}
+.dl-empty{padding:12px 0;color:var(--ink-3)}
+.due{display:flex;flex-direction:column;line-height:1.25}
+.due b{font-weight:600;font-size:13px}
+.due small{font-size:11.5px;color:var(--ink-3)}
+.due.late b{color:var(--bad)}.due.soon b{color:var(--warn)}.due.later b,.due.none b{color:var(--ink-2)}
+
+/* stuck lists */
+.dgrid2{display:flex;flex-direction:column;gap:14px}
+.slr{display:grid;grid-template-columns:64px minmax(0,1fr) auto;gap:4px 16px;align-items:center;padding:11px 16px 11px 12px;border-bottom:1px solid var(--rule)}
+.slr:last-child{border-bottom:0}
+.slr .dage{align-self:center}
+.slm{min-width:0}
+.why-line{font-size:12.5px;margin-top:5px;color:var(--ink-3)}
+.why-line .bad{color:var(--bad);font-weight:500}.why-line .warnt{color:var(--warn);font-weight:500}.why-line .q{color:var(--violet);font-weight:500}
+.why-line .sep{font-style:normal;opacity:.45;margin:0 3px}
+.dage{align-self:start;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  border-radius:6px;padding:7px 4px 6px;background:var(--surface-3);color:var(--ink-2);text-align:center}
+.dage b{font-family:"IBM Plex Mono",monospace;font-size:22px;font-weight:500;line-height:1}
+.dage small{font-size:10px;letter-spacing:.05em;text-transform:uppercase;margin-top:3px;line-height:1.15}
+.dage.bad,.dage.late{background:var(--bad-soft);color:var(--bad)}
+.dage.soon{background:var(--warn-soft);color:var(--warn)}
+
+/* deadline runway */
+.rwwrap{overflow-x:auto}
+.rw{min-width:860px}
+.rwrow{display:grid;grid-template-columns:minmax(200px,1.3fr) 128px minmax(300px,2.8fr) 150px;align-items:stretch;border-bottom:1px solid var(--rule)}
+.rwrow:last-child{border-bottom:0}
+.rwrow > div{padding:8px 14px;min-width:0}
+.rwrow > .trk{padding:0}
+.rwrow:not(.head){cursor:pointer}
+.rwrow:not(.head):hover{background:var(--surface-2)}
+.rwrow:not(.head):focus-visible{outline:none;box-shadow:inset 3px 0 0 var(--accent)}
+.rwrow.head{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);font-weight:500;background:var(--surface)}
+.rwrow.head > div{padding-top:9px;padding-bottom:7px}
+.rwrow .rt{padding-left:18px}
+.trk{position:relative;min-height:48px;margin:0 14px}
+.trk.axis{min-height:30px}
+.trk .tk{position:absolute;top:9px;transform:translateX(-50%);white-space:nowrap;text-transform:none;letter-spacing:0;font-size:11.5px}
+.trk .tk.now{color:var(--ink);font-weight:600}
+.trk .wk{position:absolute;top:0;bottom:0;width:1px;background:var(--rule);transform:translateX(-.5px)}
+.trk .wk.now{width:2px;background:var(--ink-2);transform:translateX(-1px)}
+.trk .rbar,.trk .win{position:absolute;top:50%;height:10px;transform:translateY(-50%)}
+.trk .win{background:#DCE7F1;box-shadow:inset 0 0 0 1px #B2C8DC;border-radius:0 3px 3px 0;height:8px}
+/* anchored to today: square where it meets the line, rounded at the date */
+.trk .rbar.soon{background:#C9961F;border-radius:0 4px 4px 0}
+.trk .rbar.later{background:#5E7A8F;border-radius:0 4px 4px 0}
+.trk .rbar.late{border-radius:4px 0 0 4px;
+  background:repeating-linear-gradient(135deg,#A32A1C 0 5px,#C2473A 5px 8px)}
+.trk .dot{position:absolute;top:50%;width:10px;height:10px;border-radius:50%;transform:translate(-50%,-50%);background:#C9961F;box-shadow:0 0 0 2px var(--surface)}
+.trk .mk-in{position:absolute;top:50%;width:9px;height:9px;transform:translate(-50%,-50%) rotate(45deg);
+  background:var(--surface);box-shadow:inset 0 0 0 2px var(--ink),0 0 0 2px var(--surface);border-radius:1px}
+.trk .mk-file{position:absolute;top:50%;width:2px;height:22px;transform:translate(-50%,-50%);background:var(--ink);box-shadow:0 0 0 2px var(--surface)}
+
+#tip{position:fixed;z-index:80;pointer-events:none;background:var(--ink);color:#F2F5F0;font-size:12px;line-height:1.45;
+  padding:7px 10px;border-radius:6px;white-space:pre-line;max-width:300px;box-shadow:var(--shadow-2)}
+#tip[hidden]{display:none}
+
+@media (max-width:860px){
+  .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .slr{grid-template-columns:56px minmax(0,1fr)}
+  .slr .bacts{grid-column:2;justify-content:flex-start}
+  .dlr{grid-template-columns:1fr;gap:6px}
+}
 </style>
 
 <header class="top">
@@ -563,15 +719,18 @@ h3{font-size:14px;margin:0;letter-spacing:-.005em}
 
 <nav class="tabs" role="tablist">
   <div class="frame">
+  <button class="tab" role="tab" id="t-dashboard" aria-selected="false" onclick="go('dashboard')">Dashboard<small>who has what &middot; what&rsquo;s late</small></button>
   <button class="tab" role="tab" id="t-clients" aria-selected="false" onclick="goClients()">Clients<small>everyone we act for</small></button>
   <button class="tab" role="tab" id="t-list"  aria-selected="false"  onclick="go('list')">Document checklist<small>pick what to ask for</small></button>
   <button class="tab" role="tab" id="t-board" aria-selected="false" onclick="go('board')">Chase board<small>who hasn't sent</small></button>
   <button class="tab" role="tab" id="t-client" aria-selected="false" onclick="go('client')">Client's page<small>upload &amp; the gate</small></button>
+  </div>
 </nav>
 
 <div class="typebar" id="typebar"></div>
 
 <main>
+  <section class="panel" id="p-dashboard" hidden></section>
   <section class="panel" id="p-clients" hidden></section>
   <section class="panel" id="p-list" hidden></section>
   <section class="panel" id="p-board" hidden></section>
@@ -579,6 +738,7 @@ h3{font-size:14px;margin:0;letter-spacing:-.005em}
 </main>
 
 <div id="modal" hidden onclick="if(event.target.id==='modal')closeModal()"></div>
+<div id="tip" role="tooltip" hidden></div>
 
 <script>
 /* =======================================================================
@@ -880,7 +1040,7 @@ let board = [
    owner:"Priya Shetty", missIds:[], chased:3, since:9, tags:[]},
   {id:11, et:"tax_audit", stage:"preparing", idle:6, blocked:{why:"access", since:4}, name:"Deccan Polymers Pvt Ltd", type:"Tax Audit FY 25-26",
    owner:"Faisal Qureshi", missIds:[], chased:4, since:14, tags:[]},
-  {id:12, et:"tax_audit", stage:"partner", idle:3, name:"Kaveri Exports LLP", type:"Tax Audit FY 25-26",
+  {id:12, et:"tax_audit", stage:"partner", idle:5, name:"Kaveri Exports LLP", type:"Tax Audit FY 25-26",
    owner:"Anil Rao", missIds:[], chased:2, since:18, tags:[]},
   {id:13, et:"tax_audit", stage:"filed", idle:0, name:"Nandi Motors Pvt Ltd", type:"Tax Audit FY 25-26",
    owner:"Deepa Menon", missIds:[], chased:2, since:22, tags:[]},
@@ -961,7 +1121,7 @@ function go(tab){
   // The strip is partner context. It has no meaning on the client's own phone page,
   // and the Clients tab already has its own filters.
   $("#typebar").hidden = (tab === "client" || tab === "clients");
-  ["clients","list","board","client"].forEach(t => {
+  ["dashboard","clients","list","board","client"].forEach(t => {
     $("#p-" + t).hidden = (t !== tab);
     $("#t-" + t).setAttribute("aria-selected", String(t === tab));
   });
@@ -1471,19 +1631,6 @@ function drawBoard(){
       </div>
     </div>
 
-    ${(STAGES.find(x=>x.id===stage)||{}).side === "firm" && stage !== "filed" ? `<div class="desks">
-      <span class="eyebrow" style="flex:none">Who is handling what</span>
-      ${OWNERS().map(o => {
-        const mine = scoped().filter(r => stageOf(r) === stage && r.owner === o);
-        if(!mine.length) return "";
-        const stuck = mine.filter(r => r.blocked && r.blocked.why !== "queue").length;
-        const oldest = Math.max(...mine.map(r => r.idle || 0));
-        return `<button class="desk ${stuck?"stuck":""}" onclick="setOwnerFilter('${esc(o)}')">
-          <b>${esc(o.split(" ")[0])}</b>
-          <span>${mine.length} here${stuck?` &middot; ${stuck} blocked`:""} &middot; oldest ${oldest}d</span>
-        </button>`;
-      }).join("")}
-    </div>` : ""}
 
     <div class="row-between" style="margin-bottom:9px">
       <span class="eyebrow">${(DIAGNOSES[stage]||[]).length ? "Why is it stuck?" : "&nbsp;"}</span>
@@ -1633,6 +1780,7 @@ function drawBoard(){
 
   html += `</div></div>`;
   $("#p-board").innerHTML = html;
+  drawDashboard();   // every change to a row lands on the dashboard too
 }
 
 function editAsk(et, rowId){
@@ -1643,6 +1791,395 @@ function editAsk(et, rowId){
 }
 function setFilter(f){ filter = f; openRow = null; drawBoard(); }
 function toggleRow(id){ openRow = openRow === id ? null : id; drawBoard(); }
+
+/* =======================================================================
+   SCREEN 0 — THE DASHBOARD
+   The three questions a partner opens this product to answer: who has what,
+   what is stuck and why, and what is about to be late. Every figure here is
+   derived from the same rows the chase board draws, so the two cannot disagree.
+   ======================================================================= */
+const SOON = 14;                  // "approaching fast", in calendar days
+let openPerson = null;
+const WEEKDAYS = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+const fmtShort = d => `${d.getDate()} ${MONTHS_LONG[d.getMonth()].slice(0,3)}`;
+const firstName = n => String(n).split(" ")[0];
+const plural = (n, w) => `${n} ${w}${n === 1 ? "" : "s"}`;
+const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
+const dashRows = () => board.filter(r => activeType === "all" || r.et === activeType);
+const openRows = () => dashRows().filter(r => stageOf(r) !== "filed");
+const sideOf = r => (STAGES.find(x => x.id === stageOf(r)) || {}).side;
+const stageLabel = id => (STAGES.find(x => x.id === id) || {}).label || id;
+const stageMark = r => `<span class="stg ${sideOf(r)}"><i></i>${esc(stageLabel(stageOf(r)))}</span>`;
+
+/* The date that matters: the in-by date while the client still owes a required
+   document, the filing date once the work is ours. */
+function clockOf(r){
+  const inBy = inByFor(r.et);
+  const filing = DUE_ISO[r.et] ? new Date(DUE_ISO[r.et] + "T00:00:00") : null;
+  const owes = rowBlocking(r) > 0;
+  const date = owes ? inBy : filing;
+  if(!date) return {date:null, days:Infinity, owes, inBy, filing, band:"none"};
+  const days = daysFromToday(date);
+  return {date, days, owes, inBy, filing, band: days < 0 ? "late" : days <= SOON ? "soon" : "later"};
+}
+const clockBig = c => !c.date ? "No date"
+  : c.days < 0 ? `${plural(-c.days, "day")} late`
+  : c.days === 0 ? "Today" : plural(c.days, "day");
+const clockSmall = c => !c.date ? "on request"
+  : `${c.owes ? "in by" : "filing"} ${fmtShort(c.date)}`;
+
+/* Stuck on our side: someone said why, or five days passed and nobody did. */
+const stuckOnUs = () => openRows()
+  .filter(r => sideOf(r) === "firm" && (hasTag(r, "blocked") || hasTag(r, "unsaid")))
+  .sort((a, b) => (b.idle || 0) - (a.idle || 0));
+
+/* Stuck on the client's side, worst first. Plain chasing is not stuck. */
+function clientSignal(r){
+  if(stageOf(r) !== "chasing") return null;
+  if(r.never)    return {rank:0, cls:"bad",   text:"Never opened the link"};
+  if(r.confused) return {rank:1, cls:"q",     text:`${cap(r.confused)}. Call them.`};
+  if(r.promised) return {rank:2, cls:"warnt", text:cap(r.promised)};
+  if(r.stuck)    return {rank:3, cls:"warnt", text:cap(r.stuck)};
+  if((r.chased || 0) >= 5) return {rank:4, cls:"warnt", text:`Chased ${r.chased} times, no reply`};
+  return null;
+}
+const stuckOnClient = () => openRows().filter(clientSignal)
+  .sort((a, b) => clientSignal(a).rank - clientSignal(b).rank || clockOf(a).days - clockOf(b).days);
+
+/* One line that says what is happening to this engagement right now. */
+function deskLine(r){
+  const st = stageOf(r), bits = [];
+  if(st === "chasing"){
+    bits.push(`${rowBlocking(r)} required outstanding`);
+    const s = clientSignal(r);
+    bits.push(s ? `<span class="${s.cls}">${esc(s.text)}</span>` : `chased ${plural(r.chased || 0, "time")}`);
+  } else if(st === "review"){
+    bits.push(`<span class="acct">${plural(reviewCount(r), "document")} to review</span>`);
+    if(rowBlocking(r)) bits.push(`${rowBlocking(r)} required still outstanding`);
+  } else if(st === "ready"){
+    bits.push("everything required is in, nobody has started");
+  } else {
+    bits.push(`on the desk ${r.idle ? plural(r.idle, "day") : "since today"}`);
+    if(r.blocked) bits.push(r.blocked.why === "queue"
+      ? `<span class="q">not started yet</span>`
+      : `<span class="bad">${esc(blockerLabel(r).toLowerCase())}</span>`);
+    else if((r.idle || 0) >= 5) bits.push(`<span class="bad">nobody has said why</span>`);
+  }
+  return bits.join(' <i class="sep">&middot;</i> ');
+}
+
+function openOnBoard(owner, st, id){
+  ownerFilter = owner || "all"; stage = st; filter = "all"; openRow = id || null;
+  drawBoard(); go("board");
+}
+function togglePerson(o){ openPerson = openPerson === o ? null : o; drawDashboard(); }
+function showPerson(o){ openPerson = o; drawDashboard(); }
+function jumpTo(id){ const el = document.getElementById(id); if(el) el.scrollIntoView({behavior:"smooth", block:"start"}); }
+
+/* Handing work to someone else is the fix for "whoever has it is away". */
+function reassign(id){
+  const r = board.find(x => x.id === id);
+  const firm = sideOf(r) === "firm";
+  modal(`Who should take ${esc(r.name)}?`,
+    `<p class="sub" style="margin-bottom:12px">${esc(rowType(r).name)} &middot; ${esc(stageLabel(stageOf(r)))} &middot;
+       with ${esc(r.owner)} now.</p>
+     ${OWNERS().filter(o => o !== r.owner).map(o => {
+       const load = board.filter(x => x.owner === o && stageOf(x) !== "filed").length;
+       return `<button class="opt" onclick="setOwner(${id},'${esc(o)}')"><b>${esc(o)}${o===ME?" (you)":""}</b>
+         <span>Has ${plural(load, "open engagement")} already. ${firm ? "The clock restarts today." : "Takes over the chasing."}</span></button>`;
+     }).join("")}`,
+    `<button class="btn" onclick="closeModal()">Cancel</button>`);
+}
+function setOwner(id, o){
+  const r = board.find(x => x.id === id);
+  r.owner = o;
+  if(sideOf(r) === "firm"){ r.idle = 0; if(r.blocked && r.blocked.why === "away") delete r.blocked; }
+  closeModal(); drawBoard();
+}
+
+/* ---- who is working on what: people down, stages across ---- */
+const MX_COLS = [
+  {id:"chasing",   label:"Chasing",            band:"c", rows:rs => rs.filter(r => stageOf(r) === "chasing"), board:"chasing"},
+  {id:"silent",    label:"Not responding",     band:"c", rows:rs => rs.filter(clientSignal), board:"chasing"},
+  {id:"review",    label:"To review",          band:"f", rows:rs => rs.filter(r => stageOf(r) === "review"), board:"review"},
+  {id:"ready",     label:"Ready to start",     band:"f", rows:rs => rs.filter(r => stageOf(r) === "ready"), board:"ready"},
+  {id:"preparing", label:"Being prepared",     band:"f", rows:rs => rs.filter(r => stageOf(r) === "preparing"), board:"preparing"},
+  {id:"partner",   label:"With the partner",   band:"f", rows:rs => rs.filter(r => stageOf(r) === "partner"), board:"partner"},
+  {id:"stuck",     label:"Stuck on us",        band:"s", rows:rs => rs.filter(r => sideOf(r) === "firm" && stageOf(r) !== "filed" && (hasTag(r,"blocked") || hasTag(r,"unsaid")))},
+  {id:"age",       label:"Longest untouched",  band:"s"},
+  {id:"filed",     label:"Filed",              band:"d", rows:rs => rs.filter(r => stageOf(r) === "filed"), board:"filed"},
+];
+const heat = n => n === 0 ? "z" : n === 1 ? "h1" : n === 2 ? "h2" : "h3";
+
+function peopleHTML(){
+  const rs = dashRows();
+  const people = OWNERS();
+  const loads = people.map(o => rs.filter(r => r.owner === o && stageOf(r) !== "filed").length);
+  const maxLoad = Math.max(1, ...loads);
+  const bands = [["c","Waiting on the client",2],["f","Waiting on us",4],["s","Held up",2],["d","Done",1]];
+
+  let h = `<div class="mxwrap"><table class="mx">
+    <thead>
+      <tr class="band"><th class="who"></th>${bands.map(([k,l,n]) => `<th colspan="${n}" class="b${k}">${l}</th>`).join("")}</tr>
+      <tr class="cols"><th class="who" scope="col">Person</th>
+        ${MX_COLS.map(c => `<th scope="col" class="k${c.band}">${esc(c.label)}</th>`).join("")}</tr>
+    </thead><tbody>`;
+
+  people.forEach((o, i) => {
+    const mine = rs.filter(r => r.owner === o);
+    const live = mine.filter(r => stageOf(r) !== "filed");
+    const cSide = live.filter(r => sideOf(r) === "client").length;
+    const fSide = live.length - cSide;
+    const scale = 132 / maxLoad;
+    const open = openPerson === o;
+    const firmLive = live.filter(r => sideOf(r) === "firm" && stageOf(r) !== "review" && stageOf(r) !== "ready");
+    const oldest = firmLive.slice().sort((a, b) => (b.idle || 0) - (a.idle || 0))[0];
+
+    h += `<tr class="prow ${open ? "open" : ""}">
+      <th class="who" scope="row">
+        <button class="pbtn" aria-expanded="${open}" onclick="togglePerson('${esc(o)}')">
+          <span class="caret" aria-hidden="true"></span>
+          <span class="pmeta">
+            <span class="pname">${esc(o)}${o === ME ? ` <em>you</em>` : ""}</span>
+            <span class="pload" data-tip="${esc(`${o}\n${cSide} waiting on the client\n${fSide} waiting on us`)}">
+              <span class="lbar">${cSide ? `<i class="lc" style="width:${cSide * scale}px"></i>` : ""}${fSide ? `<i class="lf" style="width:${fSide * scale}px"></i>` : ""}</span>
+              <span class="lnum">${live.length} open</span>
+            </span>
+          </span>
+        </button>
+      </th>`;
+
+    MX_COLS.forEach(c => {
+      if(c.id === "age"){
+        const od = oldest ? (oldest.idle || 0) : null;
+        h += `<td class="cell s age ${od >= 5 ? "hot" : ""}">${oldest
+          ? `<button onclick="openOnBoard('${esc(o)}','${stageOf(oldest)}',${oldest.id})" data-tip="${esc(`${oldest.name}\n${stageLabel(stageOf(oldest))}, ${od === 0 ? "picked up today" : plural(od, "day") + " on the desk"}`)}">
+               ${od === 0 ? "today" : plural(od, "day")}<small>${esc(firstName(oldest.name))}</small></button>`
+          : `<span>&ndash;</span>`}</td>`;
+        return;
+      }
+      const hits = c.rows(mine);
+      const n = hits.length;
+      const tip = n ? `${firstName(o)} · ${c.label}\n${hits.map(r => r.name).join("\n")}` : "";
+      const act = c.board ? `openOnBoard('${esc(o)}','${c.board}',${n === 1 ? hits[0].id : "null"})` : `showPerson('${esc(o)}')`;
+      h += `<td class="cell ${c.band} ${heat(n)}">${n
+        ? `<button onclick="${act}" data-tip="${esc(tip)}" aria-label="${esc(`${o}, ${c.label}: ${n}`)}">${n}</button>`
+        : `<span aria-label="none">&ndash;</span>`}</td>`;
+    });
+
+    h += `</tr>`;
+
+    if(open){
+      const list = mine.slice().sort((a, b) =>
+        (stageOf(a) === "filed") - (stageOf(b) === "filed") || clockOf(a).days - clockOf(b).days);
+      h += `<tr class="pdetail"><td colspan="${MX_COLS.length + 1}">
+        ${list.length ? list.map(r => {
+          const c = clockOf(r), filed = stageOf(r) === "filed";
+          return `<div class="dlr">
+            <div class="dl-name"><b>${esc(r.name)}</b><small>${esc(r.type)}</small></div>
+            <div>${stageMark(r)}</div>
+            <div class="rowstate">${filed ? "done" : deskLine(r)}</div>
+            <div class="due ${filed ? "" : c.band}">${filed ? "&nbsp;" : `<b>${clockBig(c)}</b><small>${clockSmall(c)}</small>`}</div>
+            <div class="bacts">
+              <button class="btn sm" onclick="openOnBoard('${esc(o)}','${stageOf(r)}',${r.id})">Open</button>
+              ${filed ? "" : `<button class="btn sm" onclick="reassign(${r.id})">Reassign</button>`}
+            </div>
+          </div>`;
+        }).join("") : `<div class="dl-empty">Nothing of this type with ${esc(firstName(o))}.</div>`}
+      </td></tr>`;
+    }
+  });
+  return h + `</tbody></table></div>`;
+}
+
+/* ---- where it is stuck ---- */
+function stuckUsHTML(){
+  const list = stuckOnUs();
+  if(!list.length) return `<div class="dempty"><b>Nothing is stuck on our side.</b>Everything with us has moved in the last five days.</div>`;
+  return list.map(r => {
+    const blocked = hasTag(r, "blocked");
+    const away = r.blocked && r.blocked.why === "away";
+    const flagged = blocked ? Math.max(0, (r.idle || 0) - (r.blocked.since || 0)) : 0;
+    return `<div class="slr">
+      <div class="dage bad"><b>${r.idle || 0}</b><small>${(r.idle || 0) === 1 ? "day" : "days"}</small></div>
+      <div class="slm">
+        <div class="bname">${esc(r.name)}</div>
+        <div class="bsub">${esc(r.type)} &middot; ${stageMark(r)} &middot; with <b>${esc(r.owner)}</b></div>
+        <div class="why-line">${blocked
+          ? `<span class="bad">${esc(blockerLabel(r))}</span> <i class="sep">&middot;</i> flagged ${flagged === 0 ? "today" : plural(flagged, "day") + " ago"}`
+          : `<span class="bad">Nobody has said why</span> <i class="sep">&middot;</i> untouched ${plural(r.idle || 0, "day")}`}</div>
+      </div>
+      <div class="bacts">
+        <button class="btn sm" onclick="flagBlocker(${r.id})">${blocked ? "Change why" : "Ask why"}</button>
+        <button class="btn sm ${away ? "primary" : ""}" onclick="reassign(${r.id})">Reassign</button>
+        ${away ? "" : `<button class="btn sm primary" onclick="advance(${r.id})">Move it on</button>`}
+      </div>
+    </div>`;
+  }).join("");
+}
+function stuckClientHTML(){
+  const list = stuckOnClient();
+  if(!list.length) return `<div class="dempty"><b>No client has gone quiet.</b>Everyone being chased is responding.</div>`;
+  return list.map(r => {
+    const s = clientSignal(r), c = clockOf(r), p = rowClient(r).people[0];
+    return `<div class="slr">
+      <div class="dage ${c.band}"><b>${c.date ? Math.abs(c.days) : "&ndash;"}</b><small>${!c.date ? "" : c.days < 0 ? "days late" : c.days === 1 ? "day left" : "days left"}</small></div>
+      <div class="slm">
+        <div class="bname">${esc(r.name)}</div>
+        <div class="bsub">${esc(r.type)} &middot; with <b>${esc(r.owner)}</b> &middot; ${rowBlocking(r)} required outstanding</div>
+        <div class="why-line"><span class="${s.cls}">${esc(s.text)}</span> <i class="sep">&middot;</i> chased ${plural(r.chased || 0, "time")}${c.date ? ` <i class="sep">&middot;</i> ${clockSmall(c)}` : ""}</div>
+      </div>
+      <div class="bacts">
+        ${r.confused
+          ? `<a class="btn sm" style="border-color:var(--violet-line);color:var(--violet);text-decoration:none" href="tel:${p.p.replace(/ /g, "")}">Call ${esc(firstName(p.n))}</a>`
+          : `<button class="btn sm" onclick="confirmChase(${r.id})">Send reminder</button>`}
+        <button class="btn sm" onclick="reassign(${r.id})">Reassign</button>
+      </div>
+    </div>`;
+  }).join("");
+}
+
+/* ---- deadlines: a runway per engagement, one shared calendar scale ---- */
+function runwayHTML(){
+  const cs = openRows().map(r => ({r, c: clockOf(r)}))
+    .sort((a, b) => a.c.days - b.c.days || a.r.name.localeCompare(b.r.name));
+  if(!cs.length) return `<div class="dempty"><b>Nothing open.</b>Every engagement of this type is filed.</div>`;
+  const dayOf = d => d ? daysFromToday(d) : null;
+  const pts = cs.flatMap(x => [dayOf(x.c.inBy), dayOf(x.c.filing)]).filter(v => v !== null);
+  const lo = Math.min(-7, ...pts) - 2;
+  const hi = Math.min(63, Math.max(21, ...pts) + 3);
+  const pn = d => (Math.max(lo, Math.min(hi, d)) - lo) / (hi - lo) * 100;
+  const P = d => pn(d).toFixed(2) + "%";
+  const ticks = [];
+  for(let d = Math.ceil(lo / 7) * 7; d <= hi; d += 7) ticks.push(d);
+  const dateAt = d => { const x = new Date(TODAY); x.setDate(x.getDate() + d); return x; };
+  const grid = ticks.map(d => `<i class="wk${d === 0 ? " now" : ""}" style="left:${P(d)}"></i>`).join("");
+
+  let h = `<div class="rwwrap"><div class="rw">
+    <div class="rwrow head">
+      <div>Client</div><div>With</div>
+      <div class="trk axis">${ticks.map(d => `<span class="tk${d === 0 ? " now" : ""}" style="left:${P(d)}">${d === 0 ? "Today" : fmtShort(dateAt(d))}</span>`).join("")}</div>
+      <div class="rt">Time left</div>
+    </div>`;
+
+  cs.forEach(({r, c}) => {
+    const inD = dayOf(c.inBy), fD = dayOf(c.filing);
+    let marks = grid;
+    if(c.date){
+      if(c.owes && inD !== null && fD !== null && fD > Math.max(inD, 0)){
+        const a = Math.max(inD, 0);
+        marks += `<i class="win" style="left:${P(a)};width:${(pn(fD) - pn(a)).toFixed(2)}%"></i>`;
+      }
+      if(c.days < 0) marks += `<i class="rbar late" style="left:${P(c.days)};width:${(pn(0) - pn(c.days)).toFixed(2)}%"></i>`;
+      else if(c.days > 0) marks += `<i class="rbar ${c.band}" style="left:${P(0)};width:${(pn(c.days) - pn(0)).toFixed(2)}%"></i>`;
+      else marks += `<i class="dot soon" style="left:${P(0)}"></i>`;
+      if(c.owes && inD !== null) marks += `<i class="mk-in" style="left:${P(inD)}"></i>`;
+      if(fD !== null) marks += `<i class="mk-file" style="left:${P(fD)}"></i>`;
+    }
+    const tip = [r.name, r.type,
+      c.inBy ? `Documents in by ${fmtShort(c.inBy)}${c.owes ? ` (${daysFromToday(c.inBy) < 0 ? plural(-daysFromToday(c.inBy), "day") + " late" : plural(daysFromToday(c.inBy), "day") + " left"})` : ", all required in"}` : "",
+      c.filing ? `Filing ${fmtShort(c.filing)} (${daysFromToday(c.filing) < 0 ? plural(-daysFromToday(c.filing), "day") + " late" : plural(daysFromToday(c.filing), "day") + " left"})` : "",
+      TURNAROUND[r.et] ? `We need ${TURNAROUND[r.et]} working days after the last document` : ""].filter(Boolean).join("\n");
+    h += `<div class="rwrow" role="button" tabindex="0" onclick="openOnBoard('all','${stageOf(r)}',${r.id})"
+        onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openOnBoard('all','${stageOf(r)}',${r.id})}">
+      <div class="dl-name"><b>${esc(r.name)}</b><small>${esc(r.type)}</small></div>
+      <div class="dl-with"><b>${esc(firstName(r.owner))}</b><small>${esc(stageLabel(stageOf(r)))}</small></div>
+      <div class="trk" data-tip="${esc(tip)}">${marks}</div>
+      <div class="due ${c.band}"><b>${clockBig(c)}</b><small>${clockSmall(c)}</small></div>
+    </div>`;
+  });
+  return h + `</div></div>`;
+}
+
+function drawDashboard(){
+  const el = $("#p-dashboard");
+  if(!el) return;
+  const rs = dashRows(), live = openRows();
+  const clocks = live.map(r => ({r, c: clockOf(r)}));
+  const late = clocks.filter(x => x.c.band === "late");
+  const soon = clocks.filter(x => x.c.band === "soon");
+  const us = stuckOnUs(), usWhy = us.filter(r => hasTag(r, "blocked")).length;
+  const chasing = live.filter(r => stageOf(r) === "chasing");
+  const quiet = stuckOnClient();
+  const people = new Set(live.map(r => r.owner)).size;
+  const names = xs => xs.length ? xs.slice(0, 3).map(x => esc(firstName(x.r ? x.r.name : x.name))).join(", ") + (xs.length > 3 ? ` and ${xs.length - 3} more` : "") : "";
+  const scope = activeType === "all" ? "every engagement type" : esc((ENGAGEMENT_TYPES.find(t => t.id === activeType) || {}).name);
+
+  const kpi = (cls, n, label, sub, target) => `<button class="kpi ${n ? cls : "zero"}" onclick="jumpTo('${target}')">
+      <span class="n">${n}</span><span class="l">${label}</span><span class="s">${sub}</span></button>`;
+
+  el.innerHTML = `<div class="stack dash">
+    <div class="row-between">
+      <div>
+        <h2>Practice dashboard</h2>
+        <p class="sub">${WEEKDAYS[TODAY.getDay()]} ${esc(fmtDate(TODAY))} &middot; ${plural(live.length, "engagement")} open across ${people} ${people === 1 ? "person" : "people"} &middot; showing ${scope}</p>
+      </div>
+      <button class="btn" onclick="openOnBoard('all','chasing')">Open the chase board</button>
+    </div>
+
+    <div class="kpis">
+      ${kpi("bad", late.length, "Late", late.length ? names(late) : "Nothing past its date", "d-due")}
+      ${kpi("warn", soon.length, `Due within ${SOON} days`, soon.length ? names(soon) : "Nothing in the next two weeks", "d-due")}
+      ${kpi("bad", us.length, "Stuck on our side", us.length ? `${usWhy} with a reason &middot; ${us.length - usWhy} nobody explained` : "Everything with us is moving", "d-stuck")}
+      ${kpi("client", chasing.length, "Waiting on clients", `${quiet.length} not responding`, "d-stuck")}
+    </div>
+
+    <section class="card dsec" id="d-people">
+      <div class="dhead">
+        <div><h3>Who is working on what</h3>
+          <p>Chasing through With the partner is everyone's open work. Not responding and Held up pick out the part of it that needs a push. Click a number to open those clients, or a name for that person's list.</p></div>
+        <div class="dlegend"><span><i class="lg-c"></i>Waiting on the client</span><span><i class="lg-f"></i>Waiting on us</span><span><i class="lg-s"></i>Held up</span></div>
+      </div>
+      ${peopleHTML()}
+    </section>
+
+    <div class="dgrid2" id="d-stuck">
+      <section class="card dsec">
+        <div class="dhead"><div><h3>Stuck on our side <span class="cnt">${us.length}</span></h3>
+          <p>Flagged with a reason, or untouched five days with none. Days on the desk, longest first.</p></div></div>
+        <div class="sl">${stuckUsHTML()}</div>
+      </section>
+      <section class="card dsec">
+        <div class="dhead"><div><h3>Stuck on the client's side <span class="cnt">${quiet.length}</span></h3>
+          <p>Being chased and not responding. Never opened the link first, then confused, then broken promises.</p></div></div>
+        <div class="sl">${stuckClientHTML()}</div>
+      </section>
+    </div>
+
+    <section class="card dsec" id="d-due">
+      <div class="dhead">
+        <div><h3>Deadlines, soonest first</h3>
+          <p>The in-by date while the client still owes a required document, the filing date once the work is ours.</p></div>
+        <div class="dlegend">
+          <span><i class="lg-late"></i>Late</span><span><i class="lg-soon"></i>Within ${SOON} days</span><span><i class="lg-later"></i>Later</span>
+          <span><i class="lg-win"></i>Our working days</span><span><i class="lg-in"></i>Documents in by</span><span><i class="lg-file"></i>Filing</span>
+        </div>
+      </div>
+      ${runwayHTML()}
+    </section>
+  </div>`;
+}
+
+/* A tooltip for charts and cells. The same facts are always written on the
+   page too, so nothing depends on hovering. */
+(function(){
+  const tip = () => document.getElementById("tip");
+  const place = e => { const t = tip(); if(!t || t.hidden) return;
+    const w = t.offsetWidth, hgt = t.offsetHeight;
+    let x = e.clientX + 14, y = e.clientY + 16;
+    if(x + w > innerWidth - 8) x = e.clientX - w - 14;
+    if(y + hgt > innerHeight - 8) y = e.clientY - hgt - 12;
+    t.style.left = x + "px"; t.style.top = y + "px"; };
+  document.addEventListener("mouseover", e => {
+    const t = tip(); if(!t) return;
+    const src = e.target.closest && e.target.closest("[data-tip]");
+    if(!src || !src.dataset.tip){ t.hidden = true; return; }
+    t.textContent = src.dataset.tip; t.hidden = false; place(e);
+  });
+  document.addEventListener("mousemove", place);
+  document.addEventListener("scroll", () => { const t = tip(); if(t) t.hidden = true; }, true);
+})();
+
 
 /* Nothing leaves the building without the sender seeing it, whether it is one
    message or twenty-nine. */
@@ -2439,5 +2976,5 @@ document.addEventListener("keydown", e => {
 });
 
 
-drawWhoAmI(); drawTypeBar(); drawClients(); drawList(); drawBoard(); applyState("partial"); go("board");
+drawWhoAmI(); drawTypeBar(); drawClients(); drawList(); drawBoard(); applyState("partial"); go("dashboard");
 </script>
