@@ -699,6 +699,7 @@ h3{font-size:14px;margin:0;letter-spacing:-.005em}
   .slr{grid-template-columns:56px minmax(0,1fr)}
   .slr .bacts{grid-column:2;justify-content:flex-start}
   .dlr{grid-template-columns:1fr;gap:6px}
+  .dlr .bacts{justify-content:flex-start}
 }
 </style>
 
@@ -1046,11 +1047,14 @@ let board = [
    owner:"Deepa Menon", missIds:[], chased:2, since:22, tags:[]},
   {id:14, et:"gst_monthly", stage:"filed", idle:0, name:"Konkan Seafoods", type:"GST August 2026",
    owner:"Priya Shetty", missIds:[], chased:1, since:11, tags:[]},
-  {id:9, et:"gst_monthly", states:{g3:"received", g7:"received"}, name:"Naveen Chandra Textiles", type:"GST August 2026", missIds:["g3","g7","g8","g9"], owner:"Faisal Qureshi", chased:1, tags:[]},
+  {id:9, et:"gst_monthly", states:{g3:"received", g7:"received"}, name:"Naveen Chandra Textiles", type:"GST August 2026", missIds:["g8","g9"], owner:"Faisal Qureshi", chased:1, tags:[]},
 ];
 
 let ownerFilter = "all";
-const OWNERS = () => [...new Set(board.map(r => r.owner))];
+/* The team is a fact about the firm, not about who happens to hold a row today.
+   Deriving it from the rows made a person vanish once their last job was reassigned. */
+const TEAM = ["Priya Shetty", "Faisal Qureshi", "Deepa Menon", "Anil Rao"];
+const OWNERS = () => [...new Set([...TEAM, ...board.map(r => r.owner).filter(Boolean)])];
 let stage = "chasing";   // the board opens where the work is
 let filter = "all";
 let openRow = null;
@@ -1466,7 +1470,7 @@ function setItemState(id, itemId, st, note){
     /* A send-back is a handover in the other direction. Without this the row sits
        under "Being prepared" forever with a required document missing. */
     const side = (STAGES.find(x => x.id === stageOf(r)) || {}).side;
-    if(side === "firm") delete r.stage;
+    if(side === "firm"){ delete r.stage; r.idle = 0; delete r.blocked; }
   }
   else r.missIds = r.missIds.filter(x => x !== itemId);
   closeModal(); drawBoard(); drawTypeBar();
@@ -1681,7 +1685,7 @@ function drawBoard(){
     const blocking = rowBlocking(r);
     const done = blocking === 0;
     const opened = openRow === r.id;
-    html += `<div class="brow ${opened?"open":""}" role="button" tabindex="0" onclick="toggleRow(${r.id})" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleRow(${r.id})}">
+    html += `<div class="brow ${opened?"open":""}" role="button" tabindex="0" onclick="toggleRow(${r.id})" onkeydown="if(event.target===this&&(event.key==='Enter'||event.key===' ')){event.preventDefault();toggleRow(${r.id})}">
       <div class="bmain">
         <div>
           <div class="bname">${esc(r.name)}</div>
@@ -2043,7 +2047,9 @@ function stuckClientHTML(){
 function runwayHTML(){
   const cs = openRows().map(r => ({r, c: clockOf(r)}))
     .sort((a, b) => a.c.days - b.c.days || a.r.name.localeCompare(b.r.name));
-  if(!cs.length) return `<div class="dempty"><b>Nothing open.</b>Every engagement of this type is filed.</div>`;
+  if(!cs.length) return dashRows().length
+    ? `<div class="dempty"><b>Nothing open.</b>Every engagement of this type is filed.</div>`
+    : `<div class="dempty"><b>No engagements yet.</b>Nothing of this type has been started for any client.</div>`;
   const dayOf = d => d ? daysFromToday(d) : null;
   const pts = cs.flatMap(x => [dayOf(x.c.inBy), dayOf(x.c.filing)]).filter(v => v !== null);
   const lo = Math.min(-7, ...pts) - 2;
@@ -2095,7 +2101,8 @@ function drawDashboard(){
   const el = $("#p-dashboard");
   if(!el) return;
   const rs = dashRows(), live = openRows();
-  const clocks = live.map(r => ({r, c: clockOf(r)}));
+  const clocks = live.map(r => ({r, c: clockOf(r)}))
+    .sort((a, b) => a.c.days - b.c.days || a.r.name.localeCompare(b.r.name));
   const late = clocks.filter(x => x.c.band === "late");
   const soon = clocks.filter(x => x.c.band === "soon");
   const us = stuckOnUs(), usWhy = us.filter(r => hasTag(r, "blocked")).length;
@@ -2211,7 +2218,7 @@ function flagBlocker(id){
 }
 function setBlocker(id, why){
   const r = board.find(x => x.id === id);
-  if(why) r.blocked = {why, since: r.idle || 0}; else delete r.blocked;
+  if(why) r.blocked = {why, since: r.idle || 0}; else { delete r.blocked; r.idle = 0; }
   closeModal(); drawBoard();
 }
 
@@ -2223,9 +2230,14 @@ function advance(id){
   const here = stageOf(r);
   const next = FIRM_ORDER[FIRM_ORDER.indexOf(here) + 1];
   if(!next) return;
+  /* Ready to start is derived from the documents, so it cannot be declared
+     while a required one is still outstanding. */
+  if(here === "review" && rowBlocking(r) > 0){ why(id, "It cannot move on yet"); return; }
   const label = (STAGES.find(x => x.id === next) || {}).label;
+  const toAccept = here === "review" ? reviewCount(r) : 0;
   modal(`Move to ${label}`,
-    `<p class="sub" style="margin-bottom:12px">${esc(r.name)} &middot; who has it now?</p>
+    `<p class="sub" style="margin-bottom:12px">${esc(r.name)} &middot; who has it now?${toAccept
+       ? ` This accepts the ${plural(toAccept, "document")} waiting for review.` : ""}</p>
      ${OWNERS().map(o => `<button class="opt" onclick="moveStage(${id},'${next}','${esc(o)}')">
        <b>${esc(o)}</b><span>${esc(label)}. The clock restarts today.</span></button>`).join("")}
      ${next === "filed" ? `<button class="opt" onclick="moveStage(${id},'filed','')"><b>Filed &mdash; nobody holds it any more</b></button>` : ""}`,
@@ -2241,7 +2253,13 @@ function handover(id){
 }
 function moveStage(id, st, owner){
   const r = board.find(x => x.id === id);
-  r.stage = st; r.idle = 0; delete r.blocked; if(owner) r.owner = owner;
+  if(st === "ready"){
+    // reviewed: accept what was waiting, and let the stage derive itself
+    r.states = r.states || {};
+    rowLedger(r).forEach(d => { if(d.state === "received") r.states[d.id] = "accepted"; });
+    delete r.stage;
+  } else r.stage = st;
+  r.idle = 0; delete r.blocked; if(owner) r.owner = owner;
   closeModal(); stage = st; filter = "all"; drawBoard();
 }
 function confirmChase(id, itemId){
@@ -2275,9 +2293,9 @@ function chase(id){
   drawBoard();
 }
 
-function why(id){
+function why(id, title){
   const r = board.find(x => x.id === id);
-  modal("Why Start work is locked",
+  modal(title || "Why Start work is locked",
     `<p class="sub" style="margin-bottom:12px">${esc(r.name)} still owes <b>${rowBlocking(r)}</b> required document${rowBlocking(r)===1?"":"s"}. Items marked <i>if applicable</i> or <i>nice to have</i> never hold this button. The button unlocks the moment the last one is accepted.</p>
      ${rowLedger(r).filter(d=>d.state==="pending"&&d.need==="Required").map(d=>d.name).map(m => `<div class="ditem" style="margin-bottom:7px"><span><span class="chip warn">Not sent</span> ${esc(m)}</span></div>`).join("")}
      <p class="sub" style="margin-top:14px;padding-top:12px;border-top:1px solid var(--rule)">
