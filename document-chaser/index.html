@@ -435,107 +435,44 @@ h3{font-size:14px;margin:0;letter-spacing:-.005em}
 .demobar button[aria-pressed="true"]{background:var(--surface);border-color:var(--rule-2);color:var(--ink);font-weight:500}
 .tickhint{font-size:12.5px;color:var(--ink-3);margin:0 0 8px}
 
-/* ---------- persistent engagement-type strip ---------- */
-.typebar{background:var(--band);border-bottom:1px solid var(--rule)}
+/* ---------- engagement-type filter ---------- */
+/* It is a filter, so it has to look like one: a label that says so, a
+   select-one marker on every choice, a count of what each choice will show,
+   and a way back out. While a filter is on, the whole strip turns blue. */
+.typebar{background:var(--band);border-bottom:1px solid var(--rule);transition:background .15s ease}
 .typebar[hidden]{display:none}
-.typebar .inner{max-width:1180px;margin:0 auto;padding:8px 22px;display:flex;align-items:center;column-gap:5px;row-gap:5px;flex-wrap:wrap}
-.typebar .lbl{font-size:10px;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-3);font-weight:500;flex:none;margin-right:4px}
+.typebar.on{background:var(--accent-soft);border-bottom-color:var(--accent-line)}
+.typebar .inner{max-width:1180px;margin:0 auto;padding:8px 22px;display:flex;align-items:center;gap:5px;flex-wrap:wrap}
+.typebar .lbl{display:inline-flex;align-items:center;gap:6px;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ink-2);font-weight:600;flex:none;margin-right:6px}
+.typebar .lbl svg{color:var(--accent);flex:none}
 .tsep{width:1px;height:17px;background:var(--rule-2);margin:0 4px;flex:none;align-self:center}
-.tpill{
-  border:1px solid var(--rule-2);background:var(--surface);border-radius:6px;
-  padding:4px 9px;white-space:nowrap;display:flex;align-items:baseline;gap:6px;
-}
-.tpill:hover:not([disabled]):not([aria-pressed="true"]){border-color:var(--accent);color:var(--accent)}
+.tpill{display:inline-flex;align-items:center;gap:7px;white-space:nowrap;line-height:1.3;
+  border:1px solid var(--rule-2);background:var(--surface);border-radius:6px;padding:4px 11px 4px 8px}
 .tpill b{font-weight:500;font-size:12.5px;letter-spacing:-.004em}
-.tpill span{font-size:10.5px;color:var(--ink-3);font-family:"IBM Plex Mono",monospace}
-.tpill[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
-.tpill[aria-pressed="true"] span{color:var(--accent-ink);opacity:.8}
+.tpill span{font-family:"IBM Plex Mono",monospace;font-size:10.5px;color:var(--ink-3)}
+.tdot{position:relative;width:13px;height:13px;border-radius:50%;flex:none;background:var(--surface);box-shadow:inset 0 0 0 1.5px var(--rule-3)}
+.tpill:hover:not([disabled]):not([aria-checked="true"]){border-color:var(--accent);color:var(--accent)}
+.tpill:hover:not([disabled]):not([aria-checked="true"]) .tdot{box-shadow:inset 0 0 0 1.5px var(--accent)}
+.tpill[aria-checked="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.tpill[aria-checked="true"]:hover{filter:brightness(1.12)}
+.tpill[aria-checked="true"] span{color:var(--accent-ink);opacity:.85}
+.tpill[aria-checked="true"] .tdot{background:var(--accent-ink);box-shadow:none}
+.tpill[aria-checked="true"] .tdot::after{content:"";position:absolute;left:4.5px;top:2.2px;width:3px;height:6px;
+  border:solid var(--accent);border-width:0 1.6px 1.6px 0;transform:rotate(45deg)}
+.tpill.none:not([aria-checked="true"]) b{color:var(--ink-2);font-weight:400}
 .tpill[disabled]{opacity:.45;border-style:dashed;cursor:not-allowed}
+.tclear{display:inline-flex;align-items:center;gap:6px;margin-left:auto;border:1px solid var(--accent-line);background:var(--surface);
+  color:var(--accent);font-size:12.5px;font-weight:500;padding:4px 10px;border-radius:6px;white-space:nowrap}
+.tclear:hover{border-color:var(--accent)}
+.fnote{display:inline-flex;align-items:center;gap:7px;flex-wrap:wrap;font-size:12.5px;color:var(--accent);
+  background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:6px;padding:3px 4px 3px 8px;margin-bottom:6px}
+.fnote b{font-weight:600}
+.fnote button{border:0;background:var(--surface);color:var(--accent);border-radius:4px;padding:1px 8px;font-size:12px;font-weight:500}
+.fnote button:hover{box-shadow:inset 0 0 0 1px var(--accent)}
 .grouplbl{font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3);font-weight:500;margin:12px 0 0}
 .prov{font-size:12.5px;color:var(--ink-3);margin-top:4px}
 .prov b{color:var(--ink-2);font-weight:500}
-
-/* ---------- demo-only controls, never part of the product ---------- */
-.demobar{
-  display:flex;align-items:center;gap:10px;flex-wrap:wrap;
-  border:1px dashed var(--rule-2);border-radius:8px;padding:8px 11px;background:var(--band);
-}
-.demobar .tag{
-  font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);font-weight:500;
-  border:1px solid var(--rule-2);border-radius:4px;padding:2px 6px;background:var(--surface);flex:none;
-}
-.demobar .lbl{font-size:12.5px;color:var(--ink-3);flex:none}
-.demobar .opts{display:flex;gap:4px;flex-wrap:wrap}
-.demobar button{
-  border:1px solid transparent;background:none;border-radius:5px;padding:4px 9px;
-  font-size:12.5px;color:var(--ink-2);
-}
-.demobar button:hover{background:var(--surface-3);color:var(--ink)}
-.demobar button[aria-pressed="true"]{background:var(--surface);border-color:var(--rule-2);color:var(--ink);font-weight:500}
-.tickhint{font-size:12.5px;color:var(--ink-3);margin:0 0 8px}
-
-/* ---------- persistent engagement-type strip ---------- */
-.typebar{background:var(--band);border-bottom:1px solid var(--rule)}
-.typebar[hidden]{display:none}
-.typebar .lbl{font-size:10px;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-3);font-weight:500;flex:none}
-.tpill{
-  border:1px solid var(--rule-2);background:var(--surface);border-radius:6px;
-  padding:5px 11px;white-space:nowrap;display:flex;align-items:baseline;gap:7px;
-}
-.tpill:hover:not([disabled]):not([aria-pressed="true"]){border-color:var(--accent);color:var(--accent)}
-.tpill b{font-weight:500;font-size:13px;letter-spacing:-.004em}
-.tpill span{font-size:11px;color:var(--ink-3);font-family:"IBM Plex Mono",monospace}
-.tpill[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
-.tpill[aria-pressed="true"] span{color:var(--accent-ink);opacity:.8}
-.tpill[disabled]{opacity:.5;border-style:dashed;cursor:not-allowed}
-.tmore{border:1px dashed var(--rule-2);background:none;border-radius:6px;padding:5px 11px;
-  font-size:12.5px;color:var(--ink-3);white-space:nowrap}
-.tmore:hover{border-color:var(--accent);color:var(--accent)}
-.tdrawer{border-top:1px solid var(--rule);background:var(--surface-2)}
-.tdrawer .inner{max-width:1180px;margin:0 auto;padding:12px 22px;display:flex;gap:26px;flex-wrap:wrap}
-.tgroup{display:flex;flex-direction:column;gap:6px;min-width:0}
-.grouplbl{font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3);font-weight:500;margin:12px 0 0}
-.prov{font-size:12.5px;color:var(--ink-3);margin-top:4px}
-.prov b{color:var(--ink-2);font-weight:500}
-
-/* ---------- demo-only controls, never part of the product ---------- */
-.demobar{
-  display:flex;align-items:center;gap:10px;flex-wrap:wrap;
-  border:1px dashed var(--rule-2);border-radius:8px;padding:8px 11px;background:var(--band);
-}
-.demobar .tag{
-  font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);font-weight:500;
-  border:1px solid var(--rule-2);border-radius:4px;padding:2px 6px;background:var(--surface);flex:none;
-}
-.demobar .lbl{font-size:12.5px;color:var(--ink-3);flex:none}
-.demobar .opts{display:flex;gap:4px;flex-wrap:wrap}
-.demobar button{
-  border:1px solid transparent;background:none;border-radius:5px;padding:4px 9px;
-  font-size:12.5px;color:var(--ink-2);
-}
-.demobar button:hover{background:var(--surface-3);color:var(--ink)}
-.demobar button[aria-pressed="true"]{background:var(--surface);border-color:var(--rule-2);color:var(--ink);font-weight:500}
-.tickhint{font-size:12.5px;color:var(--ink-3);margin:0 0 8px}
-
-/* ---------- persistent engagement-type strip ---------- */
-.typebar{background:var(--band);border-bottom:1px solid var(--rule)}
-.typebar[hidden]{display:none}
-.tgroup{display:flex;flex-direction:column;gap:8px;min-width:0}
-.glabel{font-size:10px;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-3);font-weight:500}
-.trow{display:flex;gap:7px;flex-wrap:wrap}
-.tpill{
-  border:1px solid var(--rule-2);background:var(--surface);border-radius:8px;
-  padding:9px 14px;min-width:138px;white-space:nowrap;text-align:left;line-height:1.3;
-}
-.tpill b{display:block;font-weight:500;font-size:13.5px;letter-spacing:-.004em}
-.tpill span{display:block;font-size:11px;color:var(--ink-3);font-family:"IBM Plex Mono",monospace;margin-top:2px}
-/* hover only applies to UNSELECTED tiles — on a selected one it repainted the text
-   in the same blue as its own background and the label vanished */
-.tpill:not([aria-pressed="true"]):not([disabled]):hover{border-color:var(--accent);color:var(--accent)}
-.tpill[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
-.tpill[aria-pressed="true"] span{color:var(--accent-ink);opacity:.8}
-.tpill[aria-pressed="true"]:hover{filter:brightness(1.12)}
-.tpill[disabled]{opacity:.45;border-style:dashed;cursor:not-allowed}
 
 /* ---------- dashboard ---------- */
 /* The dashboard answers three questions in the order a partner asks them.
@@ -1607,8 +1544,9 @@ function drawBoard(){
   <div class="stack">
     <div class="row-between">
       <div>
+        ${filterNote()}
         <h2>${esc(tname)}</h2>
-        <p class="sub">${activeType==="all" ? "Mixed deadlines" : inByLine(activeType)} &middot; ${scoped().length} engagements &middot; <b>${outstanding}</b> being chased &middot; ${ready} ready to start</p>
+        <p class="sub">${activeType==="all" ? "Mixed deadlines" : inByLine(activeType)} &middot; ${plural(scoped().filter(r => stageOf(r) !== "filed").length, "open engagement")} &middot; <b>${outstanding}</b> being chased &middot; ${ready} ready to start</p>
       </div>
       <div class="inline">
         <button class="btn" onclick="editTurnaround()">How long we need</button>
@@ -2110,7 +2048,6 @@ function drawDashboard(){
   const quiet = stuckOnClient();
   const people = new Set(live.map(r => r.owner)).size;
   const names = xs => xs.length ? xs.slice(0, 3).map(x => esc(firstName(x.r ? x.r.name : x.name))).join(", ") + (xs.length > 3 ? ` and ${xs.length - 3} more` : "") : "";
-  const scope = activeType === "all" ? "every engagement type" : esc((ENGAGEMENT_TYPES.find(t => t.id === activeType) || {}).name);
 
   const kpi = (cls, n, label, sub, target) => `<button class="kpi ${n ? cls : "zero"}" onclick="jumpTo('${target}')">
       <span class="n">${n}</span><span class="l">${label}</span><span class="s">${sub}</span></button>`;
@@ -2118,8 +2055,9 @@ function drawDashboard(){
   el.innerHTML = `<div class="stack dash">
     <div class="row-between">
       <div>
+        ${filterNote()}
         <h2>Practice dashboard</h2>
-        <p class="sub">${WEEKDAYS[TODAY.getDay()]} ${esc(fmtDate(TODAY))} &middot; ${plural(live.length, "engagement")} open across ${people} ${people === 1 ? "person" : "people"} &middot; showing ${scope}</p>
+        <p class="sub">${WEEKDAYS[TODAY.getDay()]} ${esc(fmtDate(TODAY))} &middot; ${plural(live.length, "engagement")} open across ${people} ${people === 1 ? "person" : "people"}</p>
       </div>
       <button class="btn" onclick="openOnBoard('all','chasing')">Open the chase board</button>
     </div>
@@ -2924,21 +2862,45 @@ function drawWhoAmI(){
   const initials = ME.split(" ").map(w => w[0]).join("").slice(0,2);
   $("#whoami").innerHTML = `<span class="av">${initials}</span><span>Signed in as <b>${esc(ME)}</b></span>`;
 }
-function drawTypeBar(){
-  const live = new Set(board.map(r => r.et));
-  const pill = t => `<button class="tpill" aria-pressed="${activeType===t.id}"
-      title="${esc(t.name)}${t.disabled ? " — " + esc(t.disabled) : ""}"
-      ${t.disabled?"disabled":`onclick="setActiveType('${t.id}')"`}>
-      <b>${esc(t.short || t.name)}</b><span>${
-        t.disabled ? "&ndash;" : live.has(t.id) ? `${typeCounts(t.id)} owing` : t.items}</span></button>`;
+/* How many engagements a filter choice will show, and how many of those are
+   waiting on the client. One meaning for the number, everywhere. */
+const openCount = id => board.filter(r => (id === "all" || r.et === id) && stageOf(r) !== "filed").length;
+const waitingCount = id => board.filter(r => (id === "all" || r.et === id) && stageOf(r) === "chasing").length;
+const activeTypeName = () => (ENGAGEMENT_TYPES.find(t => t.id === activeType) || {}).name || "";
+const FUNNEL = `<svg width="12" height="12" viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 2.2h13l-5 6v5.1l-3 1.5V8.2z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>`;
+/* Shown at the top of any screen the filter is narrowing. */
+const filterNote = () => activeType === "all" ? "" :
+  `<div class="fnote">${FUNNEL}<span>Filtered to <b>${esc(activeTypeName())}</b></span>
+     <button onclick="setActiveType('all')">Show everything</button></div>`;
 
-  let out = `<span class="lbl">Working on</span>
-    <button class="tpill" aria-pressed="${activeType==="all"}" onclick="setActiveType('all')">
-      <b>Everything</b><span>${typeCounts("all")} owing</span></button>`;
+function drawTypeBar(){
+  const tipFor = (id, name) => {
+    const n = openCount(id), w = waitingCount(id);
+    return id === "all"
+      ? `Show every engagement\n${plural(n, "open engagement")}, ${w} waiting on the client`
+      : n ? `Show only ${name}\n${plural(n, "open engagement")}, ${w} waiting on the client`
+          : `Show only ${name}\nNothing started for any client yet`;
+  };
+  const pill = t => {
+    const n = t.disabled ? 0 : openCount(t.id);
+    const on = activeType === t.id;
+    return `<button class="tpill${n ? "" : " none"}" role="radio" aria-checked="${on}"
+      ${t.disabled
+        ? `disabled title="${esc(t.name)} — ${esc(t.disabled)}"`
+        : `onclick="setActiveType('${t.id}')" data-tip="${esc(tipFor(t.id, t.name))}"`}>
+      <i class="tdot" aria-hidden="true"></i><b>${esc(t.short || t.name)}</b>${n ? `<span>${n} open</span>` : ""}</button>`;
+  };
+
+  let out = `<span class="lbl" id="typebar-lbl">${FUNNEL}Filter by type</span>
+    <button class="tpill" role="radio" aria-checked="${activeType==="all"}" onclick="setActiveType('all')" data-tip="${esc(tipFor("all"))}">
+      <i class="tdot" aria-hidden="true"></i><b>Everything</b><span>${openCount("all")} open</span></button>`;
   ["Audit","Compliance","Certification"].forEach(g => {
     out += `<i class="tsep"></i>` + ENGAGEMENT_TYPES.filter(t => t.group === g).map(pill).join("");
   });
-  $("#typebar").innerHTML = `<div class="inner">${out}</div>`;
+  if(activeType !== "all") out += `<button class="tclear" onclick="setActiveType('all')" aria-label="Clear the filter">Clear filter <span aria-hidden="true">&times;</span></button>`;
+  const bar = $("#typebar");
+  bar.classList.toggle("on", activeType !== "all");
+  bar.innerHTML = `<div class="inner" role="radiogroup" aria-labelledby="typebar-lbl">${out}</div>`;
 }
 
 function setActiveType(id){
