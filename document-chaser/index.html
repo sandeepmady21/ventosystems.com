@@ -2328,7 +2328,6 @@ function doBulk(){
   rows().filter(r => rowBlocking(r) > 0 && r.since !== 0)
         .forEach(r => { r.chased = (r.chased||0)+1; r.since = 0; });
   drawBoard();
-  toast(`${n} reminders sent. 2 held back.`, () => toast("Send cancelled. Nothing went out."));
 }
 
 /* =======================================================================
@@ -2403,7 +2402,7 @@ function drawClient(){
         </div>
         ${badge}
       </div>
-      ${c.why && c.st !== "query" ? `<div class="chint" style="color:var(--bad);margin-top:6px">${esc(c.why)}</div>` : ""}`;
+      ${c.why && c.st === "redo" ? `<div class="chint" style="color:var(--bad);margin-top:6px">${esc(c.why)}</div>` : ""}`;
 
     if(c.parts){
       body += `<div class="parts">${c.parts.map(p => `<button class="part ${c.got.includes(p)?"on":""}" onclick="uploadPart('${c.id}','${p}')">${p}</button>`).join("")}</div>
@@ -2588,11 +2587,7 @@ function gateTap(){
     drawClient();
     return;
   }
-  if(false){
-    toast("${esc(CC().owner.split(' ')[0])} has been told you are done.");
-    return;
-  }
-  const first = cards.find(c => c.st === "pending" || c.st === "redo");
+  const first = cards.find(c => c.st === "pending" || c.st === "redo" || c.st === "query");
   if(!first) return;
   const el = document.getElementById("c-" + first.id);
   el.scrollIntoView({block:"center", behavior:"smooth"});
