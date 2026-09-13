@@ -207,12 +207,20 @@ h3{font-size:14px;margin:0;letter-spacing:-.005em}
 .pipeline{display:flex;align-items:stretch;gap:12px;margin-bottom:6px}
 .side{display:flex;flex-direction:column;min-width:0}
 .side > b{
+  display:flex;justify-content:space-between;align-items:baseline;gap:10px;
   font-size:10px;letter-spacing:.12em;text-transform:uppercase;font-weight:600;
-  padding:6px 12px;border-radius:7px 7px 0 0;
+  padding:1px 2px 6px;margin-bottom:6px;border-bottom:2px solid;
 }
+.side > b .n{font-family:"IBM Plex Mono",monospace;font-size:15px;font-weight:500;letter-spacing:0}
 .side .pipe{display:flex;gap:2px;flex:1}
-.side.client > b{background:#E7D4A8;color:#4E3908}
-.side.firm   > b{background:#BFD3E6;color:#0F3352}
+.side.client > b{color:#6E5D2E;border-color:#DCC68E}
+.side.firm   > b{color:#123A5C;border-color:#A9C2D9}
+/* the seam the comment above talks about: the gap is the handover, now drawn */
+.side.firm{position:relative}
+.side.firm::before{
+  content:"";position:absolute;left:-7px;top:2px;bottom:1px;
+  border-left:1px dashed var(--rule-2);
+}
 
 .pipe button{
   flex:1;min-width:0;border:0;padding:12px 12px 12px 26px;text-align:left;
@@ -1597,7 +1605,7 @@ function drawBoard(){
           const total = mine.filter(x => x.id !== "filed" && x.id !== "notstarted")
                              .reduce((a,x) => a + stageCount(x.id), 0);
           return `<div class="side ${side}" style="flex:${mine.length}">
-            <b>${side==="client" ? "Waiting on the client" : "Waiting on us"} &middot; ${total}</b>
+            <b><span>${side==="client" ? "With the client" : "With us"}</span><span class="n">${total}</span></b>
             <div class="pipe">${mine.map(st => {
               const n = stageCount(st.id);
               return `<button aria-pressed="${stage===st.id}" class="${side}${n?"":" empty"}" onclick="setStage('${st.id}')">
@@ -1905,7 +1913,7 @@ function peopleHTML(){
   const people = OWNERS();
   const loads = people.map(o => rs.filter(r => r.owner === o && stageOf(r) !== "filed").length);
   const maxLoad = Math.max(1, ...loads);
-  const bands = [["c","Waiting on the client",2],["f","Waiting on us",4],["s","Held up",2],["d","Done",1]];
+  const bands = [["c","With the client",2],["f","With us",4],["s","Held up",2],["d","Done",1]];
 
   let h = `<div class="mxwrap"><table class="mx">
     <thead>
@@ -1930,7 +1938,7 @@ function peopleHTML(){
           <span class="caret" aria-hidden="true"></span>
           <span class="pmeta">
             <span class="pname">${esc(o)}${o === ME ? ` <em>you</em>` : ""}</span>
-            <span class="pload" data-tip="${esc(`${o}\n${cSide} waiting on the client\n${fSide} waiting on us`)}">
+            <span class="pload" data-tip="${esc(`${o}\n${cSide} with the client\n${fSide} with us`)}">
               <span class="lbar">${cSide ? `<i class="lc" style="width:${cSide * scale}px"></i>` : ""}${fSide ? `<i class="lf" style="width:${fSide * scale}px"></i>` : ""}</span>
               <span class="lnum">${live.length} open</span>
             </span>
@@ -2131,14 +2139,14 @@ function drawDashboard(){
       ${kpi("bad", late.length, "Late", late.length ? names(late) : "Nothing past its date", "d-due")}
       ${kpi("warn", soon.length, `Due within ${SOON} days`, soon.length ? names(soon) : "Nothing in the next two weeks", "d-due")}
       ${kpi("bad", us.length, "Stuck on our side", us.length ? `${usWhy} with a known blocker &middot; ${us.length - usWhy} unexplained` : "Everything with us is moving", "d-us")}
-      ${kpi("client", chasing.length, "Waiting on clients", `${quiet.length} not responding`, "d-client")}
+      ${kpi("client", chasing.length, "With clients", `${quiet.length} not responding`, "d-client")}
     </div>
 
     <section class="card dsec" id="d-people">
       <div class="dhead">
         <div><h3>Who is working on what</h3>
           <p>Chasing through With the partner is everyone's open work. Not responding and Held up pick out the part of it that needs a push. Click a number to open those clients, or a name for that person's list.</p></div>
-        <div class="dlegend"><span><i class="lg-c"></i>Waiting on the client</span><span><i class="lg-f"></i>Waiting on us</span><span><i class="lg-s"></i>Held up</span></div>
+        <div class="dlegend"><span><i class="lg-c"></i>With the client</span><span><i class="lg-f"></i>With us</span><span><i class="lg-s"></i>Held up</span></div>
       </div>
       ${peopleHTML()}
     </section>
@@ -2933,8 +2941,8 @@ function drawTypeBar(){
   const tipFor = (id, name) => {
     const n = openCount(id), w = waitingCount(id);
     return id === "all"
-      ? `Show every engagement\n${plural(n, "open engagement")}, ${w} waiting on the client`
-      : n ? `Show only ${name}\n${plural(n, "open engagement")}, ${w} waiting on the client`
+      ? `Show every engagement\n${plural(n, "open engagement")}, ${w} with the client`
+      : n ? `Show only ${name}\n${plural(n, "open engagement")}, ${w} with the client`
           : `Show only ${name}\nNothing started for any client yet`;
   };
   const pill = t => {
