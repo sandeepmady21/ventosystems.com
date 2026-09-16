@@ -1,219 +1,405 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en-IN">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="robots" content="noindex, nofollow">
-  <title>Services – Sarath &amp; Associates, Chartered Accountants</title>
-  <meta name="description" content="Audit and assurance, taxation, forensic and advisory services of Sarath &amp; Associates, Chartered Accountants.">
-  <link rel="stylesheet" href="assets/style.css">
-</head>
-<body class="page-services">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Services – Sarath &amp; Associates, Chartered Accountants</title>
+    <meta
+      name="description"
+      content="Audit and assurance, taxation, forensic and advisory services of Sarath &amp; Associates, Chartered Accountants."
+    />
+    <meta name="theme-color" content="#183e35" />
+    <link
+      rel="preload"
+      href="assets/fonts/source-serif-4-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link rel="stylesheet" href="assets/style.css" />
+    <script src="assets/site.js" defer></script>
+  </head>
+  <body class="page-services">
+    <!-- Shared navigation: keep in sync across the static HTML pages. -->
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <div class="wrap site-header__inner">
+        <a
+          class="wordmark"
+          href="index.html"
+          aria-label="Sarath &amp; Associates home"
+        >
+          <img
+            class="wordmark__logo"
+            src="assets/ca-india-logo.png"
+            alt="CA India"
+            width="320"
+            height="241"
+          />
+          <span class="wordmark__text"
+            ><span class="wordmark__name">Sarath &amp; Associates</span
+            ><span class="wordmark__desc">Chartered Accountants</span></span
+          >
+        </a>
+        <button
+          class="menu-toggle"
+          type="button"
+          aria-label="Open navigation"
+          aria-controls="site-nav"
+          aria-expanded="false"
+          hidden
+        >
+          <span>Menu</span
+          ><span class="menu-toggle__lines" aria-hidden="true"></span>
+        </button>
+        <nav class="site-nav" id="site-nav" aria-label="Main">
+          <ul>
+            <li><a href="services.html">Our practice</a></li>
+            <li><a href="people.html">Our people</a></li>
+            <li><a href="newsletter.html">Insights</a></li>
+            <li><a href="offices.html">Our offices</a></li>
+            <li><a href="careers.html">Careers</a></li>
+            <li>
+              <a class="nav-contact" href="contact.html"
+                >Contact <span aria-hidden="true">↗</span></a
+              >
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
 
-<!-- ===== SHARED HEADER BLOCK — START =========================================
-     This block is identical in every page of the site, newsletter issues
-     included. To change the menu or the wordmark, change it here and paste the
-     whole block into every other page. `ruby check.rb` tells you if one differs.
-     The menu underlines the page you are on by itself, using the class on
-     <body>, so nothing in this block changes from page to page.
-     ======================================================================== -->
-<a class="skip-link" href="#main">Skip to content</a>
+    <main id="main">
+      <!-- SECTION: Page title and intro line -->
+      <section class="page-hero" aria-labelledby="page-title">
+        <div class="wrap page-hero__inner">
+          <p class="eyebrow">Our services</p>
+          <h1 id="page-title">Four areas<br />of practice.</h1>
+          <p class="page-hero__lead">
+            Audit and assurance. Taxation. Forensic accounting and
+            investigation. Advisory. Explore the firm's work and the partners
+            who lead each area.
+          </p>
+          <p class="page-hero__note">
+            Partner qualifications and ICAI membership numbers are listed on the
+            <a href="people.html">People page</a>.
+          </p>
+        </div>
+      </section>
 
-<header class="site-header">
-  <div class="wrap site-header__inner">
-    <a class="wordmark" href="index.html">
-      <img class="wordmark__logo" src="assets/ca-india-logo.png" alt="CA India" width="320" height="241">
-      <span class="wordmark__text">
-        <span class="wordmark__name">Sarath &amp; Associates</span>
-        <span class="wordmark__desc">Chartered Accountants</span>
-      </span>
-    </a>
-    <nav class="site-nav" aria-label="Main">
-      <ul>
-        <li><a href="services.html">Services</a></li>
-        <li><a href="people.html">People</a></li>
-        <li><a href="newsletter.html">Newsletter</a></li>
-        <li><a href="offices.html">Offices</a></li>
-        <li><a href="careers.html">Careers</a></li>
-        <li><a href="contact.html">Contact</a></li>
-      </ul>
-    </nav>
-  </div>
-</header>
-<!-- ===== SHARED HEADER BLOCK — END ========================================= -->
+      <div class="section">
+        <div class="wrap with-aside">
+          <!-- SECTION: The list of areas on the left. If you add an area, add a line here. -->
+          <nav class="aside-nav" aria-labelledby="on-this-page">
+            <h2 class="aside-nav__title" id="on-this-page">
+              Areas of practice
+            </h2>
+            <ul>
+              <li><a href="#audit">Audit and assurance</a></li>
+              <li><a href="#taxation">Taxation</a></li>
+              <li>
+                <a href="#forensic">Forensic accounting and investigation</a>
+              </li>
+              <li><a href="#advisory">Advisory</a></li>
+            </ul>
+          </nav>
 
-<main id="main">
-
-  <!-- SECTION: Page title and intro line -->
-  <section class="page-hero" aria-labelledby="page-title">
-    <div class="wrap page-hero__inner">
-      <h1 id="page-title">Services</h1>
-      <p class="page-hero__lead">The firm's services are listed by area. Each area names the partners who lead it. Their membership numbers, qualifications and contact details are on the <a href="people.html">People page</a>.</p>
-    </div>
-  </section>
-
-  <div class="section">
-    <div class="wrap with-aside">
-
-      <!-- SECTION: The list of areas on the left. If you add an area, add a line here. -->
-      <nav class="aside-nav" aria-labelledby="on-this-page">
-        <h2 class="aside-nav__title" id="on-this-page">Areas</h2>
-        <ul>
-          <li><a href="#audit">Audit and assurance</a></li>
-          <li><a href="#taxation">Taxation</a></li>
-          <li><a href="#forensic">Forensic accounting and investigation</a></li>
-          <li><a href="#advisory">Advisory</a></li>
-        </ul>
-      </nav>
-
-      <div>
-
-        <!-- SECTION: Audit and assurance. The home page links to this section as #audit,
+          <div>
+            <!-- SECTION: Audit and assurance. The home page links to this section as #audit,
              so the id on the <section> must not change. -->
-        <section class="service" id="audit" aria-labelledby="audit-heading">
-          <h2 class="section-title" id="audit-heading">Audit and assurance</h2>
-          <ul class="service__list">
-            <li>Statutory audits under the Companies Act, 2013 and other statutes, including audits of banks, insurers and co-operative societies.</li>
-            <li>Statutory and internal audits of listed and unlisted companies, government entities and banks, including bank branch audits, and of co-operative societies, partnership firms, limited liability partnerships, Hindu undivided families, Section 8 companies, charitable trusts and other associations.</li>
-            <li>Audits of government agencies and externally aided projects.</li>
-            <li>Bank audit services: statutory central audit, statutory branch audit including specialised, industrial finance and corporate finance branches, concurrent audit, treasury and forex branch audit, stock audit, information systems audit, and specialised monitoring assignments.</li>
-            <li>Internal audit and process risk services, management and risk assurance, corporate risk mitigation, and systems and procedures reviews.</li>
-            <li>Information systems audit.</li>
-            <li>Certification and attest reports.</li>
-          </ul>
-          <div class="service__partners">
-            <h3 class="label">Partners</h3>
-            <ul class="chips">
-              <li><a href="people.html#kalyana-chakravarthi">CA M. Kalyana Chakravarthi</a></li>
-              <li><a href="people.html#arunima-sarath">CA Arunima Sarath P</a></li>
-              <li><a href="people.html#srinivas">CA S. Srinivas</a></li>
-              <li><a href="people.html#harika">CA Y. Harika</a></li>
-              <li><a href="people.html#rama-krishna">CA K. Rama Krishna</a></li>
-            </ul>
-          </div>
-        </section>
+            <section class="service" id="audit" aria-labelledby="audit-heading">
+              <p class="section-index">01 / Audit &amp; assurance</p>
+              <h2 class="section-title" id="audit-heading">
+                Audit and assurance
+              </h2>
+              <ul class="service__list">
+                <li>
+                  Statutory audits under the Companies Act, 2013 and other
+                  statutes, including audits of banks, insurers and co-operative
+                  societies.
+                </li>
+                <li>
+                  Statutory and internal audits of listed and unlisted
+                  companies, government entities and banks, including bank
+                  branch audits, and of co-operative societies, partnership
+                  firms, limited liability partnerships, Hindu undivided
+                  families, Section 8 companies, charitable trusts and other
+                  associations.
+                </li>
+                <li>
+                  Audits of government agencies and externally aided projects.
+                </li>
+                <li>
+                  Bank audit services: statutory central audit, statutory branch
+                  audit including specialised, industrial finance and corporate
+                  finance branches, concurrent audit, treasury and forex branch
+                  audit, stock audit, information systems audit, and specialised
+                  monitoring assignments.
+                </li>
+                <li>
+                  Internal audit and process risk services, management and risk
+                  assurance, corporate risk mitigation, and systems and
+                  procedures reviews.
+                </li>
+                <li>Information systems audit.</li>
+                <li>Certification and attest reports.</li>
+              </ul>
+              <div class="service__partners">
+                <h3 class="label">Partners</h3>
+                <ul class="chips">
+                  <li>
+                    <a href="people.html#kalyana-chakravarthi"
+                      >CA M. Kalyana Chakravarthi</a
+                    >
+                  </li>
+                  <li>
+                    <a href="people.html#arunima-sarath">CA Arunima Sarath P</a>
+                  </li>
+                  <li><a href="people.html#srinivas">CA S. Srinivas</a></li>
+                  <li><a href="people.html#harika">CA Y. Harika</a></li>
+                  <li>
+                    <a href="people.html#rama-krishna">CA K. Rama Krishna</a>
+                  </li>
+                </ul>
+              </div>
+            </section>
 
-        <!-- SECTION: Taxation. Linked from the home page as #taxation. -->
-        <section class="service" id="taxation" aria-labelledby="taxation-heading">
-          <h2 class="section-title" id="taxation-heading">Taxation</h2>
-          <ul class="service__list">
-            <li>Direct tax: domestic and international tax planning, tax audit and transfer pricing reports, compliance reviews, representation before tax authorities, and litigation support.</li>
-            <li>Indirect tax: goods and services tax advisory, compliance systems, annual return and reconciliation support, refunds, and representation.</li>
-          </ul>
-          <div class="service__partners">
-            <h3 class="label">Partners</h3>
-            <ul class="chips">
-              <li><a href="people.html#sai-roop-kumar">CA V. Sai Roop Kumar</a></li>
-              <li><a href="people.html#akhil-sai">CA K. Akhil Sai</a></li>
-              <li><a href="people.html#venkatesa-prabhu">CA E. Venkatesa Prabhu</a></li>
-            </ul>
-          </div>
-        </section>
+            <!-- SECTION: Taxation. Linked from the home page as #taxation. -->
+            <section
+              class="service"
+              id="taxation"
+              aria-labelledby="taxation-heading"
+            >
+              <p class="section-index">02 / Taxation</p>
+              <h2 class="section-title" id="taxation-heading">Taxation</h2>
+              <ul class="service__list">
+                <li>
+                  Direct tax: domestic and international tax planning, tax audit
+                  and transfer pricing reports, compliance reviews,
+                  representation before tax authorities, and litigation support.
+                </li>
+                <li>
+                  Indirect tax: goods and services tax advisory, compliance
+                  systems, annual return and reconciliation support, refunds,
+                  and representation.
+                </li>
+              </ul>
+              <div class="service__partners">
+                <h3 class="label">Partners</h3>
+                <ul class="chips">
+                  <li>
+                    <a href="people.html#sai-roop-kumar"
+                      >CA V. Sai Roop Kumar</a
+                    >
+                  </li>
+                  <li><a href="people.html#akhil-sai">CA K. Akhil Sai</a></li>
+                  <li>
+                    <a href="people.html#venkatesa-prabhu"
+                      >CA E. Venkatesa Prabhu</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </section>
 
-        <!-- SECTION: Forensic accounting and investigation. Linked from the home page as
+            <!-- SECTION: Forensic accounting and investigation. Linked from the home page as
              #forensic. Two lead paragraphs, then the list, then the training sentence.
              No client, agency, matter, city, amount, court or outcome is named here. -->
-        <section class="service" id="forensic" aria-labelledby="forensic-heading">
-          <h2 class="section-title" id="forensic-heading">Forensic accounting and investigation</h2>
-          <div class="prose">
-            <p class="lede">The firm undertakes forensic accounting and investigation assignments for central and state investigation agencies, financial sector regulators, economic offence wings of state police, anti-corruption bureaus, banks and corporates.</p>
-            <p>The forensic practice covers fraud and misappropriation investigations for police and corporates; forensic audits of listed companies and of public offers for regulators; forensic audits of collective investment and chit fund schemes; forensic audits of non-performing accounts to identify diversion of funds, and joint investigative audits for corporate debt restructuring, for public sector banks; and transaction audits under the Insolvency and Bankruptcy Code, 2016 on behalf of resolution professionals in the power, manufacturing, infrastructure and real estate sectors.</p>
-          </div>
-          <ul class="service__list">
-            <li>Preventive fraud risk management studies for corporates.</li>
-            <li>Anti-corruption advisory and investigations.</li>
-            <li>Vigilance and anti-fraud investigations.</li>
-            <li>Tax related support in investigation matters, including fraud, tax evasion and other white collar crime investigations.</li>
-          </ul>
-          <p class="note">Partners deliver training on forensic accounting, white collar crime and anti-corruption investigation for law enforcement, regulatory and banking training institutions.</p>
-          <div class="service__partners">
-            <h3 class="label">Partners</h3>
-            <ul class="chips">
-              <li><a href="people.html#sarath-kumar">CA P. Sarath Kumar</a></li>
-              <li><a href="people.html#srinivas">CA S. Srinivas</a></li>
-              <li><a href="people.html#venkatesa-prabhu">CA E. Venkatesa Prabhu</a></li>
-              <li><a href="people.html#harika">CA Y. Harika</a></li>
-            </ul>
-          </div>
-        </section>
+            <section
+              class="service"
+              id="forensic"
+              aria-labelledby="forensic-heading"
+            >
+              <p class="section-index">03 / Forensic accounting</p>
+              <h2 class="section-title" id="forensic-heading">
+                Forensic accounting and investigation
+              </h2>
+              <div class="prose">
+                <p class="lede">
+                  The firm undertakes forensic accounting and investigation
+                  assignments for central and state investigation agencies,
+                  financial sector regulators, economic offence wings of state
+                  police, anti-corruption bureaus, banks and corporates.
+                </p>
+                <p>
+                  The forensic practice covers fraud and misappropriation
+                  investigations for police and corporates; forensic audits of
+                  listed companies and of public offers for regulators; forensic
+                  audits of collective investment and chit fund schemes;
+                  forensic audits of non-performing accounts to identify
+                  diversion of funds, and joint investigative audits for
+                  corporate debt restructuring, for public sector banks; and
+                  transaction audits under the Insolvency and Bankruptcy Code,
+                  2016 on behalf of resolution professionals in the power,
+                  manufacturing, infrastructure and real estate sectors.
+                </p>
+              </div>
+              <ul class="service__list">
+                <li>
+                  Preventive fraud risk management studies for corporates.
+                </li>
+                <li>Anti-corruption advisory and investigations.</li>
+                <li>Vigilance and anti-fraud investigations.</li>
+                <li>
+                  Tax related support in investigation matters, including fraud,
+                  tax evasion and other white collar crime investigations.
+                </li>
+              </ul>
+              <p class="note">
+                Partners deliver training on forensic accounting, white collar
+                crime and anti-corruption investigation for law enforcement,
+                regulatory and banking training institutions.
+              </p>
+              <div class="service__partners">
+                <h3 class="label">Partners</h3>
+                <ul class="chips">
+                  <li>
+                    <a href="people.html#sarath-kumar">CA P. Sarath Kumar</a>
+                  </li>
+                  <li><a href="people.html#srinivas">CA S. Srinivas</a></li>
+                  <li>
+                    <a href="people.html#venkatesa-prabhu"
+                      >CA E. Venkatesa Prabhu</a
+                    >
+                  </li>
+                  <li><a href="people.html#harika">CA Y. Harika</a></li>
+                </ul>
+              </div>
+            </section>
 
-        <!-- SECTION: Advisory. Linked from the home page as #advisory. -->
-        <section class="service" id="advisory" aria-labelledby="advisory-heading">
-          <h2 class="section-title" id="advisory-heading">Advisory</h2>
-          <ul class="service__list">
-            <li>Financial due diligence, business analysis and feasibility studies, and techno-economic consultancy.</li>
-            <li>Project financing and restructuring proposals, and government subsidy applications.</li>
-            <li>Financial structuring, mergers and acquisitions, and public issue advisory.</li>
-            <li>Valuation of securities or financial assets, by partners registered with the Insolvency and Bankruptcy Board of India as Registered Valuers.</li>
-            <li>Insolvency resolution assignments under the Insolvency and Bankruptcy Code, 2016, by partners registered with the Insolvency and Bankruptcy Board of India as Insolvency Professionals.</li>
-            <li>Accounting advisory.</li>
-          </ul>
-          <div class="service__partners">
-            <h3 class="label">Partners</h3>
-            <ul class="chips">
-              <li><a href="people.html#bansal">CA Parveen Kumar Bansal</a></li>
-              <li><a href="people.html#sai-roop-kumar">CA V. Sai Roop Kumar</a></li>
-              <li><a href="people.html#vasudevan">CA D. Vasudevan</a></li>
-              <li><a href="people.html#naresh">CA M. Naresh</a></li>
-            </ul>
+            <!-- SECTION: Advisory. Linked from the home page as #advisory. -->
+            <section
+              class="service"
+              id="advisory"
+              aria-labelledby="advisory-heading"
+            >
+              <p class="section-index">04 / Advisory</p>
+              <h2 class="section-title" id="advisory-heading">Advisory</h2>
+              <ul class="service__list">
+                <li>
+                  Financial due diligence, business analysis and feasibility
+                  studies, and techno-economic consultancy.
+                </li>
+                <li>
+                  Project financing and restructuring proposals, and government
+                  subsidy applications.
+                </li>
+                <li>
+                  Financial structuring, mergers and acquisitions, and public
+                  issue advisory.
+                </li>
+                <li>
+                  Valuation of securities or financial assets, by partners
+                  registered with the Insolvency and Bankruptcy Board of India
+                  as Registered Valuers.
+                </li>
+                <li>
+                  Insolvency resolution assignments under the Insolvency and
+                  Bankruptcy Code, 2016, by partners registered with the
+                  Insolvency and Bankruptcy Board of India as Insolvency
+                  Professionals.
+                </li>
+                <li>Accounting advisory.</li>
+              </ul>
+              <div class="service__partners">
+                <h3 class="label">Partners</h3>
+                <ul class="chips">
+                  <li>
+                    <a href="people.html#bansal">CA Parveen Kumar Bansal</a>
+                  </li>
+                  <li>
+                    <a href="people.html#sai-roop-kumar"
+                      >CA V. Sai Roop Kumar</a
+                    >
+                  </li>
+                  <li><a href="people.html#vasudevan">CA D. Vasudevan</a></li>
+                  <li><a href="people.html#naresh">CA M. Naresh</a></li>
+                </ul>
+              </div>
+            </section>
           </div>
-        </section>
-
+        </div>
       </div>
-    </div>
-  </div>
 
-</main>
+      <section class="section section--stone" aria-labelledby="services-people">
+        <div class="wrap split">
+          <div>
+            <p class="eyebrow">People &amp; practice</p>
+            <h2 class="section-title" id="services-people">
+              Meet the partners.
+            </h2>
+          </div>
+          <div class="prose">
+            <p class="lede">
+              Read about the qualifications, areas of experience and
+              professional backgrounds of the firm's 13 partners.
+            </p>
+            <p>
+              <a class="more" href="people.html"
+                >Explore the partner directory</a
+              >
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
 
-<!-- ===== SHARED FOOTER BLOCK — START =========================================
-     This block is identical in every page of the site, newsletter issues
-     included. To change an address or a telephone number, change it here and
-     paste the whole block into every other page. `ruby check.rb` tells you if
-     one differs.
-     ======================================================================== -->
-<footer class="site-footer">
-  <div class="wrap site-footer__top">
-
-    <div>
-      <p class="site-footer__name">Sarath &amp; Associates</p>
-      <p class="site-footer__desc">Chartered Accountants</p>
-      <p>ICAI Firm Registration No. <span class="num">005120S</span></p>
-      <p>Established 1990</p>
-    </div>
-
-    <div>
-      <h2 class="site-footer__heading">Head office</h2>
-      <address>
-        4th Floor, MAAS Heights, 8-2-577/B, Road No. 8<br>
-        Banjara Hills, Hyderabad 500 034, Telangana
-      </address>
-      <ul class="site-footer__list">
-        <li><a href="tel:+914023354322">+91 40 2335 4322</a></li>
-        <li><a href="mailto:info@sarathcas.in">info@sarathcas.in</a></li>
-        <li><a href="offices.html">All offices</a></li>
-      </ul>
-    </div>
-
-    <div>
-      <h2 class="site-footer__heading">Useful links</h2>
-      <ul class="site-footer__list">
-        <li><a href="https://www.icai.org">Institute of Chartered Accountants of India</a></li>
-        <li><a href="https://www.mca.gov.in">Ministry of Corporate Affairs</a></li>
-        <li><a href="https://www.incometax.gov.in">Income Tax Department</a></li>
-        <li><a href="https://www.gst.gov.in">GST Portal</a></li>
-        <li><a href="https://ibbi.gov.in">Insolvency and Bankruptcy Board of India</a></li>
-      </ul>
-    </div>
-
-  </div>
-
-  <div class="wrap site-footer__bottom">
-    <p>This website provides information about the firm and is not intended to solicit work.</p>
-    <p><a href="privacy.html">Privacy notice</a></p>
-    <p>© 2026 Sarath &amp; Associates, Chartered Accountants</p>
-  </div>
-</footer>
-<!-- ===== SHARED FOOTER BLOCK — END ========================================= -->
-
-</body>
+    <!-- Shared footer: keep in sync across the static HTML pages. -->
+    <footer class="site-footer">
+      <div class="wrap site-footer__top">
+        <div>
+          <p class="site-footer__name">Sarath &amp; Associates</p>
+          <p class="site-footer__desc">Chartered Accountants</p>
+          <p>Established 1990</p>
+          <p>ICAI Firm Registration No. <span class="num">005120S</span></p>
+          <p class="site-footer__cities">
+            Hyderabad · Mumbai · Delhi<br />Vijayawada · Chennai · Bengaluru
+          </p>
+        </div>
+        <div>
+          <h2 class="site-footer__heading">Head office</h2>
+          <address>
+            4th Floor, MAAS Heights, 8-2-577/B, Road No. 8<br />Banjara Hills,
+            Hyderabad 500 034, Telangana
+          </address>
+          <ul class="site-footer__list">
+            <li><a href="tel:+914023354322">+91 40 2335 4322</a></li>
+            <li><a href="mailto:info@sarathcas.in">info@sarathcas.in</a></li>
+            <li><a href="offices.html">View all offices ↗</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2 class="site-footer__heading">Professional resources</h2>
+          <ul class="site-footer__list">
+            <li>
+              <a href="https://www.icai.org"
+                >Institute of Chartered Accountants of India</a
+              >
+            </li>
+            <li>
+              <a href="https://www.mca.gov.in">Ministry of Corporate Affairs</a>
+            </li>
+            <li>
+              <a href="https://www.incometax.gov.in">Income Tax Department</a>
+            </li>
+            <li><a href="https://www.gst.gov.in">GST Portal</a></li>
+            <li>
+              <a href="https://ibbi.gov.in"
+                >Insolvency and Bankruptcy Board of India</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="wrap site-footer__bottom">
+        <p>
+          This website provides information about the firm and is not intended
+          to solicit work.
+        </p>
+        <p><a href="privacy.html">Privacy notice</a></p>
+        <p>© 2026 Sarath &amp; Associates</p>
+      </div>
+    </footer>
+  </body>
 </html>

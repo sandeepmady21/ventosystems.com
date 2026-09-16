@@ -1,82 +1,131 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en-IN">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="robots" content="noindex, nofollow">
-  <title>Careers – Sarath &amp; Associates, Chartered Accountants</title>
-  <meta name="description" content="Articled training and positions at Sarath &amp; Associates, Chartered Accountants.">
-  <link rel="stylesheet" href="assets/style.css">
-  <script src="assets/careers.js" defer></script>
-</head>
-<body class="page-careers">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Careers – Sarath &amp; Associates, Chartered Accountants</title>
+    <meta
+      name="description"
+      content="Articled training and positions at Sarath &amp; Associates, Chartered Accountants."
+    />
+    <meta name="theme-color" content="#183e35" />
+    <link
+      rel="preload"
+      href="assets/fonts/source-serif-4-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link rel="stylesheet" href="assets/style.css" />
+    <script src="assets/site.js" defer></script>
+    <script src="assets/careers.js" defer></script>
+  </head>
+  <body class="page-careers">
+    <!-- Shared navigation: keep in sync across the static HTML pages. -->
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <div class="wrap site-header__inner">
+        <a
+          class="wordmark"
+          href="index.html"
+          aria-label="Sarath &amp; Associates home"
+        >
+          <img
+            class="wordmark__logo"
+            src="assets/ca-india-logo.png"
+            alt="CA India"
+            width="320"
+            height="241"
+          />
+          <span class="wordmark__text"
+            ><span class="wordmark__name">Sarath &amp; Associates</span
+            ><span class="wordmark__desc">Chartered Accountants</span></span
+          >
+        </a>
+        <button
+          class="menu-toggle"
+          type="button"
+          aria-label="Open navigation"
+          aria-controls="site-nav"
+          aria-expanded="false"
+          hidden
+        >
+          <span>Menu</span
+          ><span class="menu-toggle__lines" aria-hidden="true"></span>
+        </button>
+        <nav class="site-nav" id="site-nav" aria-label="Main">
+          <ul>
+            <li><a href="services.html">Our practice</a></li>
+            <li><a href="people.html">Our people</a></li>
+            <li><a href="newsletter.html">Insights</a></li>
+            <li><a href="offices.html">Our offices</a></li>
+            <li><a href="careers.html">Careers</a></li>
+            <li>
+              <a class="nav-contact" href="contact.html"
+                >Contact <span aria-hidden="true">↗</span></a
+              >
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
 
-<!-- ===== SHARED HEADER BLOCK — START =========================================
-     This block is identical in every page of the site, newsletter issues
-     included. To change the menu or the wordmark, change it here and paste the
-     whole block into every other page. `ruby check.rb` tells you if one differs.
-     The menu underlines the page you are on by itself, using the class on
-     <body>, so nothing in this block changes from page to page.
-     ======================================================================== -->
-<a class="skip-link" href="#main">Skip to content</a>
-
-<header class="site-header">
-  <div class="wrap site-header__inner">
-    <a class="wordmark" href="index.html">
-      <img class="wordmark__logo" src="assets/ca-india-logo.png" alt="CA India" width="320" height="241">
-      <span class="wordmark__text">
-        <span class="wordmark__name">Sarath &amp; Associates</span>
-        <span class="wordmark__desc">Chartered Accountants</span>
-      </span>
-    </a>
-    <nav class="site-nav" aria-label="Main">
-      <ul>
-        <li><a href="services.html">Services</a></li>
-        <li><a href="people.html">People</a></li>
-        <li><a href="newsletter.html">Newsletter</a></li>
-        <li><a href="offices.html">Offices</a></li>
-        <li><a href="careers.html">Careers</a></li>
-        <li><a href="contact.html">Contact</a></li>
-      </ul>
-    </nav>
-  </div>
-</header>
-<!-- ===== SHARED HEADER BLOCK — END ========================================= -->
-
-<main id="main">
-
-  <!-- SECTION: Page title -->
-  <section class="page-hero" aria-labelledby="page-title">
-    <div class="wrap page-hero__inner">
-      <h1 id="page-title">Careers</h1>
-      <p class="page-hero__lead">Articled training, and positions for qualified Chartered Accountants.</p>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="wrap duo">
-
-      <!-- SECTION: Articled training -->
-      <section aria-labelledby="articled-training">
-        <h2 class="section-title" id="articled-training">Articled training</h2>
-        <div class="prose">
-          <p>The firm trains articled assistants under the Chartered Accountants Regulations, 1988. As at 1 September 2026 there are <span class="num">65</span> articled assistants across the firm's offices. Work is drawn from the firm's audit and assurance, taxation, forensic and investigation, and advisory practices, and assistants move between areas as the work of their office allows. Eligibility, the stipend and the period of training are as prescribed by the Institute of Chartered Accountants of India.</p>
+    <main id="main">
+      <!-- SECTION: Page title -->
+      <section class="page-hero" aria-labelledby="page-title">
+        <div class="wrap page-hero__inner">
+          <p class="eyebrow">Careers</p>
+          <h1 id="page-title">A career<br />in practice.</h1>
+          <p class="page-hero__lead">
+            Information on articled training and positions for qualified
+            Chartered Accountants at Sarath &amp; Associates.
+          </p>
+          <nav class="page-links" aria-label="Careers information">
+            <a href="#articled-training">Articled training</a>
+            <a href="#positions">Qualified Chartered Accountants</a>
+            <a href="#apply">Application form</a>
+          </nav>
         </div>
       </section>
 
-      <!-- SECTION: Positions. No opening is listed at launch, so the page shows the
+      <section class="section">
+        <div class="wrap duo">
+          <!-- SECTION: Articled training -->
+          <section aria-labelledby="articled-training">
+            <p class="section-index">01 / Students</p>
+            <h2 class="section-title" id="articled-training">
+              Articled training
+            </h2>
+            <div class="prose">
+              <p>
+                The firm trains articled assistants under the Chartered
+                Accountants Regulations, 1988. As at 1 September 2026 there are
+                <span class="num">65</span> articled assistants across the
+                firm's offices. Work is drawn from the firm's audit and
+                assurance, taxation, forensic and investigation, and advisory
+                practices, and assistants move between areas as the work of
+                their office allows. Eligibility, the stipend and the period of
+                training are as prescribed by the Institute of Chartered
+                Accountants of India.
+              </p>
+            </div>
+          </section>
+
+          <!-- SECTION: Positions. No opening is listed at launch, so the page shows the
            empty state below. The commented-out list above it is the markup to use
            when there is one. -->
-      <section aria-labelledby="positions">
-        <h2 class="section-title" id="positions">Positions</h2>
+          <section aria-labelledby="positions">
+            <p class="section-index">02 / Qualified professionals</p>
+            <h2 class="section-title" id="positions">Positions</h2>
 
-        <!-- TODO(firm): a careers@sarathcas.in alias, and a reply time the head office can
+            <!-- TODO(firm): a careers@sarathcas.in alias, and a reply time the head office can
              honour. Until the alias exists, applications go to info@sarathcas.in, which is
              the address the application form sends to. When the alias and the reply time are
              supplied, change data-to and the action on the form, and add: <p class="note">The firm
              replies to applications within ten working days.</p> -->
 
-        <!-- EXAMPLE ONLY, NOT SHOWN ON THE PAGE. To list an opening, uncomment the list
+            <!-- EXAMPLE ONLY, NOT SHOWN ON THE PAGE. To list an opening, uncomment the list
              below and edit it, and DELETE the "No positions are listed at present"
              paragraph that follows: the two must never appear together. Use one dt and one
              dd per opening, and copy the pair to list a second opening. Keep the wording
@@ -87,13 +136,15 @@
         </dl>
         -->
 
-        <p class="note">No positions are listed at present. Applications from qualified Chartered Accountants are considered at any time.</p>
+            <p class="note">
+              No positions are listed at present. Applications from qualified
+              Chartered Accountants are considered at any time.
+            </p>
+          </section>
+        </div>
       </section>
 
-    </div>
-  </section>
-
-  <!-- SECTION: Apply.
+      <!-- SECTION: Apply.
        A simple form. It asks only for what the firm needs to decide whether to
        call someone in, and it takes no CV, so everything arrives as text.
 
@@ -108,156 +159,310 @@
 
        Clause 3.7.2: recruitment must carry no promotional element. Keep it
        plain. Do not name a service reserved to Chartered Accountants. -->
-  <section class="section section--stone" aria-labelledby="apply">
-    <div class="wrap split">
-      <h2 class="section-title" id="apply">Apply</h2>
-
-      <form class="form" id="application" action="mailto:info@sarathcas.in?subject=Application" method="post" enctype="text/plain" data-to="info@sarathcas.in">
-
-        <fieldset class="form__field form__field--wide">
-          <legend>Applying for</legend>
-          <div class="form__choices">
-            <p class="form__choice"><input type="radio" id="applying-articleship" name="applying-for" value="Articleship" data-label="Applying for" required> <label for="applying-articleship">Articleship</label></p>
-            <p class="form__choice"><input type="radio" id="applying-position" name="applying-for" value="Position for a qualified Chartered Accountant" data-label="Applying for" required> <label for="applying-position">A position for a qualified Chartered Accountant</label></p>
+      <section class="section section--stone" aria-labelledby="apply">
+        <div class="wrap split">
+          <div class="application-intro">
+            <p class="eyebrow">Application</p>
+            <h2 class="section-title" id="apply">Introduce yourself.</h2>
+            <p>
+              Share your qualifications, preferred office and experience using
+              the form.
+            </p>
+            <p class="note">
+              Your answers open in your email app as a draft application. Review
+              the draft and press Send to submit it to the firm.
+            </p>
+            <p class="note">
+              You can also write directly to
+              <a href="mailto:info@sarathcas.in?subject=Application"
+                >info@sarathcas.in</a
+              >.
+            </p>
           </div>
-        </fieldset>
 
-        <p class="form__field">
-          <label for="name">Full name</label>
-          <input type="text" id="name" name="name" data-label="Name" autocomplete="name" maxlength="100" required>
+          <form
+            class="form"
+            id="application"
+            action="mailto:info@sarathcas.in?subject=Application"
+            method="post"
+            enctype="text/plain"
+            data-to="info@sarathcas.in"
+          >
+            <fieldset class="form__field form__field--wide">
+              <legend>Applying for</legend>
+              <div class="form__choices">
+                <p class="form__choice">
+                  <input
+                    type="radio"
+                    id="applying-articleship"
+                    name="applying-for"
+                    value="Articleship"
+                    data-label="Applying for"
+                    required
+                  />
+                  <label for="applying-articleship">Articleship</label>
+                </p>
+                <p class="form__choice">
+                  <input
+                    type="radio"
+                    id="applying-position"
+                    name="applying-for"
+                    value="Position for a qualified Chartered Accountant"
+                    data-label="Applying for"
+                    required
+                  />
+                  <label for="applying-position"
+                    >A position for a qualified Chartered Accountant</label
+                  >
+                </p>
+              </div>
+            </fieldset>
+
+            <p class="form__field">
+              <label for="name">Full name</label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                data-label="Name"
+                autocomplete="name"
+                maxlength="100"
+                required
+              />
+            </p>
+
+            <p class="form__field">
+              <label for="email">Email address</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                data-label="Email"
+                autocomplete="email"
+                maxlength="120"
+                required
+              />
+            </p>
+
+            <p class="form__field">
+              <label for="mobile">Mobile number</label>
+              <input
+                type="tel"
+                id="mobile"
+                name="mobile"
+                data-label="Mobile"
+                autocomplete="tel"
+                maxlength="20"
+                required
+              />
+            </p>
+
+            <p class="form__field">
+              <label for="city"
+                >City you live in
+                <span class="form__optional">(optional)</span></label
+              >
+              <input
+                type="text"
+                id="city"
+                name="city"
+                data-label="City"
+                autocomplete="address-level2"
+                maxlength="60"
+              />
+            </p>
+
+            <p class="form__field">
+              <label for="office">Preferred office</label>
+              <select id="office" name="office" data-label="Preferred office">
+                <option>No preference</option>
+                <option>Hyderabad</option>
+                <option>Mumbai</option>
+                <option>Delhi</option>
+                <option>Vijayawada</option>
+                <option>Chennai</option>
+                <option>Bengaluru</option>
+              </select>
+            </p>
+
+            <p class="form__field">
+              <label for="icai-number">ICAI registration number</label>
+              <input
+                type="text"
+                id="icai-number"
+                name="icai-number"
+                data-label="ICAI registration number"
+                maxlength="20"
+                aria-describedby="icai-number-help"
+                required
+              />
+              <span class="form__help" id="icai-number-help"
+                >Students give their student registration number. Members give
+                their membership number.</span
+              >
+            </p>
+
+            <p class="form__field">
+              <label for="stage">Where you are in the CA course</label>
+              <select id="stage" name="stage" data-label="Stage" required>
+                <option value="">Choose one</option>
+                <option>CA Intermediate, both groups cleared</option>
+                <option>CA Intermediate, one group cleared</option>
+                <option>Articleship in progress elsewhere</option>
+                <option>CA Final</option>
+                <option>Qualified Chartered Accountant</option>
+              </select>
+            </p>
+
+            <p class="form__field">
+              <label for="graduation"
+                >Graduation
+                <span class="form__optional">(optional)</span></label
+              >
+              <input
+                type="text"
+                id="graduation"
+                name="graduation"
+                data-label="Graduation"
+                maxlength="120"
+                aria-describedby="graduation-help"
+              />
+              <span class="form__help" id="graduation-help"
+                >Degree, university and year. For example: B.Com, Osmania
+                University, 2025.</span
+              >
+            </p>
+
+            <p class="form__field">
+              <label for="experience"
+                >Work experience
+                <span class="form__optional">(optional)</span></label
+              >
+              <input
+                type="text"
+                id="experience"
+                name="experience"
+                data-label="Work experience"
+                maxlength="160"
+                aria-describedby="experience-help"
+              />
+              <span class="form__help" id="experience-help"
+                >For qualified Chartered Accountants: years since qualifying,
+                and your current or last employer and role.</span
+              >
+            </p>
+
+            <p class="form__field">
+              <label for="available"
+                >Available to start from
+                <span class="form__optional">(optional)</span></label
+              >
+              <input
+                type="month"
+                id="available"
+                name="available"
+                data-label="Available from"
+              />
+            </p>
+
+            <p class="form__field form__field--wide">
+              <label for="message"
+                >Anything else the firm should know
+                <span class="form__optional">(optional)</span></label
+              >
+              <textarea
+                id="message"
+                name="message"
+                data-label="Anything else"
+                rows="4"
+                maxlength="400"
+              ></textarea>
+            </p>
+
+            <p class="form__note">
+              Please do not include confidential information about the clients
+              or matters of any firm you work with. The firm uses what you send
+              only to consider your application. Nothing is sent until you press
+              Send in your own email app, and nothing passes through this
+              website. See the <a href="privacy.html">privacy notice</a>.
+            </p>
+
+            <p class="form__actions">
+              <button class="btn" type="submit">Apply by email</button>
+            </p>
+
+            <p
+              class="form__status"
+              id="application-status"
+              role="status"
+              aria-live="polite"
+              hidden
+            >
+              Your email app should now be open with your application written
+              out. Check it and press Send there. If it did not open, write to
+              <a href="mailto:info@sarathcas.in">info@sarathcas.in</a> with the
+              same details.
+            </p>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <!-- Shared footer: keep in sync across the static HTML pages. -->
+    <footer class="site-footer">
+      <div class="wrap site-footer__top">
+        <div>
+          <p class="site-footer__name">Sarath &amp; Associates</p>
+          <p class="site-footer__desc">Chartered Accountants</p>
+          <p>Established 1990</p>
+          <p>ICAI Firm Registration No. <span class="num">005120S</span></p>
+          <p class="site-footer__cities">
+            Hyderabad · Mumbai · Delhi<br />Vijayawada · Chennai · Bengaluru
+          </p>
+        </div>
+        <div>
+          <h2 class="site-footer__heading">Head office</h2>
+          <address>
+            4th Floor, MAAS Heights, 8-2-577/B, Road No. 8<br />Banjara Hills,
+            Hyderabad 500 034, Telangana
+          </address>
+          <ul class="site-footer__list">
+            <li><a href="tel:+914023354322">+91 40 2335 4322</a></li>
+            <li><a href="mailto:info@sarathcas.in">info@sarathcas.in</a></li>
+            <li><a href="offices.html">View all offices ↗</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2 class="site-footer__heading">Professional resources</h2>
+          <ul class="site-footer__list">
+            <li>
+              <a href="https://www.icai.org"
+                >Institute of Chartered Accountants of India</a
+              >
+            </li>
+            <li>
+              <a href="https://www.mca.gov.in">Ministry of Corporate Affairs</a>
+            </li>
+            <li>
+              <a href="https://www.incometax.gov.in">Income Tax Department</a>
+            </li>
+            <li><a href="https://www.gst.gov.in">GST Portal</a></li>
+            <li>
+              <a href="https://ibbi.gov.in"
+                >Insolvency and Bankruptcy Board of India</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="wrap site-footer__bottom">
+        <p>
+          This website provides information about the firm and is not intended
+          to solicit work.
         </p>
-
-        <p class="form__field">
-          <label for="email">Email address</label>
-          <input type="email" id="email" name="email" data-label="Email" autocomplete="email" maxlength="120" required>
-        </p>
-
-        <p class="form__field">
-          <label for="mobile">Mobile number</label>
-          <input type="tel" id="mobile" name="mobile" data-label="Mobile" autocomplete="tel" maxlength="20" required>
-        </p>
-
-        <p class="form__field">
-          <label for="city">City you live in <span class="form__optional">(optional)</span></label>
-          <input type="text" id="city" name="city" data-label="City" autocomplete="address-level2" maxlength="60">
-        </p>
-
-        <p class="form__field">
-          <label for="office">Preferred office</label>
-          <select id="office" name="office" data-label="Preferred office">
-            <option>No preference</option>
-            <option>Hyderabad</option>
-            <option>Mumbai</option>
-            <option>Delhi</option>
-            <option>Vijayawada</option>
-            <option>Chennai</option>
-            <option>Bengaluru</option>
-          </select>
-        </p>
-
-        <p class="form__field">
-          <label for="icai-number">ICAI registration number</label>
-          <input type="text" id="icai-number" name="icai-number" data-label="ICAI registration number" maxlength="20" aria-describedby="icai-number-help" required>
-          <span class="form__help" id="icai-number-help">Students give their student registration number. Members give their membership number.</span>
-        </p>
-
-        <p class="form__field">
-          <label for="stage">Where you are in the CA course</label>
-          <select id="stage" name="stage" data-label="Stage" required>
-            <option value="">Choose one</option>
-            <option>CA Intermediate, both groups cleared</option>
-            <option>CA Intermediate, one group cleared</option>
-            <option>Articleship in progress elsewhere</option>
-            <option>CA Final</option>
-            <option>Qualified Chartered Accountant</option>
-          </select>
-        </p>
-
-        <p class="form__field">
-          <label for="graduation">Graduation <span class="form__optional">(optional)</span></label>
-          <input type="text" id="graduation" name="graduation" data-label="Graduation" maxlength="120" aria-describedby="graduation-help">
-          <span class="form__help" id="graduation-help">Degree, university and year. For example: B.Com, Osmania University, 2025.</span>
-        </p>
-
-        <p class="form__field">
-          <label for="experience">Work experience <span class="form__optional">(optional)</span></label>
-          <input type="text" id="experience" name="experience" data-label="Work experience" maxlength="160" aria-describedby="experience-help">
-          <span class="form__help" id="experience-help">For qualified Chartered Accountants: years since qualifying, and your current or last employer and role.</span>
-        </p>
-
-        <p class="form__field">
-          <label for="available">Available to start from <span class="form__optional">(optional)</span></label>
-          <input type="month" id="available" name="available" data-label="Available from">
-        </p>
-
-        <p class="form__field form__field--wide">
-          <label for="message">Anything else the firm should know <span class="form__optional">(optional)</span></label>
-          <textarea id="message" name="message" data-label="Anything else" rows="4" maxlength="400"></textarea>
-        </p>
-
-        <p class="form__note">Please do not include confidential information about the clients or matters of any firm you work with. The firm uses what you send only to consider your application. Nothing is sent until you press Send in your own email app, and nothing passes through this website. See the <a href="privacy.html">privacy notice</a>.</p>
-
-        <p class="form__actions">
-          <button class="btn" type="submit">Apply by email</button>
-        </p>
-
-        <p class="form__status" id="application-status" role="status" aria-live="polite" hidden>Your email app should now be open with your application written out. Check it and press Send there. If it did not open, write to <a href="mailto:info@sarathcas.in">info@sarathcas.in</a> with the same details.</p>
-      </form>
-
-    </div>
-  </section>
-
-</main>
-
-<!-- ===== SHARED FOOTER BLOCK — START =========================================
-     This block is identical in every page of the site, newsletter issues
-     included. To change an address or a telephone number, change it here and
-     paste the whole block into every other page. `ruby check.rb` tells you if
-     one differs.
-     ======================================================================== -->
-<footer class="site-footer">
-  <div class="wrap site-footer__top">
-
-    <div>
-      <p class="site-footer__name">Sarath &amp; Associates</p>
-      <p class="site-footer__desc">Chartered Accountants</p>
-      <p>ICAI Firm Registration No. <span class="num">005120S</span></p>
-      <p>Established 1990</p>
-    </div>
-
-    <div>
-      <h2 class="site-footer__heading">Head office</h2>
-      <address>
-        4th Floor, MAAS Heights, 8-2-577/B, Road No. 8<br>
-        Banjara Hills, Hyderabad 500 034, Telangana
-      </address>
-      <ul class="site-footer__list">
-        <li><a href="tel:+914023354322">+91 40 2335 4322</a></li>
-        <li><a href="mailto:info@sarathcas.in">info@sarathcas.in</a></li>
-        <li><a href="offices.html">All offices</a></li>
-      </ul>
-    </div>
-
-    <div>
-      <h2 class="site-footer__heading">Useful links</h2>
-      <ul class="site-footer__list">
-        <li><a href="https://www.icai.org">Institute of Chartered Accountants of India</a></li>
-        <li><a href="https://www.mca.gov.in">Ministry of Corporate Affairs</a></li>
-        <li><a href="https://www.incometax.gov.in">Income Tax Department</a></li>
-        <li><a href="https://www.gst.gov.in">GST Portal</a></li>
-        <li><a href="https://ibbi.gov.in">Insolvency and Bankruptcy Board of India</a></li>
-      </ul>
-    </div>
-
-  </div>
-
-  <div class="wrap site-footer__bottom">
-    <p>This website provides information about the firm and is not intended to solicit work.</p>
-    <p><a href="privacy.html">Privacy notice</a></p>
-    <p>© 2026 Sarath &amp; Associates, Chartered Accountants</p>
-  </div>
-</footer>
-<!-- ===== SHARED FOOTER BLOCK — END ========================================= -->
-
-</body>
+        <p><a href="privacy.html">Privacy notice</a></p>
+        <p>© 2026 Sarath &amp; Associates</p>
+      </div>
+    </footer>
+  </body>
 </html>

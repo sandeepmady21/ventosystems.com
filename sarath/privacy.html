@@ -1,124 +1,196 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en-IN">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="robots" content="noindex, nofollow">
-  <title>Privacy notice – Sarath &amp; Associates, Chartered Accountants</title>
-  <meta name="description" content="How Sarath &amp; Associates, Chartered Accountants, handles email sent to the firm, and a note that this website sets no cookies, collects nothing and makes no request to any third party server.">
-  <link rel="stylesheet" href="assets/style.css">
-</head>
-<body class="page-privacy">
-
-<!-- ===== SHARED HEADER BLOCK — START =========================================
-     This block is identical in every page of the site, newsletter issues
-     included. To change the menu or the wordmark, change it here and paste the
-     whole block into every other page. `ruby check.rb` tells you if one differs.
-     The menu underlines the page you are on by itself, using the class on
-     <body>, so nothing in this block changes from page to page.
-     ======================================================================== -->
-<a class="skip-link" href="#main">Skip to content</a>
-
-<header class="site-header">
-  <div class="wrap site-header__inner">
-    <a class="wordmark" href="index.html">
-      <img class="wordmark__logo" src="assets/ca-india-logo.png" alt="CA India" width="320" height="241">
-      <span class="wordmark__text">
-        <span class="wordmark__name">Sarath &amp; Associates</span>
-        <span class="wordmark__desc">Chartered Accountants</span>
-      </span>
-    </a>
-    <nav class="site-nav" aria-label="Main">
-      <ul>
-        <li><a href="services.html">Services</a></li>
-        <li><a href="people.html">People</a></li>
-        <li><a href="newsletter.html">Newsletter</a></li>
-        <li><a href="offices.html">Offices</a></li>
-        <li><a href="careers.html">Careers</a></li>
-        <li><a href="contact.html">Contact</a></li>
-      </ul>
-    </nav>
-  </div>
-</header>
-<!-- ===== SHARED HEADER BLOCK — END ========================================= -->
-
-<main id="main">
-
-  <!-- SECTION: Page title -->
-  <section class="page-hero" aria-labelledby="page-title">
-    <div class="wrap page-hero__inner">
-      <h1 id="page-title">Privacy notice</h1>
-    </div>
-  </section>
-
-  <!-- SECTION: The notice. -->
-  <section class="section" aria-label="Privacy notice">
-    <div class="wrap">
-      <div class="prose">
-        <p class="lede">This website does not set cookies and does not use analytics, advertising or tracking scripts. It makes no requests to any third party server. Its one small script, on the Careers page, only writes out an application in your own email app.</p>
-
-        <p>The site collects nothing. The button on the Contact page and the application form on the Careers page both open your own email app with a message to the firm already written out. Nothing is sent until you press Send in your email app, and what you send goes directly from your email account to the firm&#8217;s mailbox. It does not pass through this website or any other company.</p>
-
-        <p>The firm uses what you send only to reply to you and, in the case of an application, to consider that application. It is not shared with anyone outside the firm except where the firm is required by law to do so.</p>
-        <!-- TODO(firm): retention period for email correspondence. When supplied, add: <p>Email correspondence is kept for PERIOD and then deleted.</p> -->
-        <p>Please do not include confidential information in an email unless the firm has asked for it.</p>
-        <p>To ask what personal data the firm holds about you, or to ask for it to be corrected or erased, write to <a href="mailto:info@sarathcas.in">info@sarathcas.in</a>.</p>
-        <!-- TODO(firm): the person responsible for data requests. When supplied, add: <p>Data requests are handled by NAME at the head office.</p> -->
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>
+      Privacy notice – Sarath &amp; Associates, Chartered Accountants
+    </title>
+    <meta
+      name="description"
+      content="How Sarath &amp; Associates, Chartered Accountants, handles email sent to the firm, and a note that this website sets no cookies, collects nothing and makes no request to any third party server."
+    />
+    <meta name="theme-color" content="#183e35" />
+    <link
+      rel="preload"
+      href="assets/fonts/source-serif-4-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link rel="stylesheet" href="assets/style.css" />
+    <script src="assets/site.js" defer></script>
+  </head>
+  <body class="page-privacy">
+    <!-- Shared navigation: keep in sync across the static HTML pages. -->
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <div class="wrap site-header__inner">
+        <a
+          class="wordmark"
+          href="index.html"
+          aria-label="Sarath &amp; Associates home"
+        >
+          <img
+            class="wordmark__logo"
+            src="assets/ca-india-logo.png"
+            alt="CA India"
+            width="320"
+            height="241"
+          />
+          <span class="wordmark__text"
+            ><span class="wordmark__name">Sarath &amp; Associates</span
+            ><span class="wordmark__desc">Chartered Accountants</span></span
+          >
+        </a>
+        <button
+          class="menu-toggle"
+          type="button"
+          aria-label="Open navigation"
+          aria-controls="site-nav"
+          aria-expanded="false"
+          hidden
+        >
+          <span>Menu</span
+          ><span class="menu-toggle__lines" aria-hidden="true"></span>
+        </button>
+        <nav class="site-nav" id="site-nav" aria-label="Main">
+          <ul>
+            <li><a href="services.html">Our practice</a></li>
+            <li><a href="people.html">Our people</a></li>
+            <li><a href="newsletter.html">Insights</a></li>
+            <li><a href="offices.html">Our offices</a></li>
+            <li><a href="careers.html">Careers</a></li>
+            <li>
+              <a class="nav-contact" href="contact.html"
+                >Contact <span aria-hidden="true">↗</span></a
+              >
+            </li>
+          </ul>
+        </nav>
       </div>
-    </div>
-  </section>
+    </header>
 
-</main>
+    <main id="main">
+      <!-- SECTION: Page title -->
+      <section class="page-hero" aria-labelledby="page-title">
+        <div class="wrap page-hero__inner">
+          <p class="eyebrow">Your information</p>
+          <h1 id="page-title">Privacy notice</h1>
+          <p class="page-hero__lead">
+            How this website works, and how the firm handles the information you
+            choose to share.
+          </p>
+        </div>
+      </section>
 
-<!-- ===== SHARED FOOTER BLOCK — START =========================================
-     This block is identical in every page of the site, newsletter issues
-     included. To change an address or a telephone number, change it here and
-     paste the whole block into every other page. `ruby check.rb` tells you if
-     one differs.
-     ======================================================================== -->
-<footer class="site-footer">
-  <div class="wrap site-footer__top">
+      <!-- SECTION: The notice. -->
+      <section class="section" aria-label="Privacy notice">
+        <div class="wrap">
+          <div class="prose">
+            <h2 class="section-title">Using this website</h2>
+            <p class="lede">
+              This website does not set cookies and does not use analytics,
+              advertising or tracking scripts. Its fonts, images and scripts are
+              served with the website; it makes no requests to any third party
+              server.
+            </p>
 
-    <div>
-      <p class="site-footer__name">Sarath &amp; Associates</p>
-      <p class="site-footer__desc">Chartered Accountants</p>
-      <p>ICAI Firm Registration No. <span class="num">005120S</span></p>
-      <p>Established 1990</p>
-    </div>
+            <p>
+              Scripts support the site's navigation and prepare the application
+              email on the Careers page. They do not track visitors or send form
+              information to a server.
+            </p>
 
-    <div>
-      <h2 class="site-footer__heading">Head office</h2>
-      <address>
-        4th Floor, MAAS Heights, 8-2-577/B, Road No. 8<br>
-        Banjara Hills, Hyderabad 500 034, Telangana
-      </address>
-      <ul class="site-footer__list">
-        <li><a href="tel:+914023354322">+91 40 2335 4322</a></li>
-        <li><a href="mailto:info@sarathcas.in">info@sarathcas.in</a></li>
-        <li><a href="offices.html">All offices</a></li>
-      </ul>
-    </div>
+            <h2 class="section-title">Writing to the firm</h2>
+            <p>
+              The button on the Contact page and the application form on the
+              Careers page both open your own email app with a message to the
+              firm already written out. Nothing is sent until you press Send in
+              your email app, and what you send goes from your email account to
+              the firm&#8217;s mailbox. Your message is not collected or stored
+              by this website.
+            </p>
 
-    <div>
-      <h2 class="site-footer__heading">Useful links</h2>
-      <ul class="site-footer__list">
-        <li><a href="https://www.icai.org">Institute of Chartered Accountants of India</a></li>
-        <li><a href="https://www.mca.gov.in">Ministry of Corporate Affairs</a></li>
-        <li><a href="https://www.incometax.gov.in">Income Tax Department</a></li>
-        <li><a href="https://www.gst.gov.in">GST Portal</a></li>
-        <li><a href="https://ibbi.gov.in">Insolvency and Bankruptcy Board of India</a></li>
-      </ul>
-    </div>
+            <p>
+              The firm uses what you send only to reply to you and, in the case
+              of an application, to consider that application. It is not shared
+              with anyone outside the firm except where the firm is required by
+              law to do so.
+            </p>
+            <!-- TODO(firm): retention period for email correspondence. When supplied, add: <p>Email correspondence is kept for PERIOD and then deleted.</p> -->
+            <p>
+              Please do not include confidential information in an email unless
+              the firm has asked for it.
+            </p>
+            <h2 class="section-title">Questions about your data</h2>
+            <p>
+              To ask what personal data the firm holds about you, or to ask for
+              it to be corrected or erased, write to
+              <a href="mailto:info@sarathcas.in">info@sarathcas.in</a>.
+            </p>
+            <!-- TODO(firm): the person responsible for data requests. When supplied, add: <p>Data requests are handled by NAME at the head office.</p> -->
+          </div>
+        </div>
+      </section>
+    </main>
 
-  </div>
-
-  <div class="wrap site-footer__bottom">
-    <p>This website provides information about the firm and is not intended to solicit work.</p>
-    <p><a href="privacy.html">Privacy notice</a></p>
-    <p>© 2026 Sarath &amp; Associates, Chartered Accountants</p>
-  </div>
-</footer>
-<!-- ===== SHARED FOOTER BLOCK — END ========================================= -->
-
-</body>
+    <!-- Shared footer: keep in sync across the static HTML pages. -->
+    <footer class="site-footer">
+      <div class="wrap site-footer__top">
+        <div>
+          <p class="site-footer__name">Sarath &amp; Associates</p>
+          <p class="site-footer__desc">Chartered Accountants</p>
+          <p>Established 1990</p>
+          <p>ICAI Firm Registration No. <span class="num">005120S</span></p>
+          <p class="site-footer__cities">
+            Hyderabad · Mumbai · Delhi<br />Vijayawada · Chennai · Bengaluru
+          </p>
+        </div>
+        <div>
+          <h2 class="site-footer__heading">Head office</h2>
+          <address>
+            4th Floor, MAAS Heights, 8-2-577/B, Road No. 8<br />Banjara Hills,
+            Hyderabad 500 034, Telangana
+          </address>
+          <ul class="site-footer__list">
+            <li><a href="tel:+914023354322">+91 40 2335 4322</a></li>
+            <li><a href="mailto:info@sarathcas.in">info@sarathcas.in</a></li>
+            <li><a href="offices.html">View all offices ↗</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2 class="site-footer__heading">Professional resources</h2>
+          <ul class="site-footer__list">
+            <li>
+              <a href="https://www.icai.org"
+                >Institute of Chartered Accountants of India</a
+              >
+            </li>
+            <li>
+              <a href="https://www.mca.gov.in">Ministry of Corporate Affairs</a>
+            </li>
+            <li>
+              <a href="https://www.incometax.gov.in">Income Tax Department</a>
+            </li>
+            <li><a href="https://www.gst.gov.in">GST Portal</a></li>
+            <li>
+              <a href="https://ibbi.gov.in"
+                >Insolvency and Bankruptcy Board of India</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="wrap site-footer__bottom">
+        <p>
+          This website provides information about the firm and is not intended
+          to solicit work.
+        </p>
+        <p><a href="privacy.html">Privacy notice</a></p>
+        <p>© 2026 Sarath &amp; Associates</p>
+      </div>
+    </footer>
+  </body>
 </html>
