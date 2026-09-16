@@ -47,3 +47,29 @@ From the repository root, run `python3 -m http.server 4173 --bind 127.0.0.1` and
 open `http://127.0.0.1:4173/sarath/`. Check all pages at mobile and desktop sizes,
 the mobile menu with keyboard and Escape, local links and article anchors,
 newsletter tables, and careers form validation before pushing changes.
+
+## Browser and sharing identity
+
+- `assets/favicon.svg` is an outlined Source Serif 4 “S” on the site's teal.
+  It has no font, script or external resource dependencies. `favicon.ico`
+  contains 16, 32 and 48 px versions; `favicon-32.png` is a PNG fallback.
+  `apple-touch-icon.png` is a 180 px home-screen icon.
+- `assets/social-preview-v1.jpg` is the 1200 × 630 sharing card. It uses the
+  existing architectural image and locally served site fonts, with exact
+  typeset wording. It is not a new photograph of the firm's premises.
+- All 11 page heads include Open Graph and large-image Twitter Card metadata,
+  their own title, description and absolute URL, and the shared preview image.
+  The homepage's canonical URL is `https://ventosystems.com/sarath/`.
+  Keep `noindex, nofollow` while this remains a client preview.
+- `branding/social-card.html` is the editable, fixed-size card layout.
+  `branding/build.cjs` regenerates the card and icons using Playwright 1.62.1,
+  fontkit 2.0.4 and sharp 0.35.3, with locally installed Chrome. Make those
+  development packages available to Node, then run
+  `node sarath/branding/build.cjs` from the repository root. None are needed
+  by GitHub Pages or website visitors.
+- If the shared design changes, use a new versioned JPEG filename and update
+  every page's `og:image` and `twitter:image` URL. Social platforms can cache
+  previews; verify the public asset and page metadata after publishing.
+- When moving to the firm's own domain, update the canonical, `og:url` and
+  absolute social image URLs together. Do not change the parent Ventosystems
+  site's icon or branding.
