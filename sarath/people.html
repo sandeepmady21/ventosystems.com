@@ -8,13 +8,14 @@
   <meta name="description" content="Partners of Sarath &amp; Associates, Chartered Accountants: ICAI membership numbers, qualifications, offices and areas of experience.">
   <link rel="stylesheet" href="assets/style.css">
 </head>
-<body>
+<body class="page-people">
 
 <!-- ===== SHARED HEADER BLOCK — START =========================================
-     This block is identical in every page of the site. To change the navigation
-     or the wordmark, change it here and paste the whole block into the other
-     eight pages: services.html, people.html, newsletter.html, offices.html,
-     careers.html, contact.html, privacy.html and 404.html.
+     This block is identical in every page of the site, newsletter issues
+     included. To change the menu or the wordmark, change it here and paste the
+     whole block into every other page. `ruby check.rb` tells you if one differs.
+     The menu underlines the page you are on by itself, using the class on
+     <body>, so nothing in this block changes from page to page.
      ======================================================================== -->
 <a class="skip-link" href="#main">Skip to content</a>
 
@@ -22,7 +23,7 @@
   <div class="wrap site-header__inner">
     <a class="wordmark" href="index.html">
       <img class="wordmark__logo" src="assets/ca-india-logo.png" alt="CA India" width="320" height="241">
-      <span>
+      <span class="wordmark__text">
         <span class="wordmark__name">Sarath &amp; Associates</span>
         <span class="wordmark__desc">Chartered Accountants</span>
       </span>
@@ -42,357 +43,356 @@
 <!-- ===== SHARED HEADER BLOCK — END ========================================= -->
 
 <main id="main">
-  <div class="wrap">
 
-    <!-- SECTION: Page title and intro line -->
-    <div class="page-head">
-      <h1 class="display">Partners and people</h1>
-      <p class="lead">The firm has 13 partners. Membership numbers are given so that the particulars below can be checked against the ICAI register.</p>
+  <!-- SECTION: Page title and intro line -->
+  <section class="page-hero" aria-labelledby="page-title">
+    <div class="wrap page-hero__inner">
+      <h1 id="page-title">Partners and people</h1>
+      <p class="page-hero__lead">The firm has 13 partners. Membership numbers are given so that the particulars below can be checked against the ICAI register.</p>
     </div>
+  </section>
 
-    <!-- SECTION: Partner index. Navigation only: every name here already appears on a
-         card below, and each link jumps to that card. There are thirteen partners, so
-         without this a visitor hunting for one has to scroll several screens. If you add
-         or remove a partner, add or remove their line here too. -->
-    <nav class="pindex" aria-label="Partners">
-      <ul>
-        <li><a href="#sarath-kumar">CA P. Sarath Kumar</a></li>
-        <li><a href="#srinivas">CA S. Srinivas</a></li>
-        <li><a href="#sai-roop-kumar">CA V. Sai Roop Kumar</a></li>
-        <li><a href="#bansal">CA Parveen Kumar Bansal</a></li>
-        <li><a href="#vasudevan">CA D. Vasudevan</a></li>
-        <li><a href="#kalyana-chakravarthi">CA M. Kalyana Chakravarthi</a></li>
-        <li><a href="#arunima-sarath">CA Arunima Sarath P</a></li>
-        <li><a href="#rama-krishna">CA K. Rama Krishna</a></li>
-        <li><a href="#akhil-sai">CA K. Akhil Sai</a></li>
-        <li><a href="#naresh">CA M. Naresh</a></li>
-        <li><a href="#venkatesa-prabhu">CA E. Venkatesa Prabhu</a></li>
-        <li><a href="#harika">CA Y. Harika</a></li>
-        <li><a href="#anjali">CA C. Anjali</a></li>
-      </ul>
-    </nav>
+  <!-- SECTION: People, in four counts.
+       TODO(firm): confirm these four counts and the date under them before launch.
+       Refresh them at least once a year and move the date on when you do. The partner
+       count must match the number of cards below and the figure on index.html. -->
+  <section class="section section--stone section--compact" aria-labelledby="people">
+    <div class="wrap">
+      <h2 class="visually-hidden" id="people">People</h2>
+      <dl class="stats">
+        <div>
+          <dt>Partners</dt>
+          <dd>13</dd>
+        </div>
+        <div>
+          <dt>Chartered Accountants in employment</dt>
+          <dd>8</dd>
+        </div>
+        <div>
+          <dt>Articled assistants</dt>
+          <dd>65</dd>
+        </div>
+        <div>
+          <dt>Other staff</dt>
+          <dd>5</dd>
+        </div>
+      </dl>
+      <p class="stats__note">As at 1 September 2026</p>
+    </div>
+  </section>
 
-    <!-- SECTION: Partner cards. One <article class="partner"> per partner.
-         To add a partner, copy one whole article and edit the fields. -->
-    <section class="band" aria-labelledby="partners">
-      <div class="band__label">
-        <h2 id="partners">Partners</h2>
-      </div>
+  <!-- SECTION: Partners. The index of names on the left, the cards on the right. -->
+  <section class="section" aria-labelledby="partners">
+    <div class="wrap with-aside">
+
+      <!-- The partner index. Navigation only: every name here already appears on a
+           card, and each link jumps to that card. If you add or remove a partner, add or
+           remove their line here too. -->
+      <nav class="aside-nav aside-nav--grid" aria-labelledby="partners">
+        <h2 class="aside-nav__title" id="partners">Partners</h2>
+        <ul>
+          <li><a href="#sarath-kumar">CA P. Sarath Kumar</a></li>
+          <li><a href="#srinivas">CA S. Srinivas</a></li>
+          <li><a href="#sai-roop-kumar">CA V. Sai Roop Kumar</a></li>
+          <li><a href="#bansal">CA Parveen Kumar Bansal</a></li>
+          <li><a href="#vasudevan">CA D. Vasudevan</a></li>
+          <li><a href="#kalyana-chakravarthi">CA M. Kalyana Chakravarthi</a></li>
+          <li><a href="#arunima-sarath">CA Arunima Sarath P</a></li>
+          <li><a href="#rama-krishna">CA K. Rama Krishna</a></li>
+          <li><a href="#akhil-sai">CA K. Akhil Sai</a></li>
+          <li><a href="#naresh">CA M. Naresh</a></li>
+          <li><a href="#venkatesa-prabhu">CA E. Venkatesa Prabhu</a></li>
+          <li><a href="#harika">CA Y. Harika</a></li>
+          <li><a href="#anjali">CA C. Anjali</a></li>
+        </ul>
+      </nav>
+
+      <!-- The partner cards. One <article class="partner"> per partner.
+           To add a partner, copy one whole article and edit the fields. -->
       <div>
 
-      <!-- Partner: CA P. Sarath Kumar -->
-      <article class="partner" id="sarath-kumar">
-        <div class="partner__head">
-          <h3 class="partner__name">CA P. Sarath Kumar</h3>
-          <p class="partner__quals">B.Com, LLB, FCA</p>
-          <p class="partner__role">Founder Partner</p>
-        </div>
-        <div class="partner__rail">
-          <span class="partner__office">Hyderabad</span>
-          <span class="partner__mno"><span class="label">M. No.</span> <span class="num">021755</span></span>
-        </div>
-        <p class="partner__field"><span class="label">Areas of experience</span> forensic accounting and fraud investigation · economic offence investigations for state and central law enforcement agencies · business analysis and systems studies · training on white collar crime, forensic accounting and anti-corruption investigation</p>
-        <p class="partner__prose">He established the firm in 1990, after earlier practice as a partner in another firm of chartered accountants. He has advised state and central law enforcement agencies on economic offence investigations. He lectures at training academies of law enforcement, judicial and revenue bodies, and at public sector undertakings.</p>
-      </article>
+          <!-- Partner: CA P. Sarath Kumar -->
+          <article class="partner" id="sarath-kumar">
+            <div class="partner__head">
+              <h3 class="partner__name">CA P. Sarath Kumar</h3>
+              <p class="partner__quals">B.Com, LLB, FCA</p>
+              <p class="partner__role">Founder Partner</p>
+            </div>
+            <div class="partner__rail">
+              <span class="partner__office">Hyderabad</span>
+              <span class="partner__mno"><span class="label">M. No.</span> <span class="num">021755</span></span>
+            </div>
+            <p class="partner__field"><span class="label">Areas of experience</span> forensic accounting and fraud investigation · economic offence investigations for state and central law enforcement agencies · business analysis and systems studies · training on white collar crime, forensic accounting and anti-corruption investigation</p>
+            <p class="partner__prose">He established the firm in 1990, after earlier practice as a partner in another firm of chartered accountants. He has advised state and central law enforcement agencies on economic offence investigations. He lectures at training academies of law enforcement, judicial and revenue bodies, and at public sector undertakings.</p>
+          </article>
 
-      <!-- Partner: CA S. Srinivas -->
-      <article class="partner" id="srinivas">
-        <div class="partner__head">
-          <h3 class="partner__name">CA S. Srinivas</h3>
-          <p class="partner__quals">B.Com (Hons), LLB, FCA, ACS</p>
-          <p class="partner__role">Partner</p>
-        </div>
-        <div class="partner__rail">
-          <span class="partner__office">Hyderabad</span>
-          <span class="partner__mno"><span class="label">M. No.</span> <span class="num">202471</span></span>
-        </div>
-        <p class="partner__field"><span class="label">Other qualifications</span> ICAI Post-Qualification Course in Information Systems Audit · ICAI Certificate Course on Forensic Accounting and Fraud Detection · Insolvency Professional (IBBI)</p>
-        <p class="partner__field"><span class="label">Areas of experience</span> statutory audits of banks, insurers, corporates, non-profit entities and public sector undertakings · audits of government agencies and externally aided projects · investigative assignments in economic offences for state police and anti-corruption agencies · business process and information systems reviews</p>
-        <p class="partner__prose">He is the partner in charge of audit services and oversees concurrent audits of bank branches as well as statutory and revenue audits.</p>
-      </article>
+          <!-- Partner: CA S. Srinivas -->
+          <article class="partner" id="srinivas">
+            <div class="partner__head">
+              <h3 class="partner__name">CA S. Srinivas</h3>
+              <p class="partner__quals">B.Com (Hons), LLB, FCA, ACS</p>
+              <p class="partner__role">Partner</p>
+            </div>
+            <div class="partner__rail">
+              <span class="partner__office">Hyderabad</span>
+              <span class="partner__mno"><span class="label">M. No.</span> <span class="num">202471</span></span>
+            </div>
+            <p class="partner__field"><span class="label">Other qualifications</span> ICAI Post-Qualification Course in Information Systems Audit · ICAI Certificate Course on Forensic Accounting and Fraud Detection · Insolvency Professional (IBBI)</p>
+            <p class="partner__field"><span class="label">Areas of experience</span> statutory audits of banks, insurers, corporates, non-profit entities and public sector undertakings · audits of government agencies and externally aided projects · investigative assignments in economic offences for state police and anti-corruption agencies · business process and information systems reviews</p>
+            <p class="partner__prose">He is the partner in charge of audit services and oversees concurrent audits of bank branches as well as statutory and revenue audits.</p>
+          </article>
 
-      <!-- Partner: CA V. Sai Roop Kumar -->
-      <article class="partner" id="sai-roop-kumar">
-        <div class="partner__head">
-          <h3 class="partner__name">CA V. Sai Roop Kumar</h3>
-          <p class="partner__quals">B.Com, FCA, CMA</p>
-          <p class="partner__role">Partner</p>
-        </div>
-        <div class="partner__rail">
-          <span class="partner__office">Hyderabad</span>
-          <span class="partner__mno"><span class="label">M. No.</span> <span class="num">213734</span></span>
-        </div>
-        <p class="partner__field"><span class="label">Other qualifications</span> ICAI Certificate Course on Forensic Accounting and Fraud Detection · Insolvency Professional (IBBI) · Registered Valuer, Securities or Financial Assets (IBBI)</p>
-        <p class="partner__field"><span class="label">Areas of experience</span> taxation · finalisation of accounts · advisory · forensic audit · valuation of securities or financial assets</p>
-        <p class="partner__prose">He has been in practice since 2014, and worked earlier with multinational and start-up companies.</p>
-      </article>
+          <!-- Partner: CA V. Sai Roop Kumar -->
+          <article class="partner" id="sai-roop-kumar">
+            <div class="partner__head">
+              <h3 class="partner__name">CA V. Sai Roop Kumar</h3>
+              <p class="partner__quals">B.Com, FCA, CMA</p>
+              <p class="partner__role">Partner</p>
+            </div>
+            <div class="partner__rail">
+              <span class="partner__office">Hyderabad</span>
+              <span class="partner__mno"><span class="label">M. No.</span> <span class="num">213734</span></span>
+            </div>
+            <p class="partner__field"><span class="label">Other qualifications</span> ICAI Certificate Course on Forensic Accounting and Fraud Detection · Insolvency Professional (IBBI) · Registered Valuer, Securities or Financial Assets (IBBI)</p>
+            <p class="partner__field"><span class="label">Areas of experience</span> taxation · finalisation of accounts · advisory · forensic audit · valuation of securities or financial assets</p>
+            <p class="partner__prose">He has been in practice since 2014, and worked earlier with multinational and start-up companies.</p>
+          </article>
 
-      <!-- Partner: CA Parveen Kumar Bansal -->
-      <article class="partner" id="bansal">
-        <div class="partner__head">
-          <h3 class="partner__name">CA Parveen Kumar Bansal</h3>
-          <p class="partner__quals">B.Com, FCA</p>
-          <p class="partner__role">Partner</p>
-        </div>
-        <div class="partner__rail">
-          <span class="partner__office">Delhi</span>
-          <span class="partner__mno"><span class="label">M. No.</span> <span class="num">084555</span></span>
-        </div>
-        <p class="partner__field"><span class="label">Other qualifications</span> ICAI Post-Qualification Course in Information Systems Audit · Insolvency Professional (IBBI) · Registered Valuer (IBBI)</p>
-        <p class="partner__field"><span class="label">Areas of experience</span> insolvency resolution and valuation assignments under the Insolvency and Bankruptcy Code, 2016 · audit and assurance</p>
-        <p class="partner__prose">He has worked in a large audit firm and in senior finance roles in industry.</p>
-      </article>
+          <!-- Partner: CA Parveen Kumar Bansal -->
+          <article class="partner" id="bansal">
+            <div class="partner__head">
+              <h3 class="partner__name">CA Parveen Kumar Bansal</h3>
+              <p class="partner__quals">B.Com, FCA</p>
+              <p class="partner__role">Partner</p>
+            </div>
+            <div class="partner__rail">
+              <span class="partner__office">Delhi</span>
+              <span class="partner__mno"><span class="label">M. No.</span> <span class="num">084555</span></span>
+            </div>
+            <p class="partner__field"><span class="label">Other qualifications</span> ICAI Post-Qualification Course in Information Systems Audit · Insolvency Professional (IBBI) · Registered Valuer (IBBI)</p>
+            <p class="partner__field"><span class="label">Areas of experience</span> insolvency resolution and valuation assignments under the Insolvency and Bankruptcy Code, 2016 · audit and assurance</p>
+            <p class="partner__prose">He has worked in a large audit firm and in senior finance roles in industry.</p>
+          </article>
 
-      <!-- Partner: CA D. Vasudevan -->
-      <article class="partner" id="vasudevan">
-        <div class="partner__head">
-          <h3 class="partner__name">CA D. Vasudevan</h3>
-          <p class="partner__quals">B.Com, FCA</p>
-          <p class="partner__role">Partner</p>
-        </div>
-        <div class="partner__rail">
-          <span class="partner__office">Chennai</span>
-          <span class="partner__mno"><span class="label">M. No.</span> <span class="num">020481</span></span>
-        </div>
-        <p class="partner__field"><span class="label">Areas of experience</span> project funding and restructuring proposals · business process re-engineering · activity based costing · supply chain management · enterprise resource planning implementation</p>
-        <p class="partner__prose">He has worked in the engineering and chemical industries in finance, marketing and commercial roles, and taught corporate and management accounting at college level for seven years.</p>
-      </article>
+          <!-- Partner: CA D. Vasudevan -->
+          <article class="partner" id="vasudevan">
+            <div class="partner__head">
+              <h3 class="partner__name">CA D. Vasudevan</h3>
+              <p class="partner__quals">B.Com, FCA</p>
+              <p class="partner__role">Partner</p>
+            </div>
+            <div class="partner__rail">
+              <span class="partner__office">Chennai</span>
+              <span class="partner__mno"><span class="label">M. No.</span> <span class="num">020481</span></span>
+            </div>
+            <p class="partner__field"><span class="label">Areas of experience</span> project funding and restructuring proposals · business process re-engineering · activity based costing · supply chain management · enterprise resource planning implementation</p>
+            <p class="partner__prose">He has worked in the engineering and chemical industries in finance, marketing and commercial roles, and taught corporate and management accounting at college level for seven years.</p>
+          </article>
 
-      <!-- Partner: CA M. Kalyana Chakravarthi -->
-      <article class="partner" id="kalyana-chakravarthi">
-        <div class="partner__head">
-          <h3 class="partner__name">CA M. Kalyana Chakravarthi</h3>
-          <p class="partner__quals">B.Com, FCA</p>
-          <p class="partner__role">Partner</p>
-        </div>
-        <div class="partner__rail">
-          <span class="partner__office">Hyderabad</span>
-          <span class="partner__mno"><span class="label">M. No.</span> <span class="num">210973</span></span>
-        </div>
-        <p class="partner__field"><span class="label">Areas of experience</span> statutory audits · internal audits · bank audits · stock audits · special audits</p>
-        <p class="partner__prose">He looks after the statutory and internal audits carried out by the firm.</p>
-      </article>
+          <!-- Partner: CA M. Kalyana Chakravarthi -->
+          <article class="partner" id="kalyana-chakravarthi">
+            <div class="partner__head">
+              <h3 class="partner__name">CA M. Kalyana Chakravarthi</h3>
+              <p class="partner__quals">B.Com, FCA</p>
+              <p class="partner__role">Partner</p>
+            </div>
+            <div class="partner__rail">
+              <span class="partner__office">Hyderabad</span>
+              <span class="partner__mno"><span class="label">M. No.</span> <span class="num">210973</span></span>
+            </div>
+            <p class="partner__field"><span class="label">Areas of experience</span> statutory audits · internal audits · bank audits · stock audits · special audits</p>
+            <p class="partner__prose">He looks after the statutory and internal audits carried out by the firm.</p>
+          </article>
 
-      <!-- Partner: CA Arunima Sarath P -->
-      <article class="partner" id="arunima-sarath">
-        <div class="partner__head">
-          <h3 class="partner__name">CA Arunima Sarath P</h3>
-          <p class="partner__quals">B.Com, FCA</p>
-          <p class="partner__role">Partner</p>
-        </div>
-        <div class="partner__rail">
-          <span class="partner__office">Hyderabad</span>
-          <span class="partner__mno"><span class="label">M. No.</span> <span class="num">216982</span></span>
-        </div>
-        <p class="partner__field"><span class="label">Areas of experience</span> statutory audits · internal audits · bank audits</p>
-      </article>
+          <!-- Partner: CA Arunima Sarath P -->
+          <article class="partner" id="arunima-sarath">
+            <div class="partner__head">
+              <h3 class="partner__name">CA Arunima Sarath P</h3>
+              <p class="partner__quals">B.Com, FCA</p>
+              <p class="partner__role">Partner</p>
+            </div>
+            <div class="partner__rail">
+              <span class="partner__office">Hyderabad</span>
+              <span class="partner__mno"><span class="label">M. No.</span> <span class="num">216982</span></span>
+            </div>
+            <p class="partner__field"><span class="label">Areas of experience</span> statutory audits · internal audits · bank audits</p>
+          </article>
 
-      <!-- Partner: CA K. Rama Krishna -->
-      <!-- TODO(firm): which office? The firm profile does not say, so no office is shown.
-           When it is known, add a line above the M. No. in the rail below, like the other
-           cards:  <span class="partner__office">Hyderabad</span>  -->
-      <article class="partner" id="rama-krishna">
-        <div class="partner__head">
-          <h3 class="partner__name">CA K. Rama Krishna</h3>
-          <p class="partner__quals">B.Com, FCA</p>
-          <p class="partner__role">Partner</p>
-        </div>
-        <div class="partner__rail">
-          <span class="partner__mno"><span class="label">M. No.</span> <span class="num">239495</span></span>
-        </div>
-        <p class="partner__field"><span class="label">Other qualifications</span> ICAI Post-Qualification Course in Information Systems Audit · ICAI Certificate Courses on Forensic Accounting and Fraud Detection, Concurrent Audit of Banks, and Indian Accounting Standards</p>
-        <p class="partner__field"><span class="label">Areas of experience</span> statutory audits, including bank audits · internal audits · transaction audits · tax audits · financial due diligence</p>
-        <p class="partner__prose">He was previously with a firm of chartered accountants in Chennai.</p>
-      </article>
+          <!-- Partner: CA K. Rama Krishna -->
+          <!-- TODO(firm): which office? The firm profile does not say, so no office is shown.
+               When it is known, add a line above the M. No. in the rail below, like the other
+               cards:  <span class="partner__office">Hyderabad</span>  -->
+          <article class="partner" id="rama-krishna">
+            <div class="partner__head">
+              <h3 class="partner__name">CA K. Rama Krishna</h3>
+              <p class="partner__quals">B.Com, FCA</p>
+              <p class="partner__role">Partner</p>
+            </div>
+            <div class="partner__rail">
+              <span class="partner__mno"><span class="label">M. No.</span> <span class="num">239495</span></span>
+            </div>
+            <p class="partner__field"><span class="label">Other qualifications</span> ICAI Post-Qualification Course in Information Systems Audit · ICAI Certificate Courses on Forensic Accounting and Fraud Detection, Concurrent Audit of Banks, and Indian Accounting Standards</p>
+            <p class="partner__field"><span class="label">Areas of experience</span> statutory audits, including bank audits · internal audits · transaction audits · tax audits · financial due diligence</p>
+            <p class="partner__prose">He was previously with a firm of chartered accountants in Chennai.</p>
+          </article>
 
-      <!-- Partner: CA K. Akhil Sai -->
-      <!-- TODO(firm): which office? The firm profile does not say, so no office is shown.
-           When it is known, add a line above the M. No. in the rail below, like the other
-           cards:  <span class="partner__office">Hyderabad</span>  -->
-      <article class="partner" id="akhil-sai">
-        <div class="partner__head">
-          <h3 class="partner__name">CA K. Akhil Sai</h3>
-          <p class="partner__quals">B.Com, FCA</p>
-          <p class="partner__role">Partner</p>
-        </div>
-        <div class="partner__rail">
-          <span class="partner__mno"><span class="label">M. No.</span> <span class="num">241180</span></span>
-        </div>
-        <p class="partner__field"><span class="label">Other qualifications</span> ICAI Post-Qualification Course in Information Systems Audit · ICAI Certificate Courses on Concurrent Audit of Banks and on Forensic Accounting and Fraud Detection</p>
-        <p class="partner__field"><span class="label">Areas of experience</span> indirect taxation, including tax planning · due diligence · representation · finalisation of accounts</p>
-        <p class="partner__prose">He worked earlier in regulatory reporting at a multinational bank and as a functional consultant at an information technology services company.</p>
-      </article>
+          <!-- Partner: CA K. Akhil Sai -->
+          <!-- TODO(firm): which office? The firm profile does not say, so no office is shown.
+               When it is known, add a line above the M. No. in the rail below, like the other
+               cards:  <span class="partner__office">Hyderabad</span>  -->
+          <article class="partner" id="akhil-sai">
+            <div class="partner__head">
+              <h3 class="partner__name">CA K. Akhil Sai</h3>
+              <p class="partner__quals">B.Com, FCA</p>
+              <p class="partner__role">Partner</p>
+            </div>
+            <div class="partner__rail">
+              <span class="partner__mno"><span class="label">M. No.</span> <span class="num">241180</span></span>
+            </div>
+            <p class="partner__field"><span class="label">Other qualifications</span> ICAI Post-Qualification Course in Information Systems Audit · ICAI Certificate Courses on Concurrent Audit of Banks and on Forensic Accounting and Fraud Detection</p>
+            <p class="partner__field"><span class="label">Areas of experience</span> indirect taxation, including tax planning · due diligence · representation · finalisation of accounts</p>
+            <p class="partner__prose">He worked earlier in regulatory reporting at a multinational bank and as a functional consultant at an information technology services company.</p>
+          </article>
 
-      <!-- Partner: CA M. Naresh -->
-      <article class="partner" id="naresh">
-        <div class="partner__head">
-          <h3 class="partner__name">CA M. Naresh</h3>
-          <p class="partner__quals">B.Com, FCA</p>
-          <p class="partner__role">Partner</p>
-        </div>
-        <div class="partner__rail">
-          <span class="partner__office">Vijayawada</span>
-          <span class="partner__mno"><span class="label">M. No.</span> <span class="num">241482</span></span>
-        </div>
-        <p class="partner__field"><span class="label">Other qualifications</span> ICAI Post-Qualification Course in Information Systems Audit · ICAI Certificate Course on Concurrent Audit of Banks</p>
-        <p class="partner__field"><span class="label">Areas of experience</span> internal audit · project financing and financial advisory · concurrent audit · information systems audit</p>
-        <p class="partner__prose">He has worked in accounting, taxation and audit, including due diligence work at a hospital group and internal audit at a multinational pharmaceutical company covering internal financial controls, risk based and special audits.</p>
-      </article>
+          <!-- Partner: CA M. Naresh -->
+          <article class="partner" id="naresh">
+            <div class="partner__head">
+              <h3 class="partner__name">CA M. Naresh</h3>
+              <p class="partner__quals">B.Com, FCA</p>
+              <p class="partner__role">Partner</p>
+            </div>
+            <div class="partner__rail">
+              <span class="partner__office">Vijayawada</span>
+              <span class="partner__mno"><span class="label">M. No.</span> <span class="num">241482</span></span>
+            </div>
+            <p class="partner__field"><span class="label">Other qualifications</span> ICAI Post-Qualification Course in Information Systems Audit · ICAI Certificate Course on Concurrent Audit of Banks</p>
+            <p class="partner__field"><span class="label">Areas of experience</span> internal audit · project financing and financial advisory · concurrent audit · information systems audit</p>
+            <p class="partner__prose">He has worked in accounting, taxation and audit, including due diligence work at a hospital group and internal audit at a multinational pharmaceutical company covering internal financial controls, risk based and special audits.</p>
+          </article>
 
-      <!-- Partner: CA E. Venkatesa Prabhu -->
-      <!-- TODO(firm): FCA or ACA? The firm profile says FCA in the partner table and
-           "Associate Member" in his biography. The two cannot both be right, and the site
-           must match the ICAI register, so the designation is left off until it is checked.
-           Once confirmed, change the line below to "B.Com, FCA" or "B.Com, ACA". -->
-      <article class="partner" id="venkatesa-prabhu">
-        <div class="partner__head">
-          <h3 class="partner__name">CA E. Venkatesa Prabhu</h3>
-          <p class="partner__quals">B.Com</p>
-          <p class="partner__role">Partner</p>
-        </div>
-        <div class="partner__rail">
-          <span class="partner__office">Chennai</span>
-          <span class="partner__mno"><span class="label">M. No.</span> <span class="num">245737</span></span>
-        </div>
-        <p class="partner__field"><span class="label">Areas of experience</span> investigations, internal audits and special audits · anti-fraud process reviews in manufacturing, construction and service industries · forensic audits and fraud investigations for banks and corporates · goods and services tax advisory · project finance and government subsidy applications</p>
-        <p class="partner__prose">He has worked with state investigation agencies on economic offence matters.</p>
-      </article>
+          <!-- Partner: CA E. Venkatesa Prabhu -->
+          <!-- TODO(firm): FCA or ACA? The firm profile says FCA in the partner table and
+               "Associate Member" in his biography. The two cannot both be right, and the site
+               must match the ICAI register, so the designation is left off until it is checked.
+               Once confirmed, change the line below to "B.Com, FCA" or "B.Com, ACA". -->
+          <article class="partner" id="venkatesa-prabhu">
+            <div class="partner__head">
+              <h3 class="partner__name">CA E. Venkatesa Prabhu</h3>
+              <p class="partner__quals">B.Com</p>
+              <p class="partner__role">Partner</p>
+            </div>
+            <div class="partner__rail">
+              <span class="partner__office">Chennai</span>
+              <span class="partner__mno"><span class="label">M. No.</span> <span class="num">245737</span></span>
+            </div>
+            <p class="partner__field"><span class="label">Areas of experience</span> investigations, internal audits and special audits · anti-fraud process reviews in manufacturing, construction and service industries · forensic audits and fraud investigations for banks and corporates · goods and services tax advisory · project finance and government subsidy applications</p>
+            <p class="partner__prose">He has worked with state investigation agencies on economic offence matters.</p>
+          </article>
 
-      <!-- Partner: CA Y. Harika -->
-      <article class="partner" id="harika">
-        <div class="partner__head">
-          <h3 class="partner__name">CA Y. Harika</h3>
-          <p class="partner__quals">B.Com, FCA</p>
-          <p class="partner__role">Partner</p>
-        </div>
-        <div class="partner__rail">
-          <span class="partner__office">Hyderabad</span>
-          <span class="partner__mno"><span class="label">M. No.</span> <span class="num">247109</span></span>
-        </div>
-        <p class="partner__field"><span class="label">Other qualifications</span> ICAI Post-Qualification Course in Information Systems Audit · ICAI Certificate Course on Forensic Accounting and Fraud Detection</p>
-        <p class="partner__field"><span class="label">Areas of experience</span> statutory audits, specialised monitoring assignments for banks and internal audits in the power, pharmaceutical and manufacturing sectors · asset capitalisation assignments · goods and services tax reconciliation and tax audits · forensic audits for government agencies and private entities</p>
-      </article>
+          <!-- Partner: CA Y. Harika -->
+          <article class="partner" id="harika">
+            <div class="partner__head">
+              <h3 class="partner__name">CA Y. Harika</h3>
+              <p class="partner__quals">B.Com, FCA</p>
+              <p class="partner__role">Partner</p>
+            </div>
+            <div class="partner__rail">
+              <span class="partner__office">Hyderabad</span>
+              <span class="partner__mno"><span class="label">M. No.</span> <span class="num">247109</span></span>
+            </div>
+            <p class="partner__field"><span class="label">Other qualifications</span> ICAI Post-Qualification Course in Information Systems Audit · ICAI Certificate Course on Forensic Accounting and Fraud Detection</p>
+            <p class="partner__field"><span class="label">Areas of experience</span> statutory audits, specialised monitoring assignments for banks and internal audits in the power, pharmaceutical and manufacturing sectors · asset capitalisation assignments · goods and services tax reconciliation and tax audits · forensic audits for government agencies and private entities</p>
+          </article>
 
-      <!-- Partner: CA C. Anjali -->
-      <!-- TODO(firm): areas of experience, three to six of them. The firm profile describes
-           her earlier work but not her practice areas, so this card has none. When supplied,
-           add above the prose line, matching the other cards:
-           <p class="partner__field"><span class="label">Areas of experience</span> one · two · three</p> -->
-      <article class="partner" id="anjali">
-        <div class="partner__head">
-          <h3 class="partner__name">CA C. Anjali</h3>
-          <p class="partner__quals">B.Com, ACA</p>
-          <p class="partner__role">Partner</p>
-        </div>
-        <div class="partner__rail">
-          <span class="partner__office">Bengaluru</span>
-          <span class="partner__mno"><span class="label">M. No.</span> <span class="num">245670</span></span>
-        </div>
-        <p class="partner__prose">She was previously with a multinational professional services firm in Bengaluru, with experience in back office operations and global delivery services.</p>
-      </article>
+          <!-- Partner: CA C. Anjali -->
+          <!-- TODO(firm): areas of experience, three to six of them. The firm profile describes
+               her earlier work but not her practice areas, so this card has none. When supplied,
+               add above the prose line, matching the other cards:
+               <p class="partner__field"><span class="label">Areas of experience</span> one · two · three</p> -->
+          <article class="partner" id="anjali">
+            <div class="partner__head">
+              <h3 class="partner__name">CA C. Anjali</h3>
+              <p class="partner__quals">B.Com, ACA</p>
+              <p class="partner__role">Partner</p>
+            </div>
+            <div class="partner__rail">
+              <span class="partner__office">Bengaluru</span>
+              <span class="partner__mno"><span class="label">M. No.</span> <span class="num">245670</span></span>
+            </div>
+            <p class="partner__prose">She was previously with a multinational professional services firm in Bengaluru, with experience in back office operations and global delivery services.</p>
+          </article>
 
-      <!-- TODO(firm): year of becoming ACA and year of becoming FCA for each partner, and
-           the languages each partner speaks. The ICAI guidelines expressly allow both, and
-           they help anyone checking a partner against the register. When supplied, add to
-           each rail below the M. No.:
-           <span class="partner__years">ACA 2004 · FCA 2009</span>
-           and, if wanted, a field line:
-           <p class="partner__field"><span class="label">Languages</span> English · Telugu · Hindi</p> -->
+          <!-- TODO(firm): year of becoming ACA and year of becoming FCA for each partner, and
+               the languages each partner speaks. The ICAI guidelines expressly allow both, and
+               they help anyone checking a partner against the register. When supplied, add to
+               each rail below the M. No.:
+               <span class="partner__years">ACA 2004 · FCA 2009</span>
+               and, if wanted, a field line:
+               <p class="partner__field"><span class="label">Languages</span> English · Telugu · Hindi</p> -->
 
-      <!-- TODO(firm): passport-style portraits. Either every partner has one in the same
-           format, or none does. A site with nine photographs and four grey silhouettes
-           looks worse than one with none, and a placeholder graphic is not allowed. -->
+          <!-- TODO(firm): passport-style portraits. Either every partner has one in the same
+               format, or none does. A site with nine photographs and four grey silhouettes
+               looks worse than one with none, and a placeholder graphic is not allowed. -->
 
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- SECTION: Chartered Accountants in employment.
-         NOT PUBLISHED. The guidelines allow employed Chartered Accountants to be named with
-         their designation, office and area of work, but each person must have given written
-         consent first, and anyone who leaves must come off the site within a week. Until the
-         consents are on file this section stays commented out and the table below carries the
-         count on its own. The eight names in the firm profile are Akella Venkata Sai Kamal
-         Karthik, T. Rajesh, J. Hyndavi, P. Srikanth, P. Aravind Reddy, U. Bhargav Sandeep,
-         M. Vasudha and P. Vinay Varma. Do not paste them in without the consents.
-    <section class="band" aria-labelledby="employed-cas">
-      <div class="band__label">
-        <h2 id="employed-cas">Chartered Accountants in employment</h2>
-      </div>
+  <!-- SECTION: Chartered Accountants in employment.
+       NOT PUBLISHED. The guidelines allow employed Chartered Accountants to be named with
+       their designation, office and area of work, but each person must have given written
+       consent first, and anyone who leaves must come off the site within a week. Until the
+       consents are on file this section stays commented out and the counts above carry the
+       number on their own. The eight names in the firm profile are Akella Venkata Sai Kamal
+       Karthik, T. Rajesh, J. Hyndavi, P. Srikanth, P. Aravind Reddy, U. Bhargav Sandeep,
+       M. Vasudha and P. Vinay Varma. Do not paste them in without the consents.
+  <section class="section section--stone" aria-labelledby="employed-cas">
+    <div class="wrap split">
+      <h2 class="section-title" id="employed-cas">Chartered Accountants in employment</h2>
       <div>
         <ul class="plain">
           <li>CA Name, FCA — designation, office, area of work</li>
         </ul>
         <p class="note">Employed Chartered Accountants report to the partner in charge of their office.</p>
       </div>
-    </section>
-    -->
+    </div>
+  </section>
+  -->
 
-    <!-- SECTION: People -->
-    <section class="band" aria-labelledby="people">
-      <div class="band__label">
-        <h2 id="people">People</h2>
-      </div>
-      <div>
-        <!-- TODO(firm): confirm these four counts and the date in the caption before launch.
-             Refresh them at least once a year and move the date on when you do. The partner
-             count must match the number of cards above and the hero line on index.html. -->
-        <table class="table">
-          <caption>People, as at 1 September 2026</caption>
-          <tbody>
-            <tr>
-              <th scope="row">Partners</th>
-              <td>13</td>
-            </tr>
-            <tr>
-              <th scope="row">Chartered Accountants in employment</th>
-              <td>8</td>
-            </tr>
-            <tr>
-              <th scope="row">Articled assistants</th>
-              <td>65</td>
-            </tr>
-            <tr>
-              <th scope="row">Other staff</th>
-              <td>5</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-  </div>
 </main>
 
 <!-- ===== SHARED FOOTER BLOCK — START =========================================
-     This block is identical in every page of the site. To change an address or
-     a telephone number, change it here and paste the whole block into the other
-     eight pages: services.html, people.html, newsletter.html, offices.html,
-     careers.html, contact.html, privacy.html and 404.html.
+     This block is identical in every page of the site, newsletter issues
+     included. To change an address or a telephone number, change it here and
+     paste the whole block into every other page. `ruby check.rb` tells you if
+     one differs.
      ======================================================================== -->
 <footer class="site-footer">
-  <div class="wrap site-footer__cols">
+  <div class="wrap site-footer__top">
 
-    <div class="site-footer__col">
+    <div>
       <p class="site-footer__name">Sarath &amp; Associates</p>
       <p class="site-footer__desc">Chartered Accountants</p>
       <p>ICAI Firm Registration No. <span class="num">005120S</span></p>
       <p>Established 1990</p>
     </div>
 
-    <div class="site-footer__col">
-      <h2 class="label">Head office</h2>
+    <div>
+      <h2 class="site-footer__heading">Head office</h2>
       <address>
         4th Floor, MAAS Heights, 8-2-577/B, Road No. 8<br>
         Banjara Hills, Hyderabad 500 034, Telangana
       </address>
-      <p><a href="tel:+914023354322">+91 40 2335 4322</a></p>
-      <p><a href="mailto:info@sarathcas.in">info@sarathcas.in</a></p>
-      <p><a href="offices.html">All offices</a></p>
+      <ul class="site-footer__list">
+        <li><a href="tel:+914023354322">+91 40 2335 4322</a></li>
+        <li><a href="mailto:info@sarathcas.in">info@sarathcas.in</a></li>
+        <li><a href="offices.html">All offices</a></li>
+      </ul>
     </div>
 
-    <div class="site-footer__col site-footer__col--links">
-      <h2 class="label">Useful links</h2>
-      <ul class="site-footer__links">
+    <div>
+      <h2 class="site-footer__heading">Useful links</h2>
+      <ul class="site-footer__list">
         <li><a href="https://www.icai.org">Institute of Chartered Accountants of India</a></li>
         <li><a href="https://www.mca.gov.in">Ministry of Corporate Affairs</a></li>
         <li><a href="https://www.incometax.gov.in">Income Tax Department</a></li>

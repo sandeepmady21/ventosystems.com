@@ -8,13 +8,14 @@
   <meta name="description" content="How to write to Sarath &amp; Associates, Chartered Accountants, which has its head office in Hyderabad and further offices in Mumbai, Delhi, Vijayawada, Chennai and Bengaluru.">
   <link rel="stylesheet" href="assets/style.css">
 </head>
-<body>
+<body class="page-contact">
 
 <!-- ===== SHARED HEADER BLOCK — START =========================================
-     This block is identical in every page of the site. To change the navigation
-     or the wordmark, change it here and paste the whole block into the other
-     eight pages: services.html, people.html, newsletter.html, offices.html,
-     careers.html, contact.html, privacy.html and 404.html.
+     This block is identical in every page of the site, newsletter issues
+     included. To change the menu or the wordmark, change it here and paste the
+     whole block into every other page. `ruby check.rb` tells you if one differs.
+     The menu underlines the page you are on by itself, using the class on
+     <body>, so nothing in this block changes from page to page.
      ======================================================================== -->
 <a class="skip-link" href="#main">Skip to content</a>
 
@@ -22,7 +23,7 @@
   <div class="wrap site-header__inner">
     <a class="wordmark" href="index.html">
       <img class="wordmark__logo" src="assets/ca-india-logo.png" alt="CA India" width="320" height="241">
-      <span>
+      <span class="wordmark__text">
         <span class="wordmark__name">Sarath &amp; Associates</span>
         <span class="wordmark__desc">Chartered Accountants</span>
       </span>
@@ -42,92 +43,88 @@
 <!-- ===== SHARED HEADER BLOCK — END ========================================= -->
 
 <main id="main">
-  <div class="wrap">
 
-    <!-- SECTION: Page title -->
-    <div class="page-head">
-      <h1 class="display">Contact</h1>
+  <!-- SECTION: Page title -->
+  <section class="page-hero" aria-labelledby="page-title">
+    <div class="wrap page-hero__inner">
+      <h1 id="page-title">Contact</h1>
+      <p class="page-hero__lead">The firm can be reached by email at <a href="mailto:info@sarathcas.in">info@sarathcas.in</a>, or by telephone at any of its six offices.</p>
     </div>
+  </section>
 
-    <!-- SECTION: How to reach the firm. No sub-heading, so the narrow label
-         column of the band is left empty, as on privacy.html. -->
-    <div class="band">
-      <div class="band__label"></div>
-      <div class="prose">
-        <p>The firm can be reached by email at <a href="mailto:info@sarathcas.in">info@sarathcas.in</a>, or by telephone at any of its six offices.</p>
-        <p>The address, telephone numbers and email address of each office are on the <a href="offices.html">Offices</a> page.</p>
-      </div>
-    </div>
+  <section class="section">
+    <div class="wrap contact">
 
-    <!-- SECTION: Head office -->
-    <section class="band" aria-labelledby="head-office">
-      <div class="band__label">
+      <!-- SECTION: Write to the firm.
+           There is no form on this page, deliberately. The button opens the
+           visitor's own email app with the subject and a short template filled in,
+           so the message goes straight from the sender to the firm and nothing in
+           between ever sees it. That keeps client matters confidential (clause
+           3.3.15), needs no server code, and cannot fail silently. To change the
+           template, edit the text after "body=" in the link: %20 is a space and
+           %0A is a new line. -->
+      <section aria-labelledby="write-to-the-firm">
+        <h2 class="section-title" id="write-to-the-firm">Write to the firm</h2>
+        <div class="prose">
+          <p class="lede">The button below opens your email app with a new message to the firm, ready for you to fill in and send.</p>
+          <p><a class="btn" href="mailto:info@sarathcas.in?subject=Enquiry&amp;body=Name%3A%20%0AOrganisation%3A%20%0ATelephone%3A%20%0A%0A">Write to the firm</a></p>
+          <p>If the button does not open an email app, write to <a href="mailto:info@sarathcas.in">info@sarathcas.in</a> from your usual email account.</p>
+          <p class="note">Please do not include confidential information in your first message. The firm uses what you send only to reply to you. How it handles email is set out in the <a href="privacy.html">privacy notice</a>.</p>
+        </div>
+      </section>
+
+      <!-- SECTION: Head office -->
+      <section class="contact__card" aria-labelledby="head-office">
         <h2 id="head-office">Head office</h2>
-      </div>
-      <div>
         <address>
           4th Floor, MAAS Heights, 8-2-577/B, Road No. 8<br>
           Banjara Hills, Hyderabad 500 034, Telangana
         </address>
-        <p><a href="tel:+914023354322">+91 40 2335 4322</a></p>
-        <p><a href="mailto:info@sarathcas.in">info@sarathcas.in</a></p>
-        <p><a href="offices.html">All office details</a></p>
-      </div>
-    </section>
+        <ul class="contact__lines">
+          <li><a href="tel:+914023354322">+91 40 2335 4322</a></li>
+          <li><a href="mailto:info@sarathcas.in">info@sarathcas.in</a></li>
+        </ul>
+        <p>The address, telephone numbers and email address of each office are on the Offices page.</p>
+        <a class="more" href="offices.html">All office details</a>
+      </section>
 
-    <!-- SECTION: Write to the firm.
-         There is no form on this site, deliberately. The button opens the
-         visitor's own email app with the subject and a short template filled in,
-         so the message goes straight from the sender to the firm and nothing in
-         between ever sees it. That keeps client matters confidential (clause
-         3.3.15), needs no server code, and cannot fail silently. To change the
-         template, edit the text after "body=" in the link: %20 is a space and
-         %0A is a new line. -->
-    <section class="band" aria-labelledby="write-to-the-firm">
-      <div class="band__label">
-        <h2 id="write-to-the-firm">Write to the firm</h2>
-      </div>
-      <div class="prose">
-        <p>The button below opens your email app with a new message to the firm, ready for you to fill in and send.</p>
-        <p><a class="btn" href="mailto:info@sarathcas.in?subject=Enquiry&amp;body=Name%3A%20%0AOrganisation%3A%20%0ATelephone%3A%20%0A%0A">Write to the firm</a></p>
-        <p>If the button does not open an email app, write to <a href="mailto:info@sarathcas.in">info@sarathcas.in</a> from your usual email account.</p>
-        <p class="note">Please do not include confidential information in your first message. The firm uses what you send only to reply to you. How it handles email is set out in the <a href="privacy.html">privacy notice</a>.</p>
-      </div>
-    </section>
+    </div>
+  </section>
 
-  </div>
 </main>
 
 <!-- ===== SHARED FOOTER BLOCK — START =========================================
-     This block is identical in every page of the site. To change an address or
-     a telephone number, change it here and paste the whole block into the other
-     eight pages: services.html, people.html, newsletter.html, offices.html,
-     careers.html, contact.html, privacy.html and 404.html.
+     This block is identical in every page of the site, newsletter issues
+     included. To change an address or a telephone number, change it here and
+     paste the whole block into every other page. `ruby check.rb` tells you if
+     one differs.
      ======================================================================== -->
 <footer class="site-footer">
-  <div class="wrap site-footer__cols">
+  <div class="wrap site-footer__top">
 
-    <div class="site-footer__col">
+    <div>
       <p class="site-footer__name">Sarath &amp; Associates</p>
       <p class="site-footer__desc">Chartered Accountants</p>
       <p>ICAI Firm Registration No. <span class="num">005120S</span></p>
       <p>Established 1990</p>
     </div>
 
-    <div class="site-footer__col">
-      <h2 class="label">Head office</h2>
+    <div>
+      <h2 class="site-footer__heading">Head office</h2>
       <address>
         4th Floor, MAAS Heights, 8-2-577/B, Road No. 8<br>
         Banjara Hills, Hyderabad 500 034, Telangana
       </address>
-      <p><a href="tel:+914023354322">+91 40 2335 4322</a></p>
-      <p><a href="mailto:info@sarathcas.in">info@sarathcas.in</a></p>
-      <p><a href="offices.html">All offices</a></p>
+      <ul class="site-footer__list">
+        <li><a href="tel:+914023354322">+91 40 2335 4322</a></li>
+        <li><a href="mailto:info@sarathcas.in">info@sarathcas.in</a></li>
+        <li><a href="offices.html">All offices</a></li>
+      </ul>
     </div>
 
-    <div class="site-footer__col site-footer__col--links">
-      <h2 class="label">Useful links</h2>
-      <ul class="site-footer__links">
+    <div>
+      <h2 class="site-footer__heading">Useful links</h2>
+      <ul class="site-footer__list">
         <li><a href="https://www.icai.org">Institute of Chartered Accountants of India</a></li>
         <li><a href="https://www.mca.gov.in">Ministry of Corporate Affairs</a></li>
         <li><a href="https://www.incometax.gov.in">Income Tax Department</a></li>

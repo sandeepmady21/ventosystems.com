@@ -8,13 +8,14 @@
   <meta name="description" content="Offices of Sarath &amp; Associates, Chartered Accountants, in Hyderabad, Mumbai, Delhi, Vijayawada, Chennai and Bengaluru.">
   <link rel="stylesheet" href="assets/style.css">
 </head>
-<body>
+<body class="page-offices">
 
 <!-- ===== SHARED HEADER BLOCK — START =========================================
-     This block is identical in every page of the site. To change the navigation
-     or the wordmark, change it here and paste the whole block into the other
-     eight pages: services.html, people.html, newsletter.html, offices.html,
-     careers.html, contact.html, privacy.html and 404.html.
+     This block is identical in every page of the site, newsletter issues
+     included. To change the menu or the wordmark, change it here and paste the
+     whole block into every other page. `ruby check.rb` tells you if one differs.
+     The menu underlines the page you are on by itself, using the class on
+     <body>, so nothing in this block changes from page to page.
      ======================================================================== -->
 <a class="skip-link" href="#main">Skip to content</a>
 
@@ -22,7 +23,7 @@
   <div class="wrap site-header__inner">
     <a class="wordmark" href="index.html">
       <img class="wordmark__logo" src="assets/ca-india-logo.png" alt="CA India" width="320" height="241">
-      <span>
+      <span class="wordmark__text">
         <span class="wordmark__name">Sarath &amp; Associates</span>
         <span class="wordmark__desc">Chartered Accountants</span>
       </span>
@@ -42,173 +43,174 @@
 <!-- ===== SHARED HEADER BLOCK — END ========================================= -->
 
 <main id="main">
-  <div class="wrap">
 
-    <!-- SECTION: Page title -->
-    <div class="page-head">
-      <h1 class="display">Offices</h1>
+  <!-- SECTION: Page title -->
+  <section class="page-hero" aria-labelledby="page-title">
+    <div class="wrap page-hero__inner">
+      <h1 id="page-title">Offices</h1>
+      <p class="page-hero__lead">The head office is in Hyderabad. The firm also has offices in Mumbai, Delhi, Vijayawada, Chennai and Bengaluru.</p>
     </div>
+  </section>
 
-    <!-- SECTION: Office cards. One <article class="office"> per office, head
-         office first. To add an office, copy one whole article and edit the
-         fields, then add a matching row to the strip on index.html. -->
-    <section class="band" aria-labelledby="offices">
-      <div class="band__label">
-        <h2 id="offices">Offices</h2>
+  <!-- SECTION: Office cards. One <article class="office"> per office, head office
+       first. The head office card has the extra class office--head, which runs it the
+       full width. To add an office, copy one whole article (not the head office) and
+       edit the fields, then add a matching row to the offices grid on index.html. -->
+  <section class="section section--stone" aria-label="Offices">
+    <div class="wrap">
+      <div class="office-cards">
+
+        <!-- TODO(firm): office email aliases, so that the branch cards below no longer carry a
+             personal or gmail mailbox. When supplied, replace the address on that card's Email
+             line and on the matching row of the offices grid on index.html. -->
+
+        <!-- Office: Hyderabad — head office -->
+        <article class="office office--head" id="hyderabad">
+          <p class="office__tag">Head office</p>
+          <h2 class="office__name">Hyderabad</h2>
+          <address>
+            4th Floor, MAAS Heights, 8-2-577/B, Road No. 8<br>
+            Banjara Hills, Hyderabad 500 034, Telangana
+          </address>
+          <!-- TODO(firm): working hours. When supplied, add: <p class="office__hours">Monday to Friday, 10.00 to 18.30</p> -->
+          <ul class="office__contact">
+            <li><span class="label">Tel</span> <a href="tel:+914023354322">+91 40 2335 4322</a></li>
+            <li><span class="label">Mobile</span> <a href="tel:+919849169856">+91 98491 69856</a></li>
+            <li><span class="label">Mobile</span> <a href="tel:+918588897003">+91 85888 97003</a></li>
+            <li><span class="label">Email</span> <a href="mailto:info@sarathcas.in">info@sarathcas.in</a></li>
+          </ul>
+          <p class="office__map"><a class="more" href="https://www.google.com/maps/search/?api=1&amp;query=4th%20Floor%2C%20MAAS%20Heights%2C%208-2-577%2FB%2C%20Road%20No.%208%2C%20Banjara%20Hills%2C%20Hyderabad%20500%20034%2C%20Telangana">Open in Google Maps</a></p>
+        </article>
+
+        <!-- Office: Mumbai -->
+        <article class="office" id="mumbai">
+          <h2 class="office__name">Mumbai</h2>
+          <address>
+            4th Floor, Indian Globe Chambers, D. N. Road<br>
+            Fort, Mumbai 400 001, Maharashtra
+          </address>
+          <!-- TODO(firm): working hours. When supplied, add: <p class="office__hours">Monday to Friday, 10.00 to 18.30</p> -->
+          <ul class="office__contact">
+            <li><span class="label">Tel</span> <a href="tel:+912222693132">+91 22 2269 3132</a></li>
+            <!-- TODO(firm): confirm whether the Mumbai fax line is still in service. If it is, add
+                 after the line above: <li><span class="label">Fax</span> <span class="num">the number</span></li> -->
+            <li><span class="label">Email</span> <a href="mailto:casarathmumbai@gmail.com">casarathmumbai@gmail.com</a></li>
+          </ul>
+          <p class="office__map"><a class="more" href="https://www.google.com/maps/search/?api=1&amp;query=4th%20Floor%2C%20Indian%20Globe%20Chambers%2C%20D.%20N.%20Road%2C%20Fort%2C%20Mumbai%20400%20001%2C%20Maharashtra">Open in Google Maps</a></p>
+        </article>
+
+        <!-- Office: Delhi -->
+        <article class="office" id="delhi">
+          <h2 class="office__name">Delhi</h2>
+          <address>
+            J-347, Block J, Sarita Vihar<br>
+            New Delhi 110 076, Delhi
+          </address>
+          <!-- TODO(firm): working hours. When supplied, add: <p class="office__hours">Monday to Friday, 10.00 to 18.30</p> -->
+          <ul class="office__contact">
+            <li><span class="label">Mobile</span> <a href="tel:+919971593217">+91 99715 93217</a></li>
+            <li><span class="label">Email</span> <a href="mailto:parveen.bansal@sarathcas.in">parveen.bansal@sarathcas.in</a></li>
+          </ul>
+          <p class="office__map"><a class="more" href="https://www.google.com/maps/search/?api=1&amp;query=J-347%2C%20Block%20J%2C%20Sarita%20Vihar%2C%20New%20Delhi%20110%20076%2C%20Delhi">Open in Google Maps</a></p>
+        </article>
+
+        <!-- Office: Vijayawada -->
+        <article class="office" id="vijayawada">
+          <h2 class="office__name">Vijayawada</h2>
+          <address>
+            3rd Floor, Revathi Mansion, 48-13-6, Nagarjuna Nagar<br>
+            Sri Ramachandra Nagar Road, Vijayawada 520 008, Andhra Pradesh<br>
+            Opposite SBI Circle Audit Office
+            <!-- TODO(firm): PIN code. The firm profile gives it as 52008, which is five digits.
+                 520 008 is used on the line above and must be confirmed. -->
+          </address>
+          <!-- TODO(firm): working hours. When supplied, add: <p class="office__hours">Monday to Friday, 10.00 to 18.30</p> -->
+          <ul class="office__contact">
+            <li><span class="label">Mobile</span> <a href="tel:+919542021999">+91 95420 21999</a></li>
+            <li><span class="label">Email</span> <a href="mailto:naresh@sarathcas.in">naresh@sarathcas.in</a></li>
+          </ul>
+          <p class="office__map"><a class="more" href="https://www.google.com/maps/search/?api=1&amp;query=3rd%20Floor%2C%20Revathi%20Mansion%2C%2048-13-6%2C%20Nagarjuna%20Nagar%2C%20Sri%20Ramachandra%20Nagar%20Road%2C%20Vijayawada%20520%20008%2C%20Andhra%20Pradesh">Open in Google Maps</a></p>
+        </article>
+
+        <!-- Office: Chennai -->
+        <article class="office" id="chennai">
+          <h2 class="office__name">Chennai</h2>
+          <address>
+            AH 204, 3rd Street, Anna Nagar<br>
+            Chennai, Tamil Nadu
+            <!-- TODO(firm): PIN code. The firm profile does not give one, so none is shown. When
+                 supplied, add it before the state on the line above: Chennai PIN, Tamil Nadu -->
+          </address>
+          <!-- TODO(firm): working hours. When supplied, add: <p class="office__hours">Monday to Friday, 10.00 to 18.30</p> -->
+          <ul class="office__contact">
+            <li><span class="label">Mobile</span> <a href="tel:+917397235295">+91 73972 35295</a></li>
+            <li><span class="label">Email</span> <a href="mailto:vasudevan@sarathcas.in">vasudevan@sarathcas.in</a></li>
+          </ul>
+          <p class="office__map"><a class="more" href="https://www.google.com/maps/search/?api=1&amp;query=AH%20204%2C%203rd%20Street%2C%20Anna%20Nagar%2C%20Chennai%2C%20Tamil%20Nadu">Open in Google Maps</a></p>
+        </article>
+
+        <!-- Office: Bengaluru -->
+        <article class="office" id="bengaluru">
+          <h2 class="office__name">Bengaluru</h2>
+          <address>
+            No. 60, Zenith Square, Marathahalli Outer Ring Road<br>
+            R J Gardens, Aswath Nagar, Chinnapanna Halli<br>
+            Bengaluru 560 037, Karnataka
+          </address>
+          <!-- TODO(firm): working hours. When supplied, add: <p class="office__hours">Monday to Friday, 10.00 to 18.30</p> -->
+          <ul class="office__contact">
+            <li><span class="label">Mobile</span> <a href="tel:+918106106347">+91 81061 06347</a></li>
+            <li><span class="label">Email</span> <a href="mailto:anjali@sarathcas.in">anjali@sarathcas.in</a></li>
+          </ul>
+          <p class="office__map"><a class="more" href="https://www.google.com/maps/search/?api=1&amp;query=No.%2060%2C%20Zenith%20Square%2C%20Marathahalli%20Outer%20Ring%20Road%2C%20R%20J%20Gardens%2C%20Aswath%20Nagar%2C%20Chinnapanna%20Halli%2C%20Bengaluru%20560%20037%2C%20Karnataka">Open in Google Maps</a></p>
+        </article>
+
+        <!-- Write to us. The sixth tile, on navy, so that the grid of offices closes
+             evenly. Email goes straight to the firm; see docs/MAINTENANCE.md section 6. -->
+        <section class="office office--note" aria-labelledby="write-to-us">
+          <h2 class="office__name" id="write-to-us">Write to us</h2>
+          <p class="lede">For general correspondence, write to <a href="mailto:info@sarathcas.in">info@sarathcas.in</a>.</p>
+          <p>Please do not include confidential information in an email unless the firm has asked for it.</p>
+        </section>
+
       </div>
-      <div>
+    </div>
+  </section>
 
-      <!-- TODO(firm): office email aliases, so that the branch cards below no longer carry a
-           personal or gmail mailbox. When supplied, replace the address on that card's Email
-           line and on the matching row of the strip on index.html. -->
-
-      <!-- Office: Hyderabad — head office -->
-      <article class="office" id="hyderabad">
-        <h3 class="office__name">Hyderabad — head office</h3>
-        <address>
-          4th Floor, MAAS Heights, 8-2-577/B, Road No. 8<br>
-          Banjara Hills, Hyderabad 500 034, Telangana
-        </address>
-        <!-- TODO(firm): working hours. When supplied, add: <p class="office__hours">Monday to Friday, 10.00 to 18.30</p> -->
-        <ul class="office__contact">
-          <li><span class="label">Tel</span> <a href="tel:+914023354322">+91 40 2335 4322</a></li>
-          <li><span class="label">Mobile</span> <a href="tel:+919849169856">+91 98491 69856</a></li>
-          <li><span class="label">Mobile</span> <a href="tel:+918588897003">+91 85888 97003</a></li>
-          <li><span class="label">Email</span> <a href="mailto:info@sarathcas.in">info@sarathcas.in</a></li>
-          <li><a href="https://www.google.com/maps/search/?api=1&amp;query=4th%20Floor%2C%20MAAS%20Heights%2C%208-2-577%2FB%2C%20Road%20No.%208%2C%20Banjara%20Hills%2C%20Hyderabad%20500%20034%2C%20Telangana">Open in Google Maps</a></li>
-        </ul>
-      </article>
-
-      <!-- Office: Mumbai -->
-      <article class="office" id="mumbai">
-        <h3 class="office__name">Mumbai</h3>
-        <address>
-          4th Floor, Indian Globe Chambers, D. N. Road<br>
-          Fort, Mumbai 400 001, Maharashtra
-        </address>
-        <!-- TODO(firm): working hours. When supplied, add: <p class="office__hours">Monday to Friday, 10.00 to 18.30</p> -->
-        <ul class="office__contact">
-          <li><span class="label">Tel</span> <a href="tel:+912222693132">+91 22 2269 3132</a></li>
-          <!-- TODO(firm): confirm whether the Mumbai fax line is still in service. If it is, add
-               after the line above: <li><span class="label">Fax</span> <span class="num">the number</span></li> -->
-          <li><span class="label">Email</span> <a href="mailto:casarathmumbai@gmail.com">casarathmumbai@gmail.com</a></li>
-          <li><a href="https://www.google.com/maps/search/?api=1&amp;query=4th%20Floor%2C%20Indian%20Globe%20Chambers%2C%20D.%20N.%20Road%2C%20Fort%2C%20Mumbai%20400%20001%2C%20Maharashtra">Open in Google Maps</a></li>
-        </ul>
-      </article>
-
-      <!-- Office: Delhi -->
-      <article class="office" id="delhi">
-        <h3 class="office__name">Delhi</h3>
-        <address>
-          J-347, Block J, Sarita Vihar<br>
-          New Delhi 110 076, Delhi
-        </address>
-        <!-- TODO(firm): working hours. When supplied, add: <p class="office__hours">Monday to Friday, 10.00 to 18.30</p> -->
-        <ul class="office__contact">
-          <li><span class="label">Mobile</span> <a href="tel:+919971593217">+91 99715 93217</a></li>
-          <li><span class="label">Email</span> <a href="mailto:parveen.bansal@sarathcas.in">parveen.bansal@sarathcas.in</a></li>
-          <li><a href="https://www.google.com/maps/search/?api=1&amp;query=J-347%2C%20Block%20J%2C%20Sarita%20Vihar%2C%20New%20Delhi%20110%20076%2C%20Delhi">Open in Google Maps</a></li>
-        </ul>
-      </article>
-
-      <!-- Office: Vijayawada -->
-      <article class="office" id="vijayawada">
-        <h3 class="office__name">Vijayawada</h3>
-        <address>
-          3rd Floor, Revathi Mansion, 48-13-6, Nagarjuna Nagar<br>
-          Sri Ramachandra Nagar Road, Vijayawada 520 008, Andhra Pradesh<br>
-          Opposite SBI Circle Audit Office
-          <!-- TODO(firm): PIN code. The firm profile gives it as 52008, which is five digits.
-               520 008 is used on the line above and must be confirmed. -->
-        </address>
-        <!-- TODO(firm): working hours. When supplied, add: <p class="office__hours">Monday to Friday, 10.00 to 18.30</p> -->
-        <ul class="office__contact">
-          <li><span class="label">Mobile</span> <a href="tel:+919542021999">+91 95420 21999</a></li>
-          <li><span class="label">Email</span> <a href="mailto:naresh@sarathcas.in">naresh@sarathcas.in</a></li>
-          <li><a href="https://www.google.com/maps/search/?api=1&amp;query=3rd%20Floor%2C%20Revathi%20Mansion%2C%2048-13-6%2C%20Nagarjuna%20Nagar%2C%20Sri%20Ramachandra%20Nagar%20Road%2C%20Vijayawada%20520%20008%2C%20Andhra%20Pradesh">Open in Google Maps</a></li>
-        </ul>
-      </article>
-
-      <!-- Office: Chennai -->
-      <article class="office" id="chennai">
-        <h3 class="office__name">Chennai</h3>
-        <address>
-          AH 204, 3rd Street, Anna Nagar<br>
-          Chennai, Tamil Nadu
-          <!-- TODO(firm): PIN code. The firm profile does not give one, so none is shown. When
-               supplied, add it before the state on the line above: Chennai PIN, Tamil Nadu -->
-        </address>
-        <!-- TODO(firm): working hours. When supplied, add: <p class="office__hours">Monday to Friday, 10.00 to 18.30</p> -->
-        <ul class="office__contact">
-          <li><span class="label">Mobile</span> <a href="tel:+917397235295">+91 73972 35295</a></li>
-          <li><span class="label">Email</span> <a href="mailto:vasudevan@sarathcas.in">vasudevan@sarathcas.in</a></li>
-          <li><a href="https://www.google.com/maps/search/?api=1&amp;query=AH%20204%2C%203rd%20Street%2C%20Anna%20Nagar%2C%20Chennai%2C%20Tamil%20Nadu">Open in Google Maps</a></li>
-        </ul>
-      </article>
-
-      <!-- Office: Bengaluru -->
-      <article class="office" id="bengaluru">
-        <h3 class="office__name">Bengaluru</h3>
-        <address>
-          No. 60, Zenith Square, Marathahalli Outer Ring Road<br>
-          R J Gardens, Aswath Nagar, Chinnapanna Halli<br>
-          Bengaluru 560 037, Karnataka
-        </address>
-        <!-- TODO(firm): working hours. When supplied, add: <p class="office__hours">Monday to Friday, 10.00 to 18.30</p> -->
-        <ul class="office__contact">
-          <li><span class="label">Mobile</span> <a href="tel:+918106106347">+91 81061 06347</a></li>
-          <li><span class="label">Email</span> <a href="mailto:anjali@sarathcas.in">anjali@sarathcas.in</a></li>
-          <li><a href="https://www.google.com/maps/search/?api=1&amp;query=No.%2060%2C%20Zenith%20Square%2C%20Marathahalli%20Outer%20Ring%20Road%2C%20R%20J%20Gardens%2C%20Aswath%20Nagar%2C%20Chinnapanna%20Halli%2C%20Bengaluru%20560%20037%2C%20Karnataka">Open in Google Maps</a></li>
-        </ul>
-      </article>
-
-      </div>
-    </section>
-
-    <!-- SECTION: Write to us. The site has no forms; email goes straight to the
-         firm. See docs/MAINTENANCE.md section 6. -->
-    <section class="band" aria-labelledby="write-to-us">
-      <div class="band__label">
-        <h2 id="write-to-us">Write to us</h2>
-      </div>
-      <div class="prose">
-        <p>For general correspondence, write to <a href="mailto:info@sarathcas.in">info@sarathcas.in</a>. Please do not include confidential information in an email unless the firm has asked for it.</p>
-      </div>
-    </section>
-
-  </div>
 </main>
 
 <!-- ===== SHARED FOOTER BLOCK — START =========================================
-     This block is identical in every page of the site. To change an address or
-     a telephone number, change it here and paste the whole block into the other
-     eight pages: services.html, people.html, newsletter.html, offices.html,
-     careers.html, contact.html, privacy.html and 404.html.
+     This block is identical in every page of the site, newsletter issues
+     included. To change an address or a telephone number, change it here and
+     paste the whole block into every other page. `ruby check.rb` tells you if
+     one differs.
      ======================================================================== -->
 <footer class="site-footer">
-  <div class="wrap site-footer__cols">
+  <div class="wrap site-footer__top">
 
-    <div class="site-footer__col">
+    <div>
       <p class="site-footer__name">Sarath &amp; Associates</p>
       <p class="site-footer__desc">Chartered Accountants</p>
       <p>ICAI Firm Registration No. <span class="num">005120S</span></p>
       <p>Established 1990</p>
     </div>
 
-    <div class="site-footer__col">
-      <h2 class="label">Head office</h2>
+    <div>
+      <h2 class="site-footer__heading">Head office</h2>
       <address>
         4th Floor, MAAS Heights, 8-2-577/B, Road No. 8<br>
         Banjara Hills, Hyderabad 500 034, Telangana
       </address>
-      <p><a href="tel:+914023354322">+91 40 2335 4322</a></p>
-      <p><a href="mailto:info@sarathcas.in">info@sarathcas.in</a></p>
-      <p><a href="offices.html">All offices</a></p>
+      <ul class="site-footer__list">
+        <li><a href="tel:+914023354322">+91 40 2335 4322</a></li>
+        <li><a href="mailto:info@sarathcas.in">info@sarathcas.in</a></li>
+        <li><a href="offices.html">All offices</a></li>
+      </ul>
     </div>
 
-    <div class="site-footer__col site-footer__col--links">
-      <h2 class="label">Useful links</h2>
-      <ul class="site-footer__links">
+    <div>
+      <h2 class="site-footer__heading">Useful links</h2>
+      <ul class="site-footer__list">
         <li><a href="https://www.icai.org">Institute of Chartered Accountants of India</a></li>
         <li><a href="https://www.mca.gov.in">Ministry of Corporate Affairs</a></li>
         <li><a href="https://www.incometax.gov.in">Income Tax Department</a></li>

@@ -8,13 +8,14 @@
   <meta name="description" content="This page does not exist on the website of Sarath &amp; Associates, Chartered Accountants.">
   <link rel="stylesheet" href="assets/style.css">
 </head>
-<body>
+<body class="page-404">
 
 <!-- ===== SHARED HEADER BLOCK — START =========================================
-     This block is identical in every page of the site. To change the navigation
-     or the wordmark, change it here and paste the whole block into the other
-     eight pages: services.html, people.html, newsletter.html, offices.html,
-     careers.html, contact.html, privacy.html and 404.html.
+     This block is identical in every page of the site, newsletter issues
+     included. To change the menu or the wordmark, change it here and paste the
+     whole block into every other page. `ruby check.rb` tells you if one differs.
+     The menu underlines the page you are on by itself, using the class on
+     <body>, so nothing in this block changes from page to page.
      ======================================================================== -->
 <a class="skip-link" href="#main">Skip to content</a>
 
@@ -22,7 +23,7 @@
   <div class="wrap site-header__inner">
     <a class="wordmark" href="index.html">
       <img class="wordmark__logo" src="assets/ca-india-logo.png" alt="CA India" width="320" height="241">
-      <span>
+      <span class="wordmark__text">
         <span class="wordmark__name">Sarath &amp; Associates</span>
         <span class="wordmark__desc">Chartered Accountants</span>
       </span>
@@ -42,14 +43,15 @@
 <!-- ===== SHARED HEADER BLOCK — END ========================================= -->
 
 <main id="main">
-  <div class="wrap">
 
-    <!-- SECTION: Page title, one sentence, the four navigation links, and the
-         head office line. -->
-    <div class="page-head">
-      <h1 class="display">Page not found</h1>
-      <p class="lead">That page does not exist.</p>
+  <!-- SECTION: Page title, one sentence, the navigation links, and the head
+       office line. -->
+  <section class="page-hero" aria-labelledby="page-title">
+    <div class="wrap page-hero__inner">
+      <h1 id="page-title">Page not found</h1>
+      <p class="page-hero__lead">That page does not exist.</p>
       <ul class="notfound__links">
+        <li><a href="index.html">Home</a></li>
         <li><a href="services.html">Services</a></li>
         <li><a href="people.html">People</a></li>
         <li><a href="newsletter.html">Newsletter</a></li>
@@ -59,40 +61,42 @@
       </ul>
       <p class="notfound__contact">Hyderabad, head office · <a href="tel:+914023354322">+91 40 2335 4322</a> · <a href="mailto:info@sarathcas.in">info@sarathcas.in</a></p>
     </div>
+  </section>
 
-  </div>
 </main>
 
 <!-- ===== SHARED FOOTER BLOCK — START =========================================
-     This block is identical in every page of the site. To change an address or
-     a telephone number, change it here and paste the whole block into the other
-     eight pages: services.html, people.html, newsletter.html, offices.html,
-     careers.html, contact.html, privacy.html and 404.html.
+     This block is identical in every page of the site, newsletter issues
+     included. To change an address or a telephone number, change it here and
+     paste the whole block into every other page. `ruby check.rb` tells you if
+     one differs.
      ======================================================================== -->
 <footer class="site-footer">
-  <div class="wrap site-footer__cols">
+  <div class="wrap site-footer__top">
 
-    <div class="site-footer__col">
+    <div>
       <p class="site-footer__name">Sarath &amp; Associates</p>
       <p class="site-footer__desc">Chartered Accountants</p>
       <p>ICAI Firm Registration No. <span class="num">005120S</span></p>
       <p>Established 1990</p>
     </div>
 
-    <div class="site-footer__col">
-      <h2 class="label">Head office</h2>
+    <div>
+      <h2 class="site-footer__heading">Head office</h2>
       <address>
         4th Floor, MAAS Heights, 8-2-577/B, Road No. 8<br>
         Banjara Hills, Hyderabad 500 034, Telangana
       </address>
-      <p><a href="tel:+914023354322">+91 40 2335 4322</a></p>
-      <p><a href="mailto:info@sarathcas.in">info@sarathcas.in</a></p>
-      <p><a href="offices.html">All offices</a></p>
+      <ul class="site-footer__list">
+        <li><a href="tel:+914023354322">+91 40 2335 4322</a></li>
+        <li><a href="mailto:info@sarathcas.in">info@sarathcas.in</a></li>
+        <li><a href="offices.html">All offices</a></li>
+      </ul>
     </div>
 
-    <div class="site-footer__col site-footer__col--links">
-      <h2 class="label">Useful links</h2>
-      <ul class="site-footer__links">
+    <div>
+      <h2 class="site-footer__heading">Useful links</h2>
+      <ul class="site-footer__list">
         <li><a href="https://www.icai.org">Institute of Chartered Accountants of India</a></li>
         <li><a href="https://www.mca.gov.in">Ministry of Corporate Affairs</a></li>
         <li><a href="https://www.incometax.gov.in">Income Tax Department</a></li>

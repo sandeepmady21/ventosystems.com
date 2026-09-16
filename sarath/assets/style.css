@@ -1,68 +1,66 @@
 /* ============================================================================
    Sarath & Associates, Chartered Accountants
-   Design system for the whole site. One stylesheet, no JavaScript, no
-   third-party request of any kind.
+   The stylesheet for every page of the site. One file, no build step, and no
+   request to any other server.
 
-   Direction: "deep masthead". The page is bound like an annual report. A
-   full-width band of deep petrol ink runs across the top (the site header and
-   the page title read as one solid cover) and another runs across the bottom
-   (the footer). Between them the page is a warm ivory, never white. A single
-   warm brass accent carries the section markers, the run-in labels, the rules
-   and the link underlines. The deep colour is carried inward as well, so the
-   bands never feel bolted on: the membership-number rail on every partner card
-   is a solid deep chip, the registration row is a deep plaque, and the careers
-   steps are numbered in deep squares.
+   THE LOOK, IN ONE PARAGRAPH
+   Deep navy, warm paper and a quiet champagne gold. Page titles sit on a navy
+   band; the body of each page is paper, with stone-coloured sections for
+   variety and one navy section where a page needs weight. Headings are set in
+   Source Serif 4, which draws itself with finer, higher-contrast strokes as it
+   gets larger, and everything else is Source Sans 3. Gold is only ever an
+   accent: a short rule above a heading, a hairline, a small label. It is never
+   a background for text on the light pages.
 
-   Rules a maintainer must not undo:
-     - The CA India logo is never recoloured, filtered, rotated or cropped. On
-       the deep band it is seated on a light ivory chip (.wordmark__logo) so it
-       stays legible honestly. It is always smaller than the firm's name.
-     - There is no monogram, emblem or invented mark anywhere, by design.
-     - `content:` is only ever used for structural marks (a bullet, a counter,
-       a rule). It never contains words.
-     - Every structural edge on the site is drawn with one token, --edge, and
-       every hover or :target tint with one token, --wash. That is why dark
-       mode needs six lines and not sixty. Do not hand-colour a new edge.
-     - Every text colour here has been measured against its ground. The
-       ratios are written in the comments beside the tokens in section 2. If
-       you change a colour, re-measure it: much of this site is 15px data.
+   RULES A MAINTAINER MUST NOT UNDO
+   - The CA India logo is never recoloured, filtered, rotated or cropped, and it
+     is always smaller than the firm's name beside it.
+   - There is no monogram, emblem or invented mark anywhere, by design.
+   - `content:` is only ever used for marks: a rule, an arrow, a dash. Never
+     words.
+   - Every text colour was measured against the ground it sits on. The ratios
+     are in the comments beside the colours in section 2. If you change a
+     colour, measure it again (WCAG AA: 4.5:1 for normal text).
+
+   HOW TO FIND THINGS
+   Every page's <body> has a class naming the page, such as class="page-people".
+   That class is what underlines the current page in the menu (section 7), so
+   the shared header block never needs editing page by page.
 
    Contents
      1.  Fonts
-     2.  Design tokens
-     3.  Base and reset
-     4.  Skip link and focus
-     5.  Page frame: .wrap, .page-head (the cover band), .band
-     6.  Type helpers
-     7.  Site header  (the masthead band; repeated by hand in every page)
-     8.  Site footer  (the closing band; repeated by hand in every page)
-     9.  Home: hero
-     10. Home: practice areas  (.pairs)
-     11. Home: registration    (.reg)
-     12. Home: offices strip   (.strip)
-     13. People: partner cards (.partner)
-     13b.People: partner index (.pindex)
-     14. People: people table  (.table)
-     15. Services page         (.service)
-     16. Offices page          (.office)
-     17. Careers page          (.steps)
-     17b.Email buttons         (.btn: contact.html, apply.html)
-     18. Privacy and other prose pages
-     18b.Newsletter            (.issue-entry; .issue and its articles)
-     19. 404 page
-     19b.Ready to switch on: styles for the commented-out blocks in the HTML
-     20. Print (A4 firm profile)
+     2.  Colours, type and spacing
+     3.  Base
+     4.  Skip link, focus, hidden text
+     5.  Layout: .wrap, .section, .split, .with-aside
+     6.  Type and small parts: titles, eyebrow, lede, prose, labels, buttons
+     7.  Site header          (repeated by hand in every page)
+     8.  Site footer          (repeated by hand in every page)
+     9.  Page titles          (.hero on the home page, .page-hero elsewhere)
+     10. Home                 (.cards, .office-grid)
+     11. Side navigation      (.aside-nav: services, people, newsletter issues)
+     12. Services             (.service)
+     13. People               (.stats, .partner)
+     14. Offices              (.office)
+     15. Contact              (.contact)
+     16. Careers and the application form (.duo, .form)
+     17. Newsletter           (.issue-entry on the index; .issue on each issue)
+     18. Privacy and 404
+     19. Ready to switch on   (styles for commented-out blocks in the HTML)
+     20. Print
    ========================================================================= */
 
 
 /* 1. FONTS ================================================================ */
-/* Self-hosted variable fonts. No third-party request is made by this file. */
+/* Both are variable fonts kept in assets/fonts, so no outside request is made.
+   Source Serif 4 has an optical-size axis: the browser picks the right
+   drawing for each size by itself (font-optical-sizing, section 3). */
 
 @font-face {
   font-family: "Source Serif 4";
   src: url("fonts/source-serif-4-latin.woff2") format("woff2-variations"),
        url("fonts/source-serif-4-latin.woff2") format("woff2");
-  font-weight: 100 900;
+  font-weight: 200 900;
   font-style: normal;
   font-display: swap;
 }
@@ -71,1802 +69,2217 @@
   font-family: "Source Sans 3";
   src: url("fonts/source-sans-3-latin.woff2") format("woff2-variations"),
        url("fonts/source-sans-3-latin.woff2") format("woff2");
-  font-weight: 100 900;
+  font-weight: 200 900;
   font-style: normal;
   font-display: swap;
 }
 
 
-/* 2. DESIGN TOKENS ======================================================== */
+/* 2. COLOURS, TYPE AND SPACING ============================================ */
 
 :root {
-  /* --- The deep ink. Three stops of one petrol hue, so the header and the
-     page title can carry a single continuous gradient across the join and
-     read as one band. Do not introduce a fourth. */
-  --deep-hi:  #0C424B;
-  --deep:     #0A3A42;
-  --deep-low: #082F36;
+  color-scheme: light;
 
-  /* --- The warm page between the bands. Ivory, never white. */
-  --paper: #F5F0E6;   /* page ground                                      */
-  --panel: #EBE4D6;   /* tinted panel: office cards, partner index, plaques */
-  --ink:   #1B1D1E;   /* body text on paper            14.9:1             */
-  --muted: #5A5651;   /* meta and secondary data        6.4:1             */
-  --rule:      #DCD4C4;  /* hairlines on paper                            */
-  --rule-deep: #C9BFA9;  /* hairlines inside a tinted panel               */
+  /* Navy, the firm's colour. */
+  --navy-950: #0A1422;          /* the footer */
+  --navy-900: #0F1E33;          /* page titles, dark sections */
+  --navy-800: #16294A;          /* a raised panel on navy */
+  --navy-700: #1D3A5F;          /* links on light ground: 11.0:1 on paper, 10.1:1 on stone */
 
-  /* The one STRUCTURAL EDGE of the whole site: the rule that opens a section,
-     the top of the offices strip and the partner index, the left edge of an
-     office card, the head rule of the people table. It is the cover colour
-     carried inward as a line, which is why every one of those edges is the
-     same token and not six hand-written colours. On screen it is the deep
-     ink; when printed it becomes black. Change it in one place, not in six. */
-  --edge: #0A3A42;
+  /* The light grounds. */
+  --white: #FFFFFF;             /* cards and the form */
+  --paper: #FBFAF7;             /* the page */
+  --stone: #F3F0EA;             /* alternate sections */
+  --line: #E4DED3;              /* hairlines on light ground */
+  --line-strong: #CFC6B6;       /* field borders, hover edges */
 
-  /* A wash of the deep ink, used for the hover state of a whole row (practice
-     areas, offices strip, people table) and for the card a visitor has jumped
-     to from the partner index. Deliberately a translucent wash rather than a
-     solid: it works over ivory and over the tinted panel alike. */
-  --wash: rgba(10, 58, 66, 0.055);
-  --wash-strong: rgba(10, 58, 66, 0.10);
+  /* Text on light ground. */
+  --ink: #1A2230;               /* headings: 15.3:1 on paper */
+  --text: #3A4350;              /* body: 9.6:1 on paper, 8.8:1 on stone */
+  --muted: #5F6772;             /* secondary: 5.3:1 on paper, 5.0:1 on stone */
 
-  /* --- The brass accent. Two weights, because one hue cannot be legible on
-     both grounds: --brass sits on the deep ink, --brass-ink sits on ivory.
-     --brass-rule is for rules and markers only (non-text, 3.7:1 on paper). */
-  --brass:      #E2A93F;   /* on deep       5.9:1 (4.8:1 worst case)      */
-  --brass-ink:  #7E520C;   /* on paper      6.0:1                         */
-  --brass-rule: #A8711A;   /* rules, markers, link underlines on paper    */
+  /* Gold, the accent. */
+  --gold: #B8975F;              /* rules and marks only, never text on light */
+  --gold-ink: #80612C;          /* small labels on light: 5.4:1 on paper, 5.0:1 on stone */
+  --gold-light: #D2B98A;        /* text on navy: 8.9:1 on navy-900, 9.5:1 on navy-950 */
 
-  /* --- Text on the deep bands. */
-  --on-deep:     #F3EDE1;  /* 10.6:1 on --deep, 9.5:1 on --deep-hi        */
-  --on-deep-dim: #C9C2B4;  /*  7.0:1 on --deep, 6.3:1 on --deep-hi        */
+  /* Text and lines on navy. */
+  --on-navy: #FFFFFF;           /* headings: 16.8:1 */
+  --on-navy-body: #C5CEDA;      /* body: 10.9:1 on navy-900 */
+  --on-navy-muted: #9AA5B4;     /* secondary: 7.0:1 on navy-900 */
+  --line-navy: rgba(255, 255, 255, 0.12);
+  --line-navy-gold: rgba(210, 185, 138, 0.38);
 
-  /* Link text on paper: the deep ink itself, 9.8:1, underlined in brass. */
-  --link: #12414A;
+  /* Type. */
+  --serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --sans: "Source Sans 3", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
 
-  /* Headings and section labels. The same deep ink as links today, but kept
-     as a separate token so the two can be told apart later if needed. */
-  --head: #12414A;
-
-  /* The light chip the CA India logo is seated on inside the deep band. It
-     must stay light: it is the whole reason the logo needs no filter. */
-  --chip: #F5F0E6;
-
-  /* The bookcloth texture laid over the deep bands. Kept at 0.028 alpha:
-     above about 0.04 the brass text on the band drops below 4.5:1. */
-  --cloth: repeating-linear-gradient(
-             90deg, rgba(255, 255, 255, 0.028) 0 1px, transparent 1px 8px);
-
-  /* Type */
-  --font-serif: "Source Serif 4", Georgia, "Times New Roman", serif;
-  --font-sans:  "Source Sans 3", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
-
-  --fs-display: clamp(2.75rem, 1.2rem + 6.2vw, 5.25rem); /* 44px - 84px   */
-  --fs-prose:   1.1875rem;  /* 19px running text        */
-  --fs-body:    1rem;       /* 16px data and lists      */
-  --fs-meta:    0.9375rem;  /* 15px meta lines          */
-  --fs-data:    0.9375rem;  /* 15px tabular data        */
-  --fs-label:   0.75rem;    /* 12px letter-spaced label */
-
-  /* Spacing: an 8px scale, so the vertical rhythm stays on one grid. */
-  --s1: 0.5rem;
-  --s2: 1rem;
-  --s3: 1.5rem;
-  --s4: 2rem;
-  --s5: 2.5rem;
-  --s6: 3.5rem;
-  --s7: 5rem;
-
-  /* Layout */
-  --wrap: 60rem;       /* 960px: 11rem label + 3rem gap + 46rem content */
-  --rail: 11rem;       /* the narrow left label column                  */
-  --gap:  3rem;
-  --sub-rail: 13rem;   /* the same idea, one level down                 */
-  --measure: 34rem;    /* about 62 characters of running serif text     */
+  /* Space. */
+  --wrap: 72rem;                                        /* 1152px content width */
+  --gutter: clamp(1.25rem, 0.6rem + 3vw, 3rem);         /* page side margin */
+  --section: clamp(4rem, 2.75rem + 5vw, 7rem);          /* space above and below a section */
+  --header-h: 5.5rem;                                   /* height of the sticky header */
+  --radius: 2px;
+  --shadow: 0 1px 2px rgba(15, 30, 51, 0.04), 0 18px 40px -20px rgba(15, 30, 51, 0.18);
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
 
-/* 3. BASE AND RESET ======================================================= */
+/* 3. BASE ================================================================= */
 
 *,
 *::before,
-*::after { box-sizing: border-box; }
+*::after {
+  box-sizing: border-box;
+}
 
 html {
-  /* Light only, whatever the visitor's system setting. The firm asked for it,
-     and it matches the printed profile. */
-  color-scheme: light;
   -webkit-text-size-adjust: 100%;
-
-  /* Required by the full-width cover band in section 5. That band is pulled
-     out to 100vw, and 100vw includes the width of a classic scrollbar, so
-     without this a scrollbar would put a few stray pixels of horizontal
-     scroll on every page. `hidden` is the fallback for older Safari; `clip`
-     is preferred because it creates no scroll container. Nothing else on the
-     site overflows horizontally, so nothing is lost. Do not remove this
-     without also removing the bleed. */
-  overflow-x: hidden;
-  overflow-x: clip;
+  text-size-adjust: 100%;
 }
 
 body {
   margin: 0;
   background: var(--paper);
-  color: var(--ink);
-  font-family: var(--font-sans);
-  font-size: var(--fs-body);
-  line-height: 1.5;
-  font-synthesis-weight: none;
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 1.0625rem;         /* 17px */
+  line-height: 1.65;
+  font-optical-sizing: auto;
   -webkit-font-smoothing: antialiased;
-
-  /* With horizontal overflow clipped above, a long unbroken string such as an
-     email address must be allowed to break rather than be cut off at 320px. */
-  overflow-wrap: break-word;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
-h1, h2, h3, h4, p, ul, ol, dl, dd, figure, address, table {
+h1, h2, h3, h4 {
+  margin: 0;
+  font-family: var(--serif);
+  font-weight: 400;
+  line-height: 1.2;
+  color: var(--ink);
+  text-wrap: balance;
+}
+
+p, ul, ol, dl, dd, address, figure, fieldset {
   margin: 0;
 }
 
-ul, ol { padding: 0; }
+p, li, dd {
+  text-wrap: pretty;
+}
+
+address {
+  font-style: normal;
+}
 
 img {
+  display: block;
   max-width: 100%;
   height: auto;
 }
 
-address { font-style: normal; }
-
-/* Links on ivory: the deep ink at 9.8:1, underlined in brass so the accent
-   colour never has to carry the meaning on its own. */
 a {
-  color: var(--link);
-  text-decoration: underline;
-  text-decoration-color: var(--brass-rule);
-  text-decoration-thickness: 2px;
-  text-underline-offset: 0.18em;
+  color: var(--navy-700);
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-decoration-color: rgba(184, 151, 95, 0.7);
+  text-underline-offset: 0.22em;
+  transition: color 0.2s ease, text-decoration-color 0.2s ease;
 }
 
 a:hover {
-  color: var(--brass-ink);
-  text-decoration-thickness: 3px;
+  color: var(--ink);
+  text-decoration-color: currentColor;
 }
 
-/* Digits that must line up: membership numbers, telephones, PIN codes. */
-address,
-table,
-.num,
-.hero__facts,
-.strip,
-.reg,
-.partner__rail,
-.steps { font-variant-numeric: tabular-nums; }
+strong {
+  font-weight: 600;
+  color: var(--ink);
+}
 
-.num { letter-spacing: 0.02em; }
+/* On a wide screen the header stays at the top, so a jump to a heading must
+   stop below it rather than under it. */
+@media (min-width: 62em) {
+  html { scroll-padding-top: calc(var(--header-h) + 1.5rem); }
+}
 
-/* A figure quoted inside running prose, e.g. the number of articled
-   assistants on the careers page, is given the deep ink and a little weight
-   so it reads as data rather than as part of the sentence. */
-.prose .num,
-.site-footer .num { font-weight: 600; }
-
-.prose .num { color: var(--link); }
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
 
 
-/* 4. SKIP LINK AND FOCUS ================================================== */
+/* 4. SKIP LINK, FOCUS, HIDDEN TEXT ======================================== */
 
 .skip-link {
   position: absolute;
-  left: -9999px;
-  top: 0;
-  z-index: 10;
-  background: var(--brass);
-  color: var(--deep-low);          /* 6.8:1 */
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 100;
   padding: 0.75rem 1.25rem;
+  background: var(--navy-900);
+  color: var(--on-navy);
   font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
   text-decoration: none;
+  transform: translateY(-200%);
 }
 
-.skip-link:focus { left: 0; }
+.skip-link:focus {
+  transform: none;
+  color: var(--on-navy);
+}
 
-/* A visible focus ring everywhere. The browser default is replaced, never
-   removed. Two colours, because one ring cannot be visible on both grounds:
-   the deep ink on ivory (10.9:1) and brass on the deep bands (5.9:1). */
 :focus-visible {
-  outline: 3px solid var(--deep);
-  outline-offset: 2px;
+  outline: 2px solid var(--gold-ink);
+  outline-offset: 3px;
 }
 
-.site-header :focus-visible,
-.page-head :focus-visible,
-.site-footer :focus-visible,
-.reg :focus-visible {
-  outline-color: var(--brass);
+.hero :focus-visible,
+.page-hero :focus-visible,
+.section--navy :focus-visible,
+.contact__card :focus-visible,
+.site-footer :focus-visible {
+  outline-color: var(--gold-light);
+}
+
+/* Read aloud by screen readers, not shown. */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 
-/* 5. PAGE FRAME =========================================================== */
+/* 5. LAYOUT =============================================================== */
 
+/* The content column. Everything on every page sits inside one. */
 .wrap {
-  max-width: var(--wrap);
-  margin: 0 auto;
-  padding-inline: 1rem;
+  width: min(100% - 2 * var(--gutter), var(--wrap));
+  margin-inline: auto;
 }
 
-/* No top padding: the cover band below must meet the masthead band with no
-   ivory showing between them. */
-main {
-  padding-block: 0 var(--s6);
+/* A full-width section. Add --stone or --navy for a coloured ground. */
+.section {
+  padding-block: var(--section);
 }
 
-/* THE COVER BAND. The page title block is pulled full width out of .wrap and
-   filled with the deep ink, continuing the gradient that starts in the site
-   header so the two read as one band. The brass rule along the bottom is the
-   edge of the cover. */
-.page-head {
-  margin-inline: calc(50% - 50vw);
-  padding-inline: calc(50vw - 50%);
-  padding-block: var(--s5) var(--s6);
-  background-color: var(--deep);
-  background-image: var(--cloth),
-                    linear-gradient(180deg, var(--deep) 0%, var(--deep-low) 100%);
-  border-bottom: 4px solid var(--brass);
-  color: var(--on-deep);
+.section--stone {
+  background: var(--stone);
 }
 
-.page-head a { color: var(--on-deep); text-decoration-color: var(--brass); }
-.page-head a:hover { color: var(--brass); }
-
-/* A section: a hairline, a brass marker and a letter-spaced label in the
-   narrow left column, the content in the wide right column. */
-/* Every section opens on the structural edge: a 2px rule of the cover colour
-   right across the measure, with the brass tab of the label hung beneath it.
-   This is what makes a page read as a set of bound sections rather than as
-   text with headings. Do not soften it back to a hairline. */
-.band {
-  margin-top: var(--s5);
-  padding-top: var(--s4);
-  border-top: 2px solid var(--edge);
+.section--navy {
+  background: var(--navy-900);
+  color: var(--on-navy-body);
 }
 
-.band__label h2 {
-  margin: 0 0 var(--s2);
-  font-family: var(--font-sans);
-  font-size: var(--fs-label);
-  font-weight: 700;
-  line-height: 1rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--head);
+.section--navy h2,
+.section--navy h3 {
+  color: var(--on-navy);
 }
 
-/* The brass section marker. A structural rule, not a mark or a monogram. */
-.band__label h2::before {
+/* Less space above and below, for a short band such as the counts on People. */
+.section--compact {
+  padding-block: clamp(2.5rem, 2rem + 2vw, 3.75rem);
+}
+
+/* Two paper sections in a row are divided by a hairline. */
+.section--ruled {
+  border-top: 1px solid var(--line);
+}
+
+/* Title on the left, text on the right. */
+.split {
+  display: grid;
+  gap: 1.75rem 4rem;
+}
+
+@media (min-width: 62em) {
+  .split {
+    grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+  }
+}
+
+/* A narrow side navigation on the left, the page on the right. */
+.with-aside {
+  display: grid;
+  gap: 2.5rem 5rem;
+}
+
+@media (min-width: 62em) {
+  .with-aside {
+    grid-template-columns: 15rem minmax(0, 1fr);
+    align-items: start;
+  }
+}
+
+/* A section title with a link to the right of it. */
+.section-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.25rem 2rem;
+  margin-bottom: clamp(2.25rem, 1.75rem + 2vw, 3.5rem);
+}
+
+
+/* 6. TYPE AND SMALL PARTS ================================================= */
+
+/* The heading of a section, with the short gold rule above it that runs
+   through the whole site. */
+.section-title {
+  font-size: clamp(2rem, 1.45rem + 1.8vw, 2.875rem);
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+}
+
+.section-title::before {
   content: "";
   display: block;
   width: 2.5rem;
-  height: 5px;
-  margin-bottom: 0.875rem;
-  background: var(--brass-rule);
+  height: 2px;
+  margin-bottom: 1.25rem;
+  background: var(--gold);
 }
 
-@media (min-width: 56em) {
-  .wrap { padding-inline: 2rem; }
-
-  main { padding-block: 0 var(--s7); }
-
-  .page-head { padding-block: var(--s6) var(--s7); }
-
-  .band {
-    display: grid;
-    grid-template-columns: var(--rail) minmax(0, 1fr);
-    column-gap: var(--gap);
-    margin-top: var(--s6);
-    padding-top: var(--s4);
-  }
-
-  /* The label stays with its section while that section scrolls: on the
-     partners page one label is beside thirteen cards, and a marginal head
-     that rides down the page beside them is the running head of a bound
-     report. It needs no JavaScript, and it degrades to a plain static label
-     in any browser that cannot honour it. Requires `overflow-x: clip` on
-     <html> (section 3); with the older `hidden` fallback it simply does not
-     stick, which is fine. */
-  .band__label {
-    position: sticky;
-    top: var(--s4);
-    align-self: start;
-  }
-
-  .band__label h2 { margin-bottom: 0; }
-}
-
-
-/* Tap targets of at least 44px on phones. This covers every link that is a
-   list item, a heading link or a line of contact details. Links inside a
-   running sentence are left alone: WCAG exempts inline text links. */
-@media (max-width: 55.99em) {
-  .wordmark,
-  .site-footer a,
-  .pairs dt a,
-  .strip__after a,
-  .service__partners a,
-  .notfound__contact a {
-    display: inline-flex;
-    align-items: center;
-    min-height: 44px;
-  }
-
-  .wordmark { display: flex; }
-}
-
-
-/* 6. TYPE HELPERS ========================================================= */
-
-/* The firm's name and every page title. Large, and set in the light ivory
-   against the deep ground of the cover band. */
-.display {
-  font-family: var(--font-serif);
+/* Small capitals above a title: "Established 1990 · Hyderabad". */
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  font-family: var(--sans);
+  font-size: 0.8125rem;
   font-weight: 600;
-  font-size: var(--fs-display);
-  line-height: 1.02;
-  letter-spacing: -0.025em;
-  margin: 0;
-  color: var(--on-deep);
-  text-wrap: balance; /* keeps a long title from leaving one word alone */
-}
-
-.lead {
-  font-family: var(--font-serif);
-  font-size: clamp(1.1875rem, 1.05rem + 0.5vw, 1.375rem);
-  line-height: 1.6;
-  max-width: 40rem;
-  margin-top: var(--s3);
-  color: var(--on-deep-dim);
-}
-
-.prose {
-  max-width: var(--measure);
-}
-
-.prose p {
-  font-family: var(--font-serif);
-  font-size: var(--fs-prose);
-  line-height: 2rem;
-  text-wrap: pretty; /* avoids a single short last line */
-}
-
-.prose p + p { margin-top: var(--s3); }
-
-/* The small letter-spaced label used for run-in field names and column
-   headings. The structuring device of the whole site, and now the main
-   carrier of the brass accent through the data. */
-.label {
-  font-family: var(--font-sans);
-  font-size: var(--fs-label);
-  font-weight: 700;
-  line-height: 1rem;
-  letter-spacing: 0.14em;
+  line-height: 1.4;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--brass-ink);
+  color: var(--gold-ink);
 }
 
-.meta {
-  font-size: var(--fs-meta);
-  line-height: 1.5rem;
+.eyebrow::before {
+  content: "";
+  flex: none;
+  width: 2rem;
+  height: 1px;
+  background: currentColor;
+}
+
+/* The first paragraph of a passage, set larger in the serif. */
+.lede {
+  font-family: var(--serif);
+  font-size: clamp(1.3125rem, 1.15rem + 0.55vw, 1.625rem);
+  line-height: 1.5;
+  color: var(--ink);
+}
+
+/* Running text. */
+.prose {
+  max-width: 44rem;
+}
+
+.prose > * + * {
+  margin-top: 1.15em;
+}
+
+.prose ul,
+.prose ol {
+  padding-left: 1.25rem;
+}
+
+/* A small uppercase label, such as "Partners" or "M. No.". */
+.label {
+  font-family: var(--sans);
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--gold-ink);
+}
+
+/* Figures that should line up: registration and membership numbers. */
+.num {
+  font-variant-numeric: lining-nums tabular-nums;
+  letter-spacing: 0.02em;
+}
+
+/* A quieter aside inside running text. */
+.note {
+  padding-left: 1.125rem;
+  border-left: 2px solid var(--gold);
+  font-size: 0.9688rem;
+  line-height: 1.6;
   color: var(--muted);
+}
+
+/* "All services →": a text link that leads somewhere else. */
+.more {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  min-height: 2.75rem;
+  font-family: var(--sans);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--navy-700);
+  text-decoration: none;
+}
+
+.more::after {
+  content: "\2192";
+  color: var(--gold-ink);
+  transition: transform 0.25s var(--ease);
+}
+
+.more:hover {
+  color: var(--ink);
+}
+
+.more:hover::after {
+  transform: translateX(4px);
+}
+
+.section--navy .more,
+.contact__card .more {
+  color: var(--on-navy);
+}
+
+.section--navy .more::after,
+.contact__card .more::after {
+  color: var(--gold-light);
+}
+
+/* Buttons. Every button on the site is either a link that opens the visitor's
+   email app or a link to another page. None of them sends anything. */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  min-height: 3.125rem;
+  padding: 0.8125rem 1.625rem;
+  font-family: var(--sans);
+  font-size: 0.9688rem;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+  color: var(--on-navy);
+  text-decoration: none;
+  background: var(--navy-900);
+  border: 1px solid var(--navy-900);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.btn::after {
+  content: "\2192";
+  transition: transform 0.25s var(--ease);
+}
+
+.btn:hover {
+  color: var(--on-navy);
+  background: var(--navy-700);
+  border-color: var(--navy-700);
+}
+
+.btn:hover::after {
+  transform: translateX(4px);
+}
+
+/* On navy: a gold button, and an outlined one beside it. */
+.btn--gold {
+  color: var(--navy-900);         /* 8.9:1 on the gold */
+  background: var(--gold-light);
+  border-color: var(--gold-light);
+}
+
+.btn--gold:hover {
+  color: var(--navy-900);
+  background: #E4D2AE;
+  border-color: #E4D2AE;
+}
+
+.btn--outline {
+  color: var(--on-navy);
+  background: transparent;
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.btn--outline:hover {
+  color: var(--on-navy);
+  background: rgba(255, 255, 255, 0.06);
+  border-color: var(--gold-light);
+}
+
+@media (max-width: 29.99em) {
+  /* On a phone a button takes the whole line, so the tap target is generous. */
+  .btn { width: 100%; }
 }
 
 
 /* 7. SITE HEADER ========================================================== */
-/* The masthead. The top half of the cover band: its gradient ends on --deep,
-   which is exactly where .page-head begins, so the join is invisible. */
 
 .site-header {
-  padding-block: var(--s3);
-  background-color: var(--deep-hi);
-  background-image: var(--cloth),
-                    linear-gradient(180deg, var(--deep-hi) 0%, var(--deep) 100%);
-  color: var(--on-deep);
+  position: relative;
+  z-index: 50;
+  background: var(--paper);
+  border-bottom: 1px solid var(--line);
+}
+
+@media (min-width: 62em) {
+  .site-header {
+    position: sticky;
+    top: 0;
+  }
 }
 
 .site-header__inner {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: var(--s2) var(--s4);
+  gap: 1rem 2.5rem;
+  min-height: var(--header-h);
 }
 
 .wordmark {
   display: flex;
   align-items: center;
-  gap: 0.875rem;
+  gap: 1rem;
+  color: var(--ink);
   text-decoration: none;
-  color: var(--on-deep);
 }
 
-/* The CA India logo is a dark blue, saffron and green mark on a transparent
-   background. On the deep band it is seated on a light ivory chip so that it
-   stays exactly the colours the Institute prescribes. NEVER apply a filter,
-   an opacity, a blend mode or a background-colour change to this image, and
-   never let it grow taller than the firm's name beside it. The height below
-   is the border-box height; the padding is the chip's margin around the
-   artwork, so the artwork itself is 28px (32px from 56em up). */
+.wordmark:hover {
+  color: var(--ink);
+}
+
+/* The CA India logo, as supplied. Height only; never recolour it. */
 .wordmark__logo {
   width: auto;
-  height: 38px;
-  padding: 5px 7px;
-  flex: none;
-  background: var(--chip);
-  border-radius: 2px;
+  height: 2.75rem;
+}
+
+.wordmark__text {
+  display: flex;
+  flex-direction: column;
+  padding-left: 1rem;
+  border-left: 1px solid var(--line-strong);
 }
 
 .wordmark__name {
-  display: block;
-  font-family: var(--font-serif);
-  font-weight: 600;
-  font-size: clamp(1.25rem, 0.95rem + 1.35vw, 1.875rem);
-  line-height: 1.2;
-  letter-spacing: -0.015em;
+  font-family: var(--serif);
+  font-size: 1.4375rem;
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.005em;
+  white-space: nowrap;
 }
 
 .wordmark__desc {
-  display: block;
-  margin-top: 0.25rem;
+  margin-top: 0.3125rem;
   font-size: 0.6875rem;
-  font-weight: 700;
-  line-height: 1;
+  font-weight: 600;
+  line-height: 1.2;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--brass);
-}
-
-.wordmark:hover .wordmark__name {
-  text-decoration: underline;
-  text-decoration-color: var(--brass);
-  text-decoration-thickness: 2px;
-  text-underline-offset: 0.16em;
+  color: var(--muted);
+  white-space: nowrap;
 }
 
 .site-nav ul {
   display: flex;
-  flex-wrap: wrap;
-  list-style: none;
+  gap: 2.25rem;
   margin: 0;
-  gap: 0 var(--s3);
+  padding: 0;
+  list-style: none;
 }
 
 .site-nav a {
+  position: relative;
   display: flex;
   align-items: center;
-  min-height: 44px;
-  font-size: 0.8125rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--on-deep);
+  min-height: 2.75rem;
+  font-size: 0.9688rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: var(--ink);
   text-decoration: none;
-  border-bottom: 2px solid transparent;
 }
 
-.site-nav a:hover,
-.site-nav a:focus-visible {
-  color: var(--brass);
-  border-bottom-color: var(--brass);
+.site-nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0.3rem;
+  height: 1px;
+  background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s var(--ease);
 }
 
-@media (min-width: 56em) {
-  .site-header { padding-block: var(--s4); }
-  .site-nav a { min-height: 0; padding-bottom: 0.25rem; }
-  .wordmark__logo { height: 44px; padding: 6px 8px; }
+.site-nav a:hover::after {
+  transform: scaleX(1);
+}
+
+/* The page you are on. Add a line here if you ever add a page to the menu. */
+.page-services   .site-nav a[href="services.html"],
+.page-people     .site-nav a[href="people.html"],
+.page-newsletter .site-nav a[href="newsletter.html"],
+.page-offices    .site-nav a[href="offices.html"],
+.page-careers    .site-nav a[href="careers.html"],
+.page-contact    .site-nav a[href="contact.html"] {
+  color: var(--navy-700);
+  font-weight: 600;
+}
+
+.page-services   .site-nav a[href="services.html"]::after,
+.page-people     .site-nav a[href="people.html"]::after,
+.page-newsletter .site-nav a[href="newsletter.html"]::after,
+.page-offices    .site-nav a[href="offices.html"]::after,
+.page-careers    .site-nav a[href="careers.html"]::after,
+.page-contact    .site-nav a[href="contact.html"]::after {
+  height: 2px;
+  transform: scaleX(1);
+}
+
+/* Below 62em the menu drops under the wordmark as a tidy grid of six. */
+@media (max-width: 61.99em) {
+  .site-header__inner {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    min-height: 0;
+  }
+
+  .wordmark {
+    padding-block: 0.875rem;
+  }
+
+  .site-nav {
+    margin-inline: calc(-1 * var(--gutter));
+    border-top: 1px solid var(--line);
+  }
+
+  .site-nav ul {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 0;
+  }
+
+  .site-nav li + li {
+    border-left: 1px solid var(--line);
+  }
+
+  .site-nav a {
+    justify-content: center;
+    min-height: 3rem;
+    font-size: 0.9375rem;
+  }
+
+  .site-nav a::after {
+    left: 1rem;
+    right: 1rem;
+    bottom: 0;
+  }
+}
+
+@media (max-width: 39.99em) {
+  .site-nav ul {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .site-nav li:nth-child(4) {
+    border-left: 0;
+  }
+
+  .site-nav li:nth-child(n + 4) {
+    border-top: 1px solid var(--line);
+  }
+
+  .wordmark__logo { height: 2.375rem; }
+  .wordmark__name { font-size: 1.25rem; }
+  .wordmark__desc { font-size: 0.625rem; letter-spacing: 0.18em; }
 }
 
 
 /* 8. SITE FOOTER ========================================================== */
-/* The closing band. The back cover: the same deep ink, opened by the same
-   4px brass rule that closes the cover band at the top of the page. */
 
 .site-footer {
-  margin-top: var(--s6);
-  padding-block: var(--s6) var(--s5);
-  border-top: 4px solid var(--brass);
-  background-color: var(--deep);
-  background-image: var(--cloth),
-                    linear-gradient(180deg, var(--deep) 0%, var(--deep-low) 100%);
-  color: var(--on-deep);
-  font-size: var(--fs-meta);
+  background: var(--navy-950);
+  color: var(--on-navy-muted);
+  font-size: 0.9375rem;
   line-height: 1.6;
 }
 
-.site-footer__cols {
+.site-footer__top {
   display: grid;
-  gap: var(--s5);
+  gap: 2.75rem 3rem;
+  padding-block: clamp(3.5rem, 2.5rem + 4vw, 5.5rem) clamp(2.5rem, 2rem + 2vw, 3.5rem);
 }
 
-.site-footer h2 {
-  margin-bottom: var(--s2);
+@media (min-width: 48em) {
+  .site-footer__top { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
-.site-footer .label { color: var(--brass); }
-
-.site-footer a {
-  color: var(--on-deep);
-  text-decoration-color: var(--brass);
+@media (min-width: 62em) {
+  .site-footer__top { grid-template-columns: minmax(0, 5fr) minmax(0, 4fr) minmax(0, 4fr); }
 }
-
-.site-footer a:hover { color: var(--brass); }
 
 .site-footer__name {
-  font-family: var(--font-serif);
-  font-size: 1.5rem;
-  font-weight: 600;
-  line-height: 1.2;
-  letter-spacing: -0.015em;
-  color: var(--on-deep);
+  font-family: var(--serif);
+  font-size: 1.75rem;
+  line-height: 1.15;
+  color: var(--on-navy);
 }
 
 .site-footer__desc {
-  margin-top: 0.375rem;
-  font-size: 0.6875rem;
-  font-weight: 700;
+  margin: 0.5rem 0 1.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--brass);
-  margin-bottom: var(--s2);
+  color: var(--gold-light);
 }
 
-.site-footer__links {
-  list-style: none;
-  margin: 0;
-}
-
-.site-footer__links li + li { margin-top: 0.125rem; }
-
-.site-footer__bottom {
-  margin-top: var(--s6);
-  padding-top: var(--s3);
-  border-top: 1px solid rgba(243, 237, 225, 0.22);
-  color: var(--on-deep-dim);
-}
-
-.site-footer__bottom p + p { margin-top: 0.25rem; }
-
-@media (min-width: 56em) {
-  /* Wider than the --rail column used elsewhere: the firm's name is set large
-     here and must not break across two lines. */
-  .site-footer__cols {
-    grid-template-columns: 15rem minmax(0, 1fr) minmax(0, 1fr);
-    column-gap: var(--gap);
-  }
-}
-
-
-/* 9. HOME: HERO =========================================================== */
-/* The hero sits inside the cover band, so everything here is light on deep. */
-
-.hero__desc {
-  margin-top: var(--s3);
-  font-size: 0.8125rem;
-  font-weight: 700;
-  line-height: 1rem;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  color: var(--brass);
-}
-
-.hero__areas {
-  margin-top: var(--s5);
-  padding-top: var(--s4);
-  border-top: 1px solid rgba(243, 237, 225, 0.22);
-  max-width: 44rem;
-  font-size: 1.125rem;
-  line-height: 1.75rem;
-  color: var(--on-deep);
-}
-
-.hero__facts {
-  margin-top: var(--s2);
-  max-width: 44rem;
-  font-size: var(--fs-meta);
-  line-height: 1.5rem;
-  color: var(--on-deep-dim);
-}
-
-/* The three links out of the hero, and the same treatment on the 404 page.
-   Outlined in brass on the deep ground, and filled with brass on hover. */
-.hero__links,
-.notfound__links {
-  display: flex;
-  flex-wrap: wrap;
-  list-style: none;
-  margin-top: var(--s5);
-  gap: var(--s2);
-}
-
-.hero__links a,
-.notfound__links a {
-  display: inline-flex;
-  align-items: center;
-  min-height: 44px;
-  padding: 0.5rem 1.125rem;
-  font-size: 0.8125rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--on-deep);
-  text-decoration: none;
-  border: 1px solid rgba(243, 237, 225, 0.35);
-  border-bottom: 3px solid var(--brass);
-}
-
-.hero__links a:hover,
-.notfound__links a:hover {
-  background: var(--brass);
-  border-color: var(--brass);
-  color: var(--deep-low);          /* 6.8:1 on brass */
-}
-
-
-/* 10. HOME: PRACTICE AREAS ================================================ */
-
-/* The list is pulled out into the page gutter by 0.875rem and given that much
-   padding back, so that the hover wash below covers a band wider than the
-   text while the text itself still lines up with everything else in the
-   column. If you remove the negative margin, remove the padding too. */
-.pairs {
-  display: grid;
-  margin-inline: -0.875rem;
-}
-
-.pairs dt,
-.pairs dd { padding-inline: 0.875rem; }
-
-.pairs dt {
-  padding-top: var(--s3);
-  border-top: 1px solid var(--rule);
-  font-family: var(--font-serif);
-  font-size: 1.375rem;
+.site-footer__heading {
+  margin-bottom: 1.125rem;
+  font-family: var(--sans);
+  font-size: 0.75rem;
   font-weight: 600;
-  line-height: 1.75rem;
-  letter-spacing: -0.01em;
-}
-
-.pairs dd {
-  padding-bottom: var(--s3);
-  font-size: var(--fs-meta);
-  line-height: 1.6;
-  color: var(--muted);
-  max-width: 32rem;
-}
-
-.pairs dt:first-of-type { border-top: 0; padding-top: 0; }
-
-/* Hover takes the whole pair, not just the link: the name and its description
-   are one row, so they light up as one row. `dt:hover + dd` is the only way to
-   reach the description, so keep the two selectors together. */
-.pairs dt:hover,
-.pairs dt:hover + dd { background: var(--wash); }
-
-.pairs dt:hover { border-top-color: var(--brass-rule); }
-
-.pairs dt a {
-  text-decoration-thickness: 2px;
-  text-underline-offset: 0.2em;
-}
-
-@media (min-width: 56em) {
-  .pairs {
-    grid-template-columns: var(--sub-rail) minmax(0, 1fr);
-    column-gap: var(--s3);
-  }
-
-  .pairs dt,
-  .pairs dd {
-    border-top: 1px solid var(--rule);
-    padding: var(--s3) 0.875rem var(--s4);
-  }
-
-  .pairs dd:first-of-type { border-top: 0; padding-top: 0; }
-  .pairs dt:hover + dd { border-top-color: var(--brass-rule); }
-}
-
-
-/* 11. HOME: REGISTRATION ================================================== */
-/* The registration number is the single fact a bank or a public sector
-   undertaking checks first, so it is set on a solid block of the deep ink:
-   the cover colour carried into the middle of the page. */
-
-.reg {
-  display: grid;
-  padding: var(--s4);
-  background-color: var(--deep);
-  background-image: var(--cloth),
-                    linear-gradient(180deg, var(--deep-hi) 0%, var(--deep) 100%);
-  border-left: 5px solid var(--brass);
-  color: var(--on-deep);
-}
-
-/* The field name recedes and the number carries the brass, not the other way
-   round. This is the one place on the site where the accent is set large, and
-   it is deliberate: the registration number is the fact an institutional
-   reader came to check. */
-.reg dt {
-  font-size: var(--fs-label);
-  font-weight: 700;
-  line-height: 1rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--on-deep-dim);
-}
-
-.reg dd {
-  margin-top: var(--s2);
-  margin-bottom: var(--s3);
-  font-family: var(--font-serif);
-  font-size: clamp(1.75rem, 1.3rem + 1.6vw, 2.5rem);
-  font-weight: 600;
-  line-height: 1.15;
-  letter-spacing: 0.01em;
-  color: var(--brass);
-}
-
-.reg dd:last-of-type { margin-bottom: 0; }
-
-@media (min-width: 56em) {
-  .reg {
-    grid-template-columns: var(--sub-rail) minmax(0, 1fr);
-    column-gap: var(--s3);
-    align-items: baseline;
-    padding: var(--s5);
-  }
-
-  .reg dt { padding-top: 0.5rem; }
-  .reg dd { margin-top: 0; margin-bottom: 0; }
-}
-
-
-/* 12. HOME: OFFICES STRIP ================================================= */
-
-.strip {
-  list-style: none;
-  margin: 0;
-  background: var(--panel);
-  border-top: 3px solid var(--edge);
-}
-
-.strip li:hover { background: var(--wash); }
-
-.strip li {
-  border-bottom: 1px solid var(--rule-deep);
-  border-left: 4px solid transparent;
-  padding: 0.625rem 1rem;
-}
-
-.strip li:last-child { border-bottom: 0; }
-
-/* The head office is the first row. A brass edge marks it without a word
-   being added anywhere. */
-.strip li:first-child { border-left-color: var(--brass-rule); }
-
-.strip__city {
-  display: block;
-  font-family: var(--font-serif);
-  font-size: 1.125rem;
-  font-weight: 600;
-  line-height: 1.75rem;
-  color: var(--head);
-}
-
-.strip a {
-  display: flex;
-  align-items: center;
-  min-height: 44px;
-  font-size: var(--fs-meta);
-}
-
-.strip__after { margin-top: var(--s3); }
-
-@media (min-width: 56em) {
-  .strip li {
-    display: grid;
-    grid-template-columns: var(--sub-rail) 10rem minmax(0, 1fr);
-    column-gap: var(--s3);
-    align-items: baseline;
-    padding-block: 0.875rem;
-  }
-
-  .strip a {
-    display: inline;
-    min-height: 0;
-  }
-}
-
-
-/* 13. PEOPLE: PARTNER CARDS =============================================== */
-
-.partner {
-  scroll-margin-top: var(--s3);
-  margin-top: var(--s5);
-  padding-top: var(--s4);
-  border-top: 1px solid var(--rule);
-}
-
-.partner:first-of-type {
-  margin-top: var(--s3);
-}
-
-/* Thirteen cards look alike, so the one a visitor has just jumped to from the
-   partner index marks itself: a wash of the deep ink and a brass edge. The
-   box-shadow is the card's padding — a spread shadow in the same colour puts
-   the wash 0.75rem outside the text without moving anything on the page. */
-.partner:target {
-  background: var(--wash-strong);
-  box-shadow: 0 0 0 0.75rem var(--wash-strong);
-  border-top-color: var(--brass-rule);
-}
-
-.partner__name {
-  font-family: var(--font-serif);
-  font-size: 1.625rem;
-  font-weight: 600;
-  line-height: 1.25;
-  letter-spacing: -0.02em;
-  color: var(--head);
-  margin: 0;
-}
-
-.partner__quals {
-  margin-top: 0.375rem;
-  font-size: var(--fs-meta);
-  line-height: 1.5rem;
-  color: var(--muted);
-}
-
-.partner__role {
-  margin-top: 0.375rem;
-  font-size: var(--fs-label);
-  font-weight: 700;
-  line-height: 1rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--brass-ink);
+  color: var(--gold-light);
 }
 
-/* THE LEFT RAIL. A column of membership numbers is what an institutional
-   visitor scans, so it gets its own axis down the page, and it is filled with
-   the deep ink: thirteen solid chips marching down the left margin are what
-   carries the cover colour through the longest page on the site. */
-.partner__rail {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0 var(--s2);
-  margin-top: var(--s3);
-  padding: 0.625rem 0.875rem;
-  background: var(--deep);
-  border-left: 4px solid var(--brass);
-  color: var(--on-deep);
-  font-size: var(--fs-meta);
-  line-height: 1.5rem;
+.site-footer address {
+  color: var(--on-navy-body);
 }
 
-.partner__office {
-  font-family: var(--font-serif);
-  font-weight: 600;
-  color: var(--on-deep);
+.site-footer a {
+  color: var(--on-navy-body);
+  text-decoration-color: transparent;
 }
 
-.partner__mno { color: var(--on-deep-dim); }
-
-.partner__rail .label { color: var(--brass); }
-
-.partner__mno .num {
-  color: var(--on-deep);
-  font-weight: 600;
+.site-footer a:hover {
+  color: var(--on-navy);
+  text-decoration-color: var(--gold-light);
 }
 
-.partner__field {
-  margin-top: var(--s3);
-  font-size: var(--fs-meta);
-  line-height: 1.6;
-  max-width: 42rem;
-}
-
-.partner__field .label { margin-right: 0.35em; }
-
-.partner__prose {
-  margin-top: var(--s3);
-  max-width: var(--measure);
-  font-family: var(--font-serif);
-  font-size: 1.0625rem;
-  line-height: 1.75rem;
-  color: var(--muted);
-}
-
-@media (min-width: 56em) {
-  .partner {
-    display: grid;
-    grid-template-columns: var(--rail) minmax(0, 1fr);
-    column-gap: var(--gap);
-    margin-top: var(--s6);
-    padding-top: var(--s4);
-  }
-
-  /* Everything sits in the wide column except the rail, which is pulled
-     up beside the partner's name. */
-  .partner > * { grid-column: 2; }
-
-  .partner__rail {
-    grid-column: 1;
-    grid-row: 1;
-    display: block;
-    margin-top: 0.375rem;
-    padding: var(--s2);
-  }
-
-  .partner__office { display: block; }
-
-  .partner__mno {
-    display: block;
-    margin-top: var(--s1);
-    padding-top: var(--s1);
-    border-top: 1px solid rgba(243, 237, 225, 0.22);
-  }
-
-  .partner__rail .label { display: block; margin-bottom: 0.125rem; }
-}
-
-
-/* 13b. PEOPLE: PARTNER INDEX ============================================== */
-/* Navigation only. Thirteen cards is several screens, so this lets a visitor who
-   wants one partner jump straight to them. It sits between the intro line and the
-   first card, and is set on a tinted panel so that it reads as the contents page
-   of a bound document rather than as a stray list of links. */
-
-.pindex {
-  margin: var(--s6) 0 0;
-  padding: var(--s4);
-  background: var(--panel);
-  border-top: 3px solid var(--edge);
-}
-
-.pindex ul {
-  list-style: none;
-  margin: 0;
+.site-footer__list {
+  margin: 0.875rem 0 0;
   padding: 0;
+  list-style: none;
+}
+
+.site-footer__list li + li {
+  margin-top: 0.375rem;
+}
+
+.site-footer__bottom {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--s2) var(--s5);
+  justify-content: space-between;
+  gap: 0.5rem 2rem;
+  padding-block: 1.5rem 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.09);
+  font-size: 0.8438rem;
 }
 
-.pindex a {
-  display: inline-block;
-  font-size: var(--fs-meta);
-  line-height: 1.5rem;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 0.18em;
-}
-
-.pindex a:hover { text-decoration-thickness: 2px; }
-
-/* On phones the names stack one per line with a comfortable tap height. The list
-   must leave flex here, or the items sit side by side and the names run together. */
-@media (max-width: 55.99em) {
-  .pindex {
-    padding: var(--s2) var(--s3);
-  }
-
-  .pindex ul {
-    display: block;
-    gap: 0;
-  }
-
-  .pindex li { border-top: 1px solid var(--rule-deep); }
-  .pindex li:first-child { border-top: 0; }
-
-  .pindex a {
-    display: flex;
+@media (max-width: 47.99em) {
+  .site-footer__list a,
+  .site-footer__bottom a {
+    display: inline-flex;
     align-items: center;
-    min-height: 44px;
+    min-height: 2.75rem;          /* a comfortable tap target on a phone */
+  }
+
+  .site-footer__list li + li { margin-top: 0; }
+}
+
+
+/* 9. PAGE TITLES ========================================================== */
+
+/* --- The home page ------------------------------------------------------- */
+
+.hero,
+.page-hero {
+  position: relative;
+  overflow: hidden;
+  color: var(--on-navy-body);
+  background-color: var(--navy-900);
+  background-image:
+    radial-gradient(56rem 34rem at 92% -12%, rgba(210, 185, 138, 0.13), transparent 62%),
+    radial-gradient(40rem 30rem at -8% 118%, rgba(29, 58, 95, 0.55), transparent 70%);
+}
+
+/* A faint ledger ruling across the navy: fine vertical lines at the column
+   spacing of the page. Decoration only. */
+.hero::before,
+.page-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: calc(var(--wrap) / 6) 100%;
+  background-position: calc(50% - var(--wrap) / 2) 0;
+  mask-image: linear-gradient(180deg, transparent 0%, #000 30%, #000 70%, transparent 100%);
+}
+
+.hero > .wrap,
+.page-hero > .wrap {
+  position: relative;
+}
+
+.hero .eyebrow,
+.page-hero .eyebrow {
+  color: var(--gold-light);
+}
+
+.hero__grid {
+  display: grid;
+  gap: 3.5rem 5rem;
+  padding-block: clamp(4.5rem, 2.75rem + 7vw, 9rem) clamp(4rem, 2.75rem + 5vw, 7.5rem);
+}
+
+@media (min-width: 62em) {
+  .hero__grid {
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+    align-items: end;
   }
 }
 
-@media print { .pindex { display: none; } }
-
-
-/* 14. PEOPLE: PEOPLE TABLE ================================================ */
-
-.table {
-  width: 100%;
-  max-width: 30rem;
-  border-collapse: collapse;
+.hero__title {
+  margin-top: 1.75rem;
+  font-size: clamp(2.75rem, 1.4rem + 4vw, 5.25rem);
+  font-weight: 400;
+  line-height: 1.02;
+  letter-spacing: -0.025em;
+  color: var(--on-navy);
 }
 
-.table caption {
-  text-align: left;
-  font-size: var(--fs-label);
-  font-weight: 700;
-  line-height: 1rem;
-  letter-spacing: 0.14em;
+.hero__lead {
+  max-width: 36rem;
+  margin-top: 2rem;
+  font-size: clamp(1.0625rem, 0.98rem + 0.35vw, 1.25rem);
+  line-height: 1.65;
+  color: var(--on-navy-body);
+}
+
+.hero__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.875rem;
+  margin-top: 2.75rem;
+}
+
+/* The firm at a glance, ruled like a ledger. */
+.hero__facts {
+  border-top: 1px solid var(--line-navy-gold);
+}
+
+.hero__facts > div {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding-block: 1.25rem;
+  border-bottom: 1px solid var(--line-navy);
+}
+
+.hero__facts dt {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--brass-ink);
-  padding-bottom: var(--s3);
+  color: var(--on-navy-muted);
 }
 
-/* The same brass tab that opens a section label, so the table reads as a
-   schedule with a heading rather than as four stray rows. Structural rule,
-   not a mark. */
-.table caption::before {
+.hero__facts dd {
+  font-family: var(--serif);
+  font-size: clamp(1.75rem, 1.5rem + 1vw, 2.375rem);
+  line-height: 1;
+  color: var(--on-navy);
+  font-variant-numeric: lining-nums tabular-nums;
+  white-space: nowrap;
+}
+
+/* --- Every other page ---------------------------------------------------- */
+
+.page-hero__inner {
+  padding-block: clamp(3.5rem, 2.25rem + 5vw, 6.5rem) clamp(3rem, 2rem + 4vw, 5.5rem);
+}
+
+.page-hero h1 {
+  font-size: clamp(2.5rem, 1.6rem + 3.6vw, 4.5rem);
+  line-height: 1.04;
+  letter-spacing: -0.022em;
+  color: var(--on-navy);
+}
+
+.page-hero h1::before {
   content: "";
   display: block;
   width: 2.5rem;
-  height: 5px;
-  margin-bottom: 0.875rem;
-  background: var(--brass-rule);
+  height: 2px;
+  margin-bottom: 1.75rem;
+  background: var(--gold-light);
 }
 
-.table th,
-.table td {
-  border-bottom: 1px solid var(--rule);
-  padding: 0.75rem 0;
-  font-size: var(--fs-meta);
-  line-height: 1.5rem;
+/* A page title with an eyebrow above it does not also need the rule. */
+.page-hero .eyebrow + h1 {
+  margin-top: 1.5rem;
 }
 
-.table th {
-  text-align: left;
-  font-weight: 400;
+.page-hero .eyebrow + h1::before {
+  display: none;
+}
+
+.page-hero__lead {
+  max-width: 46rem;
+  margin-top: 1.75rem;
+  font-size: clamp(1.0625rem, 0.98rem + 0.4vw, 1.3125rem);
+  line-height: 1.65;
+  color: var(--on-navy-body);
+}
+
+.page-hero__note {
+  max-width: 46rem;
+  margin-top: 1.25rem;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--on-navy-muted);
+}
+
+.page-hero a {
+  color: var(--on-navy);
+  text-decoration-color: var(--gold-light);
+}
+
+.page-hero a:hover {
+  color: var(--gold-light);
+}
+
+
+/* 10. HOME ================================================================ */
+
+/* --- Practice areas: four cards, each a link to its part of services.html - */
+
+.cards {
+  display: grid;
+  gap: 1.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 48em) {
+  .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(1.75rem, 1.25rem + 2vw, 2.75rem);
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  transition: border-color 0.25s ease, box-shadow 0.35s var(--ease), transform 0.35s var(--ease);
+}
+
+.card:hover {
+  border-color: var(--line-strong);
+  box-shadow: var(--shadow);
+  transform: translateY(-2px);
+}
+
+.card__title {
+  font-size: clamp(1.5rem, 1.3rem + 0.7vw, 1.9375rem);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+.card__title a {
   color: var(--ink);
+  text-decoration: none;
 }
 
-/* The counts are the point of this table, so they are set in the serif, at
-   the deep ink, and lined up on tabular figures. */
-.table td {
-  text-align: right;
-  width: 6rem;
-  font-family: var(--font-serif);
+/* The whole card is the link. */
+.card__title a::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+.card p {
+  margin-top: 1rem;
+}
+
+/* The arrow at the foot of each card. */
+.card::after {
+  content: "\2192";
+  margin-top: auto;
+  padding-top: 1.75rem;
+  font-size: 1.25rem;
+  line-height: 1;
+  color: var(--gold-ink);
+  transition: transform 0.3s var(--ease);
+}
+
+.card:hover::after {
+  transform: translateX(6px);
+}
+
+/* --- Offices: a ruled grid of six on navy ------------------------------- */
+
+.office-grid {
+  display: grid;
+  gap: 1px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  background: var(--line-navy);
+  border: 1px solid var(--line-navy);
+}
+
+@media (min-width: 40em) {
+  .office-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (min-width: 62em) {
+  .office-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+.office-grid li {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+  padding: clamp(1.5rem, 1.2rem + 1vw, 2.125rem);
+  background: var(--navy-900);
+}
+
+.office-grid__city {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.25rem 0.75rem;
+  margin-bottom: 0.75rem;
+  font-family: var(--serif);
   font-size: 1.625rem;
+  line-height: 1.2;
+  color: var(--on-navy);
+}
+
+.office-grid__tag {
+  font-family: var(--sans);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gold-light);
+}
+
+.office-grid a {
+  align-self: flex-start;
+  color: var(--on-navy-body);
+  text-decoration-color: transparent;
+  overflow-wrap: anywhere;
+}
+
+.office-grid a:hover {
+  color: var(--on-navy);
+  text-decoration-color: var(--gold-light);
+}
+
+@media (max-width: 47.99em) {
+  .office-grid a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+  }
+}
+
+.office-grid + .more,
+.cards + .more {
+  margin-top: 1.5rem;
+}
+
+
+/* 11. SIDE NAVIGATION ===================================================== */
+/* The list of sections at the left of the Services page, the partner index on
+   the People page, and the contents of each newsletter issue. On a wide screen
+   it stays in view while the page scrolls. */
+
+.aside-nav__title {
+  margin-bottom: 1rem;
+  font-family: var(--sans);
+  font-size: 0.75rem;
   font-weight: 600;
   line-height: 1.3;
-  color: var(--head);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gold-ink);
 }
 
-.table tr:first-child th,
-.table tr:first-child td { border-top: 3px solid var(--edge); }
-
-/* A row highlights across both cells, so the eye carries the label to the
-   figure on a narrow table with a wide gap in the middle. */
-.table tbody tr:hover th,
-.table tbody tr:hover td { background: var(--wash); }
-
-
-/* 15. SERVICES PAGE ======================================================= */
-
-.service { scroll-margin-top: var(--s3); }
-
-.service__list {
-  list-style: none;
+.aside-nav ul,
+.aside-nav ol {
   margin: 0;
-  max-width: 42rem;
+  padding: 0;
+  list-style: none;
+  border-left: 1px solid var(--line);
+}
+
+.aside-nav a {
+  display: block;
+  margin-left: -1px;
+  padding: 0.5rem 0 0.5rem 1.25rem;
+  border-left: 2px solid transparent;
+  font-size: 0.9375rem;
+  line-height: 1.4;
+  color: var(--muted);
+  text-decoration: none;
+}
+
+.aside-nav a:hover {
+  color: var(--ink);
+  border-left-color: var(--gold);
+}
+
+.aside-nav__more {
+  margin-top: 1.5rem;
+}
+
+.aside-nav .aside-nav__more a {
+  display: inline-flex;
+  min-height: 2.75rem;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 0.9375rem;
+  color: var(--navy-700);
+}
+
+@media (min-width: 62em) {
+  .aside-nav {
+    position: sticky;
+    top: calc(var(--header-h) + 2.5rem);
+    max-height: calc(100vh - var(--header-h) - 4rem);
+    overflow-y: auto;
+    padding-right: 0.5rem;
+  }
+}
+
+/* On a phone the side navigation becomes a panel at the top of the page. */
+@media (max-width: 61.99em) {
+  .aside-nav {
+    padding: 1.5rem 1.5rem 1rem;
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+  }
+
+  .aside-nav ul,
+  .aside-nav ol {
+    border-left: 0;
+  }
+
+  .aside-nav li + li {
+    border-top: 1px solid var(--line);
+  }
+
+  .aside-nav a {
+    display: flex;
+    align-items: center;
+    min-height: 2.75rem;
+    margin-left: 0;
+    padding: 0.5rem 0;
+    border-left: 0;
+    color: var(--navy-700);
+  }
+
+  /* Thirteen partner names: two columns, so the list is not a screen long. */
+  .aside-nav--grid ul {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 1.25rem;
+  }
+
+  .aside-nav--grid a {
+    font-size: 0.875rem;
+  }
+
+  .aside-nav--grid li + li {
+    border-top: 0;
+  }
+
+  .aside-nav--grid li {
+    border-bottom: 1px solid var(--line);
+  }
+}
+
+
+/* 12. SERVICES ============================================================ */
+
+.service + .service {
+  margin-top: clamp(4.5rem, 3rem + 4vw, 7rem);
+}
+
+.service > .prose {
+  margin-top: 2rem;
+}
+
+/* The services in an area, each on its own ruled line. */
+.service__list {
+  margin: 2rem 0 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--line);
 }
 
 .service__list li {
   position: relative;
-  padding: 0.625rem 0 0.625rem 1.5rem;
-  border-top: 1px solid var(--rule);
-  font-size: var(--fs-meta);
-  line-height: 1.6;
+  padding: 1.125rem 0 1.125rem 2.25rem;
+  border-bottom: 1px solid var(--line);
 }
 
-/* An em dash instead of a bullet, in brass. A structural list marker. */
 .service__list li::before {
-  content: "\2014";
+  content: "";
   position: absolute;
   left: 0;
-  color: var(--brass-rule);
-  font-weight: 700;
+  top: calc(1.125rem + 0.8em);
+  width: 1rem;
+  height: 1px;
+  background: var(--gold);
 }
 
-.service__list li:first-child { border-top: 0; }
+.service > .note {
+  margin-top: 2rem;
+}
 
-/* On the forensic section the list follows two paragraphs of prose, and a closing
-   sentence follows the list. Without these two rules both joins are tighter than
-   the rhythm everywhere else on the page. */
-.prose + .service__list { margin-top: var(--s4); }
-
-.service__list + .note { margin-top: var(--s4); }
-
-/* The partners who lead an area: a tinted plaque, so the reader can find the
-   names without reading the list above them again. */
+/* "Partners" and the names of the partners who lead the area. */
 .service__partners {
-  margin-top: var(--s4);
-  padding: var(--s2) var(--s3);
-  background: var(--panel);
-  border-left: 4px solid var(--brass-rule);
-  font-size: var(--fs-meta);
-  line-height: 1.8;
+  margin-top: 2.25rem;
 }
 
 .service__partners .label {
-  display: block;
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.875rem;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.chips a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.5rem;
+  padding: 0.375rem 0.9375rem;
+  font-size: 0.9375rem;
+  color: var(--ink);
+  text-decoration: none;
+  background: var(--white);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.chips a:hover {
+  color: var(--navy-700);
+  border-color: var(--gold);
 }
 
 
-/* 16. OFFICES PAGE ======================================================== */
-/* Each office is a tinted card edged in the deep ink, so the six offices read
-   as six units rather than as one long column of addresses. */
+/* 13. PEOPLE ============================================================== */
+
+/* --- The four counts under the page title -------------------------------- */
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+}
+
+@media (min-width: 48em) {
+  .stats { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+
+.stats > div {
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  padding: clamp(1.25rem, 1rem + 1vw, 2rem);
+  background: var(--white);
+}
+
+.stats dt {
+  font-size: 0.9375rem;
+  line-height: 1.4;
+  color: var(--muted);
+}
+
+.stats dd {
+  font-family: var(--serif);
+  font-size: clamp(2.25rem, 1.8rem + 1.6vw, 3.25rem);
+  line-height: 1;
+  color: var(--ink);
+  font-variant-numeric: lining-nums tabular-nums;
+}
+
+.stats__note {
+  margin-top: 0.875rem;
+  font-size: 0.875rem;
+  color: var(--muted);
+}
+
+/* --- A partner ----------------------------------------------------------- */
+
+.partner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  padding: clamp(1.5rem, 1rem + 2.2vw, 2.75rem);
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.partner + .partner {
+  margin-top: 1.25rem;
+}
+
+/* The card a visitor jumped to from the index or the Services page. */
+.partner:target {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 1px var(--gold), var(--shadow);
+}
+
+.partner__head {
+  display: flex;
+  flex-direction: column;
+}
+
+/* On a phone the parts stack in this order: name, office, description, fields. */
+.partner__head  { order: -3; }
+.partner__rail  { order: -2; }
+.partner__prose { order: -1; }
+
+.partner__name {
+  font-size: clamp(1.625rem, 1.4rem + 0.8vw, 2.125rem);
+  line-height: 1.15;
+  letter-spacing: -0.012em;
+}
+
+.partner__quals {
+  margin-top: 0.5rem;
+  font-size: 0.9688rem;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+}
+
+/* "Partner" or "Founder Partner" sits above the name. */
+.partner__role {
+  order: -1;
+  margin-bottom: 0.625rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gold-ink);
+}
+
+/* The office and membership number. */
+.partner__rail {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.25rem 1.5rem;
+  margin-top: 1rem;
+  font-size: 0.9688rem;
+  color: var(--ink);
+}
+
+.partner__office {
+  font-weight: 600;
+}
+
+.partner__rail .label {
+  margin-right: 0.375rem;
+}
+
+/* "Other qualifications" and "Areas of experience": a label column on the
+   left and the text on the right. */
+.partner__field {
+  margin-top: 1.5rem;
+  padding-top: 1.375rem;
+  border-top: 1px solid var(--line);
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+.partner__field .label {
+  display: block;
+  margin-bottom: 0.375rem;
+  padding-top: 0.2rem;
+}
+
+/* The description, directly under the name. */
+.partner__prose {
+  max-width: 46rem;
+  margin-top: 1.5rem;
+  font-family: var(--serif);
+  font-size: clamp(1.0625rem, 1rem + 0.25vw, 1.125rem);
+  line-height: 1.65;
+  color: var(--ink);
+}
+
+@media (min-width: 48em) {
+  .partner {
+    grid-template-columns: minmax(0, 1fr) auto;
+    column-gap: 2rem;
+  }
+
+  .partner__head { grid-column: 1; grid-row: 1; }
+
+  .partner__rail {
+    grid-column: 2;
+    grid-row: 1;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.375rem;
+    margin-top: 0;
+    padding-top: 0.25rem;
+    text-align: right;
+  }
+
+  .partner__prose {
+    grid-column: 1 / -1;
+  }
+
+  .partner__field {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: 11.5rem minmax(0, 1fr);
+    column-gap: 2rem;
+  }
+
+  .partner__field .label { margin-bottom: 0; }
+}
+
+
+/* 14. OFFICES ============================================================= */
+
+.office-cards {
+  display: grid;
+  gap: 1.5rem;
+}
+
+@media (min-width: 48em) {
+  .office-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
 
 .office {
-  margin-top: var(--s4);
-  padding: var(--s3);
-  background: var(--panel);
-  border-left: 5px solid var(--edge);
+  display: flex;
+  flex-direction: column;
+  padding: clamp(1.75rem, 1.25rem + 2vw, 2.75rem);
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
 }
 
-.office:first-of-type { margin-top: var(--s3); }
+.office:target {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 1px var(--gold), var(--shadow);
+}
+
+.office__tag {
+  margin-bottom: 0.625rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gold-ink);
+}
 
 .office__name {
-  font-family: var(--font-serif);
-  font-size: 1.375rem;
-  font-weight: 600;
-  line-height: 1.3;
-  letter-spacing: -0.015em;
-  color: var(--head);
-  margin: 0;
+  font-size: clamp(1.75rem, 1.5rem + 0.9vw, 2.25rem);
+  line-height: 1.15;
+  letter-spacing: -0.012em;
 }
 
 .office address {
-  margin-top: var(--s2);
-  font-size: var(--fs-meta);
-  line-height: 1.6;
-  color: var(--muted);
+  margin-top: 1.125rem;
+  color: var(--text);
 }
 
 .office__contact {
+  margin: 1.75rem 0 0;
+  padding: 0;
   list-style: none;
-  margin: var(--s2) 0 0;
-  padding-top: var(--s2);
-  border-top: 1px solid var(--rule-deep);
-  font-size: var(--fs-meta);
-  line-height: 1.6;
+  border-top: 1px solid var(--line);
 }
 
-.office__contact .label { margin-right: 0.35em; }
+.office__contact li {
+  display: grid;
+  grid-template-columns: 4.75rem minmax(0, 1fr);
+  align-items: baseline;
+  gap: 1rem;
+  padding-block: 0.625rem;
+  border-bottom: 1px solid var(--line);
+}
 
 .office__contact a {
-  display: flex;
-  align-items: center;
-  min-height: 44px;
+  overflow-wrap: anywhere;
 }
 
-@media (min-width: 56em) {
-  .office {
-    display: grid;
-    grid-template-columns: var(--rail) minmax(0, 1fr);
-    column-gap: var(--gap);
-    margin-top: var(--s4);
-    padding: var(--s4);
-  }
-
-  .office > * { grid-column: 2; }
-
-  .office__name {
-    grid-column: 1;
-    grid-row: 1;
-    font-size: 1.125rem;
-    line-height: 1.4;
-  }
-
-  .office address { margin-top: 0; }
-
-  .office__contact a {
-    display: inline;
-    min-height: 0;
+/* On a phone the label sits above its number, so a long email address has
+   the whole width of the card and does not break mid-word. */
+@media (max-width: 29.99em) {
+  .office__contact li {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.125rem;
   }
 }
 
-
-/* 17. CAREERS PAGE ======================================================== */
-
-.steps {
-  list-style: none;
-  counter-reset: step;
-  margin: 0;
-  max-width: 42rem;
+/* The sixth tile: "Write to us", on navy. */
+.office--note {
+  color: var(--on-navy-body);
+  background: var(--navy-900);
+  border-color: var(--navy-900);
 }
 
-.steps li {
-  counter-increment: step;
-  position: relative;
-  padding: var(--s3) 0 var(--s3) 3.5rem;
-  border-top: 1px solid var(--rule);
-  font-size: var(--fs-meta);
-  line-height: 1.6;
+.office--note .office__name {
+  color: var(--on-navy);
 }
 
-/* The step number, set in a solid square of the deep ink. A CSS counter, not
-   a word and not a mark. */
-.steps li::before {
-  content: counter(step, decimal-leading-zero);
-  position: absolute;
-  left: 0;
-  top: var(--s3);
-  display: grid;
-  place-items: center;
+.office--note .office__name::before {
+  content: "";
+  display: block;
   width: 2.5rem;
-  height: 2.5rem;
-  background-color: var(--deep);
-  background-image: var(--cloth);
-  color: var(--brass);          /* 5.9:1 on the deep square */
-  font-size: 0.8125rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  font-variant-numeric: tabular-nums;
+  height: 2px;
+  margin-bottom: 1.25rem;
+  background: var(--gold-light);
 }
 
-.steps li:first-child { border-top: 0; }
+.office--note p {
+  margin-top: 1.125rem;
+}
 
-.note {
-  padding-left: var(--s3);
-  border-left: 3px solid var(--brass-rule);
-  font-size: var(--fs-meta);
-  line-height: 1.6;
-  max-width: 42rem;
+.office--note .lede {
+  color: var(--on-navy);
+}
+
+.office--note a {
+  color: var(--on-navy);
+  text-decoration-color: var(--gold-light);
+}
+
+.office--note a:hover {
+  color: var(--gold-light);
+}
+
+/* The map link sits apart at the foot of the card. */
+.office__map {
+  margin-top: auto;
+  padding-top: 1.25rem;
+}
+
+/* The head office runs the full width, with its address beside its numbers. */
+@media (min-width: 48em) {
+  .office--head {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    column-gap: 3rem;
+    border-top: 3px solid var(--navy-900);
+  }
+
+  .office--head .office__tag,
+  .office--head .office__name,
+  .office--head address,
+  .office--head .office__hours { grid-column: 1; }
+
+  .office--head .office__contact {
+    grid-column: 2;
+    grid-row: 1 / span 4;
+    margin-top: 0;
+  }
+
+  .office--head .office__map {
+    grid-column: 1;
+    align-self: end;
+  }
+}
+
+
+/* 15. CONTACT ============================================================= */
+
+.contact {
+  display: grid;
+  gap: 3rem 5rem;
+  align-items: start;
+}
+
+@media (min-width: 62em) {
+  .contact { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); }
+}
+
+.contact .prose {
+  margin-top: 2rem;
+}
+
+.contact .btn {
+  margin-block: 0.5rem;
+}
+
+/* The head office, on a navy card. */
+.contact__card {
+  padding: clamp(1.75rem, 1.25rem + 2vw, 2.75rem);
+  color: var(--on-navy-body);
+  background: var(--navy-900);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.contact__card h2 {
+  font-size: 1.875rem;
+  color: var(--on-navy);
+}
+
+.contact__card h2::before {
+  content: "";
+  display: block;
+  width: 2.5rem;
+  height: 2px;
+  margin-bottom: 1.25rem;
+  background: var(--gold-light);
+}
+
+.contact__card address {
+  margin-top: 1.25rem;
+}
+
+.contact__card a {
+  color: var(--on-navy);
+  text-decoration-color: var(--line-navy-gold);
+}
+
+.contact__card a:hover {
+  color: var(--gold-light);
+}
+
+.contact__lines {
+  margin: 1.5rem 0 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--line-navy);
+}
+
+.contact__lines li {
+  padding-block: 0.625rem;
+  border-bottom: 1px solid var(--line-navy);
+}
+
+.contact__card p {
+  margin-top: 1.25rem;
+  font-size: 0.9375rem;
+  color: var(--on-navy-muted);
+}
+
+.contact__card .more {
+  margin-top: 0.75rem;
+}
+
+
+/* 16. CAREERS AND THE APPLICATION FORM ==================================== */
+
+/* Articled training beside Positions. */
+.duo {
+  display: grid;
+  gap: 3.5rem 5rem;
+}
+
+@media (min-width: 62em) {
+  .duo { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); }
+}
+
+.duo .prose,
+.duo .note {
+  margin-top: 2rem;
+}
+
+/* --- The form ------------------------------------------------------------ */
+/* Pressing the button sends nothing: see the comment in careers.html and
+   assets/careers.js. Labels sit above their fields, never inside them. */
+
+.form {
+  display: grid;
+  gap: 1.75rem 2rem;
+  padding: clamp(1.5rem, 0.75rem + 3.5vw, 3.25rem);
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+@media (min-width: 48em) {
+  .form { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .form__field--wide,
+  .form__note,
+  .form__actions,
+  .form__status { grid-column: 1 / -1; }
+}
+
+.form__field {
+  min-width: 0;
+  padding: 0;
+  border: 0;
+}
+
+.form label,
+.form legend {
+  display: block;
+  margin-bottom: 0.5rem;
+  padding: 0;
+  font-size: 0.9688rem;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--ink);
+}
+
+.form__optional {
+  font-weight: 400;
   color: var(--muted);
 }
 
+.form input[type="text"],
+.form input[type="email"],
+.form input[type="tel"],
+.form input[type="month"],
+.form select,
+.form textarea {
+  display: block;
+  width: 100%;
+  min-height: 3.125rem;
+  padding: 0.6875rem 0.875rem;
+  font-family: var(--sans);
+  font-size: 1rem;               /* 16px: below this a phone zooms the page on focus */
+  line-height: 1.4;
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
 
-/* 17b. EMAIL BUTTONS ====================================================== */
-/* The site has no forms. The Contact and Apply pages carry buttons that open
-   the visitor's own email app with a message to the firm already addressed.
-   They are links styled as buttons: the deep ink with the ivory on it, filled
-   with brass on hover and on focus, exactly as the hero links in section 9. */
-.btn {
-  display: inline-flex;
+.form select {
+  appearance: none;
+  padding-right: 2.5rem;
+  background-image: linear-gradient(45deg, transparent 50%, var(--muted) 50%),
+                    linear-gradient(135deg, var(--muted) 50%, transparent 50%);
+  background-position: calc(100% - 1.2rem) 50%, calc(100% - 0.85rem) 50%;
+  background-size: 0.35rem 0.35rem, 0.35rem 0.35rem;
+  background-repeat: no-repeat;
+}
+
+.form textarea {
+  min-height: 8rem;
+  resize: vertical;
+}
+
+.form input:hover,
+.form select:hover,
+.form textarea:hover {
+  border-color: var(--muted);
+}
+
+.form input:focus,
+.form select:focus,
+.form textarea:focus {
+  outline: none;
+  background-color: var(--white);
+  border-color: var(--navy-700);
+  box-shadow: 0 0 0 3px rgba(184, 151, 95, 0.35);
+}
+
+/* The two "Applying for" choices, as two selectable panels. */
+.form__choices {
+  display: grid;
+  gap: 0.75rem;
+}
+
+@media (min-width: 40em) {
+  .form__choices { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+.form__choice {
+  position: relative;
+  display: flex;
   align-items: center;
-  justify-content: center;
-  min-height: 3rem;
-  padding: 0.75rem var(--s4);
-  font-family: var(--font-sans);
-  font-size: 0.8125rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  text-decoration: none;         /* a link, but it must read as a button */
-  color: var(--on-deep);         /* 10.6:1 on the deep ground */
-  background-color: var(--deep);
-  background-image: var(--cloth),
-                    linear-gradient(180deg, var(--deep-hi) 0%, var(--deep) 100%);
-  border: 0;
-  border-bottom: 3px solid var(--brass);
-  border-radius: 2px;
+  gap: 0.875rem;
+  min-height: 3.5rem;
+  padding: 0.75rem 1rem;
+  background: var(--paper);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.form__choice:hover {
+  border-color: var(--muted);
+}
+
+.form__choice:has(input:checked) {
+  background: var(--white);
+  border-color: var(--navy-700);
+  box-shadow: inset 0 0 0 1px var(--navy-700);
+}
+
+.form__choice label {
+  margin: 0;
+  font-weight: 500;
   cursor: pointer;
 }
 
-/* .prose a sets its own underline and colour; keep the button's. */
-.prose .btn,
-.prose .btn:visited {
-  color: var(--on-deep);
-  text-decoration: none;
-}
-
-.btn:hover,
-.btn:focus-visible,
-.prose .btn:hover,
-.prose .btn:focus-visible {
-  background-color: var(--brass);
-  background-image: none;
-  border-bottom-color: var(--brass);
-  color: var(--deep-low);        /* 6.8:1 on brass */
-  text-decoration: none;
-}
-
-@media (max-width: 55.99em) {
-  /* On a phone the button takes the full width, so that the tap target is the
-     whole line and not a word in the middle of it. */
-  .btn { width: 100%; }
-}
-
-
-/* 18. PRIVACY AND OTHER PROSE PAGES ======================================= */
-
-.prose h3 {
-  font-family: var(--font-serif);
-  font-size: 1.375rem;
-  font-weight: 600;
-  line-height: 1.75rem;
-  color: var(--head);
-  margin-top: var(--s5);
-}
-
-.prose ul {
-  margin-top: var(--s2);
-  padding-left: 1.25rem;
-}
-
-.prose li + li { margin-top: 0.25rem; }
-
-
-/* 18b. NEWSLETTER ========================================================= */
-/* Two kinds of page: newsletter.html, which indexes the issues, and one page
-   for each issue, of which newsletter-2026-04.html is the first. An issue is
-   six long articles of professional prose with real tables inside them, so
-   most of what follows is about reading: the serif at a measure, one article
-   clearly separated from the next without a box round either, and tables that
-   can be read on a 320px phone. docs/NEWSLETTERS.md has the procedure for
-   adding an issue; nothing here needs changing when one is added. */
-
-/* --- The index page ------------------------------------------------------ */
-
-/* One issue. Separated from the next by the hairline and the wide gap the
-   partner cards use, because it is the same kind of thing: a repeated unit in
-   a list, not a card with a border round it. New issues are pasted above the
-   old ones, so the rule is on the top edge. */
-.issue-entry {
-  margin-top: var(--s5);
-  padding-top: var(--s4);
-  border-top: 1px solid var(--rule);
-}
-
-.issue-entry:first-of-type {
-  margin-top: 0;
-  padding-top: 0;
-  border-top: 0;
-}
-
-.issue-entry__meta {
-  font-size: var(--fs-label);
-  font-weight: 700;
-  line-height: 1rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--brass-ink);       /* 6.0:1 on paper */
-  font-variant-numeric: tabular-nums;
-}
-
-/* The month is the link, and it is the largest thing in the entry: it is what
-   a visitor came to this page to find. The contents list under it is
-   secondary and stays at meta size. */
-.issue-entry__title {
-  margin-top: 0.5rem;
-  font-family: var(--font-serif);
-  font-size: 1.75rem;
-  font-weight: 600;
-  line-height: 1.2;
-  letter-spacing: -0.02em;
-}
-
-.issue-entry__title a { text-underline-offset: 0.14em; }
-
-.issue-entry__contents {
-  list-style: none;
-  margin: var(--s3) 0 0;
-  max-width: 42rem;
-  font-size: var(--fs-meta);
-  line-height: 1.6;
-}
-
-.issue-entry__contents li {
-  position: relative;
-  padding-left: 1.5rem;
-}
-
-/* An em dash instead of a bullet, in brass, as on the services page. A
-   structural list marker, never a word. */
-.issue-entry__contents li::before {
-  content: "\2014";
+/* The label covers the whole panel, so a tap anywhere on it chooses it. */
+.form__choice label::after {
+  content: "";
   position: absolute;
-  left: 0;
-  color: var(--brass-rule);
-  font-weight: 700;
+  inset: 0;
 }
 
-@media (max-width: 55.99em) {
-  .issue-entry__contents li + li { margin-top: 0.25rem; }
-
-  .issue-entry__contents a {
-    display: inline-flex;
-    align-items: center;
-    min-height: 44px;
-  }
-}
-
-/* --- The issue page ------------------------------------------------------ */
-
-/* The line above the title, inside the cover band: volume, issue and month.
-   The same treatment the home page gives .hero__desc, since it does the same
-   job at the same place on the band. */
-.issue__volume {
-  margin-bottom: var(--s3);
-  font-size: 0.8125rem;
-  font-weight: 700;
-  line-height: 1rem;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  color: var(--brass);           /* 5.9:1 on the deep band */
-  font-variant-numeric: tabular-nums;
-}
-
-/* THE CONTENTS. Set on the tinted panel with the deep top edge that the
-   partner index uses on people.html, because it is the same thing: the
-   contents page of a bound document. The numbers are the numbered deep
-   squares of the careers steps, one size down, so that the list reads as
-   navigation at a glance and not as six sentences. */
-.issue__toc {
-  list-style: none;
-  counter-reset: item;
+.form input[type="radio"] {
+  flex: none;
+  width: 1.25rem;
+  height: 1.25rem;
   margin: 0;
-  padding: var(--s2) var(--s3);
-  background: var(--panel);
-  border-top: 3px solid var(--edge);
+  accent-color: var(--navy-900);
 }
 
-.issue__toc li {
-  counter-increment: item;
-  position: relative;
-  padding: 0.625rem 0 0.625rem 2.75rem;
-  border-top: 1px solid var(--rule-deep);
-}
-
-.issue__toc li:first-child { border-top: 0; }
-
-/* A row lights up as a row, as on the offices strip and the people table. */
-.issue__toc li:hover { background: var(--wash); }
-
-/* A CSS counter in a solid square of the deep ink, as on the careers page. A
-   structural mark, not a word. */
-.issue__toc li::before {
-  content: counter(item, decimal-leading-zero);
-  position: absolute;
-  left: 0;
-  top: 0.75rem;
-  display: grid;
-  place-items: center;
-  width: 1.75rem;
-  height: 1.75rem;
-  background: var(--deep);
-  color: var(--on-deep);         /* 10.6:1 on the deep square */
-  font-size: var(--fs-label);
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  font-variant-numeric: tabular-nums;
-}
-
-.issue__toc a {
+.form__help {
   display: block;
-  font-family: var(--font-serif);
-  font-size: 1.0625rem;
-  line-height: 1.5rem;
-}
-
-/* THE ARTICLES. Six of them, and long. Each is separated from the next by the
-   hairline and the wide gap of the partner cards: at this length a box round
-   each article would put six heavy frames down a page that is already
-   carrying three tables. */
-.issue__article {
-  scroll-margin-top: var(--s3);  /* the contents list links into these */
-  margin-top: var(--s6);
-  padding-top: var(--s4);
-  border-top: 1px solid var(--rule);
-}
-
-.issue__article:first-of-type {
-  margin-top: 0;
-  padding-top: 0;
-  border-top: 0;
-}
-
-/* Six long articles look alike, so the one a reader has just jumped to from
-   the contents marks itself, exactly as a partner card does: a wash of the
-   deep ink, carried 0.75rem outside the text by a spread shadow of the same
-   colour, and a brass top edge. Nothing moves on the page. */
-.issue__article:target {
-  background: var(--wash-strong);
-  box-shadow: 0 0 0 0.75rem var(--wash-strong);
-  border-top-color: var(--brass-rule);
-}
-
-.issue__article h3 {
-  max-width: var(--measure);
-  font-family: var(--font-serif);
-  font-size: 1.625rem;
-  font-weight: 600;
-  line-height: 1.25;
-  letter-spacing: -0.02em;
-  color: var(--head);            /* 9.8:1 on paper */
-  text-wrap: balance;
-}
-
-/* The sub-headings inside an article are set in the sans, so that a reader
-   scrolling a long article can tell a heading from the serif prose without
-   reading it. */
-.issue__article h4 {
-  max-width: var(--measure);
-  margin-top: var(--s4);
-  font-family: var(--font-sans);
-  font-size: 1.0625rem;
-  font-weight: 700;
-  line-height: 1.5rem;
-  color: var(--head);            /* 9.8:1 on paper */
-}
-
-/* The running text, in the serif at the site's reading measure of about 62
-   characters. Six articles of this length are read, not scanned. */
-.issue__article p,
-.issue__article li {
-  max-width: var(--measure);
-  font-family: var(--font-serif);
-  font-size: var(--fs-prose);    /* 19px */
-  line-height: 2rem;
-  text-wrap: pretty;
-}
-
-.issue__article p { margin-top: var(--s3); }
-
-.issue__article ul,
-.issue__article ol {
-  margin-top: var(--s3);
-  padding-left: 1.25rem;
-}
-
-.issue__article li + li { margin-top: var(--s1); }
-
-/* Brass bullets, as everywhere else on the site. The markers of an ordered
-   list are deliberately left in the ink: those numbers are read as text, and
-   text has to clear 4.5:1, which the brass rule does not. */
-.issue__article ul li::marker { color: var(--brass-rule); }
-
-.issue__article .issue__byline {
   margin-top: 0.5rem;
-  font-family: var(--font-sans);
-  font-size: var(--fs-meta);
-  line-height: 1.5rem;
-  color: var(--muted);           /* 6.4:1 on paper */
-}
-
-/* A tinted aside: the takeaway, or the key compliance points. The panel token
-   with the deep edge the office cards use. There is exactly one tint on this
-   site and this is it; do not invent a second. */
-.issue__callout {
-  max-width: var(--measure);
-  margin-top: var(--s4);
-  padding: var(--s3);
-  background: var(--panel);
-  border-left: 5px solid var(--edge);
-}
-
-.issue__callout h4 { margin-top: 0; }
-
-/* The link back to the index, at the foot of an issue. */
-.issue__back {
-  margin-top: var(--s6);
-  padding-top: var(--s3);
-  border-top: 1px solid var(--rule);
-  font-size: var(--fs-meta);
-}
-
-/* THE TABLES. An issue carries real data: three columns of practical issues,
-   a quarterly due-date table, and a compliance calendar of about forty rows.
-   They are set at --fs-data, 15px, which is the floor. Nothing here is shrunk
-   to make a table fit. */
-.issue table {
-  width: 100%;
-  margin-top: var(--s4);
-  border-collapse: collapse;
-  font-size: var(--fs-data);     /* 15px */
-  line-height: 1.5rem;
-}
-
-/* These captions are whole sentences, so they are set as sentences and not in
-   the letter-spaced label the people table uses. */
-.issue caption {
-  max-width: var(--measure);
-  padding-bottom: var(--s2);
-  text-align: left;
-  font-size: var(--fs-meta);
-  line-height: 1.5rem;
-  color: var(--muted);           /* 6.4:1 on paper */
-}
-
-/* Ruled on every side, in the structural edge token: the cover colour carried
-   inward as a line, which becomes black when printed without another rule
-   being written. A full grid is what forty rows of dates need. --rule, the
-   site's hairline, is 1.3:1 on the page and would disappear at this density;
-   --edge is 10.9:1, so the grid clears the 3:1 a meaningful non-text mark has
-   to meet.
-   There is deliberately no striping: the grid already tracks the eye, and a
-   tinted row would sit on top of the scroll affordance further down. */
-.issue th,
-.issue td {
-  padding: 0.5rem 0.75rem;
-  border: 1px solid var(--edge);
-  text-align: left;
-  vertical-align: top;
-
-  /* Section 3 lets a long unbroken string break anywhere, so that an email
-     address cannot push the page sideways. Inside a table that rule turns a
-     due date into "30-04-" and "2026" on two lines, because the column is
-     free to be narrower than the date. A table cell is allowed to say no: the
-     column then sizes itself to the longest date, and a table too wide for
-     the screen scrolls instead, which is what the block below is for. */
-  overflow-wrap: normal;
-}
-
-/* The head row is the deep ink carried into the table, the same move the
-   registration plaque makes on the home page. */
-.issue thead th {
-  background: var(--deep);
-  color: var(--on-deep);         /* 10.6:1 on the deep ground */
-  font-size: var(--fs-label);
-  font-weight: 700;
-  line-height: 1rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  vertical-align: bottom;
-}
-
-/* The row header: the due date, or the issue being described. A date has a
-   break opportunity after each of its hyphens, which no amount of
-   overflow-wrap will suppress, so the column is given a floor wide enough to
-   hold "30-04-2026" on one line. Measured at 15px in the sans with tabular
-   figures: 69px of text, 24px of padding, 2px of rule. 7rem is that with room
-   to spare, and it is far below the natural width of the sentence-length row
-   headers in the other two tables, so it does nothing to them. */
-.issue tbody th {
-  min-width: 7rem;
-  font-weight: 700;
-  color: var(--head);            /* 9.8:1 on paper */
-}
-
-/* Forty rows are followed across by eye. The row highlights as a row, the same
-   wash the people table uses, so a date and the form it belongs to stay on one
-   line. It is a wash and not a solid: the scroll affordance below is painted
-   on the table itself and has to show through. */
-.issue tbody tr:hover th,
-.issue tbody tr:hover td { background: var(--wash); }
-
-@media (max-width: 55.99em) {
-  .issue__toc a {
-    display: flex;
-    align-items: center;
-    min-height: 44px;
-  }
-
-  .issue__back a {
-    display: inline-flex;
-    align-items: center;
-    min-height: 44px;
-  }
-
-  /* THE TABLES ON A PHONE. Read this before changing it.
-     The compliance calendar is four columns and about forty rows. At 320px it
-     cannot be made to fit without either shrinking the type below 15px or
-     stacking every row into a block, and stacking a forty row calendar throws
-     away the column headings that say what each line means. So the table is
-     allowed to scroll sideways inside itself. The page is not: section 3
-     clips horizontal overflow on <html>, and without a scrolling box here the
-     far columns would simply be cut off with no way to reach them.
-     display:block is what makes a <table> its own scrolling box. There is no
-     wrapper element around these tables to put the scroll on, and the markup
-     is not ours to change. The cost is real and should be known: Safari with
-     VoiceOver drops the table semantics of an element whose display is not
-     `table`, so this is confined to phone widths and the desktop table keeps
-     its semantics in full.
-     The min-width on the cells is what makes the table scroll instead of
-     squeezing itself into one word per line. */
-  .issue table {
-    display: block;
-
-    /* `scroll` and not `auto`: where a platform draws a classic scrollbar,
-       this one is always drawn, under every table, and it is drawn in brass on
-       the panel tint. On a platform with overlay scrollbars nothing is shown
-       until the reader touches the table, which is what the shaded edge below
-       is for. */
-    overflow-x: scroll;
-    scrollbar-color: var(--brass-rule) var(--panel);
-
-    /* THE AFFORDANCE, in two background layers. The lower one is a shadow: the
-       same wash of the deep ink that a hovered row takes, laid down the right
-       edge of the visible box, so a table with more of itself to the right
-       visibly runs under a shaded edge. The upper one is a patch of the page
-       colour sitting at the far right end of the table's own content. It
-       scrolls with that content, because its attachment is `local`, so when
-       the reader reaches the end of the table the patch arrives under the
-       shadow and covers it, and the shadow goes out. The last cell of each row
-       is padded so that the patch lands on empty space.
-       It has to be a shadow and not a fade to the page colour. A background is
-       painted behind the text of the cells, so it can shade what is around the
-       words but it cannot fade the words themselves; a fade would simply be
-       invisible. The wash is 10% ink, which leaves the text over it at better
-       than 12:1. */
-    background-image:
-      linear-gradient(var(--paper), var(--paper)),
-      linear-gradient(90deg, transparent, var(--wash-strong));
-    background-position: right center;
-    background-size: var(--s5) 100%;
-    background-repeat: no-repeat;
-    background-attachment: local, scroll;
-  }
-
-  /* The caption is inside the scrolling box, so it is pinned to the left edge
-     of it. Without this it slides out of view the moment a reader scrolls the
-     table sideways, and the sentence that says what the columns are goes with
-     it. The section labels do the same thing down the page from 56em up. */
-  .issue caption {
-    display: block;
-    position: sticky;
-    left: 0;
-  }
-
-  .issue th,
-  .issue td,
-  .issue tbody th { min-width: 8rem; }
-
-  /* The scroll gutter: the same width as the patch above, so the patch lands
-     on it and not on a word. */
-  .issue tr > :last-child { padding-right: var(--s5); }
-}
-
-/* 19. 404 PAGE ============================================================ */
-/* The links are styled with .hero__links in section 9. Only the contact line
-   below them is particular to this page. */
-
-.notfound__contact {
-  margin-top: var(--s5);
-  padding-top: var(--s3);
-  border-top: 1px solid rgba(243, 237, 225, 0.22);
-  font-size: var(--fs-meta);
-  color: var(--on-deep-dim);
-}
-
-/* 19b. READY TO SWITCH ON ================================================== */
-/* These three are not used by any page yet. They style the commented-out blocks
-   that sit in the HTML waiting for facts the firm has still to supply, so that
-   whoever uncomments one gets something that already looks right. See
-   docs/MAINTENANCE.md section 7. Do not delete them. */
-
-/* Year of becoming ACA and FCA, on a partner card, under the membership number.
-   It sits inside the deep rail, so it takes the rail's light text. */
-.partner__years {
-  display: block;
-  margin-top: var(--s1);
-  font-size: var(--fs-label);
-  font-variant-numeric: tabular-nums;
-  color: var(--on-deep-dim);
-}
-
-/* Working hours, on an office card, under the contact lines. */
-.office__hours {
-  margin: var(--s2) 0 0;
-  font-size: var(--fs-data);
+  font-size: 0.875rem;
+  line-height: 1.5;
   color: var(--muted);
 }
 
-/* An unadorned list: employed Chartered Accountants, once consents are on file. */
-.plain {
+/* A field is marked only after the applicant has touched it and left it
+   wrong. The border thickens as well as changing colour, so the mark does not
+   rely on colour alone. */
+.form input:user-invalid,
+.form select:user-invalid,
+.form textarea:user-invalid {
+  border-color: #9B3B2E;
+  box-shadow: inset 0 0 0 1px #9B3B2E;
+}
+
+/* The confidentiality notice, directly above the button. */
+.form__note {
+  padding: 1.125rem 1.25rem;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--text);
+  background: var(--stone);
+  border-left: 2px solid var(--gold);
+}
+
+/* What happens next, shown once the button is pressed, because nothing on the
+   page changes when the email app opens. */
+.form__status {
+  padding: 1.125rem 1.25rem;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--ink);
+  background: #EEF2F7;
+  border-left: 2px solid var(--navy-700);
+}
+
+.form__status[hidden] {
+  display: none;
+}
+
+
+/* 17. NEWSLETTER ========================================================== */
+
+/* --- The index of issues ------------------------------------------------- */
+
+.issue-entry {
+  display: grid;
+  gap: 1.5rem 4rem;
+  padding-block: clamp(2rem, 1.5rem + 2vw, 3rem);
+  border-top: 1px solid var(--line);
+}
+
+.issue-entry:last-of-type {
+  border-bottom: 1px solid var(--line);
+}
+
+@media (min-width: 62em) {
+  .issue-entry { grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); }
+}
+
+.issue-entry__meta {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gold-ink);
+}
+
+.issue-entry__title {
+  margin-top: 0.625rem;
+  font-size: clamp(2rem, 1.6rem + 1.4vw, 2.75rem);
+  line-height: 1.1;
+  letter-spacing: -0.018em;
+}
+
+.issue-entry__title a {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.issue-entry__title a:hover {
+  color: var(--navy-700);
+}
+
+.issue-entry__read {
+  margin-top: 0.75rem;
+}
+
+.issue-entry__contents {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: entry;
+}
+
+.issue-entry__contents li {
+  counter-increment: entry;
+  border-bottom: 1px solid var(--line);
+}
+
+.issue-entry__contents li:first-child {
+  border-top: 1px solid var(--line);
+}
+
+.issue-entry__contents a {
+  display: grid;
+  grid-template-columns: 2.25rem minmax(0, 1fr);
+  align-items: baseline;
+  padding-block: 0.875rem;
+  color: var(--ink);
+  text-decoration: none;
+  transition: color 0.2s ease, padding-left 0.3s var(--ease);
+}
+
+.issue-entry__contents a::before {
+  content: counter(entry, decimal-leading-zero);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--gold-ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.issue-entry__contents a:hover {
+  color: var(--navy-700);
+  padding-left: 0.375rem;
+}
+
+/* --- One issue ----------------------------------------------------------- */
+
+.issue {
+  min-width: 0;
+}
+
+.issue__article + .issue__article {
+  margin-top: clamp(3.5rem, 2.5rem + 3vw, 5.5rem);
+  padding-top: clamp(3.5rem, 2.5rem + 3vw, 5.5rem);
+  border-top: 1px solid var(--line);
+}
+
+/* The article title. */
+.issue__article h2 {
+  max-width: 44rem;
+  font-size: clamp(1.875rem, 1.5rem + 1.3vw, 2.5rem);
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+}
+
+.issue__article h2::before {
+  content: "";
+  display: block;
+  width: 2.5rem;
+  height: 2px;
+  margin-bottom: 1.25rem;
+  background: var(--gold);
+}
+
+.issue__byline {
+  margin-top: 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* The reading text is set in the serif, at a comfortable measure. */
+.issue__article > p,
+.issue__article > ul,
+.issue__article > ol,
+.issue__callout {
+  max-width: 44rem;
+}
+
+.issue__article > p,
+.issue__article > ul,
+.issue__article > ol {
+  margin-top: 1.25rem;
+  font-family: var(--serif);
+  font-size: clamp(1.0625rem, 1rem + 0.25vw, 1.125rem);
+  line-height: 1.75;
+  color: var(--text);
+}
+
+.issue__article > .issue__byline {
+  margin-top: 1rem;
+  font-family: var(--sans);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.issue__article > .issue__byline + * {
+  margin-top: 2rem;
+}
+
+.issue__article ul,
+.issue__article ol {
+  padding-left: 1.375rem;
+}
+
+.issue__article li + li {
+  margin-top: 0.5rem;
+}
+
+.issue__article li::marker {
+  color: var(--gold-ink);
+}
+
+/* Sub-headings inside an article. */
+.issue__article h3 {
+  max-width: 44rem;
+  margin-top: 2.5rem;
+  font-size: 1.4375rem;
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: -0.005em;
+}
+
+/* A boxed passage: a takeaway, a list of key points. */
+.issue__callout {
+  margin-top: 2rem;
+  padding: 1.5rem 1.75rem;
+  background: var(--stone);
+  border-left: 2px solid var(--gold);
+}
+
+.issue__callout h3 {
+  margin-top: 0;
+  font-family: var(--sans);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold-ink);
+}
+
+.issue__callout p,
+.issue__callout ul,
+.issue__callout ol {
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  color: var(--text);
+}
+
+.issue__callout h3 + *,
+.issue__callout > * + * {
+  margin-top: 0.75rem;
+}
+
+/* Tables. On a narrow screen a table scrolls sideways inside its own box
+   rather than squeezing its columns or widening the page. */
+.table-scroll {
+  margin-top: 2rem;
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--white);
+}
+
+.issue table {
+  width: 100%;
+  min-width: 36rem;
+  border-collapse: collapse;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+
+.issue caption {
+  caption-side: bottom;
+  padding: 0.75rem 1rem;
+  font-size: 0.8125rem;
+  text-align: left;
+  color: var(--muted);
+  background: var(--paper);
+  border-top: 1px solid var(--line);
+}
+
+.issue th,
+.issue td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--line);
+}
+
+.issue thead th {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--on-navy);
+  background: var(--navy-900);
+  border-bottom: 0;
+}
+
+.issue tbody th {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.issue tbody tr:nth-child(even) {
+  background: #FAF8F4;
+}
+
+.issue tbody tr:last-child th,
+.issue tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+/* The disclaimer at the foot of every issue. */
+.issue__disclaimer {
+  max-width: 44rem;
+  margin-top: clamp(3.5rem, 2.5rem + 3vw, 5.5rem);
+  padding: 1.75rem 2rem;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--muted);
+  background: var(--stone);
+  border-radius: var(--radius);
+}
+
+.issue__disclaimer h2 {
+  margin-bottom: 0.625rem;
+}
+
+.issue__back {
+  margin-top: 2.5rem;
+}
+
+
+/* 18. PRIVACY AND 404 ===================================================== */
+
+.notfound__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.625rem;
+  margin: 2.5rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.notfound__links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  padding: 0.5rem 1.125rem;
+  color: var(--on-navy);
+  text-decoration: none;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: var(--radius);
+}
+
+.notfound__links a:hover {
+  color: var(--navy-900);
+  background: var(--gold-light);
+  border-color: var(--gold-light);
+}
+
+.notfound__contact {
+  margin-top: 2rem;
+  color: var(--on-navy-muted);
+}
+
+
+/* 19. READY TO SWITCH ON ================================================== */
+/* Styles for blocks that are commented out in the HTML until the firm supplies
+   the facts. They are here so that switching a block on needs no CSS. */
+
+.partner__years {                 /* people.html: "ACA 2004 · FCA 2009" */
+  color: var(--muted);
+  font-variant-numeric: lining-nums tabular-nums;
+}
+
+.office__hours {                  /* offices.html: working hours */
+  margin-top: 0.75rem;
+  color: var(--muted);
+}
+
+.plain {                          /* people.html: employed Chartered Accountants */
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
 .plain li {
-  padding: var(--s2) 0;
-  border-bottom: 1px solid var(--rule);
-  font-size: var(--fs-data);
+  padding-block: 0.75rem;
+  border-bottom: 1px solid var(--line);
 }
 
-.plain li:last-child { border-bottom: 0; }
+.pairs dt {                       /* careers.html: a listed position */
+  margin-top: 1.5rem;
+  font-family: var(--serif);
+  font-size: 1.375rem;
+  color: var(--ink);
+}
+
+.pairs dd {
+  margin-top: 0.375rem;
+}
 
 
 /* 20. PRINT =============================================================== */
-/* The site prints as an A4 firm profile for banks and public sector
-   undertakings. Everything goes black on white: the deep bands, the tinted
-   panels and the brass all come off, because a filed profile is photocopied.
-   The registration block and each partner and office card stay whole and are
-   never split across two pages. */
+/* The site prints as a plain A4 document: black on white, no navy, no menu,
+   no buttons, and no card split across two pages. */
 
 @media print {
   @page {
@@ -1874,360 +2287,121 @@ main {
     margin: 16mm 14mm;
   }
 
-  :root {
-    --paper: #FFFFFF;
-    --panel: #FFFFFF;
-    --chip: #FFFFFF;
-    --ink: #000000;
-    --muted: #333333;
-    --rule: #999999;
-    --rule-deep: #999999;
-    --deep: #000000;
-    --deep-hi: #000000;
-    --deep-low: #000000;
-    --brass: #000000;
-    --brass-ink: #000000;
-    --brass-rule: #000000;
-    --on-deep: #000000;
-    --on-deep-dim: #333333;
-    --link: #000000;
-    --head: #000000;
-    --cloth: none;
-    --edge: #000000;
-    --wash: transparent;        /* no hover or :target tint on paper */
-    --wash-strong: transparent;
-  }
-
-  html { overflow-x: visible; }
-
   body {
     background: #FFFFFF;
     color: #000000;
-    font-size: 9.5pt;
-    line-height: 1.45;
-  }
-
-  .wrap {
-    max-width: none;
-    padding-inline: 0;
-  }
-
-  main { padding-block: 10pt 0; }
-
-  a {
-    color: #000000;
-    text-decoration: none;
-  }
-
-  .skip-link,
-  .site-nav,
-  .hero__links,
-  .notfound__links,
-  .site-footer__col--links { display: none; }
-
-  /* Strip every band, panel and chip back to paper. These selectors repeat the
-     ones above on purpose: the print block is last, so it wins without
-     !important. If you add a coloured block anywhere, add it here too. */
-  .site-header,
-  .page-head,
-  .site-footer,
-  .reg,
-  .strip,
-  .pindex,
-  .partner__rail,
-  .office,
-  .service__partners,
-  .wordmark__logo,
-  .issue__toc,
-  .issue__callout,
-  .issue thead th {
-    background: #FFFFFF;
-    background-image: none;
-    color: #000000;
-  }
-
-  .steps li::before {
-    background: #FFFFFF;
-    color: #000000;
-    border: 0.5pt solid #000000;
-  }
-
-  .wordmark__logo { padding: 0; }
-
-  /* The 44px tap targets from the phone media block also match on A4, which is
-     narrower than 56em. On paper they only waste vertical space, so they are
-     released here. */
-  .wordmark { min-height: 0; }
-
-  .site-footer a,
-  .pairs dt a,
-  .strip__after a,
-  .service__partners a,
-  .notfound__contact a,
-  .office__contact a,
-  .strip a {
-    display: inline;
-    min-height: 0;
-  }
-
-  /* In the 34mm rail the office and the membership number must stack. */
-  .partner__office { display: block; }
-  .partner__rail .label { display: block; }
-
-  .notfound__contact { border-top: 0.5pt solid #999999; }
-
-  /* The cover band becomes a plain ruled title block. Undo the full-width
-     bleed, or the title sits outside the printable area. */
-  .page-head {
-    margin-inline: 0;
-    padding-inline: 0;
-    padding-block: 0 10pt;
-    border-bottom: 1.5pt solid #000000;
-  }
-
-  .site-header {
-    border-bottom: 0.5pt solid #000000;
-    padding-block: 0 6pt;
-  }
-
-  .display { font-size: 24pt; color: #000000; }
-  .lead, .prose p { font-size: 10.5pt; line-height: 1.5; color: #000000; }
-  .partner__prose { font-size: 9.5pt; line-height: 1.4; color: #000000; }
-  .hero__areas { font-size: 10pt; border-top: 0.5pt solid #000000; padding-top: 6pt; }
-  .hero__desc, .site-footer__desc, .wordmark__desc,
-  .issue__volume { color: #000000; }
-
-  .band__label h2::before,
-  .table caption::before { background: #000000; height: 2pt; width: 10mm; margin-bottom: 4pt; }
-
-  /* The label is sticky on screen from 56em up, and A4 is narrower than that,
-     so this is belt and braces: a sticky box in paged media can repeat or
-     float. Keep it. */
-  .band__label { position: static; }
-
-  /* The screen version bleeds the practice-area list into the page gutter to
-     make room for the hover wash. There is no hover on paper, and the bleed
-     would push the list past the printable margin. */
-  .pairs { margin-inline: 0; }
-  .pairs dt,
-  .pairs dd { padding-inline: 0; }
-
-  /* The jumped-to partner card carries a wash and a spread shadow on screen.
-     Neither may print: a filed profile is photocopied. */
-  .partner:target {
-    background: #FFFFFF;
-    box-shadow: none;
-    border-top-color: #999999;
-  }
-
-  /* Keep the two-column ledger arrangement on paper. */
-  .band,
-  .partner,
-  .office {
-    display: grid;
-    grid-template-columns: 34mm minmax(0, 1fr);
-    column-gap: 8mm;
-    margin-top: 10pt;
-    padding-top: 8pt;
-  }
-
-  /* On screen a section opens on a 2px rule of the cover colour. On paper that
-     becomes a plain hairline, because the whole sheet is black on white. */
-  .band { border-top: 0.75pt solid #000000; }
-
-  .partner > *,
-  .office > * { grid-column: 2; }
-
-  .partner__rail {
-    grid-column: 1;
-    grid-row: 1;
-    display: block;
-    margin-top: 0;
-    padding: 0;
-    border-left: 0;
-  }
-
-  .office {
-    padding: 0 0 0 0;
-    padding-top: 8pt;
-    border-left: 0;
-    border-top: 0.5pt solid #999999;
-  }
-
-  .office__name {
-    grid-column: 1;
-    grid-row: 1;
-  }
-
-  .strip { border-top: 0.5pt solid #000000; }
-  .strip li { border-left: 0; padding-inline: 0; }
-
-  .pindex,
-  .office { border-color: #000000; }
-
-  .table caption { padding-bottom: 6pt; }
-
-  .reg {
-    padding: 0;
-    border-left: 0;
-    border-top: 0.5pt solid #000000;
-    border-bottom: 0.5pt solid #000000;
-    padding-block: 6pt;
-  }
-
-  .reg dd { font-size: 12pt; }
-
-  .service__partners,
-  .note { border-left: 0; padding-left: 0; }
-
-  .table td { font-size: 11pt; color: #000000; }
-  .table tr:first-child th,
-  .table tr:first-child td { border-top: 1pt solid #000000; }
-
-  /* 44mm, not 38mm: at 38mm "Forensic accounting and investigation" breaks
-     over four lines in the A4 label column. */
-  .pairs,
-  .reg,
-  .strip li {
-    display: grid;
-    grid-template-columns: 44mm minmax(0, 1fr);
-    column-gap: 6mm;
-  }
-
-  .strip li { grid-template-columns: 44mm 30mm minmax(0, 1fr); }
-
-  /* --- Email buttons (17b) --------------------------------------------- */
-  /* A button cannot be pressed on paper and a link back to an index cannot be
-     followed, so neither prints. The email address beside each button does. */
-  .btn,
-  .issue__back { display: none; }
-
-  /* --- The newsletter (18b) -------------------------------------------- */
-  /* Banks print an issue and file it, so it has to come off the printer as a
-     document: black on white, every table ruled and headed, and no heading
-     left stranded at the foot of a page. */
-  .issue__toc {
-    border-top: 1pt solid #000000;
-    padding: 6pt 0 0;
-  }
-
-  .issue__toc li::before {
-    background: #FFFFFF;
-    color: #000000;
-    border: 0.5pt solid #000000;
-  }
-
-  .issue__toc a,
-  .issue__back a,
-  .issue-entry__contents a {
-    display: inline;
-    min-height: 0;
-  }
-
-  /* The wash and the spread shadow on the article a reader jumped to are a
-     screen state, exactly as on a partner card. Neither may print. */
-  .issue__article:target {
-    background: #FFFFFF;
-    box-shadow: none;
-    border-top-color: #999999;
-  }
-
-  .issue__article {
-    margin-top: 12pt;
-    padding-top: 8pt;
-    border-top: 0.5pt solid #999999;
-  }
-
-  .issue__article h3 { font-size: 14pt; }
-  .issue__article h4 { font-size: 11pt; margin-top: 8pt; }
-
-  .issue__article p,
-  .issue__article li {
-    max-width: none;
     font-size: 10pt;
     line-height: 1.45;
   }
 
-  .issue__callout {
-    max-width: none;
-    padding: 6pt 0;
-    border-left: 0;
-    border-top: 0.5pt solid #000000;
-    border-bottom: 0.5pt solid #000000;
-  }
+  .wrap { width: auto; }
 
-  .issue-entry__title { font-size: 13pt; }
+  a { color: #000000; text-decoration: none; }
 
-  /* A4 is narrower than 56em, so the phone rules in 18b match on paper too.
-     They must be undone here or the tables print as scrolling boxes with
-     their far columns cut off, which is exactly what a filed compliance
-     calendar cannot be. */
-  .issue table {
-    display: table;
-    overflow: visible;
-    background-image: none;
-    font-size: 8.5pt;
-    line-height: 1.3;
-  }
+  .skip-link,
+  .site-nav,
+  .aside-nav,
+  .btn,
+  .more,
+  .hero__links,
+  .notfound__links,
+  .form__status,
+  .issue__back,
+  .office__map,
+  .site-footer__top > :last-child { display: none; }
 
-  .issue caption {
-    display: table-caption;
-    max-width: none;
-    font-size: 8.5pt;
-    padding-bottom: 4pt;
-  }
-
-  .issue th,
-  .issue td {
-    min-width: 0;
-    padding: 2pt 3pt;
-    border: 0.5pt solid #000000;
-  }
-
-  .issue tr > :last-child { padding-right: 3pt; }
-
-  .issue thead th { font-size: 8pt; letter-spacing: 0.08em; }
-
-  /* The compliance calendar is forty rows and will cross a page break, so its
-     head row repeats at the top of the next page. */
-  .issue thead { display: table-header-group; }
-
-  /* Nothing that should be read as one unit may break across pages. */
+  .site-header,
+  .hero,
+  .page-hero,
+  .section--stone,
+  .section--navy,
+  .site-footer,
+  .contact__card,
+  .card,
   .partner,
   .office,
-  .reg,
-  .table,
-  .steps li,
-  .pairs dt,
-  .pairs dd,
-  .strip li,
+  .stats > div,
+  .office-grid li,
   .issue__callout,
+  .issue__disclaimer,
+  .form {
+    color: #000000;
+    background: #FFFFFF;
+    box-shadow: none;
+  }
+
+  .hero::before,
+  .page-hero::before { display: none; }
+
+  .site-header { position: static; border-bottom: 0.75pt solid #000000; }
+
+  h1, h2, h3,
+  .hero__title,
+  .page-hero h1,
+  .section--navy h2,
+  .contact__card h2,
+  .office-grid__city,
+  .hero__facts dd,
+  .site-footer__name { color: #000000; }
+
+  .hero__lead,
+  .page-hero__lead,
+  .page-hero__note,
+  .hero__facts dt,
+  .office-grid a,
+  .site-footer,
+  .site-footer a,
+  .site-footer address,
+  .contact__card a,
+  .contact__card p { color: #000000; }
+
+  .hero__grid,
+  .page-hero__inner { padding-block: 8pt 12pt; }
+
+  .hero__title { font-size: 24pt; }
+  .page-hero h1 { font-size: 24pt; }
+
+  .section { padding-block: 12pt; }
+
+  .section-title::before,
+  .page-hero h1::before,
+  .issue__article h2::before,
+  .contact__card h2::before { background: #000000; }
+
+  .office-grid,
+  .stats { background: #000000; border-color: #000000; }
+
+  .eyebrow,
+  .label,
+  .office__tag,
+  .partner__role,
+  .office-grid__tag,
+  .site-footer__desc,
+  .site-footer__heading,
+  .issue-entry__meta { color: #000000; }
+
+  .card::after { display: none; }
+
+  .office-grid li,
+  .stats > div,
+  .hero__facts { break-inside: avoid; }
+
+  .card,
+  .partner,
+  .office,
   .issue-entry,
-  .issue tr {
-    break-inside: avoid;
-    page-break-inside: avoid;
+  .issue__callout,
+  .issue table { break-inside: avoid; }
+
+  .issue__article h2,
+  .issue__article h3 { break-after: avoid; }
+
+  .issue thead th {
+    color: #000000;
+    background: #FFFFFF;
+    border-bottom: 1pt solid #000000;
   }
 
-  /* An article is pages long and has to be allowed to break; its headings and
-     its byline are what must not be left alone at the foot of one. */
-  h1, h2, h3, h4,
-  .partner__name,
-  .office__name,
-  .table caption,
-  .issue__byline,
-  .issue caption,
-  .issue-entry__title {
-    break-after: avoid;
-    page-break-after: avoid;
-  }
-
-  .site-footer {
-    border-top: 1pt solid #000000;
-    margin-top: 14pt;
-    padding-block: 8pt 0;
-    font-size: 8.5pt;
-  }
-
-  .site-footer__bottom { border-top: 0.5pt solid #999999; margin-top: 8pt; }
-  .site-footer__name { font-size: 11pt; }
+  .table-scroll { overflow: visible; border-color: #000000; }
+  .issue table { min-width: 0; font-size: 8.5pt; }
 }

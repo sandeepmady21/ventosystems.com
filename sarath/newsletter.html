@@ -8,13 +8,14 @@
   <meta name="description" content="Monthly newsletter of Sarath &amp; Associates, Chartered Accountants, Hyderabad. Professional updates on company law, direct and indirect taxation, and the month's compliance calendar.">
   <link rel="stylesheet" href="assets/style.css">
 </head>
-<body>
+<body class="page-newsletter">
 
 <!-- ===== SHARED HEADER BLOCK — START =========================================
-     This block is identical in every page of the site. To change the navigation
-     or the wordmark, change it here and paste the whole block into the other
-     eight pages: services.html, people.html, newsletter.html, offices.html,
-     careers.html, contact.html, privacy.html and 404.html.
+     This block is identical in every page of the site, newsletter issues
+     included. To change the menu or the wordmark, change it here and paste the
+     whole block into every other page. `ruby check.rb` tells you if one differs.
+     The menu underlines the page you are on by itself, using the class on
+     <body>, so nothing in this block changes from page to page.
      ======================================================================== -->
 <a class="skip-link" href="#main">Skip to content</a>
 
@@ -22,7 +23,7 @@
   <div class="wrap site-header__inner">
     <a class="wordmark" href="index.html">
       <img class="wordmark__logo" src="assets/ca-india-logo.png" alt="CA India" width="320" height="241">
-      <span>
+      <span class="wordmark__text">
         <span class="wordmark__name">Sarath &amp; Associates</span>
         <span class="wordmark__desc">Chartered Accountants</span>
       </span>
@@ -42,101 +43,100 @@
 <!-- ===== SHARED HEADER BLOCK — END ========================================= -->
 
 <main id="main">
-  <div class="wrap">
 
-    <!-- SECTION: Page title and intro -->
-    <div class="page-head">
-      <h1 class="display">Newsletter</h1>
-      <p class="lead">A monthly note on company law, direct and indirect taxation, and the compliance calendar for the month ahead.</p>
+  <!-- SECTION: Page title, intro and a note on what an issue is. Keep the note
+       factual: it must not read as an invitation to subscribe. There is
+       deliberately no sign-up box on this page. See docs/NEWSLETTERS.md. -->
+  <section class="page-hero" aria-labelledby="page-title">
+    <div class="wrap page-hero__inner">
+      <h1 id="page-title">Newsletter</h1>
+      <p class="page-hero__lead">A monthly note on company law, direct and indirect taxation, and the compliance calendar for the month ahead.</p>
+      <p class="page-hero__note">Each issue states the position as at the date it is published and is not revised afterwards. It is general information, not advice, and the disclaimer carried on every issue applies to all of it.</p>
     </div>
+  </section>
 
-    <!-- SECTION: About. Two short paragraphs. Keep this factual: it must not read as
-         an invitation to subscribe. There is deliberately no sign-up box on this page.
-         See docs/NEWSLETTERS.md. -->
-    <section class="band" aria-labelledby="about-the-newsletter">
-      <div class="band__label">
-        <h2 id="about-the-newsletter">About</h2>
+  <!-- SECTION: Issues, newest first.
+       TO ADD AN ISSUE: copy the whole first <article class="issue-entry"> block below,
+       paste the copy directly above it so the newest issue is first, and change the
+       volume, issue number, month, both links and the contents list. Full procedure
+       in docs/NEWSLETTERS.md. -->
+  <section class="section" aria-labelledby="issues">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 class="section-title" id="issues">Issues</h2>
       </div>
-      <div class="prose">
-        <p>Each issue states the position as at the date it is published and is not revised afterwards. It is general information, not advice, and the disclaimer carried on every issue applies to all of it.</p>
-      </div>
-    </section>
 
-    <!-- SECTION: Issues, newest first.
-         TO ADD AN ISSUE: copy the whole <article class="issue-entry"> block below,
-         paste the copy directly above this comment's following block so the newest
-         issue is first, and change the volume, issue number, month, link and the
-         contents list. Full procedure in docs/NEWSLETTERS.md. -->
-    <section class="band" aria-labelledby="issues">
-      <div class="band__label">
-        <h2 id="issues">Issues</h2>
-      </div>
-      <div>
-
-        <article class="issue-entry">
+      <article class="issue-entry">
+        <div>
           <p class="issue-entry__meta">Volume 1 · Issue 3</p>
           <h3 class="issue-entry__title"><a href="newsletter-2026-04.html">April 2026</a></h3>
-          <ul class="issue-entry__contents">
-            <li><a href="newsletter-2026-04.html#schedule-iii-ind-as">Schedule III under Ind AS: From Compliance to Financial Reporting Integrity</a></li>
-            <li><a href="newsletter-2026-04.html#gst-pre-deposit-appeals">GST Advisory Update – Pre-Deposit Payment in Appeals</a></li>
-            <li><a href="newsletter-2026-04.html#gstr-3b-tax-liability-breakup">GSTR-3B Evolution – The New Mandatory "Tax Liability Breakup"</a></li>
-            <li><a href="newsletter-2026-04.html#year-end-gst-readiness">Year-End Requirements &amp; New Financial Year 2026-27 Readiness – GST</a></li>
-            <li><a href="newsletter-2026-04.html#tds-immovable-property">TDS on Transfer of Immovable Property for the Tax Year 2026-27 onwards</a></li>
-            <li><a href="newsletter-2026-04.html#compliance-deadlines-april-2026">Compliance Deadlines – April 2026</a></li>
-          </ul>
-        </article>
+          <p class="issue-entry__read"><a class="more" href="newsletter-2026-04.html">Read this issue</a></p>
+        </div>
+        <ul class="issue-entry__contents">
+              <li><a href="newsletter-2026-04.html#schedule-iii-ind-as">Schedule III under Ind AS: From Compliance to Financial Reporting Integrity</a></li>
+              <li><a href="newsletter-2026-04.html#gst-pre-deposit-appeals">GST Advisory Update – Pre-Deposit Payment in Appeals</a></li>
+              <li><a href="newsletter-2026-04.html#gstr-3b-tax-liability-breakup">GSTR-3B Evolution – The New Mandatory "Tax Liability Breakup"</a></li>
+              <li><a href="newsletter-2026-04.html#year-end-gst-readiness">Year-End Requirements &amp; New Financial Year 2026-27 Readiness – GST</a></li>
+              <li><a href="newsletter-2026-04.html#tds-immovable-property">TDS on Transfer of Immovable Property for the Tax Year 2026-27 onwards</a></li>
+              <li><a href="newsletter-2026-04.html#compliance-deadlines-april-2026">Compliance Deadlines – April 2026</a></li>
+            </ul>
+      </article>
 
-        <article class="issue-entry">
+      <article class="issue-entry">
+        <div>
           <p class="issue-entry__meta">Volume 1 · Issue 2</p>
           <h3 class="issue-entry__title"><a href="newsletter-2026-03.html">March 2026</a></h3>
-          <ul class="issue-entry__contents">
-            <li><a href="newsletter-2026-03.html#closing-procedures-year-end">Closing Procedures: The Year-End Ritual</a></li>
-            <li><a href="newsletter-2026-03.html#strategic-gst-review">Before You Close the Books: A Strategic GST Review</a></li>
-            <li><a href="newsletter-2026-03.html#advance-tax-liability">Liability for Payment of Advance Tax</a></li>
-            <li><a href="newsletter-2026-03.html#tds-key-changes">Key Changes in Tax Deducted at Source</a></li>
-            <li><a href="newsletter-2026-03.html#compliance-deadlines-march-2026">Compliance Deadlines – March 2026</a></li>
-          </ul>
-        </article>
+          <p class="issue-entry__read"><a class="more" href="newsletter-2026-03.html">Read this issue</a></p>
+        </div>
+        <ul class="issue-entry__contents">
+              <li><a href="newsletter-2026-03.html#closing-procedures-year-end">Closing Procedures: The Year-End Ritual</a></li>
+              <li><a href="newsletter-2026-03.html#strategic-gst-review">Before You Close the Books: A Strategic GST Review</a></li>
+              <li><a href="newsletter-2026-03.html#advance-tax-liability">Liability for Payment of Advance Tax</a></li>
+              <li><a href="newsletter-2026-03.html#tds-key-changes">Key Changes in Tax Deducted at Source</a></li>
+              <li><a href="newsletter-2026-03.html#compliance-deadlines-march-2026">Compliance Deadlines – March 2026</a></li>
+            </ul>
+      </article>
 
-        <!-- TODO(firm): Volume 1, Issue 1, presumably February 2026, is not on the site.
-             Add it below March the same way if the archive should be complete. -->
+      <!-- TODO(firm): Volume 1, Issue 1, presumably February 2026, is not on the site.
+           Add it below March the same way if the archive should be complete. -->
 
-      </div>
-    </section>
+    </div>
+  </section>
 
-  </div>
 </main>
 
 <!-- ===== SHARED FOOTER BLOCK — START =========================================
-     This block is identical in every page of the site. To change an address or
-     a telephone number, change it here and paste the whole block into the other
-     eight pages: services.html, people.html, newsletter.html, offices.html,
-     careers.html, contact.html, privacy.html and 404.html.
+     This block is identical in every page of the site, newsletter issues
+     included. To change an address or a telephone number, change it here and
+     paste the whole block into every other page. `ruby check.rb` tells you if
+     one differs.
      ======================================================================== -->
 <footer class="site-footer">
-  <div class="wrap site-footer__cols">
+  <div class="wrap site-footer__top">
 
-    <div class="site-footer__col">
+    <div>
       <p class="site-footer__name">Sarath &amp; Associates</p>
       <p class="site-footer__desc">Chartered Accountants</p>
       <p>ICAI Firm Registration No. <span class="num">005120S</span></p>
       <p>Established 1990</p>
     </div>
 
-    <div class="site-footer__col">
-      <h2 class="label">Head office</h2>
+    <div>
+      <h2 class="site-footer__heading">Head office</h2>
       <address>
         4th Floor, MAAS Heights, 8-2-577/B, Road No. 8<br>
         Banjara Hills, Hyderabad 500 034, Telangana
       </address>
-      <p><a href="tel:+914023354322">+91 40 2335 4322</a></p>
-      <p><a href="mailto:info@sarathcas.in">info@sarathcas.in</a></p>
-      <p><a href="offices.html">All offices</a></p>
+      <ul class="site-footer__list">
+        <li><a href="tel:+914023354322">+91 40 2335 4322</a></li>
+        <li><a href="mailto:info@sarathcas.in">info@sarathcas.in</a></li>
+        <li><a href="offices.html">All offices</a></li>
+      </ul>
     </div>
 
-    <div class="site-footer__col site-footer__col--links">
-      <h2 class="label">Useful links</h2>
-      <ul class="site-footer__links">
+    <div>
+      <h2 class="site-footer__heading">Useful links</h2>
+      <ul class="site-footer__list">
         <li><a href="https://www.icai.org">Institute of Chartered Accountants of India</a></li>
         <li><a href="https://www.mca.gov.in">Ministry of Corporate Affairs</a></li>
         <li><a href="https://www.incometax.gov.in">Income Tax Department</a></li>

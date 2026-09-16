@@ -8,13 +8,14 @@
   <meta name="description" content="Sarath &amp; Associates, Chartered Accountants, Hyderabad. Established 1990. ICAI Firm Registration No. 005120S. Audit and assurance, taxation, forensic accounting and investigation, advisory. Offices in Hyderabad, Mumbai, Delhi, Vijayawada, Chennai and Bengaluru.">
   <link rel="stylesheet" href="assets/style.css">
 </head>
-<body>
+<body class="page-home">
 
 <!-- ===== SHARED HEADER BLOCK — START =========================================
-     This block is identical in every page of the site. To change the navigation
-     or the wordmark, change it here and paste the whole block into the other
-     eight pages: services.html, people.html, newsletter.html, offices.html,
-     careers.html, contact.html, privacy.html and 404.html.
+     This block is identical in every page of the site, newsletter issues
+     included. To change the menu or the wordmark, change it here and paste the
+     whole block into every other page. `ruby check.rb` tells you if one differs.
+     The menu underlines the page you are on by itself, using the class on
+     <body>, so nothing in this block changes from page to page.
      ======================================================================== -->
 <a class="skip-link" href="#main">Skip to content</a>
 
@@ -22,7 +23,7 @@
   <div class="wrap site-header__inner">
     <a class="wordmark" href="index.html">
       <img class="wordmark__logo" src="assets/ca-india-logo.png" alt="CA India" width="320" height="241">
-      <span>
+      <span class="wordmark__text">
         <span class="wordmark__name">Sarath &amp; Associates</span>
         <span class="wordmark__desc">Chartered Accountants</span>
       </span>
@@ -42,160 +43,177 @@
 <!-- ===== SHARED HEADER BLOCK — END ========================================= -->
 
 <main id="main">
-  <div class="wrap">
 
-    <!-- SECTION: Hero. Four lines, then three links. -->
-    <div class="page-head hero">
-      <h1 class="display">Sarath &amp; Associates</h1>
-      <p class="hero__desc">Chartered Accountants</p>
-      <p class="hero__areas">Audit and assurance · Taxation · Forensic accounting and investigation · Advisory</p>
-      <p class="hero__facts">Established 1990 · 13 partners · Hyderabad · Mumbai · Delhi · Vijayawada · Chennai · Bengaluru</p>
-      <ul class="hero__links">
-        <li><a href="services.html">Services</a></li>
-        <li><a href="offices.html">Offices</a></li>
-        <li><a href="careers.html">Careers</a></li>
-      </ul>
-    </div>
-
-    <!-- SECTION: The firm -->
-    <section class="band" aria-labelledby="the-firm">
-      <div class="band__label">
-        <h2 id="the-firm">The firm</h2>
+  <!-- SECTION: Title. One factual line, the practice areas and cities, two
+       links, and the firm at a glance on the right. The partner count must
+       match people.html. -->
+  <section class="hero" aria-labelledby="page-title">
+    <div class="wrap hero__grid">
+      <div>
+        <p class="eyebrow">Established 1990 · Hyderabad</p>
+        <h1 class="hero__title" id="page-title">A firm of Chartered Accountants.</h1>
+        <p class="hero__lead">Audit and assurance, taxation, forensic accounting and investigation, and advisory, from a head office in Hyderabad and offices in Mumbai, Delhi, Vijayawada, Chennai and Bengaluru.</p>
+        <p class="hero__links">
+          <a class="btn btn--gold" href="services.html">Services</a>
+          <a class="btn btn--outline" href="people.html">Partners</a>
+        </p>
       </div>
+
+      <dl class="hero__facts">
+        <div>
+          <dt>Partners</dt>
+          <dd>13</dd>
+        </div>
+        <div>
+          <dt>Offices</dt>
+          <dd>6</dd>
+        </div>
+        <div>
+          <dt>ICAI Firm Registration No.</dt>
+          <dd>005120S</dd>
+        </div>
+
+        <!-- TODO(firm): Peer Review certificate. This is the credential banks, PSUs and
+             regulators look for, so it should be added before launch. When the firm gives
+             the certificate number, delete this comment and use:
+        <div>
+          <dt>Peer Review certificate</dt>
+          <dd>012345</dd>
+        </div>
+        -->
+
+        <!-- TODO(firm): AQMM level, only if the firm has actually been reviewed. When it
+             has, delete this comment and use:
+        <div>
+          <dt>Audit Quality Maturity Model</dt>
+          <dd>Level 3</dd>
+        </div>
+        -->
+
+        <!-- Nothing else belongs in this list. Do not add the C&AG, RBI, IBA, bank or
+             state GST empanelments, and never the PAN, GSTIN or Registrar of Firms
+             number. See docs/MAINTENANCE.md section 4, rules 5 and 6. -->
+      </dl>
+    </div>
+  </section>
+
+  <!-- SECTION: The firm -->
+  <section class="section" aria-labelledby="the-firm">
+    <div class="wrap split">
+      <h2 class="section-title" id="the-firm">The firm</h2>
       <div class="prose">
-        <p>Sarath &amp; Associates is a firm of Chartered Accountants registered with the Institute of Chartered Accountants of India (Firm Registration No. 005120S). The firm was established in Hyderabad in 1990 by CA P. Sarath Kumar.</p>
+        <p class="lede">Sarath &amp; Associates is a firm of Chartered Accountants registered with the Institute of Chartered Accountants of India (Firm Registration No. 005120S). The firm was established in Hyderabad in 1990 by CA P. Sarath Kumar.</p>
         <p>Its core practice is audit and assurance. The practice also covers direct and indirect taxation, forensic accounting and investigation, and financial advisory. Clients include listed and unlisted companies, non-corporate groups, and government organisations and agencies across a range of industries.</p>
         <p>Engagement teams are staffed by qualified professionals who keep current with accounting and auditing standards and applicable regulations. The firm has 13 partners and works from six offices: Hyderabad, which is the head office, and Mumbai, Delhi, Vijayawada, Chennai and Bengaluru.</p>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- SECTION: Practice areas. Each heading links to the Services page. -->
-    <section class="band" aria-labelledby="practice-areas">
-      <div class="band__label">
-        <h2 id="practice-areas">Practice areas</h2>
+  <!-- SECTION: Practice areas. Four cards; each links to its part of services.html. -->
+  <section class="section section--stone" aria-labelledby="practice-areas">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 class="section-title" id="practice-areas">Practice areas</h2>
+        <a class="more" href="services.html">All services</a>
       </div>
-      <div>
-        <dl class="pairs">
-          <dt><a href="services.html#audit">Audit and assurance</a></dt>
-          <dd>Internal audit and process-risk reviews, management and risk assurance, concurrent, stock and information-systems audits of bank branches, and systems and procedures reviews.</dd>
+      <ul class="cards">
+        <li class="card">
+          <h3 class="card__title"><a href="services.html#audit">Audit and assurance</a></h3>
+          <p>Internal audit and process-risk reviews, management and risk assurance, concurrent, stock and information-systems audits of bank branches, and systems and procedures reviews.</p>
+        </li>
+        <li class="card">
+          <h3 class="card__title"><a href="services.html#taxation">Taxation</a></h3>
+          <p>Direct and indirect tax planning and advisory, goods and services tax, compliance reviews, and representation before tax authorities.</p>
+        </li>
+        <li class="card">
+          <h3 class="card__title"><a href="services.html#forensic">Forensic accounting and investigation</a></h3>
+          <p>Forensic audits, fraud and misappropriation investigations, transaction audits under the Insolvency and Bankruptcy Code, 2016, anti-fraud process reviews, and training.</p>
+        </li>
+        <li class="card">
+          <h3 class="card__title"><a href="services.html#advisory">Advisory</a></h3>
+          <p>Due diligence, valuation, project financing and feasibility studies, restructuring, mergers and acquisitions, and insolvency professional services.</p>
+        </li>
+      </ul>
+    </div>
+  </section>
 
-          <dt><a href="services.html#taxation">Taxation</a></dt>
-          <dd>Direct and indirect tax planning and advisory, goods and services tax, compliance reviews, and representation before tax authorities.</dd>
-
-          <dt><a href="services.html#forensic">Forensic accounting and investigation</a></dt>
-          <dd>Forensic audits, fraud and misappropriation investigations, transaction audits under the Insolvency and Bankruptcy Code, 2016, anti-fraud process reviews, and training.</dd>
-
-          <dt><a href="services.html#advisory">Advisory</a></dt>
-          <dd>Due diligence, valuation, project financing and feasibility studies, restructuring, mergers and acquisitions, and insolvency professional services.</dd>
-        </dl>
+  <!-- SECTION: Offices. Head office first. The same numbers and addresses are on
+       offices.html; change both together. -->
+  <section class="section section--navy" aria-labelledby="offices">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 class="section-title" id="offices">Offices</h2>
+        <a class="more" href="offices.html">All office details</a>
       </div>
-    </section>
+      <ul class="office-grid">
+        <li>
+          <p class="office-grid__city">Hyderabad <span class="office-grid__tag">Head office</span></p>
+          <a href="tel:+914023354322">+91 40 2335 4322</a>
+          <a href="mailto:info@sarathcas.in">info@sarathcas.in</a>
+        </li>
+        <li>
+          <p class="office-grid__city">Mumbai</p>
+          <a href="tel:+912222693132">+91 22 2269 3132</a>
+          <a href="mailto:casarathmumbai@gmail.com">casarathmumbai@gmail.com</a>
+        </li>
+        <li>
+          <p class="office-grid__city">Delhi</p>
+          <a href="tel:+919971593217">+91 99715 93217</a>
+          <a href="mailto:parveen.bansal@sarathcas.in">parveen.bansal@sarathcas.in</a>
+        </li>
+        <li>
+          <p class="office-grid__city">Vijayawada</p>
+          <a href="tel:+919542021999">+91 95420 21999</a>
+          <a href="mailto:naresh@sarathcas.in">naresh@sarathcas.in</a>
+        </li>
+        <li>
+          <p class="office-grid__city">Chennai</p>
+          <a href="tel:+917397235295">+91 73972 35295</a>
+          <a href="mailto:vasudevan@sarathcas.in">vasudevan@sarathcas.in</a>
+        </li>
+        <li>
+          <p class="office-grid__city">Bengaluru</p>
+          <a href="tel:+918106106347">+91 81061 06347</a>
+          <a href="mailto:anjali@sarathcas.in">anjali@sarathcas.in</a>
+        </li>
+      </ul>
+    </div>
+  </section>
 
-    <!-- SECTION: Registration -->
-    <section class="band" aria-labelledby="registration">
-      <div class="band__label">
-        <h2 id="registration">Registration</h2>
-      </div>
-      <div>
-        <dl class="reg">
-          <dt>ICAI Firm Registration No.</dt>
-          <dd><span class="num">005120S</span></dd>
-
-          <!-- TODO(firm): Peer Review certificate. This is the credential banks, PSUs and
-               regulators look for, so it should be added before launch. When the firm gives
-               the certificate number and the date it runs to, delete this comment and use:
-          <dt>Peer Review certificate</dt>
-          <dd><span class="num">012345</span>, valid to <span class="num">31 March 2028</span></dd>
-          -->
-
-          <!-- TODO(firm): AQMM level, only if the firm has actually been reviewed. When it
-               has, delete this comment and use:
-          <dt>Audit Quality Maturity Model</dt>
-          <dd>Level <span class="num">3</span>, reviewed <span class="num">June 2026</span></dd>
-          -->
-
-          <!-- Nothing else belongs in this list. Do not add the C&AG, RBI, IBA, bank or
-               state GST empanelments, and never the PAN, GSTIN or Registrar of Firms
-               number. See docs/MAINTENANCE.md section 4, rules 5 and 6. -->
-        </dl>
-      </div>
-    </section>
-
-    <!-- SECTION: Offices strip. Head office first. -->
-    <section class="band" aria-labelledby="offices">
-      <div class="band__label">
-        <h2 id="offices">Offices</h2>
-      </div>
-      <div>
-        <ul class="strip">
-          <li>
-            <span class="strip__city">Hyderabad — head office</span>
-            <a href="tel:+914023354322">+91 40 2335 4322</a>
-            <a href="mailto:info@sarathcas.in">info@sarathcas.in</a>
-          </li>
-          <li>
-            <span class="strip__city">Mumbai</span>
-            <a href="tel:+912222693132">+91 22 2269 3132</a>
-            <a href="mailto:casarathmumbai@gmail.com">casarathmumbai@gmail.com</a>
-          </li>
-          <li>
-            <span class="strip__city">Delhi</span>
-            <a href="tel:+919971593217">+91 99715 93217</a>
-            <a href="mailto:parveen.bansal@sarathcas.in">parveen.bansal@sarathcas.in</a>
-          </li>
-          <li>
-            <span class="strip__city">Vijayawada</span>
-            <a href="tel:+919542021999">+91 95420 21999</a>
-            <a href="mailto:naresh@sarathcas.in">naresh@sarathcas.in</a>
-          </li>
-          <li>
-            <span class="strip__city">Chennai</span>
-            <a href="tel:+917397235295">+91 73972 35295</a>
-            <a href="mailto:vasudevan@sarathcas.in">vasudevan@sarathcas.in</a>
-          </li>
-          <li>
-            <span class="strip__city">Bengaluru</span>
-            <a href="tel:+918106106347">+91 81061 06347</a>
-            <a href="mailto:anjali@sarathcas.in">anjali@sarathcas.in</a>
-          </li>
-        </ul>
-        <p class="strip__after"><a href="offices.html">All office details</a></p>
-      </div>
-    </section>
-
-  </div>
 </main>
 
 <!-- ===== SHARED FOOTER BLOCK — START =========================================
-     This block is identical in every page of the site. To change an address or
-     a telephone number, change it here and paste the whole block into the other
-     eight pages: services.html, people.html, newsletter.html, offices.html,
-     careers.html, contact.html, privacy.html and 404.html.
+     This block is identical in every page of the site, newsletter issues
+     included. To change an address or a telephone number, change it here and
+     paste the whole block into every other page. `ruby check.rb` tells you if
+     one differs.
      ======================================================================== -->
 <footer class="site-footer">
-  <div class="wrap site-footer__cols">
+  <div class="wrap site-footer__top">
 
-    <div class="site-footer__col">
+    <div>
       <p class="site-footer__name">Sarath &amp; Associates</p>
       <p class="site-footer__desc">Chartered Accountants</p>
       <p>ICAI Firm Registration No. <span class="num">005120S</span></p>
       <p>Established 1990</p>
     </div>
 
-    <div class="site-footer__col">
-      <h2 class="label">Head office</h2>
+    <div>
+      <h2 class="site-footer__heading">Head office</h2>
       <address>
         4th Floor, MAAS Heights, 8-2-577/B, Road No. 8<br>
         Banjara Hills, Hyderabad 500 034, Telangana
       </address>
-      <p><a href="tel:+914023354322">+91 40 2335 4322</a></p>
-      <p><a href="mailto:info@sarathcas.in">info@sarathcas.in</a></p>
-      <p><a href="offices.html">All offices</a></p>
+      <ul class="site-footer__list">
+        <li><a href="tel:+914023354322">+91 40 2335 4322</a></li>
+        <li><a href="mailto:info@sarathcas.in">info@sarathcas.in</a></li>
+        <li><a href="offices.html">All offices</a></li>
+      </ul>
     </div>
 
-    <div class="site-footer__col site-footer__col--links">
-      <h2 class="label">Useful links</h2>
-      <ul class="site-footer__links">
+    <div>
+      <h2 class="site-footer__heading">Useful links</h2>
+      <ul class="site-footer__list">
         <li><a href="https://www.icai.org">Institute of Chartered Accountants of India</a></li>
         <li><a href="https://www.mca.gov.in">Ministry of Corporate Affairs</a></li>
         <li><a href="https://www.incometax.gov.in">Income Tax Department</a></li>

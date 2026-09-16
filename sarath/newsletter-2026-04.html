@@ -8,13 +8,14 @@
   <meta name="description" content="Sarath &amp; Associates newsletter, Volume 1 Issue 3, April 2026. Schedule III under Ind AS, GST pre-deposit in appeals, the GSTR-3B liability breakup, year-end GST readiness, TDS on immovable property, and the April compliance calendar.">
   <link rel="stylesheet" href="assets/style.css">
 </head>
-<body>
+<body class="page-newsletter">
 
 <!-- ===== SHARED HEADER BLOCK — START =========================================
-     This block is identical in every page of the site. To change the navigation
-     or the wordmark, change it here and paste the whole block into the other
-     eight pages: services.html, people.html, newsletter.html, offices.html,
-     careers.html, contact.html, privacy.html and 404.html.
+     This block is identical in every page of the site, newsletter issues
+     included. To change the menu or the wordmark, change it here and paste the
+     whole block into every other page. `ruby check.rb` tells you if one differs.
+     The menu underlines the page you are on by itself, using the class on
+     <body>, so nothing in this block changes from page to page.
      ======================================================================== -->
 <a class="skip-link" href="#main">Skip to content</a>
 
@@ -22,7 +23,7 @@
   <div class="wrap site-header__inner">
     <a class="wordmark" href="index.html">
       <img class="wordmark__logo" src="assets/ca-india-logo.png" alt="CA India" width="320" height="241">
-      <span>
+      <span class="wordmark__text">
         <span class="wordmark__name">Sarath &amp; Associates</span>
         <span class="wordmark__desc">Chartered Accountants</span>
       </span>
@@ -42,22 +43,24 @@
 <!-- ===== SHARED HEADER BLOCK — END ========================================= -->
 
 <main id="main">
-  <div class="wrap">
 
-    <!-- SECTION: Issue masthead -->
-    <div class="page-head">
-      <p class="issue__volume">Volume 1 · Issue 3 · April 2026</p>
-      <h1 class="display">Newsletter</h1>
-      <p class="lead">Moving into FY 2026-27 requires more than just closing the past; it demands an architectural shift in reporting. This month, we decode the Schedule III compliance, analyze the new GSTR-3B liability breakups, and provide a roadmap for the revised TDS protocols on immovable property.</p>
+  <!-- SECTION: Issue title. The eyebrow carries the volume and issue number, the
+       title is the month, and the lead is the issue's own introduction. -->
+  <section class="page-hero" aria-labelledby="page-title">
+    <div class="wrap page-hero__inner">
+      <p class="eyebrow">Newsletter · Volume 1 · Issue 3</p>
+      <h1 id="page-title">April 2026</h1>
+      <p class="page-hero__lead">Moving into FY 2026-27 requires more than just closing the past; it demands an architectural shift in reporting. This month, we decode the Schedule III compliance, analyze the new GSTR-3B liability breakups, and provide a roadmap for the revised TDS protocols on immovable property.</p>
     </div>
+  </section>
 
-    <!-- SECTION: Contents. Each item links to the article further down this page. -->
-    <section class="band" aria-labelledby="contents">
-      <div class="band__label">
-        <h2 id="contents">Contents</h2>
-      </div>
-      <div>
-        <ol class="issue__toc">
+  <div class="section">
+    <div class="wrap with-aside">
+
+      <!-- SECTION: Contents. Each item links to the article further down this page. -->
+      <nav class="aside-nav" aria-labelledby="contents">
+        <h2 class="aside-nav__title" id="contents">Contents</h2>
+        <ol>
           <li><a href="#schedule-iii-ind-as">Schedule III under Ind AS: From Compliance to Financial Reporting Integrity</a></li>
           <li><a href="#gst-pre-deposit-appeals">GST Advisory Update – Pre-Deposit Payment in Appeals</a></li>
           <li><a href="#gstr-3b-tax-liability-breakup">GSTR-3B Evolution – The New Mandatory "Tax Liability Breakup"</a></li>
@@ -65,21 +68,19 @@
           <li><a href="#tds-immovable-property">TDS on Transfer of Immovable Property for the Tax Year 2026-27 onwards</a></li>
           <li><a href="#compliance-deadlines-april-2026">Compliance Deadlines – April 2026</a></li>
         </ol>
-      </div>
-    </section>
+        <p class="aside-nav__more"><a class="more" href="newsletter.html">All issues</a></p>
+      </nav>
 
-    <!-- SECTION: The articles.
-         Each is an <article class="issue__article"> with its own id, so the contents
-         list above and the newsletter index can link straight to it. The wording is
-         the firm's own, transcribed from the printed issue. Do not reword it. -->
-    <section class="band" aria-labelledby="articles">
-      <div class="band__label">
-        <h2 id="articles">Articles</h2>
-      </div>
+      <!-- SECTION: The articles.
+           Each is an <article class="issue__article"> with its own id, so the contents
+           list and the newsletter index can link straight to it. Inside an article the
+           title is an <h2> and each sub-heading an <h3>. A table goes inside
+           <div class="table-scroll"> so that it scrolls sideways on a phone. The wording
+           is the firm's own, transcribed from the printed issue. Do not reword it. -->
       <div class="issue">
 
       <article class="issue__article" id="schedule-iii-ind-as">
-        <h3>Schedule III under Ind AS: From Compliance to Financial Reporting Integrity</h3>
+        <h2>Schedule III under Ind AS: From Compliance to Financial Reporting Integrity</h2>
         <p class="issue__byline">By K. Sri Rakshitha</p>
 
         <p>In the high-stakes world of corporate governance, financial statements are more than a statutory filing - they are company’s most definitive statements of integrity in terms of financial values. When disclosures are imprecise, the numbers lose their voice, and the bridge of trust with stakeholders begins to fracture. Schedule III of the Companies Act, 2013, is the vital framework that prevents this collapse, transforming raw data into a standardized, transparent narrative of financial health.</p>
@@ -96,7 +97,7 @@
 
         <p>While Schedule III establishes a uniform framework for presentation, its application under Division II (Ind AS) introduces a higher degree of complexity. The emphasis on fair value, substance-over-form, and enhanced disclosures shifts presentation from a structured exercise to one requiring considerable professional judgment.</p>
 
-        <h4>Applicability of Division II</h4>
+        <h3>Applicability of Division II</h3>
 
         <p>Division II of Schedule III applies to companies required to comply with Ind AS as per the Companies (Indian Accounting Standards) Rules, 2015. The roadmap for mandatory adoption includes:</p>
 
@@ -108,7 +109,7 @@
 
         <p>While companies not meeting the mandatory criteria may elect to adopt Ind AS voluntarily, it is critical to note that once Ind AS is adopted, the transition is irrevocable. The entity must continue to follow the Division II framework for all subsequent financial years.</p>
 
-        <h4>Key Areas of Judgment under Division II of Schedule III</h4>
+        <h3>Key Areas of Judgment under Division II of Schedule III</h3>
 
         <p>Having established its applicability, the true significance of Division II emerges in its application. These areas are particularly critical, as they directly influence classification, disclosure, and the overall interpretability of financial statements.</p>
 
@@ -119,11 +120,11 @@
           <li><strong>Determination of Materiality:</strong> Materiality forms the foundation of financial statement presentation. Management must assess whether an item, individually or collectively, could influence the economic decisions of users — a determination that depends not only on size, but also on the nature and context of the item.</li>
         </ul>
 
-        <h4>Key Breaches and Common Deficiencies Identified by NFRA and FRRB-ICAI</h4>
+        <h3>Key Breaches and Common Deficiencies Identified by NFRA and FRRB-ICAI</h3>
 
         <p>Given the judgment-intensive nature of Division II, these areas frequently become the focus of regulatory scrutiny. Observations from the National Financial Reporting Authority (NFRA), through its Audit Quality Review reports, and the Financial Reporting Review Board (FRRB) of ICAI highlight recurring deficiencies in classification, disclosure, and presentation.</p>
 
-        <h4>Classification Deficiencies</h4>
+        <h3>Classification Deficiencies</h3>
 
         <p>Misclassification remains one of the most frequently observed deficiencies, directly affecting the structure and interpretability of financial statements. Common instances include:</p>
 
@@ -136,7 +137,7 @@
           <li>Presenting “Investments” as standalone line items instead of including them within the required “Financial Assets” classification in the balance sheet.</li>
         </ul>
 
-        <h4>Disclosure Deficiencies</h4>
+        <h3>Disclosure Deficiencies</h3>
 
         <p>Disclosure failures — whether through omission or incomplete reporting — significantly impair the transparency and decision-usefulness of financial statements. Key observations include:</p>
 
@@ -149,7 +150,7 @@
           <li>Incorrect classification of Bank Guarantees (performance or counter-guarantees) relating to the company’s own obligations as contingent liabilities, contrary to prescribed guidance.</li>
         </ul>
 
-        <h4>Presentation and Structural Deficiencies</h4>
+        <h3>Presentation and Structural Deficiencies</h3>
 
         <p>Non-compliance with the structural and presentation requirements of Schedule III undermines the clarity and comparability of financial statements. Common deficiencies include:</p>
 
@@ -161,7 +162,7 @@
           <li>Misclassification of actuarial gains and losses (remeasurement of defined benefit plans) under “Equity Instruments through OCI” instead of recognising them as a part of retained earnings.</li>
         </ul>
 
-        <h4>Accounting and Valuation Breaches</h4>
+        <h3>Accounting and Valuation Breaches</h3>
 
         <p>Certain deficiencies arise from fundamental accounting judgments and policy application, ultimately resulting in mis-stated financial statement presentation. Key observations include:</p>
 
@@ -173,26 +174,26 @@
         </ul>
 
         <div class="issue__callout">
-          <h4>The Takeaway</h4>
+          <h3>The Takeaway</h3>
           <p>The breadth and recurrence of these lapses convey a clear message: compliance with Schedule III is no longer a checklist exercise. Regulatory scrutiny of financial statements has become increasingly rigorous, and deficiencies — whether in classification, disclosure, or presentation — are being identified and reported with precision.</p>
           <p>Accordingly, Schedule III must be viewed not merely as a formatting requirement, but as a substantive framework that underpins the integrity of financial reporting. Periodic internal reviews against these commonly observed deficiencies can serve as a critical safeguard in ensuring robust and compliant financial statements.</p>
         </div>
       </article>
       <article class="issue__article" id="gst-pre-deposit-appeals">
-        <h3>GST Advisory Update – Pre-Deposit Payment in Appeals</h3>
+        <h2>GST Advisory Update – Pre-Deposit Payment in Appeals</h2>
         <p class="issue__byline">By D. Sri Chaitanya</p>
 
-        <h4>Issue Involved</h4>
+        <h3>Issue Involved</h3>
 
         <p>A common frustration during GST litigation occurs when a taxpayer makes a "voluntary" payment during an audit via Form DRC-03, only to find that the GST Portal "ignores" this payment when they later try to file an appeal.</p>
 
         <p>To file an appeal, the law requires a mandatory pre-deposit (usually 10% of the disputed tax). Because the system previously did not link a voluntary DRC-03 to a specific Demand ID, taxpayers were often forced to pay the same amount twice—once during the audit and once to file the appeal. This led to severe working capital blockage and unnecessary refund claims.</p>
 
-        <h4>The Solution: Enter Form GST DRC-03A</h4>
+        <h3>The Solution: Enter Form GST DRC-03A</h3>
 
         <p>To bridge this gap, the government introduced Form GST DRC-03A. This is a "linking tool" that allows a taxpayer to map a previously paid DRC-03 to a specific Demand ID generated by an Order (such as an Assessment Order under Section 73 or 74). Once this link is established, the payment is reflected in the Electronic Liability Register (Part II), and the portal recognizes it as a valid pre-deposit.</p>
 
-        <h4>Strategic Implications for Assessee</h4>
+        <h3>Strategic Implications for Assessee</h3>
 
         <p>The introduction of DRC-03A brings much-needed relief to the taxpayer's bottom line:</p>
 
@@ -201,16 +202,16 @@
         <p>Case B: Partial Coverage - If the linked payment is less than the required pre-deposit, you are only required to pay the remaining balance. This ensures that your previously paid taxes are not "trapped" or ignored by the system.</p>
       </article>
       <article class="issue__article" id="gstr-3b-tax-liability-breakup">
-        <h3>GSTR-3B Evolution – The New Mandatory "Tax Liability Breakup"</h3>
+        <h2>GSTR-3B Evolution – The New Mandatory "Tax Liability Breakup"</h2>
         <p class="issue__byline">By D. Sri Chaitanya</p>
 
-        <h4>The Shift Toward Precision</h4>
+        <h3>The Shift Toward Precision</h3>
         <p>The GST Portal has recently moved from "Summary Filing" to "Detailed Filing." The most significant change is the new requirement to provide a <strong>Tax Liability Breakup</strong> within the GSTR-3B. Previously, if you missed reporting an invoice in January and reported it in February, you would simply add it to the February totals. Now, the portal requires you to explicitly state which portion of your current tax payment belongs to which <em>previous tax period</em>.</p>
 
-        <h4>Auto-Population and the "Save" Hurdle</h4>
+        <h3>Auto-Population and the "Save" Hurdle</h3>
         <p>The system now auto-populates this breakup based on the data you provided in your <strong>GSTR-1, GSTR-1A, or IFF.</strong> While this sounds helpful, it has created a mandatory technical step that can prevent filing. Even if a taxpayer has <strong>no past-period liability</strong>, the "Tax Liability Breakup" tab must be opened, reviewed, and—most importantly—<strong>SAVED</strong>. Without clicking "Save" in this specific sub-menu, the "Proceed to File" button for the main GSTR-3B will remain disabled.</p>
 
-        <h4>The Mandatory Compliance Step</h4>
+        <h3>The Mandatory Compliance Step</h3>
         <p>To avoid filing errors or last-minute delays, taxpayers must follow this specific sequence within the portal:</p>
         <ol>
           <li><strong>Offset Tax Liability:</strong> Complete the payment of taxes using ITC or Cash as usual.</li>
@@ -220,23 +221,23 @@
           <li><strong>File GSTR-3B:</strong> Only after the success message for the "Save" action appears will the final "File" button become active.</li>
         </ol>
 
-        <h4>Highlights at a Glance</h4>
+        <h3>Highlights at a Glance</h3>
         <ul>
           <li><strong>Purpose:</strong> Ensures proper interest computation for delayed reporting of outward supplies.</li>
           <li><strong>Mandatory Status:</strong> This step applies to <strong>all taxpayers</strong>, regardless of whether they have past-period liabilities or not.</li>
         </ul>
       </article>
       <article class="issue__article" id="year-end-gst-readiness">
-        <h3>Year-End Requirements &amp; New Financial Year 2026-27 Readiness</h3>
+        <h2>Year-End Requirements &amp; New Financial Year 2026-27 Readiness</h2>
         <p class="issue__byline">By D. Sri Chaitanya</p>
 
         <p>As we prepare to close the books for FY 2025-26, the following requirements serve as the critical bridge to the new financial year. From resetting invoice series to renewing export benefits and declaring tax preferences, these checkpoints are essential to ensure your business remains compliant and operationally sound from Day 1 of FY 2026-27.</p>
 
-        <h4>The Fresh Start – Mandatory New Invoice Series for FY 2026-27</h4>
+        <h3>The Fresh Start – Mandatory New Invoice Series for FY 2026-27</h3>
 
         <p>As we transition from Financial Year 2025-26 to 2026-27, the most fundamental task for every registered taxpayer is the commencement of a new, unique invoice numbering series. Under Rule 46(b) of the CGST Rules, 2017, every tax invoice must have a consecutive serial number that is unique for a specific financial year. Repeating a number from a previous year is not just a clerical error but it is a compliance failure that can halt your supply chain.</p>
 
-        <h4>Zero-Rated Supplies – Renewing Your LUT (RFD-11)</h4>
+        <h3>Zero-Rated Supplies – Renewing Your LUT (RFD-11)</h3>
 
         <p>For businesses engaged in the export of goods or services, or supplies to Special Economic Zones (SEZ), the Letter of Undertaking (LUT) is the most critical document in your folder. It allows you to make "Zero-Rated Supplies" without the immediate payment of Integrated GST (IGST).</p>
 
@@ -244,7 +245,7 @@
 
         <p>In light of these regulations, we need to file a fresh LUT for FY 2026-27 through the GST portal (Form RFD-11) before the current month ends.</p>
 
-        <h4>Action Plan for Exporters:</h4>
+        <h3>Action Plan for Exporters:</h3>
 
         <ul>
           <li><strong>Online Filing:</strong> Log into the GST Portal → Services → User Services → Furnish Letter of Undertaking (LUT).</li>
@@ -252,30 +253,30 @@
           <li><strong>Immediate Confirmation:</strong> Once the ARN (Application Reference Number) is generated, download the PDF and share it with your Customs House Agent (CHA) and bank to ensure smooth shipping and BRC (Bank Realisation Certificate) processing.</li>
         </ul>
 
-        <h4>AATO – The All-India PAN Metrics</h4>
+        <h3>AATO – The All-India PAN Metrics</h3>
 
         <p>The Aggregate Annual Turnover (AATO) is calculated on an All-India basis for all GSTINs under the same PAN. It includes all taxable, exempt, and export supplies, as well as inter-state stock transfers. However, it excludes inward supplies taxable under Reverse Charge (RCM) and all GST taxes. Businesses must calculate this PAN-level total for the closing FY 2025-26 to determine their mandatory compliance thresholds for the upcoming year.</p>
 
-        <h4>E-Invoicing – The "Once Covered, Always Covered" Rule</h4>
+        <h3>E-Invoicing – The "Once Covered, Always Covered" Rule</h3>
 
         <p>E-invoicing remains mandatory for any taxpayer whose AATO exceeded ₹5 Crore in any financial year from 2017-18 onwards. Once you cross this threshold, the requirement to generate an Invoice Reference Number (IRN) is permanent, regardless of whether your turnover drops in subsequent years. Additionally, for businesses over ₹10 Crore AATO, a strict 30-day reporting window is now in effect; invoices not reported to the IRP within 30 days are legally invalid and block the recipient's Input Tax Credit (ITC).</p>
 
-        <h4>Opting into the Composition Scheme (Form CMP-02)</h4>
+        <h3>Opting into the Composition Scheme (Form CMP-02)</h3>
 
         <p>For small businesses and service providers, The Composition Scheme simplifies GST for small businesses by replacing detailed monthly filings with a fixed tax rate—1% for manufacturers/traders and 6% for service providers—paid quarterly via Form CMP-08. To transition for FY 2026-27, you must file Form GST CMP-02 by March 31, 2026, as mid-year entries are not permitted. Note that opting in requires an ITC reversal on all held stock (via Form ITC-03) and restricts you from collecting GST or making inter-state outward supplies.</p>
       </article>
       <article class="issue__article" id="tds-immovable-property">
-        <h3>TDS on Transfer of Immovable Property for the Tax Year 2026-27 onwards</h3>
+        <h2>TDS on Transfer of Immovable Property for the Tax Year 2026-27 onwards</h2>
         <p class="issue__byline">By V. Roopa Samhitha</p>
 
-        <h4>Purchase from a Resident Seller</h4>
+        <h3>Purchase from a Resident Seller</h3>
 
         <p>Section 393 of the Income-tax Act, 2025 (Section 194-IA of the Income-tax Act, 1961) provides that any person responsible for paying consideration for the transfer of immovable property (other than agricultural land) must deduct TDS at a rate of 1%, where consideration or stamp duty value of the property, whichever is higher, is Rs.50 Lakhs or more.</p>
 
         <p>TDS is required to be deposited with the Central Government through Form 141 (earlier Form 26QB) within 30 days from the end of the month in which deduction is made. The deductor shall issue a TDS certificate in Form 132 (earlier Form 16B) through the TRACES portal to the deductee.</p>
 
         <div class="issue__callout">
-          <h4>Key TDS Compliance Points</h4>
+          <h3>Key TDS Compliance Points</h3>
           <ol>
             <li>TDS is applicable if the total property value is Rs. 50 lakhs or more, irrespective of the individual share of each buyer</li>
             <li>The consideration for transfer shall include incidental charges such as membership fees, parking fees, electricity/water facility charges, maintenance fees, etc.</li>
@@ -287,6 +288,8 @@
         <p>A correction statement may be filed to rectify errors in any schedule in Form No.141 within two years from the end of the tax year in which such statement is required to be delivered.</p>
 
         <p>Practical Challenges under Form 26QB and the Improvements Introduced by Form 141:</p>
+
+        <div class="table-scroll">
 
         <table>
           <caption>Practical issues under Form 26QB, an illustration of each, and the corresponding improvement introduced by Form 141</caption>
@@ -315,8 +318,9 @@
             </tr>
           </tbody>
         </table>
+        </div>
 
-        <h4>Purchase from a Non-Resident Seller</h4>
+        <h3>Purchase from a Non-Resident Seller</h3>
 
         <p>Section 393 of Income Tax Act, 2025 (Corresponding to Section 195 of Income Tax Act, 1961) applies to any person making a payment to a non-resident regarding consideration for transfer of immovable property, whether an individual, firm, company or even a non-resident paying must deduct TDS if such income is chargeable in India.</p>
 
@@ -327,6 +331,8 @@
           <li>TDS can be deposited online or through banks that are authorised by the government or the Income Tax Department.</li>
           <li>After depositing the TDS, the buyer should electronically file a TDS return by filing Form 144 (earlier Form 27Q). TDS returns are filed quarterly within the below due dates.</li>
         </ul>
+
+        <div class="table-scroll">
 
         <table>
           <caption>Quarterly due dates for filing the TDS return in Form 144</caption>
@@ -360,6 +366,7 @@
             </tr>
           </tbody>
         </table>
+        </div>
 
         <ul>
           <li>After the TDS returns have been filed, the deductor shall issue the TDS certificate, i.e., Form 131, to the NRI within 15 days from the due date of filing Form 144.</li>
@@ -367,7 +374,7 @@
           <li>The Finance Bill, 2026, proposes a significant compliance relaxation under the Income-tax Act, 2025, by exempting resident individuals and Hindu Undivided Families (HUFs) from the requirement to obtain a Tax Deduction and Collection Account Number (TAN) when purchasing immovable property from a non-resident seller. Once implemented, it will come into effect on 1 October 2026.</li>
         </ul>
 
-        <h4>Consequences of Non-Compliance</h4>
+        <h3>Consequences of Non-Compliance</h3>
 
         <p>Failing to file or delaying the deposit of tax carries heavy financial consequences:</p>
 
@@ -379,7 +386,8 @@
         </ul>
       </article>
       <article class="issue__article" id="compliance-deadlines-april-2026">
-        <h3>April Month’s Compliance Deadlines</h3>
+        <h2>April Month’s Compliance Deadlines</h2>
+        <div class="table-scroll">
         <table>
           <caption>April 2026 compliance deadlines: due date, category, the compliance or form concerned, and the period it covers.</caption>
           <thead>
@@ -591,60 +599,59 @@
             </tr>
           </tbody>
         </table>
+        </div>
         <div class="issue__callout">
           <p>Disclaimer: The contents of this Newsletter are obtained from open sources, that we find reliable, and we do not warrant or guarantee accuracy of the information. The readers are advised not take any decision purely based on the contents of this newsletter without professional advice.</p>
         </div>
       </article>
 
-      </div>
-    </section>
+        <!-- SECTION: Disclaimer. Carried on the last page of every printed issue.
+             Keep it on every issue page. -->
+        <section class="issue__disclaimer" aria-labelledby="disclaimer">
+          <h2 class="label" id="disclaimer">Disclaimer</h2>
+          <p>The contents of this Newsletter are obtained from open sources, that we find reliable, and we do not warrant or guarantee accuracy of the information. The readers are advised not take any decision purely based on the contents of this newsletter without professional advice.</p>
+        </section>
 
-    <!-- SECTION: Disclaimer. Carried on the last page of every printed issue.
-         Keep it on every issue page. -->
-    <section class="band" aria-labelledby="disclaimer">
-      <div class="band__label">
-        <h2 id="disclaimer">Disclaimer</h2>
-      </div>
-      <div class="prose">
-        <p>The contents of this Newsletter are obtained from open sources, that we find reliable, and we do not warrant or guarantee accuracy of the information. The readers are advised not take any decision purely based on the contents of this newsletter without professional advice.</p>
-      </div>
-    </section>
+        <p class="issue__back"><a class="more" href="newsletter.html">All issues</a></p>
 
-    <p class="issue__back"><a href="newsletter.html">All issues</a></p>
-
+      </div>
+    </div>
   </div>
+
 </main>
 
 <!-- ===== SHARED FOOTER BLOCK — START =========================================
-     This block is identical in every page of the site. To change an address or
-     a telephone number, change it here and paste the whole block into the other
-     eight pages: services.html, people.html, newsletter.html, offices.html,
-     careers.html, contact.html, privacy.html and 404.html.
+     This block is identical in every page of the site, newsletter issues
+     included. To change an address or a telephone number, change it here and
+     paste the whole block into every other page. `ruby check.rb` tells you if
+     one differs.
      ======================================================================== -->
 <footer class="site-footer">
-  <div class="wrap site-footer__cols">
+  <div class="wrap site-footer__top">
 
-    <div class="site-footer__col">
+    <div>
       <p class="site-footer__name">Sarath &amp; Associates</p>
       <p class="site-footer__desc">Chartered Accountants</p>
       <p>ICAI Firm Registration No. <span class="num">005120S</span></p>
       <p>Established 1990</p>
     </div>
 
-    <div class="site-footer__col">
-      <h2 class="label">Head office</h2>
+    <div>
+      <h2 class="site-footer__heading">Head office</h2>
       <address>
         4th Floor, MAAS Heights, 8-2-577/B, Road No. 8<br>
         Banjara Hills, Hyderabad 500 034, Telangana
       </address>
-      <p><a href="tel:+914023354322">+91 40 2335 4322</a></p>
-      <p><a href="mailto:info@sarathcas.in">info@sarathcas.in</a></p>
-      <p><a href="offices.html">All offices</a></p>
+      <ul class="site-footer__list">
+        <li><a href="tel:+914023354322">+91 40 2335 4322</a></li>
+        <li><a href="mailto:info@sarathcas.in">info@sarathcas.in</a></li>
+        <li><a href="offices.html">All offices</a></li>
+      </ul>
     </div>
 
-    <div class="site-footer__col site-footer__col--links">
-      <h2 class="label">Useful links</h2>
-      <ul class="site-footer__links">
+    <div>
+      <h2 class="site-footer__heading">Useful links</h2>
+      <ul class="site-footer__list">
         <li><a href="https://www.icai.org">Institute of Chartered Accountants of India</a></li>
         <li><a href="https://www.mca.gov.in">Ministry of Corporate Affairs</a></li>
         <li><a href="https://www.incometax.gov.in">Income Tax Department</a></li>
