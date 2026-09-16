@@ -1464,19 +1464,10 @@ main {
   font-weight: 700;
 }
 
-.issue-entry__file {
-  margin-top: var(--s3);
-  font-size: var(--fs-meta);
-  line-height: 1.5rem;
-  color: var(--muted);           /* 6.4:1 on paper */
-  font-variant-numeric: tabular-nums;
-}
-
 @media (max-width: 55.99em) {
   .issue-entry__contents li + li { margin-top: 0.25rem; }
 
-  .issue-entry__contents a,
-  .issue-entry__file a {
+  .issue-entry__contents a {
     display: inline-flex;
     align-items: center;
     min-height: 44px;
@@ -2128,8 +2119,7 @@ main {
 
   .issue__toc a,
   .issue__back a,
-  .issue-entry__contents a,
-  .issue-entry__file a {
+  .issue-entry__contents a {
     display: inline;
     min-height: 0;
   }
