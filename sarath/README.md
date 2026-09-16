@@ -7,8 +7,10 @@ in place because this is a preview under the Ventosystems domain.
 
 ## Design and maintenance
 
-- `assets/style.css` contains the responsive design: warm ivory, forest green,
-  copper accents, Source Serif 4 headings and Source Sans 3 body text.
+- `assets/style.css` contains the responsive design: warm ivory, rich teal,
+  terracotta, cobalt and gold, Source Serif 4 headings and Source Sans 3 body text.
+  Practice colours match between the homepage and service details. Mastheads use
+  page-specific colour, while forms and long reading surfaces remain light.
 - All fonts, images and scripts are local. There are no trackers or third-party
   requests during page load.
 - Headers and footers are repeated in the 11 HTML files; update them together.
