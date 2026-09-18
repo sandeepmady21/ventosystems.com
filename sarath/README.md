@@ -7,10 +7,10 @@ in place because this is a preview under the Ventosystems domain.
 
 ## Design and maintenance
 
-- `assets/style.css` contains the responsive design: warm ivory, rich teal,
-  terracotta, cobalt and gold, Source Serif 4 headings and Source Sans 3 body text.
-  Practice colours match between the homepage and service details. Mastheads use
-  page-specific colour, while forms and long reading surfaces remain light.
+- `assets/style.css` contains the responsive design: warm ivory, muted sage,
+  deep teal and restrained bronze, Source Serif 4 headings and Source Sans 3
+  body text. Mastheads share a light sage treatment; cards, forms and long
+  reading surfaces stay light. Dark teal is reserved for emphasis and contrast.
 - All fonts, images and scripts are local. There are no trackers or third-party
   requests during page load.
 - Headers and footers are repeated in the 11 HTML files; update them together.
@@ -54,7 +54,7 @@ newsletter tables, and careers form validation before pushing changes.
   It has no font, script or external resource dependencies. `favicon.ico`
   contains 16, 32 and 48 px versions; `favicon-32.png` is a PNG fallback.
   `apple-touch-icon.png` is a 180 px home-screen icon.
-- `assets/social-preview-v1.jpg` is the 1200 × 630 sharing card. It uses the
+- `assets/social-preview-v2.jpg` is the 1200 × 630 sharing card. It uses the
   existing architectural image and locally served site fonts, with exact
   typeset wording. It is not a new photograph of the firm's premises.
 - All 11 page heads include Open Graph and large-image Twitter Card metadata,
