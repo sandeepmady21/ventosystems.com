@@ -7,7 +7,8 @@ in place because this is a preview under the Ventosystems domain.
 
 ## Design and maintenance
 
-- The responsive design uses marine blue, fresh teal, warm apricot and white.
+- The responsive design uses navy, evergreen, warm neutral surfaces and brass
+  accents, with restrained typography, ruled panels and simple controls.
   `assets/style.css` holds the global design system, navigation and footer;
   `assets/home.css` holds the homepage; `assets/pages.css` holds interior pages.
   Source Sans 3 leads the typography, with Source Serif 4 for editorial accents.
@@ -68,11 +69,11 @@ newsletter tables and PDF downloads, and the careers email link before pushing c
 
 ## Browser and sharing identity
 
-- `assets/favicon.svg` is an outlined Source Serif 4 “S” on the site's blue.
+- `assets/favicon.svg` is an outlined Source Serif 4 “S” on the site's navy.
   It has no font, script or external resource dependencies. `favicon.ico`
   contains 16, 32 and 48 px versions; `favicon-32.png` is a PNG fallback.
   `apple-touch-icon.png` is a 180 px home-screen icon.
-- `assets/social-preview-v3.jpg` is the 1200 × 630 sharing card. It uses the
+- `assets/social-preview-v4.jpg` is the 1200 × 630 sharing card. It uses the
   existing architectural image and locally served site fonts, with exact
   typeset wording. It is not a new photograph of the firm's premises.
 - All 11 page heads include Open Graph and large-image Twitter Card metadata,

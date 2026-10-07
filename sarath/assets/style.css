@@ -1,4 +1,4 @@
-/* Sarath & Associates — a contemporary blue, teal and warm-white design system. */
+/* Sarath & Associates — professional navy, evergreen and warm-white design system. */
 @font-face {
   font-family: "Source Sans 3";
   src: url("fonts/source-sans-3-latin.woff2") format("woff2");
@@ -15,20 +15,20 @@
 }
 :root {
   color-scheme: light;
-  --paper: #fcfaf6;
+  --paper: #fbfaf7;
   --white: #ffffff;
-  --ink: #153c52;
-  --text: #445d67;
-  --muted: #5b6e73;
-  --blue: #175f86;
-  --blue-light: #e5f1f7;
-  --forest: #176956;
-  --mint: #e5f2e9;
-  --copper: #a44d28;
-  --peach: #fae5d6;
-  --deep: #10364b;
-  --line: #d3e0e1;
-  --sand: #f6d5ac;
+  --ink: #203b4c;
+  --text: #465c66;
+  --muted: #596c72;
+  --blue: #214f70;
+  --blue-light: #eaf1f5;
+  --forest: #245f55;
+  --mint: #edf3ef;
+  --copper: #8c512e;
+  --peach: #f5ece0;
+  --deep: #142f43;
+  --line: #d6dfe2;
+  --sand: #e6cda5;
   --sage: #b6d8c6;
   --stone: var(--mint);
   --mist: var(--blue-light);
@@ -69,12 +69,12 @@ h4 {
   font-family: var(--sans);
   font-weight: 600;
   line-height: 1.12;
-  letter-spacing: -0.035em;
+  letter-spacing: -0.025em;
   text-wrap: balance;
 }
 h1 {
-  font-size: clamp(48px, 6.4vw, 88px);
-  letter-spacing: -0.055em;
+  font-size: clamp(44px, 5.5vw, 76px);
+  letter-spacing: -0.035em;
 }
 h2 {
   font-size: clamp(32px, 3.8vw, 52px);
@@ -213,10 +213,9 @@ strong {
 }
 .eyebrow::before {
   content: "";
-  width: 8px;
-  height: 8px;
+  width: 24px;
+  height: 1px;
   flex: none;
-  border-radius: 50%;
   background: currentColor;
 }
 .label {
@@ -286,7 +285,7 @@ strong {
   padding: 16px 24px;
   min-height: 54px;
   border: 1px solid var(--blue);
-  border-radius: 999px;
+  border-radius: 3px;
   background: var(--blue);
   color: var(--white);
   font-size: 16px;
@@ -296,7 +295,7 @@ strong {
 }
 .btn::after {
   content: "↗";
-  font-size: 24px;
+  font-size: 21px;
   line-height: 1;
   font-weight: 400;
 }
@@ -342,10 +341,8 @@ strong {
   display: inline-grid;
   place-items: center;
   flex: none;
-  width: 30px;
-  height: 30px;
-  border: 1px solid currentColor;
-  border-radius: 50%;
+  width: 24px;
+  height: 26px;
   font-size: 20px;
   font-weight: 400;
 }
@@ -408,14 +405,15 @@ strong {
   font-size: 15px;
   line-height: 1.4;
   padding: 10px 12px;
-  border-radius: 8px;
+  border-radius: 0;
   white-space: nowrap;
   text-decoration: none;
 }
 .site-nav a:hover,
 .site-nav a[aria-current="page"] {
   color: var(--blue);
-  background: var(--blue-light);
+  text-decoration: underline;
+  text-underline-offset: 8px;
 }
 .site-nav a[aria-current="page"] {
   font-weight: 600;
@@ -426,7 +424,7 @@ strong {
   gap: 22px;
   margin-left: 5px;
   padding: 13px 20px;
-  border-radius: 999px;
+  border-radius: 3px;
   background: var(--blue);
   color: var(--white);
 }
@@ -434,6 +432,7 @@ strong {
 .site-nav .nav-contact[aria-current="page"] {
   background: var(--deep);
   color: var(--white);
+  text-decoration: none;
 }
 .nav-contact span {
   font-size: 22px;
@@ -444,7 +443,7 @@ strong {
   align-items: center;
   gap: 12px;
   border: 1px solid var(--line);
-  border-radius: 50px;
+  border-radius: 3px;
   padding: 12px 16px;
   background: var(--white);
   color: var(--ink);
@@ -690,7 +689,7 @@ strong {
     margin: 0;
     justify-content: space-between;
     padding: 13px 14px;
-    border-radius: 8px;
+    border-radius: 3px;
   }
   .split,
   .duo,
