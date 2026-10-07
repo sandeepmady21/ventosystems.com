@@ -1,4 +1,4 @@
-/* Professional layouts in a quieter slate-blue, sage and bronze palette. */
+/* Professional layouts with clear blue, fresh mint and soft apricot. */
 .page-home .home-opening {
   padding: 42px 0 24px;
   color: var(--white);
@@ -42,7 +42,7 @@
   text-wrap: initial;
 }
 .home-opening__title em {
-  color: var(--white);
+  color: var(--sand);
   font-family: var(--serif);
   font-weight: 400;
   font-style: normal;

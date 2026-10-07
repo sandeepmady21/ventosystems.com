@@ -7,19 +7,18 @@ in place because this is a preview under the Ventosystems domain.
 
 ## Design and maintenance
 
-- The responsive design uses a muted palette inspired by the supplied CA logo:
-  slate blue `#2E5368`, sage accents `#7F947B` and warm bronze `#BEA080`, with
-  restrained typography, ruled panels and simple controls. The homepage opens
-  in slate blue, introduces the firm on deeper pastel sage `#C5D2BF` and closes
-  on a warm neutral `#EEE6DC`. Matching header stripes, practice-area rules and
-  action buttons carry the softer colors across the site. The original CA logo
-  image is unchanged.
+- The responsive design pairs the supplied CA logo's clear blue `#195888` with
+  emerald accents `#4C9675` and soft apricot `#EDB68B`. Typography, ruled panels
+  and controls remain restrained. The homepage opens in blue with warm-cream
+  title emphasis, introduces the firm on clean mint `#D4EEE1` and closes on pale
+  apricot `#FFF0E2`. Matching header stripes, practice-area rules and buttons
+  carry the fresh palette across the site. The original CA logo image is unchanged.
   `assets/style.css` holds the global design system, navigation and footer;
   `assets/home.css` holds the homepage; `assets/pages.css` holds interior pages.
   Source Sans 3 leads the typography, with Source Serif 4 for editorial accents.
   Reading surfaces stay light; larger color fields distinguish sections.
-- Use white text on slate blue and dark navy text on sage and bronze backgrounds.
-  Sage and bronze accent colors are decorative or surface fills, not small text
+- Use white or warm-cream text on blue and dark navy text on mint and apricot.
+  Emerald and apricot accent colors are decorative or surface fills, not small text
   on white. Darker green and copper variants keep text and control borders readable.
 - All fonts, images and scripts are local. There are no trackers or third-party
   requests during page load.
@@ -77,13 +76,13 @@ newsletter tables and PDF downloads, and the careers email link before pushing c
 
 ## Browser and sharing identity
 
-- `assets/favicon.svg` is an outlined Source Serif 4 “S” on slate blue,
-  with muted sage and bronze accents.
+- `assets/favicon.svg` is an outlined Source Serif 4 “S” on logo blue,
+  with emerald and apricot accents.
   It has no font, script or external resource dependencies. `favicon.ico`
   contains 16, 32 and 48 px versions; `favicon-32.png` is a PNG fallback.
   `apple-touch-icon.png` is a 180 px home-screen icon.
-- `assets/social-preview-v6.jpg` is the 1200 × 630 sharing card. It uses the
-  muted site palette, existing architectural image and locally served site
+- `assets/social-preview-v7.jpg` is the 1200 × 630 sharing card. It uses the
+  fresh site palette, existing architectural image and locally served site
   fonts, with exact typeset wording. It is not a new photograph of the firm's
   premises.
 - All 11 page heads include Open Graph and large-image Twitter Card metadata,

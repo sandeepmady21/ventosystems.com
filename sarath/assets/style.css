@@ -1,4 +1,4 @@
-/* Sarath & Associates — restrained slate blue, sage and warm bronze. */
+/* Sarath & Associates — clear blue, fresh mint and soft apricot. */
 @font-face {
   font-family: "Source Sans 3";
   src: url("fonts/source-sans-3-latin.woff2") format("woff2");
@@ -15,33 +15,33 @@
 }
 :root {
   color-scheme: light;
-  --paper: #fbfaf7;
+  --paper: #fdfcf9;
   --white: #ffffff;
   --ink: #203b4c;
   --text: #465c66;
   --muted: #596c72;
-  /* Muted colors inspired by the supplied logo; the original logo is unchanged. */
-  --brand-blue: #2e5368;
-  --brand-green: #7f947b;
-  --brand-orange: #bea080;
-  --green-soft: #c5d2bf;
-  --warm-surface: #eee6dc;
+  /* Restore the supplied logo blue, with fresh green and softer warm accents. */
+  --brand-blue: #195888;
+  --brand-green: #4c9675;
+  --brand-orange: #edb68b;
+  --green-soft: #d4eee1;
+  --warm-surface: #fff0e2;
   --blue: var(--brand-blue);
-  --blue-light: #eaf0f3;
-  --forest: #405b43;
-  --mint: #edf1e9;
-  --copper: #805638;
-  --peach: #f3eee7;
+  --blue-light: #eaf4fb;
+  --forest: #28634c;
+  --mint: #edf8f2;
+  --copper: #925025;
+  --peach: #fff2e8;
   --deep: #142f43;
   --line: #d6dfe2;
-  --sand: #e1cbb5;
+  --sand: #ffdfc6;
   --sage: var(--brand-green);
   --stone: var(--mint);
   --mist: var(--blue-light);
   --linen: var(--peach);
   --slate: var(--forest);
-  --blue-soft: #aebfca;
-  --orange-soft: #cfb9a3;
+  --blue-soft: #abcde3;
+  --orange-soft: #f6c9a5;
   --serif: "Source Serif 4", Georgia, serif;
   --sans: "Source Sans 3", Arial, sans-serif;
   --wrap: 1280px;
@@ -317,7 +317,7 @@ strong {
 }
 .btn--accent:hover {
   color: var(--deep);
-  background: #d0b397;
+  background: var(--orange-soft);
   border-color: var(--deep);
 }
 .btn--accent:focus-visible {
