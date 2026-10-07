@@ -7,19 +7,20 @@ in place because this is a preview under the Ventosystems domain.
 
 ## Design and maintenance
 
-- The responsive design visibly uses the supplied CA logo's sampled blue
-  `#195888`, green `#54B849` and orange `#F27821`, with restrained typography,
-  ruled panels and simple controls. The homepage opens in logo blue, introduces
-  the firm on pastel sage `#DCE9D6` and closes with logo orange. Matching header
-  stripes, practice-area rules and action buttons carry those colors across the site.
+- The responsive design uses a muted palette inspired by the supplied CA logo:
+  slate blue `#2E5368`, sage accents `#7F947B` and warm bronze `#BEA080`, with
+  restrained typography, ruled panels and simple controls. The homepage opens
+  in slate blue, introduces the firm on deeper pastel sage `#C5D2BF` and closes
+  on a warm neutral `#EEE6DC`. Matching header stripes, practice-area rules and
+  action buttons carry the softer colors across the site. The original CA logo
+  image is unchanged.
   `assets/style.css` holds the global design system, navigation and footer;
   `assets/home.css` holds the homepage; `assets/pages.css` holds interior pages.
   Source Sans 3 leads the typography, with Source Serif 4 for editorial accents.
   Reading surfaces stay light; larger color fields distinguish sections.
-- Use white text on logo blue and dark navy text on pastel sage and orange
-  backgrounds. Keep the exact logo green in small accents rather than broad
-  fills. Darker green and orange variants are reserved for small text on light
-  surfaces.
+- Use white text on slate blue and dark navy text on sage and bronze backgrounds.
+  Sage and bronze accent colors are decorative or surface fills, not small text
+  on white. Darker green and copper variants keep text and control borders readable.
 - All fonts, images and scripts are local. There are no trackers or third-party
   requests during page load.
 - Headers and footers are repeated in the 11 HTML files; update them together.
@@ -76,13 +77,13 @@ newsletter tables and PDF downloads, and the careers email link before pushing c
 
 ## Browser and sharing identity
 
-- `assets/favicon.svg` is an outlined Source Serif 4 “S” on the logo's blue,
-  with green and orange accents.
+- `assets/favicon.svg` is an outlined Source Serif 4 “S” on slate blue,
+  with muted sage and bronze accents.
   It has no font, script or external resource dependencies. `favicon.ico`
   contains 16, 32 and 48 px versions; `favicon-32.png` is a PNG fallback.
   `apple-touch-icon.png` is a 180 px home-screen icon.
-- `assets/social-preview-v5.jpg` is the 1200 × 630 sharing card. It uses the
-  exact logo palette, existing architectural image and locally served site
+- `assets/social-preview-v6.jpg` is the 1200 × 630 sharing card. It uses the
+  muted site palette, existing architectural image and locally served site
   fonts, with exact typeset wording. It is not a new photograph of the firm's
   premises.
 - All 11 page heads include Open Graph and large-image Twitter Card metadata,

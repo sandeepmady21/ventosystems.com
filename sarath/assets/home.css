@@ -1,4 +1,4 @@
-/* Professional layouts with unmistakable CA-logo blue, green and orange. */
+/* Professional layouts in a quieter slate-blue, sage and bronze palette. */
 .page-home .home-opening {
   padding: 42px 0 24px;
   color: var(--white);
@@ -438,7 +438,7 @@
   text-decoration: underline;
 }
 .home-contact {
-  background: var(--brand-orange);
+  background: var(--warm-surface);
   color: var(--deep);
   padding: 65px 0;
 }

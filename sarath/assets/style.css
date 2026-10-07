@@ -1,4 +1,4 @@
-/* Sarath & Associates — CA-logo blue, green and orange with accessible text tones. */
+/* Sarath & Associates — restrained slate blue, sage and warm bronze. */
 @font-face {
   font-family: "Source Sans 3";
   src: url("fonts/source-sans-3-latin.woff2") format("woff2");
@@ -20,28 +20,28 @@
   --ink: #203b4c;
   --text: #465c66;
   --muted: #596c72;
-  /* Sampled from the supplied CA India logo; darker text tones stay separate. */
-  --brand-blue: #195888;
-  --brand-green: #54b849;
-  --brand-orange: #f27821;
-  /* Softer green for broad surfaces; keep the logo green in small accents. */
-  --green-soft: #dce9d6;
+  /* Muted colors inspired by the supplied logo; the original logo is unchanged. */
+  --brand-blue: #2e5368;
+  --brand-green: #7f947b;
+  --brand-orange: #bea080;
+  --green-soft: #c5d2bf;
+  --warm-surface: #eee6dc;
   --blue: var(--brand-blue);
-  --blue-light: #eaf3fa;
-  --forest: #246527;
-  --mint: #eff8ed;
-  --copper: #9a430d;
-  --peach: #fff0e3;
+  --blue-light: #eaf0f3;
+  --forest: #405b43;
+  --mint: #edf1e9;
+  --copper: #805638;
+  --peach: #f3eee7;
   --deep: #142f43;
   --line: #d6dfe2;
-  --sand: #ffdbbf;
-  --sage: #b6d8c6;
+  --sand: #e1cbb5;
+  --sage: var(--brand-green);
   --stone: var(--mint);
   --mist: var(--blue-light);
   --linen: var(--peach);
   --slate: var(--forest);
-  --blue-soft: #97bfd3;
-  --orange-soft: #d89c75;
+  --blue-soft: #aebfca;
+  --orange-soft: #cfb9a3;
   --serif: "Source Serif 4", Georgia, serif;
   --sans: "Source Sans 3", Arial, sans-serif;
   --wrap: 1280px;
@@ -313,11 +313,11 @@ strong {
 .btn--accent {
   color: var(--deep);
   background: var(--brand-orange);
-  border-color: var(--brand-orange);
+  border-color: var(--copper);
 }
 .btn--accent:hover {
   color: var(--deep);
-  background: #ff9244;
+  background: #d0b397;
   border-color: var(--deep);
 }
 .btn--accent:focus-visible {
