@@ -1,4 +1,4 @@
-/* Sarath & Associates — clear blue, vivid emerald and apricot. */
+/* Sarath & Associates — an editorial identity in blue, ivory and restrained brand accents. */
 @font-face {
   font-family: "Source Sans 3";
   src: url("fonts/source-sans-3-latin.woff2") format("woff2");
@@ -15,26 +15,26 @@
 }
 :root {
   color-scheme: light;
-  --paper: #fdfcf9;
+  --paper: #f8f7f3;
   --white: #ffffff;
-  --ink: #203b4c;
+  --ink: #183c52;
   --text: #465c66;
   --muted: #596c72;
-  /* Keep the supplied logo blue, with vivid green and apricot accents. */
+  /* The logo colors remain visible in details; reading surfaces stay neutral. */
   --brand-blue: #195888;
   --brand-green: #239c64;
-  --brand-orange: #ffa15c;
-  --green-soft: #91d9af;
-  --warm-surface: #ffd0a4;
+  --brand-orange: #efa36c;
+  --green-soft: #e9f2ec;
+  --warm-surface: #f5e9df;
   --blue: var(--brand-blue);
-  --blue-light: #eaf4fb;
+  --blue-light: #eff4f7;
   --forest: #176541;
-  --mint: #e2f6e9;
+  --mint: #eef5f0;
   --copper: #944517;
-  --peach: #ffe8d3;
+  --peach: #faf0e6;
   --deep: #142f43;
-  --line: #d6dfe2;
-  --sand: #ffd3ad;
+  --line: #d8dfdf;
+  --sand: #f2cfb1;
   --sage: var(--brand-green);
   --stone: var(--mint);
   --mist: var(--blue-light);
@@ -290,7 +290,7 @@ strong {
   padding: 16px 24px;
   min-height: 54px;
   border: 1px solid var(--blue);
-  border-radius: 3px;
+  border-radius: 0;
   background: var(--blue);
   color: var(--white);
   font-size: 16px;
@@ -363,8 +363,8 @@ strong {
 }
 .brand-rule {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr;
-  height: 5px;
+  grid-template-columns: 8fr 1fr 1fr;
+  height: 2px;
 }
 .brand-rule span:nth-child(1) {
   background: var(--brand-blue);
@@ -493,7 +493,8 @@ strong {
 }
 /* Shared closing area. */
 .contact-band {
-  background: var(--peach);
+  background: var(--paper);
+  border-top: 1px solid var(--line);
   padding-block: 52px;
 }
 .contact-band__inner {
@@ -503,6 +504,8 @@ strong {
   gap: 35px;
 }
 .contact-band h2 {
+  font-family: var(--serif);
+  font-weight: 400;
   font-size: clamp(32px, 3.4vw, 48px);
 }
 .contact-band p {
@@ -543,7 +546,7 @@ strong {
   margin-top: 5px;
 }
 .site-footer__heading {
-  color: var(--sand);
+  color: #f2cfb1;
   font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.1em;

@@ -8,19 +8,18 @@ in place because this is a preview under the Ventosystems domain.
 ## Design and maintenance
 
 - The responsive design pairs the supplied CA logo's clear blue `#195888` with
-  vivid emerald accents `#239C64` and apricot `#FFA15C`. Typography, ruled panels
-  and controls remain restrained. The homepage opens in blue with warm-cream
-  title emphasis, introduces the firm on bright mint `#91D9AF` and closes on
-  peach-apricot `#FFD0A4`. Matching header stripes, practice-area rules and buttons
-  carry the fresh palette across the site. The original CA logo image is unchanged.
+  small emerald `#239C64` and apricot `#EFA36C` accents on warm ivory `#F8F7F3`
+  and white. The editorial opening pairs a blue serif headline with the
+  architectural image. Fine rules replace heavy rainbow cards and colored slabs.
+  The original CA logo image is unchanged.
   `assets/style.css` holds the global design system, navigation and footer;
   `assets/home.css` holds the homepage; `assets/pages.css` holds interior pages.
-  Source Sans 3 leads the typography, with Source Serif 4 for editorial accents.
-  Reading surfaces stay light; larger color fields distinguish sections.
-- The homepage's `assets/architectural-lines.svg` is a decorative, locally served
-  architectural drawing that echoes the sandstone image. It sits beside the
-  desktop headline and is hidden on narrow screens to preserve reading space.
-  A fine rule separates the firm's founding date from its introduction.
+  Source Serif 4 leads headings; Source Sans 3 provides readable body copy and
+  navigation. The offices section provides one blue anchor within the light page.
+- The founding-year section uses `assets/heritage-tree.webp` on ivory, not a green
+  background. It is decorative, with an empty alt attribute, and is lazy-loaded.
+  The founding year and registration remain readable live HTML below the canopy.
+  The earlier `assets/architectural-lines.svg` is preserved but no longer used.
 - Links and buttons do not use decorative arrow marks. Text links use a quiet
   underline; cards retain clear hover and keyboard-focus states. The arrows in
   the archived April article's GST menu sequence are content, not decoration.
@@ -61,6 +60,17 @@ sweeping arch through the upper right. Calm, tactile, realistic architectural
 magazine photography with subtle grain. No people, writing, logos, watermark,
 flags or office signage; no website mockup.
 
+## Founding-year tree illustration
+
+`assets/heritage-tree.webp` is an original decorative illustration generated with
+the built-in image-generation tool (not the fallback CLI) on 7 October 2026.
+The generated transparent PNG was optimized to a 1200 × 800 WebP with its alpha
+preserved. It is a symbolic botanical illustration, not a tree at the firm's premises.
+
+Final generation prompt:
+
+> Use case: stylized-concept. Asset type: botanical editorial illustration for the founding-year section of a professional Indian chartered accountancy website. Primary request: one beautiful mature tree with lots of leaves, replacing a plain green background beside the year 1990. Subject: a single spreading Indian rain tree with an elegant branching trunk and a lush, finely detailed broad canopy of many individual leaves. Style: refined botanical watercolor and delicate engraved ink linework, sophisticated natural history folio illustration, subtly textured but crisp at web size, not cartoon clip art. Composition: the complete tree centered, from crown to trunk base, no clipped branches, generous small transparent margins, broad canopy, airy visible gaps among leaf clusters. Colors: fresh natural emerald and deep green leaves with subtly sunlit lighter green highlights; warm dark brown trunk. Backdrop: genuinely transparent alpha, no landscape or sky or opaque paper rectangle. Constraints: no words, numbers, labels, logos, watermark, frame, people, birds, money symbols or extra objects. The image will sit above the live HTML number 1990 on warm ivory.
+
 ## Preview and verify
 
 From the repository root, run `python3 -m http.server 4173 --bind 127.0.0.1` and
@@ -83,13 +93,13 @@ newsletter tables and PDF downloads, and the careers email link before pushing c
 
 ## Browser and sharing identity
 
-- `assets/favicon.svg` is an outlined Source Serif 4 “S” on logo blue,
+- `assets/favicon.svg` is an outlined logo-blue Source Serif 4 “S” on ivory,
   with emerald and apricot accents.
   It has no font, script or external resource dependencies. `favicon.ico`
   contains 16, 32 and 48 px versions; `favicon-32.png` is a PNG fallback.
   `apple-touch-icon.png` is a 180 px home-screen icon.
-- `assets/social-preview-v8.jpg` is the 1200 × 630 sharing card. It uses the
-  vivid site palette, existing architectural image and locally served site
+- `assets/social-preview-v9.jpg` is the 1200 × 630 sharing card. It uses the
+  light editorial palette, existing architectural image and locally served site
   fonts, with exact typeset wording. It is not a new photograph of the firm's
   premises.
 - All 11 page heads include Open Graph and large-image Twitter Card metadata,

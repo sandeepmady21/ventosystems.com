@@ -32,10 +32,10 @@ async function build() {
   const y = 53 + box.minY * scale;
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
   <title>Sarath &amp; Associates</title>
-  <rect width="64" height="64" rx="12" fill="#195888"/>
-  <path fill="#ffffff" transform="translate(${x.toFixed(4)} ${y.toFixed(4)}) scale(${scale.toFixed(6)} -${scale.toFixed(6)})" d="${glyph.path.toSVG()}"/>
+  <rect width="64" height="64" rx="12" fill="#f8f7f3"/>
+  <path fill="#195888" transform="translate(${x.toFixed(4)} ${y.toFixed(4)}) scale(${scale.toFixed(6)} -${scale.toFixed(6)})" d="${glyph.path.toSVG()}"/>
   <path fill="#239c64" d="M8 57h24v4H8z"/>
-  <path fill="#ffa15c" d="M32 57h24v4H32z"/>
+  <path fill="#efa36c" d="M32 57h24v4H32z"/>
 </svg>\n`;
   await fs.writeFile(path.join(assets, "favicon.svg"), svg);
   const pixels = new Map();
@@ -118,7 +118,7 @@ async function build() {
       );
     }
     await page.screenshot({
-      path: path.join(assets, "social-preview-v8.jpg"),
+      path: path.join(assets, "social-preview-v9.jpg"),
       type: "jpeg",
       quality: 92,
     });
