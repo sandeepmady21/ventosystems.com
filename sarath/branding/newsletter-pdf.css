@@ -1,0 +1,98 @@
+/* Print edition of the existing HTML newsletters. Article wording is unchanged. */
+@font-face {
+  font-family: "Source Serif 4";
+  src: url("../assets/fonts/source-serif-4-latin.woff2") format("woff2");
+  font-weight: 200 900;
+}
+@font-face {
+  font-family: "Source Sans 3";
+  src: url("../assets/fonts/source-sans-3-latin.woff2") format("woff2");
+  font-weight: 200 900;
+}
+* { box-sizing: border-box; }
+html { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+body {
+  margin: 0;
+  color: #253a35;
+  font-family: "Source Sans 3", Arial, sans-serif;
+  font-size: 10pt;
+  line-height: 1.4;
+}
+h1, h2, h3, h4 {
+  color: #2e514b;
+  font-family: "Source Serif 4", Georgia, serif;
+  font-weight: 500;
+  line-height: 1.18;
+  break-after: avoid;
+}
+p, ul, ol { margin: 0 0 8pt; }
+p, li { orphans: 3; widows: 3; }
+ul, ol { padding-left: 18pt; }
+li + li { margin-top: 4pt; }
+a { color: inherit; text-decoration: none; }
+strong { font-weight: 650; }
+.pdf-cover { break-after: page; }
+.pdf-brand {
+  padding: 9mm 0 13mm;
+  border-top: 3pt solid #2e514b;
+  font-family: "Source Serif 4", Georgia, serif;
+  font-size: 25pt;
+  line-height: 1.1;
+  color: #2e514b;
+}
+.pdf-brand span {
+  display: block;
+  margin-top: 7pt;
+  font: 10pt "Source Sans 3", Arial, sans-serif;
+  letter-spacing: 1.3pt;
+  text-transform: uppercase;
+}
+.eyebrow {
+  color: #806342;
+  font-size: 9pt;
+  letter-spacing: 1pt;
+  text-transform: uppercase;
+  margin: 0 0 10pt;
+}
+h1 { font-size: 44pt; margin: 0 0 14pt; }
+.page-hero__lead { font-size: 12pt; line-height: 1.5; margin-bottom: 22pt; }
+.pdf-contents { border-top: 1pt solid #d7ddd5; padding-top: 16pt; }
+.pdf-contents h2 { margin: 0 0 11pt; font-size: 18pt; }
+.pdf-contents ol { padding-left: 18pt; }
+.pdf-contents li { margin-bottom: 9pt; font-size: 11pt; }
+.issue__article { margin-top: 23pt; border-top: 1pt solid #d7ddd5; padding-top: 17pt; }
+.pdf-cover + .issue__article { margin-top: 0; padding-top: 0; border-top: 0; }
+.issue__article > h2 { font-size: 23pt; margin: 0 0 9pt; }
+h3 { font-size: 15pt; margin: 15pt 0 8pt; }
+h4 { font-size: 12pt; margin: 13pt 0 8pt; }
+.issue__byline { color: #806342; font-size: 9pt; margin-bottom: 17pt; break-after: avoid; }
+.issue__callout {
+  border-left: 2pt solid #806342;
+  background: #f0ebe2;
+  padding: 11pt 13pt;
+  margin: 15pt 0;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+.issue__callout h3:first-child { margin-top: 0; }
+.issue__callout p:last-child, .issue__callout ul:last-child { margin-bottom: 0; }
+.issue__disclaimer {
+  margin-top: 8pt;
+  border-top: 1pt solid #d7ddd5;
+  padding-top: 8pt;
+  font-size: 9pt;
+  break-inside: avoid;
+}
+.issue__disclaimer h2 { font-size: 12pt; margin: 0 0 6pt; }
+.table-scroll { margin: 13pt 0; overflow: visible; }
+table { width: 100%; border-collapse: collapse; font-size: 9pt; line-height: 1.35; }
+caption { text-align: left; font-weight: 650; font-size: 10pt; padding: 0 0 9pt; break-after: avoid; break-inside: avoid; }
+thead { display: table-header-group; break-after: avoid; }
+tr { break-inside: avoid; }
+th, td { padding: 4pt; border: 0.5pt solid #d7ddd5; vertical-align: top; text-align: left; }
+thead th { color: white; background: #2e514b; font-weight: 600; }
+tbody th { font-weight: 600; }
+tbody tr:nth-child(even) { background: #edf0eb; }
+td p:last-child, th p:last-child { margin-bottom: 0; }
+#compliance-deadlines-april-2026 th,
+#compliance-deadlines-april-2026 td { padding-block: 2.7pt; }

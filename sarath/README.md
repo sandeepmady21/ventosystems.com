@@ -8,8 +8,8 @@ in place because this is a preview under the Ventosystems domain.
 ## Design and maintenance
 
 - `assets/style.css` contains the responsive design: warm ivory, muted sage,
-  deep teal and restrained bronze, Source Serif 4 headings and Source Sans 3
-  body text. Mastheads share a light sage treatment; cards, forms and long
+  deep teal and restrained CA-blue and orange accents, Source Serif 4 headings
+  and Source Sans 3 body text. Mastheads share a light sage treatment; cards and long
   reading surfaces stay light. Dark teal is reserved for emphasis and contrast.
 - All fonts, images and scripts are local. There are no trackers or third-party
   requests during page load.
@@ -17,10 +17,14 @@ in place because this is a preview under the Ventosystems domain.
 - `assets/site.js` enables mobile navigation, active navigation links and
   keyboard scrolling of newsletter tables. Navigation remains available with
   JavaScript disabled. Motion respects `prefers-reduced-motion`.
-- `assets/careers.js` prepares an email using the applicant's email app. It does
-  not send or store application data. Keep its field IDs and `data-label`
-  attributes in sync with `careers.html`.
-- Keep partner qualifications/membership numbers, office details, service
+- Careers has a direct `mailto:` Apply button, not a form or submission backend.
+  Visitors review and send applications in their own email app. The current
+  recipient is `info@sarathcas.in`, pending a dedicated careers alias.
+- The six practice areas and partner assignments follow the October 2026
+  client feedback. People includes the nine supplied qualified professionals;
+  membership numbers are intentionally not displayed. Updated partner bios
+  are still awaiting client copy, so the existing biographies are preserved.
+- Keep partner qualifications, office details, service
   anchors and newsletter content factual. Existing TODO comments identify
   details still awaiting confirmation by the firm.
 
@@ -46,7 +50,20 @@ flags or office signage; no website mockup.
 From the repository root, run `python3 -m http.server 4173 --bind 127.0.0.1` and
 open `http://127.0.0.1:4173/sarath/`. Check all pages at mobile and desktop sizes,
 the mobile menu with keyboard and Escape, local links and article anchors,
-newsletter tables, and careers form validation before pushing changes.
+newsletter tables and PDF downloads, and the careers email link before pushing changes.
+
+## Newsletter downloads
+
+- `downloads/newsletter-2026-03.pdf` and `downloads/newsletter-2026-04.pdf` are
+  downloadable editions of the existing archived newsletters. Archive and
+  issue pages link to them directly, with no service or backend required.
+- `branding/build-newsletters.cjs` copies the existing article, table and
+  disclaimer markup into a print layout using `branding/newsletter-pdf.css`.
+  With Playwright available to Node and Chrome installed, run
+  `node sarath/branding/build-newsletters.cjs` from the repository root.
+- After changing an issue, regenerate its PDF, compare extracted text with
+  the original, and render every page to verify pagination and table layout.
+  These PDFs preserve historical issue content; they are not current guidance.
 
 ## Browser and sharing identity
 

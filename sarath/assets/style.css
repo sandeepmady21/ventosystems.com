@@ -1,4 +1,4 @@
-/* Sarath & Associates — warm ivory, muted sage, deep teal and restrained bronze. */
+/* Sarath & Associates — ivory and sage, with restrained CA-blue and orange accents. */
 @font-face {
   font-family: "Source Serif 4";
   src: url("fonts/source-serif-4-latin.woff2") format("woff2");
@@ -24,7 +24,10 @@
   --text: #4d5b55;
   --muted: #606d64;
   --line: #d7ddd5;
-  --copper: #806342;
+  --copper: #98512c;
+  --blue: #32637c;
+  --blue-soft: #9bb7c2;
+  --orange-soft: #d1a98e;
   --sage: #cedbd0;
   --sand: #d6c5a5;
   --mist: #e7eee8;
@@ -355,7 +358,7 @@ article[id] {
 }
 .wordmark__name {
   font-family: var(--serif);
-  font-size: 25px;
+  font-size: 31px;
   letter-spacing: -0.05em;
   color: var(--forest);
   line-height: 1.2;
@@ -386,7 +389,7 @@ article[id] {
 }
 .site-nav a:hover,
 .site-nav a[aria-current="page"] {
-  color: var(--copper);
+  color: var(--blue);
 }
 .site-nav a[aria-current="page"]:not(.nav-contact) {
   border-bottom-color: currentColor;
@@ -594,19 +597,29 @@ article[id] {
   gap: 12px;
 }
 .practice-item {
+  --practice-accent: var(--forest);
+  --practice-rule: var(--sage);
   display: grid;
   grid-template-columns: 60px 1fr 1fr 42px;
   gap: 26px;
   align-items: start;
   padding: 30px 24px;
   border: 1px solid var(--line);
-  border-left: 3px solid var(--sage);
+  border-left: 3px solid var(--practice-rule);
   background: var(--white);
   text-decoration: none;
   color: var(--text);
   transition:
     box-shadow 0.2s,
     background 0.2s;
+}
+.practice-list > li:nth-child(3n + 1) .practice-item {
+  --practice-accent: var(--blue);
+  --practice-rule: var(--blue-soft);
+}
+.practice-list > li:nth-child(3n) .practice-item {
+  --practice-accent: var(--copper);
+  --practice-rule: var(--orange-soft);
 }
 .practice-item:hover {
   color: var(--text);
@@ -615,7 +628,7 @@ article[id] {
 }
 .practice-item__number {
   font-size: 12px;
-  color: var(--copper);
+  color: var(--practice-accent);
   padding-top: 10px;
 }
 .practice-item h3 {
@@ -740,7 +753,7 @@ article[id] {
   position: relative;
   min-height: 235px;
   padding: 18px;
-  background: var(--forest);
+  background: var(--blue);
   color: var(--paper);
   overflow: hidden;
   display: flex;
@@ -1335,11 +1348,47 @@ article[id] {
   margin-bottom: 25px;
 }
 .page-careers .duo > section {
-  border-top: 2px solid var(--sage);
+  border-top: 2px solid var(--blue-soft);
   padding-top: 24px;
+}
+.page-careers .duo > section + section {
+  border-top-color: var(--orange-soft);
 }
 .page-careers .section--stone {
   background: var(--stone);
+}
+.career-apply {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: clamp(32px, 6vw, 80px);
+  align-items: start;
+}
+.career-apply__lead {
+  margin-top: 24px;
+  max-width: 600px;
+}
+.career-apply__action {
+  padding: 32px;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--sage);
+}
+.career-apply__action > * + * {
+  margin-top: 20px;
+}
+.qualified-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  list-style: none;
+  padding: 0;
+}
+.qualified-list li {
+  padding: 22px;
+  border: 1px solid var(--line);
+  background: var(--white);
+  color: var(--forest);
+  font: 400 21px/1.4 var(--serif);
 }
 .pairs dt {
   font-weight: 600;
@@ -1485,6 +1534,9 @@ article[id] {
   max-width: 680px;
 }
 .issue-entry__read {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 28px;
   margin-top: 22px;
 }
 .issue-entry__contents {
@@ -1513,7 +1565,7 @@ article[id] {
   flex-direction: column;
   min-height: 360px;
   padding: 26px;
-  background: var(--forest);
+  background: var(--blue);
   color: var(--paper);
   text-decoration: none;
 }
@@ -1532,7 +1584,7 @@ article[id] {
 }
 .issue-cover:hover {
   color: var(--paper);
-  background: var(--deep);
+  background: #244b60;
 }
 .issue-cover--clay {
   background: var(--slate);
@@ -1821,7 +1873,7 @@ tbody tr:nth-child(even) {
     gap: 19px;
   }
   .wordmark__name {
-    font-size: 23px;
+    font-size: 27px;
   }
   .wordmark__logo {
     width: 40px;
@@ -1938,6 +1990,15 @@ tbody tr:nth-child(even) {
   }
 }
 @media (max-width: 767px) {
+  .career-apply {
+    grid-template-columns: 1fr;
+  }
+  .career-apply__action {
+    padding: 26px;
+  }
+  .qualified-list {
+    grid-template-columns: 1fr;
+  }
   :root {
     --gutter: 24px;
     --header-h: 80px;
@@ -1951,7 +2012,7 @@ tbody tr:nth-child(even) {
     gap: 10px;
   }
   .wordmark__name {
-    font-size: 23px;
+    font-size: 25px;
   }
   .wordmark__desc {
     font-size: 8px;
@@ -2312,7 +2373,7 @@ tbody tr:nth-child(even) {
 }
 @media (max-width: 479px) {
   .wordmark__name {
-    font-size: 21px;
+    font-size: 23px;
   }
   .wordmark__logo {
     width: 32px;
@@ -2451,7 +2512,7 @@ tbody tr:nth-child(even) {
     --gutter: 20px;
   }
   .wordmark__name {
-    font-size: 18px;
+    font-size: 20px;
   }
   .wordmark__desc {
     font-size: 7px;
@@ -2502,6 +2563,7 @@ tbody tr:nth-child(even) {
   .aside-nav,
   .home-hero__image,
   .contact-band,
+  .newsletter-download,
   .page-hero::after {
     display: none !important;
   }
