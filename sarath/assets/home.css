@@ -1,8 +1,8 @@
-/* A professional editorial homepage: navy, evergreen and warm neutral surfaces. */
+/* Professional layouts with unmistakable CA-logo blue, green and orange. */
 .page-home .home-opening {
   padding: 42px 0 24px;
   color: var(--white);
-  background: var(--deep);
+  background: var(--brand-blue);
 }
 .home-opening__topline {
   display: flex;
@@ -27,9 +27,12 @@
 .home-opening__topline a:hover {
   text-decoration: underline;
 }
-.home-opening__topline a:focus-visible,
-.home-firm :focus-visible {
+.home-opening__topline a:focus-visible {
   outline-color: var(--sand);
+}
+.home-firm :focus-visible,
+.home-contact :focus-visible {
+  outline-color: var(--deep);
 }
 .page-home .home-opening__title {
   margin: 30px 0 38px;
@@ -39,7 +42,7 @@
   text-wrap: initial;
 }
 .home-opening__title em {
-  color: var(--sand);
+  color: var(--white);
   font-family: var(--serif);
   font-weight: 400;
   font-style: normal;
@@ -82,10 +85,11 @@
   justify-content: center;
   padding: clamp(28px, 3vw, 44px);
   background: var(--paper);
+  border-top: 8px solid var(--brand-green);
   color: var(--ink);
 }
 .home-opening__note .label {
-  color: var(--copper);
+  color: var(--forest);
   margin-bottom: 16px;
 }
 .home-opening__note > p:not(.label) {
@@ -140,14 +144,15 @@
 .home-practice-grid > li {
   --practice-surface: var(--white);
   --practice-ink: var(--blue);
+  --practice-rule: var(--brand-blue);
 }
-.home-practice-grid > li:nth-child(2),
-.home-practice-grid > li:nth-child(4) {
+.home-practice-grid > li:nth-child(3n + 2) {
   --practice-ink: var(--forest);
+  --practice-rule: var(--brand-green);
 }
-.home-practice-grid > li:nth-child(3),
-.home-practice-grid > li:nth-child(5) {
+.home-practice-grid > li:nth-child(3n) {
   --practice-ink: var(--copper);
+  --practice-rule: var(--brand-orange);
 }
 .home-practices .practice-item {
   position: relative;
@@ -159,7 +164,7 @@
   min-height: 292px;
   padding: 28px 30px 26px;
   border: 1px solid var(--line);
-  border-top: 2px solid var(--practice-ink);
+  border-top: 6px solid var(--practice-rule);
   border-radius: 0;
   background: var(--practice-surface);
   color: var(--ink);
@@ -201,8 +206,8 @@
   font: 400 21px/1 var(--sans);
 }
 .home-firm {
-  background: var(--forest);
-  color: var(--white);
+  background: var(--brand-green);
+  color: var(--deep);
 }
 .home-firm__grid {
   display: grid;
@@ -210,43 +215,44 @@
   gap: 80px;
 }
 .home-firm .eyebrow {
-  color: var(--sand);
+  color: var(--deep);
 }
 .home-firm__year {
   margin: 30px 0 28px;
-  color: var(--sand);
+  color: var(--deep);
   font: 400 clamp(86px, 8vw, 116px) / 1 var(--serif);
   letter-spacing: -0.04em;
 }
 .home-firm__year span {
   display: block;
   margin-top: 25px;
-  color: var(--white);
+  color: var(--deep);
   font: 400 21px/1.4 var(--serif);
   letter-spacing: -0.015em;
 }
 .home-firm__registration {
-  color: #d0e9df;
+  color: var(--deep);
   font-size: 13px;
   letter-spacing: 0.025em;
 }
 .home-firm .home-section-title {
-  color: var(--white);
+  color: var(--deep);
   margin-bottom: 26px;
 }
 .home-firm__copy > p {
   max-width: 650px;
   margin-bottom: 18px;
-  color: #e3f1eb;
+  color: var(--deep);
   font-size: 18px;
   line-height: 1.65;
 }
 .home-firm .more {
-  color: var(--white);
+  color: var(--deep);
   margin-top: 12px;
 }
 .home-firm .more:hover {
-  color: var(--sand);
+  color: var(--deep);
+  text-decoration: underline;
 }
 .home-firm__facts {
   display: grid;
@@ -254,7 +260,7 @@
   gap: 32px;
   margin-top: 65px;
   padding-top: 30px;
-  border-top: 1px solid #ffffff45;
+  border-top: 1px solid #142f4360;
 }
 .home-firm__facts > div {
   display: flex;
@@ -268,7 +274,7 @@
   line-height: 1.4;
 }
 .home-firm__facts dd {
-  color: var(--sand);
+  color: var(--deep);
   font: 500 64px/1 var(--sans);
   letter-spacing: -0.045em;
 }
@@ -432,7 +438,8 @@
   text-decoration: underline;
 }
 .home-contact {
-  background: var(--peach);
+  background: var(--brand-orange);
+  color: var(--deep);
   padding: 65px 0;
 }
 .home-contact__inner {
@@ -442,10 +449,11 @@
   gap: 35px;
 }
 .home-contact .eyebrow {
-  color: var(--copper);
+  color: var(--deep);
 }
 .home-contact .home-section-title {
   margin-bottom: 14px;
+  color: var(--deep);
 }
 .home-contact__inner .btn {
   flex-shrink: 0;

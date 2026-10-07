@@ -2,20 +2,24 @@
 .page-hero {
   --hero-colour: var(--blue-light);
   --hero-accent: var(--blue);
+  --hero-rule: var(--brand-blue);
   position: relative;
   overflow: hidden;
   padding-block: clamp(58px, 6vw, 94px);
   background: var(--hero-colour);
+  border-bottom: 6px solid var(--hero-rule);
 }
 .page-people .page-hero,
 .page-offices .page-hero {
   --hero-colour: var(--mint);
   --hero-accent: var(--forest);
+  --hero-rule: var(--brand-green);
 }
 .page-careers .page-hero,
 .page-404 .page-hero {
   --hero-colour: var(--peach);
   --hero-accent: var(--copper);
+  --hero-rule: var(--brand-orange);
 }
 .page-hero__inner {
   display: grid;
@@ -156,10 +160,22 @@
 .service {
   --area-accent: var(--blue);
   --area-tint: var(--blue-light);
+  --area-rule: var(--brand-blue);
   padding: clamp(26px, 3.5vw, 48px);
   background: var(--white);
   border: 1px solid var(--line);
+  border-top: 6px solid var(--area-rule);
   border-radius: 4px;
+}
+.service:nth-of-type(3n + 2) {
+  --area-accent: var(--forest);
+  --area-tint: var(--mint);
+  --area-rule: var(--brand-green);
+}
+.service:nth-of-type(3n) {
+  --area-accent: var(--copper);
+  --area-tint: var(--peach);
+  --area-rule: var(--brand-orange);
 }
 .service + .service {
   margin-top: 28px;
@@ -197,7 +213,7 @@
   top: 26px;
   width: 7px;
   height: 7px;
-  background: var(--area-accent);
+  background: var(--area-rule);
   border-radius: 2px;
 }
 .service__list li:last-child {
@@ -554,9 +570,12 @@
 .page-careers .duo > section {
   padding: clamp(28px, 3.5vw, 48px);
   border: 1px solid var(--line);
-  border-top: 2px solid var(--blue);
+  border-top: 4px solid var(--brand-blue);
   border-radius: 4px;
   background: var(--white);
+}
+.page-careers .duo > section:nth-child(2) {
+  border-top-color: var(--brand-green);
 }
 .page-careers .duo .section-title {
   font-size: clamp(30px, 2.8vw, 36px);
@@ -583,6 +602,7 @@
 .career-apply__action {
   padding: clamp(28px, 3vw, 44px);
   border: 1px solid var(--line);
+  border-top: 5px solid var(--brand-orange);
   border-radius: 4px;
   background: var(--white);
 }

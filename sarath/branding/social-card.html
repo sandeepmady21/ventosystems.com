@@ -26,10 +26,26 @@
         width: 1200px;
         height: 630px;
         overflow: hidden;
-        background: #142f43;
-        color: #fcfaf6;
+        background: #195888;
+        color: #ffffff;
         font-family: "Source Sans 3", sans-serif;
-        border-bottom: 4px solid #e6cda5;
+      }
+      .brand-band {
+        position: absolute;
+        inset: auto 0 0;
+        height: 20px;
+        display: grid;
+        grid-template-columns: 3fr 2fr;
+      }
+      .brand-band::before,
+      .brand-band::after {
+        content: "";
+      }
+      .brand-band::before {
+        background: #54b849;
+      }
+      .brand-band::after {
+        background: #f27821;
       }
       .copy {
         position: absolute;
@@ -47,12 +63,12 @@
         margin: 13px 0 0;
         font-size: 21px;
         letter-spacing: 0.5px;
-        color: #e5f1f7;
+        color: #ffffff;
       }
       .rule {
-        width: 52px;
-        height: 2px;
-        background: #e6cda5;
+        width: 72px;
+        height: 5px;
+        background: #f27821;
         margin-top: 48px;
       }
       h1 {
@@ -67,7 +83,7 @@
         display: block;
       }
       h1 em {
-        color: #e6cda5;
+        color: #ffffff;
         font-family: "Source Serif 4", Georgia, serif;
         font-size: 68px;
         font-weight: 400;
@@ -77,7 +93,7 @@
         position: absolute;
         top: 34px;
         right: 34px;
-        bottom: 34px;
+        bottom: 54px;
         width: 434px;
       }
       .visual::before {
@@ -86,8 +102,8 @@
         inset: -13px -13px auto auto;
         width: 125px;
         height: 125px;
-        border-top: 1px solid #e6cda5;
-        border-right: 1px solid #e6cda5;
+        border-top: 4px solid #54b849;
+        border-right: 4px solid #54b849;
       }
       .visual img {
         border-radius: 2px;
@@ -115,6 +131,7 @@
           alt="An architectural study of sandstone columns and an archway"
         />
       </div>
+      <div class="brand-band" aria-hidden="true"></div>
     </main>
   </body>
 </html>

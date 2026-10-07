@@ -1,4 +1,4 @@
-/* Sarath & Associates — professional navy, evergreen and warm-white design system. */
+/* Sarath & Associates — CA-logo blue, green and orange with accessible text tones. */
 @font-face {
   font-family: "Source Sans 3";
   src: url("fonts/source-sans-3-latin.woff2") format("woff2");
@@ -20,15 +20,19 @@
   --ink: #203b4c;
   --text: #465c66;
   --muted: #596c72;
-  --blue: #214f70;
-  --blue-light: #eaf1f5;
-  --forest: #245f55;
-  --mint: #edf3ef;
-  --copper: #8c512e;
-  --peach: #f5ece0;
+  /* Sampled from the supplied CA India logo; darker text tones stay separate. */
+  --brand-blue: #195888;
+  --brand-green: #54b849;
+  --brand-orange: #f27821;
+  --blue: var(--brand-blue);
+  --blue-light: #eaf3fa;
+  --forest: #246527;
+  --mint: #eff8ed;
+  --copper: #9a430d;
+  --peach: #fff0e3;
   --deep: #142f43;
   --line: #d6dfe2;
-  --sand: #e6cda5;
+  --sand: #ffdbbf;
   --sage: #b6d8c6;
   --stone: var(--mint);
   --mist: var(--blue-light);
@@ -304,6 +308,19 @@ strong {
   border-color: var(--deep);
   color: white;
 }
+.btn--accent {
+  color: var(--deep);
+  background: var(--brand-orange);
+  border-color: var(--brand-orange);
+}
+.btn--accent:hover {
+  color: var(--deep);
+  background: #ff9244;
+  border-color: var(--deep);
+}
+.btn--accent:focus-visible {
+  outline-color: var(--deep);
+}
 .btn--outline {
   color: var(--blue);
   background: transparent;
@@ -357,6 +374,20 @@ strong {
   z-index: 30;
   background: var(--white);
   border-bottom: 1px solid var(--line);
+}
+.brand-rule {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  height: 5px;
+}
+.brand-rule span:nth-child(1) {
+  background: var(--brand-blue);
+}
+.brand-rule span:nth-child(2) {
+  background: var(--brand-green);
+}
+.brand-rule span:nth-child(3) {
+  background: var(--brand-orange);
 }
 .site-header__inner {
   display: flex;
