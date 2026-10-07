@@ -16,9 +16,11 @@ in place because this is a preview under the Ventosystems domain.
   `assets/home.css` holds the homepage; `assets/pages.css` holds interior pages.
   Source Serif 4 leads headings; Source Sans 3 provides readable body copy and
   navigation. The offices section provides one blue anchor within the light page.
-- The founding-year section uses `assets/heritage-tree.webp` on ivory, not a green
-  background. It is decorative, with an empty alt attribute, and is lazy-loaded.
-  The founding year and registration remain readable live HTML below the canopy.
+- The founding-year section uses the user-supplied photograph in
+  `assets/leaf-canopy.webp`, not a green background or illustrated tree.
+  It is decorative, with an empty alt attribute, and is lazy-loaded. The founding
+  year and registration remain live HTML on a 90%-opaque navy caption panel.
+  The earlier `assets/heritage-tree.webp` illustration is preserved but not displayed.
   The earlier `assets/architectural-lines.svg` is preserved but no longer used.
 - Links and buttons do not use decorative arrow marks. Text links use a quiet
   underline; cards retain clear hover and keyboard-focus states. The arrows in
@@ -60,7 +62,16 @@ sweeping arch through the upper right. Calm, tactile, realistic architectural
 magazine photography with subtle grain. No people, writing, logos, watermark,
 flags or office signage; no website mockup.
 
-## Founding-year tree illustration
+## Founding-year canopy photograph
+
+`assets/leaf-canopy.webp` is the photograph supplied by the user on 7 October 2026:
+sunlight through a leafy canopy, viewed from below. The original 4000 × 6000 PNG
+was optimized to a 1200 × 1800 WebP without retouching. The photograph is used as
+atmospheric imagery, not identified as the firm's premises. Text is kept within
+a bounded `#142F43` caption at 90% opacity; even over pure white, white caption
+text has approximately 10:1 contrast. The original supplied file is left unchanged.
+
+## Earlier tree illustration (not displayed)
 
 `assets/heritage-tree.webp` is an original decorative illustration generated with
 the built-in image-generation tool (not the fallback CLI) on 7 October 2026.

@@ -195,7 +195,7 @@
   font-size: 16px;
   line-height: 1.65;
 }
-/* The tree carries the green; there is no green panel behind the founding year. */
+/* Photographic foliage carries the green; live text sits on a readable caption. */
 .home-firm {
   background: var(--paper);
   border-top: 1px solid var(--line);
@@ -207,24 +207,40 @@
   align-items: center;
 }
 .home-firm__year-block {
-  text-align: center;
-  padding: 0 18px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 560px;
+  overflow: hidden;
+  background: var(--deep);
 }
 .home-firm__year-block .eyebrow {
-  justify-content: center;
-  color: var(--forest);
-  margin: 0 0 20px;
+  position: relative;
+  align-self: flex-start;
+  color: var(--white);
+  background: #142f43e6;
+  margin: 26px 26px 210px;
+  padding: 8px 12px;
+  font-size: 10px;
 }
-.home-firm__tree {
+.home-firm__photo {
+  position: absolute;
+  inset: 0;
   display: block;
   width: 100%;
-  max-width: 490px;
-  height: auto;
-  margin: 0 auto;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 35%;
+}
+.home-firm__caption {
+  position: relative;
+  padding: 28px 32px;
+  background: #142f43e6;
 }
 .home-firm__year {
-  margin: 8px 0 18px;
-  color: var(--ink);
+  margin: 0 0 18px;
+  color: var(--white);
   font: 400 clamp(72px, 7vw, 96px) / 1 var(--serif);
   letter-spacing: -0.06em;
 }
@@ -235,7 +251,7 @@
   letter-spacing: -0.015em;
 }
 .home-firm__registration {
-  color: var(--muted);
+  color: var(--white);
   font-size: 12px;
 }
 .home-firm .home-section-title {
@@ -486,9 +502,6 @@
   .home-firm__grid {
     gap: 45px;
   }
-  .home-firm__year-block {
-    padding-inline: 0;
-  }
   .home-insights__grid {
     gap: 30px;
   }
@@ -567,11 +580,15 @@
   }
   .home-firm__year-block {
     max-width: 450px;
+    min-height: 480px;
     width: 100%;
     margin-inline: auto;
   }
-  .home-firm__tree {
-    max-width: 400px;
+  .home-firm__year-block .eyebrow {
+    margin: 22px 22px 190px;
+  }
+  .home-firm__caption {
+    padding: 24px;
   }
   .home-firm__copy > p {
     font-size: 17px;
