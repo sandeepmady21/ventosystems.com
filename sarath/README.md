@@ -8,10 +8,10 @@ in place because this is a preview under the Ventosystems domain.
 ## Design and maintenance
 
 - The responsive design pairs the supplied CA logo's clear blue `#195888` with
-  emerald accents `#4C9675` and soft apricot `#EDB68B`. Typography, ruled panels
+  vivid emerald accents `#239C64` and apricot `#FFA15C`. Typography, ruled panels
   and controls remain restrained. The homepage opens in blue with warm-cream
-  title emphasis, introduces the firm on clean mint `#D4EEE1` and closes on pale
-  apricot `#FFF0E2`. Matching header stripes, practice-area rules and buttons
+  title emphasis, introduces the firm on bright mint `#91D9AF` and closes on
+  peach-apricot `#FFD0A4`. Matching header stripes, practice-area rules and buttons
   carry the fresh palette across the site. The original CA logo image is unchanged.
   `assets/style.css` holds the global design system, navigation and footer;
   `assets/home.css` holds the homepage; `assets/pages.css` holds interior pages.
@@ -88,8 +88,8 @@ newsletter tables and PDF downloads, and the careers email link before pushing c
   It has no font, script or external resource dependencies. `favicon.ico`
   contains 16, 32 and 48 px versions; `favicon-32.png` is a PNG fallback.
   `apple-touch-icon.png` is a 180 px home-screen icon.
-- `assets/social-preview-v7.jpg` is the 1200 × 630 sharing card. It uses the
-  fresh site palette, existing architectural image and locally served site
+- `assets/social-preview-v8.jpg` is the 1200 × 630 sharing card. It uses the
+  vivid site palette, existing architectural image and locally served site
   fonts, with exact typeset wording. It is not a new photograph of the firm's
   premises.
 - All 11 page heads include Open Graph and large-image Twitter Card metadata,

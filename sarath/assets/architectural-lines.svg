@@ -1,20 +1,20 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 200" fill="none">
-  <g stroke="#d4eee1" stroke-width="0.8" opacity="0.22">
+  <g stroke="#b3ebc9" stroke-width="0.8" opacity="0.22">
     <path d="M19 181h228M35 158h212M80 18v175M143 9v184M205 29v164"/>
     <path d="m19 193 71-47m40 47 39-47m58 47 10-47"/>
     <path d="M70 90h145M133 28h20M143 18v20"/>
   </g>
-  <g stroke="#d4eee1" stroke-width="1.3" opacity="0.65">
+  <g stroke="#b3ebc9" stroke-width="1.3" opacity="0.65">
     <path d="M80 181V90a63 63 0 0 1 126 0v91"/>
     <path d="M98 181V90a45 45 0 0 1 90 0v91"/>
     <path d="M80 181h18m90 0h18"/>
   </g>
-  <g stroke="#ffdfc6" stroke-width="1.1" opacity="0.7">
+  <g stroke="#ffd3ad" stroke-width="1.1" opacity="0.7">
     <path d="M98 181h23V99a45 45 0 0 1 67-39"/>
     <path d="m98 90 23 9m-41 82 23 10h126V100a63 63 0 0 0-42-59"/>
     <path d="m206 181 23 10"/>
   </g>
-  <g stroke="#ffdfc6" stroke-width="0.8" opacity="0.35">
+  <g stroke="#ffd3ad" stroke-width="0.8" opacity="0.35">
     <path d="M51 57v33m-4-29 8-8m-8 41 8-8M55 90h18M143 20v-7m-4 3 8-6"/>
   </g>
 </svg>

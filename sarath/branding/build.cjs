@@ -34,8 +34,8 @@ async function build() {
   <title>Sarath &amp; Associates</title>
   <rect width="64" height="64" rx="12" fill="#195888"/>
   <path fill="#ffffff" transform="translate(${x.toFixed(4)} ${y.toFixed(4)}) scale(${scale.toFixed(6)} -${scale.toFixed(6)})" d="${glyph.path.toSVG()}"/>
-  <path fill="#4c9675" d="M8 57h24v4H8z"/>
-  <path fill="#edb68b" d="M32 57h24v4H32z"/>
+  <path fill="#239c64" d="M8 57h24v4H8z"/>
+  <path fill="#ffa15c" d="M32 57h24v4H32z"/>
 </svg>\n`;
   await fs.writeFile(path.join(assets, "favicon.svg"), svg);
   const pixels = new Map();
@@ -118,7 +118,7 @@ async function build() {
       );
     }
     await page.screenshot({
-      path: path.join(assets, "social-preview-v7.jpg"),
+      path: path.join(assets, "social-preview-v8.jpg"),
       type: "jpeg",
       quality: 92,
     });

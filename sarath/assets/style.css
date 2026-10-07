@@ -1,4 +1,4 @@
-/* Sarath & Associates — clear blue, fresh mint and soft apricot. */
+/* Sarath & Associates — clear blue, vivid emerald and apricot. */
 @font-face {
   font-family: "Source Sans 3";
   src: url("fonts/source-sans-3-latin.woff2") format("woff2");
@@ -20,28 +20,28 @@
   --ink: #203b4c;
   --text: #465c66;
   --muted: #596c72;
-  /* Restore the supplied logo blue, with fresh green and softer warm accents. */
+  /* Keep the supplied logo blue, with vivid green and apricot accents. */
   --brand-blue: #195888;
-  --brand-green: #4c9675;
-  --brand-orange: #edb68b;
-  --green-soft: #d4eee1;
-  --warm-surface: #fff0e2;
+  --brand-green: #239c64;
+  --brand-orange: #ffa15c;
+  --green-soft: #91d9af;
+  --warm-surface: #ffd0a4;
   --blue: var(--brand-blue);
   --blue-light: #eaf4fb;
-  --forest: #28634c;
-  --mint: #edf8f2;
-  --copper: #925025;
-  --peach: #fff2e8;
+  --forest: #176541;
+  --mint: #e2f6e9;
+  --copper: #944517;
+  --peach: #ffe8d3;
   --deep: #142f43;
   --line: #d6dfe2;
-  --sand: #ffdfc6;
+  --sand: #ffd3ad;
   --sage: var(--brand-green);
   --stone: var(--mint);
   --mist: var(--blue-light);
   --linen: var(--peach);
   --slate: var(--forest);
   --blue-soft: #abcde3;
-  --orange-soft: #f6c9a5;
+  --orange-soft: #ffb778;
   --serif: "Source Serif 4", Georgia, serif;
   --sans: "Source Sans 3", Arial, sans-serif;
   --wrap: 1280px;
