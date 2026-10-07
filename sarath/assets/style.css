@@ -24,6 +24,8 @@
   --brand-blue: #195888;
   --brand-green: #54b849;
   --brand-orange: #f27821;
+  /* Softer green for broad surfaces; keep the logo green in small accents. */
+  --green-soft: #dce9d6;
   --blue: var(--brand-blue);
   --blue-light: #eaf3fa;
   --forest: #246527;

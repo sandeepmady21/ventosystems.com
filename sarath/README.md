@@ -10,15 +10,16 @@ in place because this is a preview under the Ventosystems domain.
 - The responsive design visibly uses the supplied CA logo's sampled blue
   `#195888`, green `#54B849` and orange `#F27821`, with restrained typography,
   ruled panels and simple controls. The homepage opens in logo blue, introduces
-  the firm on logo green and closes with logo orange. Matching header stripes,
-  practice-area rules and action buttons carry those colors across the site.
+  the firm on pastel sage `#DCE9D6` and closes with logo orange. Matching header
+  stripes, practice-area rules and action buttons carry those colors across the site.
   `assets/style.css` holds the global design system, navigation and footer;
   `assets/home.css` holds the homepage; `assets/pages.css` holds interior pages.
   Source Sans 3 leads the typography, with Source Serif 4 for editorial accents.
   Reading surfaces stay light; larger color fields distinguish sections.
-- Use white text on logo blue and dark navy text on the bright green and orange
-  backgrounds. Darker green and orange variants are reserved for small text on
-  light surfaces; the exact logo colors are the prominent fills and accents.
+- Use white text on logo blue and dark navy text on pastel sage and orange
+  backgrounds. Keep the exact logo green in small accents rather than broad
+  fills. Darker green and orange variants are reserved for small text on light
+  surfaces.
 - All fonts, images and scripts are local. There are no trackers or third-party
   requests during page load.
 - Headers and footers are repeated in the 11 HTML files; update them together.

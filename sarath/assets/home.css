@@ -206,7 +206,7 @@
   font: 400 21px/1 var(--sans);
 }
 .home-firm {
-  background: var(--brand-green);
+  background: var(--green-soft);
   color: var(--deep);
 }
 .home-firm__grid {
