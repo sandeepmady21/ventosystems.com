@@ -17,6 +17,13 @@ in place because this is a preview under the Ventosystems domain.
   `assets/home.css` holds the homepage; `assets/pages.css` holds interior pages.
   Source Sans 3 leads the typography, with Source Serif 4 for editorial accents.
   Reading surfaces stay light; larger color fields distinguish sections.
+- The homepage's `assets/architectural-lines.svg` is a decorative, locally served
+  architectural drawing that echoes the sandstone image. It sits beside the
+  desktop headline and is hidden on narrow screens to preserve reading space.
+  A fine rule separates the firm's founding date from its introduction.
+- Links and buttons do not use decorative arrow marks. Text links use a quiet
+  underline; cards retain clear hover and keyboard-focus states. The arrows in
+  the archived April article's GST menu sequence are content, not decoration.
 - Use white or warm-cream text on blue and dark navy text on mint and apricot.
   Emerald and apricot accent colors are decorative or surface fills, not small text
   on white. Darker green and copper variants keep text and control borders readable.

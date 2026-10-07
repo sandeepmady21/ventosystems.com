@@ -678,18 +678,11 @@
 .issue-entry__contents a {
   display: block;
   position: relative;
-  padding: 15px 24px 15px 0;
+  padding: 15px 0;
   font-size: 16px;
   line-height: 1.45;
   color: var(--text);
   text-decoration: none;
-}
-.issue-entry__contents a::after {
-  content: "↗";
-  position: absolute;
-  right: 0;
-  top: 14px;
-  color: var(--blue);
 }
 .issue-entry__contents a:hover {
   color: var(--blue);
@@ -702,9 +695,6 @@
 }
 .issue-entry__read .more {
   font-size: 14px;
-}
-.newsletter-download::after {
-  content: "↓";
 }
 .issue-cover {
   position: relative;
