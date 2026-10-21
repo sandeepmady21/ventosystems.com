@@ -72,27 +72,27 @@ Business and Autonomy project rows use native disclosures with titles and curren
 
 ## Artwork archive
 
-[Hero concept gallery](docs/artwork-explorations/2026-10-21/README.md) preserves all 13 generated hero originals, including the earlier apparatus and weave, plus every plan, human, paper, lidar and graph-screen revision. Each original PNG has a lightweight WebP preview. The gallery manifest records exact built-in imagegen prompts, dimensions and hashes. The current site uses optimized `hero-engineering.webp` and `hero-engineering-compact.webp`; the archive is retained for later reuse.
+[Hero concept gallery](docs/artwork-explorations/2026-10-21/README.md) preserves all 13 generated hero originals, including the earlier apparatus and weave, plus every plan, human, paper, lidar and graph-screen revision. Each original PNG has a lightweight WebP preview. The gallery manifest records exact built-in imagegen prompts, dimensions and hashes. The current site uses optimized `hero-studio.webp` and `hero-studio-small.webp`, both exported from the selected `engineering-studio.png` original; the archive is retained for later reuse.
 
 ## Hosting
 
-The repository uses GitHub Pages with `CNAME` set to `ventosystems.com`. Production at `https://ventosystems.com/` is served from `main`. The current improvements are developed on `codex/vento-hero-and-icons`; pushing this branch does not replace production. Changes reach production through a reviewed pull request merged into `main`.
+The repository uses GitHub Pages with `CNAME` set to `ventosystems.com`. Production at `https://ventosystems.com/` is served from `main`. The current improvements are developed on `codex/vento-studio-hero`; pushing this branch does not replace production. Changes reach production through a reviewed pull request merged into `main`.
 
 ## Rollback
 
-The remote tag `vento-company-v1.12` preserves the published weave hero before the engineering-scene and specialist-icon update, at commit `f653790`. The earlier desktop systems hero remains in `vento-company-v1.11` at `1463b78`. The previous mobile-first version remains in `vento-company-v1.10` at `c1cfe9a`. The orange illustration version remains in `vento-company-v1.9` at `85a1605`. The earlier dark illustration treatment is preserved by `vento-company-v1.8` at `668c87e`. This checkpoint includes both independent sub-sites, which remain unchanged in this refinement. The older `vento-company-v1.7`, `vento-company-v1.6`, `vento-company-v1.5`, `vento-company-v1.4`, `vento-company-v1.3`, `vento-company-v1.2`, `vento-company-v1.1` and `vento-company-v1` tags remain available as earlier checkpoints.
+The remote tag `vento-company-v1.13` preserves the published graph-and-lidar hero, weave section and specialist icons before selecting the engineering-studio artwork, at commit `2debcc3`. The tag `vento-company-v1.12` preserves the published weave hero before the engineering-scene and specialist-icon update, at commit `f653790`. The earlier desktop systems hero remains in `vento-company-v1.11` at `1463b78`. The previous mobile-first version remains in `vento-company-v1.10` at `c1cfe9a`. The orange illustration version remains in `vento-company-v1.9` at `85a1605`. The earlier dark illustration treatment is preserved by `vento-company-v1.8` at `668c87e`. This checkpoint includes both independent sub-sites, which remain unchanged in this refinement. The older `vento-company-v1.7`, `vento-company-v1.6`, `vento-company-v1.5`, `vento-company-v1.4`, `vento-company-v1.3`, `vento-company-v1.2`, `vento-company-v1.1` and `vento-company-v1` tags remain available as earlier checkpoints.
 
-To restore v1.12, work from the repository root with a clean working tree and create a new branch from current production. Restore the tagged tree as a new change; do not reset or force-push `main`.
+To restore v1.13, work from the repository root with a clean working tree and create a new branch from current production. Restore the tagged tree as a new change; do not reset or force-push `main`.
 
 ```sh
 git fetch origin --tags
-git switch -c restore/vento-company-v1-12 origin/main
-git restore --source=vento-company-v1.12 --staged --worktree -- .
+git switch -c restore/vento-company-v1-13 origin/main
+git restore --source=vento-company-v1.13 --staged --worktree -- .
 git diff --cached --stat
 python3 scripts/check_site.py .
 node --check assets/company.js
-git commit -m "Restore Vento company v1.12"
-git push -u origin restore/vento-company-v1-12
+git commit -m "Restore Vento company v1.13"
+git push -u origin restore/vento-company-v1-13
 ```
 
 Review the restored site locally, then open and merge a pull request from the restore branch into `main`. After GitHub Pages publishes, verify the production site. This retains the improvements in Git history while restoring the saved site files.

@@ -122,12 +122,12 @@
 /* One figure follows the headline in reading order at every screen size. */
 .hero-scene{display:block;margin:16px 0 0;min-width:0}
 .hero-scene picture{display:block}
-.hero-scene img{display:block;width:100%;height:auto;aspect-ratio:960/417;object-fit:contain;mask-image:linear-gradient(to bottom,transparent,#000 6%,#000 82%,transparent)}
+.hero-scene img{display:block;width:100%;height:auto;aspect-ratio:960/417;object-fit:cover;object-position:50% 35%;mask-image:linear-gradient(to bottom,transparent,#000 6%,#000 82%,transparent)}
 .hero-scene figcaption{padding:4px 6px 0;color:var(--muted);font:400 9px/1.6 var(--mono);text-align:center}
 .hero-scene figcaption span:first-child{display:none}
 .company-hero+.business-section{padding-top:clamp(44px,4.4vw,64px)}
 @media(max-width:700px){
-  .hero-scene{margin-top:12px}
+  .hero-scene{max-width:400px;margin:12px auto 0}
   .hero-scene img{height:clamp(128px,40vw,160px)}
 }
 @media(min-width:701px) and (max-width:999px){
@@ -135,7 +135,7 @@
   .company-hero .hero-copy h1{margin-top:20px}
   .company-hero .hero-description{margin-top:20px}
   .company-hero .hero-actions{margin-top:24px}
-  .hero-scene{max-width:620px;margin:20px auto 0}
+  .hero-scene{max-width:560px;margin:20px auto 0}
   .hero-scene img{max-height:220px}
 }
 @media(min-width:1000px){
@@ -146,7 +146,7 @@
   .company-hero .hero-copy h1{font-size:clamp(60px,6.7vw,98px);line-height:1.04}
   .company-hero .hero-description{max-width:510px;font-size:17px}
   .hero-scene{grid-column:2;grid-row:1/span 4;align-self:center;margin:0}
-  .hero-scene img{aspect-ratio:1536/1024;mask-image:linear-gradient(to bottom,transparent,#000 6%,#000 72%,transparent)}
+  .hero-scene img{aspect-ratio:1536/1024;object-fit:contain;mask-image:linear-gradient(to bottom,transparent,#000 6%,#000 72%,transparent)}
   .hero-scene figcaption{display:flex;justify-content:space-between;gap:14px;padding:10px 6px 24px;color:var(--muted);font:400 9px/1.6 var(--mono)}
   .hero-scene figcaption span:first-child{display:inline;color:var(--ink)}
 }

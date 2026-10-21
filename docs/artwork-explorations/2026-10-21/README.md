@@ -2,7 +2,7 @@
 
 All original PNGs are preserved unchanged. WebP files are lightweight gallery previews. These are conceptual illustrations, not photographs of delivered products. Generated with built-in imagegen; exact prompts, original filenames, dimensions and SHA-256 hashes are in [manifest.json](manifest.json).
 
-The selected homepage artwork is **graphs-lidar-final**, with **graphs-lidar-final-mobile** for compact screens. The weave remains in the common-thread section. Original website rollback: `vento-company-v1.12` at `f6537907ee9b9a261d209c862974c09d0618003a`.
+The selected homepage artwork is **engineering-studio**: the human drawing beside a graph display, with a copper path connecting the plan to a rover experiment. Both desktop and mobile use this exact original, exported as optimized WebP files; compact screens frame it with CSS without regenerating the scene. The weave remains in the common-thread section. The previously published graph-and-lidar scene remains saved below and in rollback tag `vento-company-v1.13` at `2debcc3b3519b77b8bed971ca175f93745018601`. The earlier weave hero is preserved in `vento-company-v1.12`.
 
 ## Desktop systems apparatus
 
