@@ -21,31 +21,89 @@
   const form = document.getElementById('enquiry-form');
   if (!form) return;
   const area = document.getElementById('enquiry-area');
-  const query = new URLSearchParams(location.search).get('need');
-  if (query && Array.from(area.options).some(option => option.value === query)) area.value = query;
+  const topic = document.getElementById('enquiry-topic');
+  const engagement = document.getElementById('enquiry-path');
+  const nameField = document.getElementById('enquiry-name');
+  const companyField = document.getElementById('enquiry-company');
+  const messageField = document.getElementById('enquiry-message');
   const preview = document.getElementById('enquiry-preview');
   const draft = document.getElementById('enquiry-draft');
   const status = document.getElementById('form-status');
   const open = document.getElementById('enquiry-open');
-  form.addEventListener('input', () => {
-    if (!preview.hidden) { preview.hidden = true; status.textContent = 'Your details changed. Prepare the enquiry again to update your draft.'; }
-  });
-  form.addEventListener('submit', e => {
-    e.preventDefault();
+  const topicAreas = new Map([
+    ['travio', 'business'],
+    ['ap-automation', 'business'],
+    ['auditproof', 'business'],
+    ['practice-tracker', 'business'],
+    ['distribution', 'business'],
+    ['perception-control', 'autonomy']
+  ]);
+  const engagementPaths = new Set(['general', 'product', 'engineering', 'research']);
+  const hasOption = (select, value) => Boolean(select && Array.from(select.options).some(option => option.value === value));
+  const setOption = (select, value) => {
+    if (!hasOption(select, value)) return false;
+    select.value = value;
+    return true;
+  };
+  const label = select => select?.selectedOptions[0]?.text || '';
+  const oneLine = value => value.replace(/[\r\n]+/g, ' ').trim();
+  const syncTopicArea = () => {
+    const expected = topicAreas.get(topic?.value);
+    if (expected) setOption(area, expected);
+  };
+
+  // Only known values from the visible controls can influence an enquiry.
+  // A specific product supplies its area when links contain conflicting context.
+  const query = new URLSearchParams(location.search);
+  setOption(area, query.get('need'));
+  const requestedTopic = query.get('topic');
+  if ((requestedTopic === 'general' || topicAreas.has(requestedTopic)) && setOption(topic, requestedTopic)) syncTopicArea();
+  const requestedPath = query.get('path');
+  if (engagementPaths.has(requestedPath)) setOption(engagement, requestedPath);
+
+  const invalidateDraft = () => {
+    if (preview.hidden) return;
+    preview.hidden = true;
+    draft.value = '';
+    open.href = 'mailto:hello@ventosystems.com';
+    status.textContent = 'Your details changed. Prepare the enquiry again to update your draft.';
+  };
+  const handleEdit = event => {
+    if (event.target === topic) syncTopicArea();
+    if (event.target === area && topicAreas.has(topic?.value) && topicAreas.get(topic.value) !== area.value) setOption(topic, 'general');
+    if (event.target === nameField || event.target === messageField) event.target.setCustomValidity('');
+    invalidateDraft();
+  };
+  form.addEventListener('input', handleEdit);
+  form.addEventListener('change', handleEdit);
+  form.addEventListener('submit', event => {
+    event.preventDefault();
+    const name = nameField.value.trim();
+    const company = oneLine(companyField.value);
+    const message = messageField.value.trim();
+    nameField.setCustomValidity(name ? '' : 'Please enter your name.');
+    messageField.setCustomValidity(message ? '' : 'Please add a few words about your enquiry.');
     if (!form.reportValidity()) return;
-    const name = document.getElementById('enquiry-name').value.trim();
-    const company = document.getElementById('enquiry-company').value.trim();
-    const message = document.getElementById('enquiry-message').value.trim();
-    if (!name || !message) { status.textContent = 'Please add your name and a few words about your enquiry.'; return; }
-    const subject = `${area.selectedOptions[0].text}${company ? ' — ' + company : ''}`;
-    const body = `Hello Vento,\n\n${message}\n\nArea: ${area.selectedOptions[0].text}\nName: ${name}${company ? '\nOrganization: ' + company : ''}\n`;
+
+    const interest = topic && topic.value !== 'general' ? label(topic) : label(area);
+    const pathLabel = engagement && engagement.value !== 'general' ? label(engagement) : '';
+    const subject = [interest, pathLabel, company].filter(Boolean).map(oneLine).join(' — ');
+    const context = [
+      `Area: ${label(area)}`,
+      ...(topic ? [`Interest: ${label(topic)}`] : []),
+      ...(pathLabel ? [`Engagement: ${pathLabel}`] : []),
+      `Name: ${oneLine(name)}`,
+      ...(company ? [`Organization: ${company}`] : [])
+    ];
+    const body = `Hello Vento,\n\n${message}\n\n${context.join('\n')}\n`;
     draft.value = `To: hello@ventosystems.com\nSubject: ${subject}\n\n${body}`;
     open.href = `mailto:hello@ventosystems.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     preview.hidden = false;
-    status.textContent = 'Your draft is ready. Open your email app or copy it below.';
+    status.textContent = 'Your draft is ready. Open your email app or copy it below. Nothing has been sent.';
     draft.focus();
   });
   document.getElementById('enquiry-copy').addEventListener('click', async () => {
+    if (preview.hidden) return;
     try { await navigator.clipboard.writeText(draft.value); status.textContent = 'Draft copied. Paste it into your email app to send it.'; }
     catch { draft.focus(); draft.select(); status.textContent = 'Select and copy the draft below, then paste it into your email app.'; }
   });
