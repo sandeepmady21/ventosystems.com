@@ -1,6 +1,6 @@
 # Vento Systems
 
-The Vento company website: intelligent products and systems for business and the physical world. Static HTML, CSS and a small progressive-enhancement script; no build step or framework dependency.
+The Vento company website: interdisciplinary technology across AI, software, sensing and embedded control. Static HTML, CSS and a small progressive-enhancement script; no build step or framework dependency.
 
 ## Preview
 
@@ -64,23 +64,23 @@ The source checker validates document structure, accessible labels, local links,
 
 ## Hosting
 
-The repository uses GitHub Pages with `CNAME` set to `ventosystems.com`. Production at `https://ventosystems.com/` is served from `main`. The current improvements are developed on `codex/vento-content-refinement`; pushing this branch does not replace production. Changes reach production through a reviewed pull request merged into `main`.
+The repository uses GitHub Pages with `CNAME` set to `ventosystems.com`. Production at `https://ventosystems.com/` is served from `main`. The current improvements are developed on `codex/vento-interdisciplinary-positioning`; pushing this branch does not replace production. Changes reach production through a reviewed pull request merged into `main`.
 
 ## Rollback
 
-The remote tag `vento-company-v1.6` preserves the production state immediately before the content, enquiry-context and accessibility refinements, at commit `fa782a0`. This checkpoint includes both independent sub-sites, which remain unchanged in this refinement. The older `vento-company-v1.5`, `vento-company-v1.4`, `vento-company-v1.3`, `vento-company-v1.2`, `vento-company-v1.1` and `vento-company-v1` tags remain available as earlier checkpoints.
+The remote tag `vento-company-v1.7` preserves the production state immediately before the interdisciplinary positioning refinement, at commit `c8ba718`. This checkpoint includes both independent sub-sites, which remain unchanged in this refinement. The older `vento-company-v1.6`, `vento-company-v1.5`, `vento-company-v1.4`, `vento-company-v1.3`, `vento-company-v1.2`, `vento-company-v1.1` and `vento-company-v1` tags remain available as earlier checkpoints.
 
-To restore v1.6, work from the repository root with a clean working tree and create a new branch from current production. Restore the tagged tree as a new change; do not reset or force-push `main`.
+To restore v1.7, work from the repository root with a clean working tree and create a new branch from current production. Restore the tagged tree as a new change; do not reset or force-push `main`.
 
 ```sh
 git fetch origin --tags
-git switch -c restore/vento-company-v1-6 origin/main
-git restore --source=vento-company-v1.6 --staged --worktree -- .
+git switch -c restore/vento-company-v1-7 origin/main
+git restore --source=vento-company-v1.7 --staged --worktree -- .
 git diff --cached --stat
 python3 scripts/check_site.py .
 node --check assets/company.js
-git commit -m "Restore Vento company v1.6"
-git push -u origin restore/vento-company-v1-6
+git commit -m "Restore Vento company v1.7"
+git push -u origin restore/vento-company-v1-7
 ```
 
 Review the restored site locally, then open and merge a pull request from the restore branch into `main`. After GitHub Pages publishes, verify the production site. This retains the improvements in Git history while restoring the saved site files.
