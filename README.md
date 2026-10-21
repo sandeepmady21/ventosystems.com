@@ -25,6 +25,8 @@ Open `http://127.0.0.1:8765/`. A server is needed because site links and assets 
 
 The homepage combines the shared engineering introduction with the four illustrated business cards. Both `#businesses` and the legacy `#engineering` anchor lead to this section.
 
+Each business-area page keeps its original illustration and shared visual components. Its introduction links to the detailed work and an area-specific enquiry. Project and development labels distinguish client work, working builds, prototypes and research; proposed assessment and pilot outputs describe the scope to agree, rather than delivered results.
+
 Headers and footers are static HTML repeated across the eight company pages. Keep them aligned when editing. Shared layout and behavior belong in the company CSS/JS.
 
 ## Behavior
@@ -54,23 +56,23 @@ The source checker validates document structure, accessible labels, local links,
 
 ## Hosting
 
-The repository uses GitHub Pages with `CNAME` set to `ventosystems.com`. Production at `https://ventosystems.com/` is served from `main`. The current improvements are developed on `codex/vento-combined-domains`; pushing this branch does not replace production. Changes reach production through a reviewed pull request merged into `main`.
+The repository uses GitHub Pages with `CNAME` set to `ventosystems.com`. Production at `https://ventosystems.com/` is served from `main`. The current improvements are developed on `codex/vento-business-pages`; pushing this branch does not replace production. Changes reach production through a reviewed pull request merged into `main`.
 
 ## Rollback
 
-The remote tag `vento-company-v1.2` preserves the production state immediately before combining the engineering and domain sections, at commit `e7ff6be`. The older `vento-company-v1.1` and `vento-company-v1` tags remain available as earlier checkpoints.
+The remote tag `vento-company-v1.3` preserves the production state immediately before the individual business-page refinements, at commit `6b6f9de`. The older `vento-company-v1.2`, `vento-company-v1.1` and `vento-company-v1` tags remain available as earlier checkpoints.
 
-To restore v1.2, work from the repository root with a clean working tree and create a new branch from current production. Restore the tagged tree as a new change; do not reset or force-push `main`.
+To restore v1.3, work from the repository root with a clean working tree and create a new branch from current production. Restore the tagged tree as a new change; do not reset or force-push `main`.
 
 ```sh
 git fetch origin --tags
-git switch -c restore/vento-company-v1-2 origin/main
-git restore --source=vento-company-v1.2 --staged --worktree -- .
+git switch -c restore/vento-company-v1-3 origin/main
+git restore --source=vento-company-v1.3 --staged --worktree -- .
 git diff --cached --stat
 python3 scripts/check_site.py .
 node --check assets/company.js
-git commit -m "Restore Vento company v1.2"
-git push -u origin restore/vento-company-v1-2
+git commit -m "Restore Vento company v1.3"
+git push -u origin restore/vento-company-v1-3
 ```
 
 Review the restored site locally, then open and merge a pull request from the restore branch into `main`. After GitHub Pages publishes, verify the production site. This retains the improvements in Git history while restoring the saved site files.
