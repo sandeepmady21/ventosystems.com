@@ -1,0 +1,12 @@
+/* Additions used only by Vision and Lab; the shared company style stays intact. */
+.page-hero .systems-figure img{max-height:none;aspect-ratio:1200/560;object-fit:contain}
+.project-figure figcaption{padding-top:13px;color:var(--muted);font:400 10px/1.5 var(--mono)}
+.lab-project{min-width:0;display:flex;flex-direction:column;align-items:flex-start}
+.lab-project .project-figure{width:100%}
+.lab-project .card-heading{margin:24px 0 14px}
+.lab-project .project-summary{margin-top:22px;color:var(--muted);font-size:16px;line-height:1.7}
+.project-questions{margin:24px 0 0;border-top:1px solid var(--line);padding-top:22px}
+.project-questions dt{font:400 10px/1.5 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink)}
+.project-questions dd{margin:10px 0 23px;color:var(--muted);font-size:15px;line-height:1.7}
+.lab-project>.text-link{margin-top:auto}
+@media(max-width:600px){.lab-project-grid{gap:56px}.project-figure figcaption{font-size:9px}.lab-project .project-summary{font-size:15px}.lab-project .card-heading h3{font-size:30px}}

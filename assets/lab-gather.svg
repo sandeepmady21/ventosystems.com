@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="620" viewBox="0 0 900 620" role="img" aria-labelledby="title desc">
+<title id="title">Gather: a shared workspace for people and agents</title>
+<desc id="desc">Conceptual collaboration system. People and an AI agent contribute through a shared coordination and review point to projects, tasks and documents. Connected records provide common context. This illustrates an internal development direction, not a finished interface.</desc>
+<defs>
+  <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#211e18"/><stop offset=".6" stop-color="#171510"/><stop offset="1" stop-color="#242019"/></linearGradient>
+  <linearGradient id="metal" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#d7c9af"/><stop offset=".23" stop-color="#6e6554"/><stop offset=".52" stop-color="#302b23"/><stop offset=".8" stop-color="#716654"/><stop offset="1" stop-color="#c0ae90"/></linearGradient>
+  <linearGradient id="panel" x2=".8" y2="1"><stop stop-color="#393228"/><stop offset="1" stop-color="#1c1914"/></linearGradient>
+  <linearGradient id="edge" x2=".7" y2="1"><stop stop-color="#efe8dc"/><stop offset=".5" stop-color="#9c8c71"/><stop offset="1" stop-color="#4b4336"/></linearGradient>
+  <linearGradient id="orange" x2=".8" y2="1"><stop stop-color="#ffbe7c"/><stop offset=".45" stop-color="#f47735"/><stop offset="1" stop-color="#b3441b"/></linearGradient>
+  <radialGradient id="glow"><stop stop-color="#c45c26" stop-opacity=".22"/><stop offset="1" stop-color="#c45c26" stop-opacity="0"/></radialGradient>
+  <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#b9a88e" stroke-opacity=".065" stroke-width="1"/></pattern>
+  <pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r=".8" fill="#b9a88e" opacity=".18"/></pattern>
+</defs>
+<rect width="900" height="620" fill="url(#bg)"/>
+<rect width="900" height="620" fill="url(#grid)"/>
+<ellipse cx="450" cy="310" rx="396" ry="272.8" fill="url(#glow)"/>
+
+<g fill="none" stroke="#b9a88e" stroke-opacity=".18">
+ <path d="M90 104H810M90 516H810"/>
+ <ellipse cx="450" cy="313" rx="335" ry="205" stroke-dasharray="2 7"/>
+ <ellipse cx="450" cy="313" rx="307" ry="181" stroke-opacity=".12"/>
+</g>
+<!-- People and an agent contribute through the same coordination point. -->
+<path d="M259 177H410M490 177H641M450 217V270" fill="none" stroke="#f47735" stroke-width="2" stroke-opacity=".9"/>
+<path d="M259 177v-34h382v34" fill="none" stroke="#b9a88e" stroke-opacity=".24" stroke-dasharray="3 6"/>
+<!-- Human collaborators: two abstract person profiles. -->
+<rect x="110" y="123" width="149" height="111" rx="4" fill="url(#panel)" stroke="#9a8a70" stroke-opacity=".75"/>
+<g fill="none" stroke="#cfbea0" stroke-opacity=".75" stroke-width="1.3">
+ <circle cx="157" cy="160" r="16"/><path d="M130 211v-11c0-19 54-19 54 0v11Z"/>
+ <circle cx="213" cy="163" r="13"/><path d="M195 211v-10c0-14 39-14 39 0v10Z"/>
+</g>
+<circle cx="242" cy="137" r="3" fill="#f47735"/>
+<!-- Agent: an explicit computational node rather than another person. -->
+<rect x="641" y="123" width="149" height="111" rx="4" fill="url(#panel)" stroke="#9a8a70" stroke-opacity=".75"/>
+<rect x="685" y="149" width="60" height="58" rx="3" fill="#201b14" stroke="#b9a88e"/>
+<g fill="none" stroke="#b9a88e" stroke-opacity=".6">
+ <path d="M695 137v12M708 137v12M721 137v12M734 137v12M695 207v12M708 207v12M721 207v12M734 207v12M673 160h12M673 173h12M673 186h12M673 199h12M745 160h12M745 173h12M745 186h12M745 199h12"/>
+ <path d="M698 177l17-12 17 12-17 13Z" fill="url(#orange)" stroke="#ffc089"/>
+</g>
+<!-- Coordination is visible and precedes changes to the shared work. -->
+<circle cx="450" cy="177" r="51" fill="none" stroke="#b9a88e" stroke-opacity=".2"/>
+<circle cx="450" cy="177" r="38" fill="url(#panel)" stroke="#b9a88e" stroke-opacity=".8"/>
+<path d="M436 177l10 10 20-23" fill="none" stroke="#f47735" stroke-width="2.3" stroke-linecap="round"/>
+<!-- Shared project board: structure without a fabricated product screenshot. -->
+<rect x="296" y="282" width="320" height="215" rx="5" fill="#15130f" stroke="#63543e"/>
+<rect x="284" y="270" width="320" height="215" rx="5" fill="url(#panel)" stroke="#ad9c80" stroke-opacity=".8"/>
+<path d="M284 312h320" stroke="#b9a88e" stroke-opacity=".4"/>
+<path d="M303 290h14v12h-14zM328 296h72M556 296h28" fill="none" stroke="#d2c2a6" stroke-opacity=".65"/>
+<g stroke="#8c7b5e" stroke-opacity=".6">
+ <rect x="303" y="332" width="80" height="57" rx="3" fill="#242018"/>
+ <rect x="404" y="332" width="80" height="57" rx="3" fill="#30271c"/>
+ <rect x="505" y="332" width="80" height="57" rx="3" fill="#242018"/>
+ <rect x="303" y="407" width="80" height="57" rx="3" fill="#242018"/>
+ <rect x="404" y="407" width="80" height="57" rx="3" fill="#242018"/>
+</g>
+<g fill="none" stroke="#d2c2a6" stroke-opacity=".5">
+ <path d="M314 349h52M314 361h38M314 376h18M415 349h52M415 361h42M415 376h18M516 349h52M516 361h34M516 376h18M314 424h52M314 436h38M314 451h18M415 424h52M415 436h42M415 451h18"/>
+ <path d="M393 325v145M494 325v145" stroke-opacity=".15"/>
+</g>
+<path d="M404 332v57" stroke="#f47735" stroke-width="2.4"/><circle cx="470" cy="375" r="3" fill="#f47735"/>
+<!-- Connected documents provide common context. -->
+<path d="M284 378H235M604 378H660" fill="none" stroke="#f47735" stroke-width="1.5" stroke-opacity=".85"/>
+<rect x="119" y="340" width="116" height="141" rx="3" fill="#171510" stroke="#655943"/>
+<path d="M107 328h90l26 26v115H107Z" fill="url(#panel)" stroke="#9c8a6c" stroke-opacity=".8"/>
+<path d="M197 328v26h26M125 368h77M125 382h65M125 396h75M125 421h64M125 435h75M125 449h42" fill="none" stroke="#c6b394" stroke-opacity=".55"/>
+<!-- A discussion record, not an autonomous action. -->
+<path d="M660 327H794V443H716L690 464V443H660Z" fill="url(#panel)" stroke="#9c8a6c" stroke-opacity=".8"/>
+<circle cx="680" cy="350" r="5" fill="#8c7b5e"/><path d="M695 350h77M678 369h94M678 382h72" fill="none" stroke="#c6b394" stroke-opacity=".5"/>
+<circle cx="680" cy="408" r="5" fill="#f47735" opacity=".8"/><path d="M695 408h77M695 421h51" fill="none" stroke="#c6b394" stroke-opacity=".5"/>
+<path d="M174 328V278H284M727 327V278H604" fill="none" stroke="#b9a88e" stroke-opacity=".22" stroke-dasharray="3 6"/>
+
+<g fill="none" stroke="#b9a88e" stroke-opacity=".34" stroke-width="1"><path d="M32 36h8M36 32v8"/><path d="M860 36h8M864 32v8"/><path d="M32 584h8M36 580v8"/><path d="M860 584h8M864 580v8"/></g>
+</svg>
