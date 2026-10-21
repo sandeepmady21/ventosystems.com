@@ -4,13 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Vento Systems</title>
-<meta name="description" content="Vento Systems builds AI for business operations, from back-office workflows to the physical sites a company runs. The systems work on the company's own data and run in its own environment.">
+<meta name="description" content="Vento Systems builds software automation, AI, robotics and safety systems for business operations, from the back office to the sites a company runs.">
 <meta name="theme-color" content="#16130F">
 <meta name="color-scheme" content="dark">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Vento Systems">
 <meta property="og:title" content="Vento Systems, AI for business operations">
-<meta property="og:description" content="AI for business operations, from back-office workflows to the physical sites a company runs, built on the company's own data.">
+<meta property="og:description" content="Four divisions building for business operations: Vento Automation, Vento AI, Vento Robotics and Vento Safety.">
 <meta property="og:url" content="https://ventosystems.com/">
 <meta name="twitter:card" content="summary">
 <link rel="canonical" href="https://ventosystems.com/">
@@ -18,319 +18,88 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..800&family=IBM+Plex+Mono:wght@400;500&display=swap">
-<style>
-/* Colours. Change them here and the whole page follows.
-   Warm dark tones with the orange from the logo; no red, blue or plain black and white. */
-:root{
-  --bg:#16130F; --card:#1D1915; --card-2:#24201A;
-  --line:#342D25; --line-soft:#2A241E;
-  --ink:#EFE6D6; --muted:#A99F8F; --faint:#776E61;
-  --sand:#C9B08A; --orange:#F26B21; --orange-ink:#1A120A;
-
-  --sans:"Archivo",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
-  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
-  --measure:1200px;
-}
-
-*,*::before,*::after{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;scroll-padding-top:84px}
-@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
-body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.6 var(--sans);font-stretch:100%;-webkit-font-smoothing:antialiased}
-a{color:inherit}
-svg{display:block}
-h1,h2,h3{margin:0;font-weight:500;letter-spacing:-.015em}
-p{margin:0}
-:focus-visible{outline:2px solid var(--orange);outline-offset:3px;border-radius:4px}
-
-.wrap{max-width:var(--measure);margin:0 auto;padding:0 28px}
-.tag{display:inline-block;font:500 11px/1 var(--mono);letter-spacing:.04em;padding:5px 8px;border-radius:999px;background:var(--card-2);color:var(--muted);white-space:nowrap}
-.eyebrow{font:500 12px/1.4 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--sand)}
-.eyebrow .n{color:var(--faint);margin-left:10px}
-.arrow::after{content:"\2192";margin-left:6px;transition:transform .2s}
-a:hover .arrow::after,.arrow:hover::after{transform:translateX(3px)}
-
-/* Floating bar */
-.bar{position:fixed;top:14px;left:0;right:0;z-index:20;pointer-events:none}
-.bar .inner{pointer-events:auto;max-width:var(--measure);margin:0 auto;padding:0 28px}
-.bar nav{display:flex;align-items:center;justify-content:space-between;gap:20px;height:56px;padding:0 10px 0 18px;border:1px solid var(--line);border-radius:999px;background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
-.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font:700 15px/1 var(--sans);font-stretch:125%;letter-spacing:.06em;text-transform:uppercase}
-.brand svg{width:22px;height:22px}
-.links{display:flex;align-items:center;gap:26px}
-.links a{text-decoration:none;font-size:14.5px;color:var(--muted)}
-.links a:hover{color:var(--ink)}
-.links a.btn{color:var(--orange-ink)}
-.btn{display:inline-flex;align-items:center;gap:6px;border:0;cursor:pointer;padding:11px 18px;border-radius:999px;font:600 14.5px/1 var(--sans);text-decoration:none}
-.btn-orange{background:var(--orange);color:var(--orange-ink)}
-.btn-orange:hover{background:var(--ink)}
-
-/* Hero */
-.hero{min-height:100vh;min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px 0 72px}
-.mark{width:min(300px,62vw);height:auto;margin:0 auto 56px}
-.hero h1{font-size:clamp(34px,4.8vw,58px);line-height:1.08;font-stretch:112%;max-width:20ch;margin:0 auto}
-.hero h1 .s{color:var(--sand)}
-.hero p{color:var(--muted);font-size:18px;max-width:52ch;margin:22px auto 0}
-.hero .go{display:flex;gap:28px;justify-content:center;margin-top:34px;font-size:15.5px}
-.hero .go a{text-decoration:none;font-weight:500}
-.hero .go a + a{color:var(--muted)}
-.hero .go a:hover{color:var(--ink)}
-
-/* Sections */
-section{padding:110px 0}
-.head{display:flex;justify-content:space-between;align-items:flex-end;gap:32px;flex-wrap:wrap;margin-bottom:44px}
-.head h2{font-size:clamp(30px,3.6vw,46px);line-height:1.1;font-stretch:112%;margin-top:14px;max-width:22ch}
-.head p{color:var(--muted);max-width:46ch}
-
-/* Product grid */
-.grid{display:grid;gap:22px}
-.grid.three{grid-template-columns:repeat(3,1fr)}
-.grid.four{grid-template-columns:repeat(4,1fr);margin-top:22px}
-.item .tile{aspect-ratio:1/1.08;border:1px solid var(--line);border-radius:14px;background:var(--card);display:grid;place-items:center;color:var(--ink);transition:border-color .2s,background .2s}
-.grid.three .item .tile{aspect-ratio:1/.82}
-.item:hover .tile{border-color:var(--sand);background:var(--card-2)}
-.item .tile svg{width:30%;max-width:96px;height:auto}
-.item .tile.word{font:700 clamp(22px,2.4vw,32px)/1 var(--sans);font-stretch:125%;letter-spacing:.02em}
-.item .name{display:flex;align-items:center;gap:10px;margin-top:18px;font-weight:600;font-size:17px}
-.item p{margin-top:8px;font-size:16px;line-height:1.45;color:var(--ink);max-width:36ch}
-.item .more{display:flex;gap:18px;margin-top:12px;font-size:13.5px;color:var(--muted)}
-.item .more a{text-decoration:none}
-.item .more a:hover{color:var(--ink)}
-
-/* What we do */
-.rows{border-top:1px solid var(--line)}
-.rows > div{display:grid;grid-template-columns:150px 1fr 1.5fr;gap:32px;align-items:baseline;padding:30px 0;border-bottom:1px solid var(--line)}
-.rows .k{font:500 12px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--orange)}
-.rows h3{font-size:24px;line-height:1.2;font-stretch:108%}
-.rows p{color:var(--muted);font-size:16px}
-
-/* Why Vento */
-.why{background:var(--card);border-top:1px solid var(--line-soft);border-bottom:1px solid var(--line-soft)}
-.why .intro{font-size:clamp(22px,2.4vw,30px);line-height:1.35;font-stretch:106%;max-width:34ch;color:var(--ink)}
-.why .intro .s{color:var(--sand)}
-.rules{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;margin-top:64px}
-.rules .n{font:500 13px/1 var(--mono);color:var(--orange)}
-.rules h3{font-size:20px;line-height:1.25;margin:16px 0 10px;font-stretch:108%}
-.rules p{color:var(--muted);font-size:15.5px}
-
-/* Clients */
-.clients{display:grid;grid-template-columns:1fr 1fr;gap:22px}
-.client{border:1px solid var(--line);border-radius:14px;padding:28px}
-.client h3{font-size:21px;line-height:1.25;margin:14px 0 10px;font-stretch:108%}
-.client p{color:var(--muted);font-size:15.5px}
-.note{margin-top:18px;font-size:14px;color:var(--faint)}
-
-/* Contact form */
-.contact{display:grid;grid-template-columns:1fr 1.25fr;gap:56px;align-items:start}
-.contact h2{font-size:clamp(34px,4.2vw,54px);line-height:1.06;font-stretch:112%;margin-top:14px}
-.contact .side p{color:var(--muted);margin-top:18px;max-width:40ch}
-.contact .side .mail{display:inline-block;margin-top:24px;font-weight:600;text-decoration:none;border-bottom:1px solid var(--orange);padding-bottom:2px}
-form{border:1px solid var(--line);border-radius:16px;background:var(--card);padding:28px}
-fieldset{border:0;margin:0 0 22px;padding:0}
-legend,label{display:block;font:500 12px/1.4 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;padding:0}
-.choices{display:flex;flex-wrap:wrap;gap:8px}
-.choices label{display:inline-block;margin:0;font:inherit;letter-spacing:0;text-transform:none;color:inherit}
-.choices input{position:absolute;opacity:0;pointer-events:none}
-.choices span{display:inline-block;padding:9px 14px;border:1px solid var(--line);border-radius:999px;font-size:14.5px;cursor:pointer;color:var(--ink)}
-.choices input:checked + span{background:var(--orange);border-color:var(--orange);color:var(--orange-ink)}
-.choices input:focus-visible + span{outline:2px solid var(--orange);outline-offset:2px}
-.pair{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:22px}
-input[type=text],input[type=email],textarea{width:100%;font:400 16px/1.4 var(--sans);color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
-input::placeholder,textarea::placeholder{color:var(--faint)}
-input:focus,textarea:focus{outline:none;border-color:var(--sand)}
-textarea{min-height:120px;resize:vertical}
-.send{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:22px}
-.send small{color:var(--faint);font-size:13px}
-
-/* Footer */
-footer{padding:40px 0 34px;border-top:1px solid var(--line-soft)}
-.big{font:800 clamp(64px,19vw,250px)/.82 var(--sans);font-stretch:125%;letter-spacing:-.01em;color:var(--sand);text-align:center;margin-bottom:28px;user-select:none}
-.foot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px 28px;font-size:14px;color:var(--muted)}
-.foot a{text-decoration:none}
-.foot a:hover{color:var(--ink)}
-
-/* Tablet */
-@media (max-width: 1000px){
-  .links a:not(.btn){display:none}
-  .grid.three{grid-template-columns:1fr 1fr}
-  .grid.four{grid-template-columns:1fr 1fr}
-  .item .tile,.grid.three .item .tile{aspect-ratio:4/3}
-  .rows > div{grid-template-columns:110px 1fr;gap:12px 24px}
-  .rows p:not(.k){grid-column:2}
-  .rules{grid-template-columns:1fr 1fr;gap:40px 28px}
-  .contact{grid-template-columns:1fr;gap:36px}
-}
-/* Phone */
-@media (max-width: 640px){
-  body{font-size:16px}
-  .wrap,.bar .inner{padding:0 16px}
-  .bar{top:10px}
-  .bar nav{height:52px;padding:0 6px 0 14px}
-  .hero{padding:110px 0 56px}
-  .mark{margin:0 auto 40px}
-  .hero p{font-size:16.5px}
-  .hero .go{flex-direction:column;gap:12px}
-  section{padding:76px 0}
-  .grid.three,.grid.four{grid-template-columns:1fr}
-  .grid.three .item .tile,.item .tile{aspect-ratio:16/9}
-  .item .tile svg{width:22%}
-  .rows > div{grid-template-columns:1fr;gap:10px;padding:24px 0}
-  .rows p:not(.k){grid-column:auto}
-  .rules{grid-template-columns:1fr;gap:32px;margin-top:44px}
-  .clients{grid-template-columns:1fr}
-  .client,form{padding:20px}
-  .pair{grid-template-columns:1fr}
-}
-</style>
+<link rel="stylesheet" href="/assets/site.css">
 </head>
 <body>
 
 <header class="bar">
   <div class="inner">
     <nav aria-label="Main">
-      <a class="brand" href="#top" aria-label="Vento Systems, top of page">
+      <a class="brand" href="/" aria-label="Vento Systems, home">
         <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M11 15h15l14 34-5 9z" fill="#EFE6D6"/><path d="M38 26h8L37 50l-3-7z" fill="#EFE6D6"/><path d="M40 15h14l-9 11h-7z" fill="#F26B21"/></svg>
         Vento
       </a>
       <div class="links">
-        <a href="#work">What we build</a>
-        <a href="#services">Services</a>
-        <a href="#why">Why Vento</a>
-        <a href="#clients">Clients</a>
-        <a class="btn btn-orange" href="#contact">Start a project</a>
+        <a href="/automation/">Automation</a>
+        <a href="/ai/">AI</a>
+        <a href="/robotics/">Robotics</a>
+        <a href="/safety/">Safety</a>
+        <a href="/cyber/">Cyber</a>
+        <a class="btn btn-orange" href="/#contact">Start a project</a>
       </div>
     </nav>
   </div>
 </header>
 
-<main id="top">
+<main>
 
 <div class="hero">
   <div class="wrap">
-    <svg class="mark" viewBox="0 0 300 260" aria-hidden="true">
-      <defs>
-        <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#EFE6D6"/><stop offset="1" stop-color="#C9B08A"/></linearGradient>
-        <linearGradient id="g2" x1="1" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E3D5BC"/><stop offset="1" stop-color="#9E8768"/></linearGradient>
-      </defs>
-      <path d="M20 30h78l84 196-26 32z" fill="url(#g1)"/>
-      <path d="M184 92h42l-58 134-16-38z" fill="url(#g2)"/>
-      <path d="M196 30h86l-52 62h-46z" fill="#F26B21"/>
-    </svg>
-    <h1>AI for business operations, <span class="s">from the back office to the sites you run.</span></h1>
-    <p>Vento Systems designs, trains and runs AI systems on a company&rsquo;s own records and live data, inside the company&rsquo;s own environment.</p>
-    <div class="go">
-      <a href="#contact"><span class="arrow">Start a project</span></a>
-      <a href="#work"><span class="arrow">See what we build</span></a>
+    <h1 class="caps">AI for business <span class="o">operations</span></h1>
+    <div class="under">
+      <p>Vento Systems has four divisions. Each builds for a different part of a company&rsquo;s operations, from the back office to the sites it runs.</p>
+      <div class="go">
+        <a class="btn btn-orange" href="#contact">Start a project</a>
+        <a class="btn btn-line" href="#divisions">Our divisions</a>
+      </div>
     </div>
   </div>
 </div>
 
-<section id="work">
+<section id="divisions">
   <div class="wrap">
     <div class="head">
       <div>
-        <p class="eyebrow">What we build<span class="n">07</span></p>
-        <h2>Products for the back office, and AI for physical sites</h2>
+        <p class="eyebrow">Divisions &middot; 05</p>
+        <h2 class="caps">What we build</h2>
       </div>
-      <p>Our products handle routine work for finance, tax and compliance teams. We also build AI for physical sites and robots, and our sister company Vento Cyber covers security.</p>
+      <p>Each division has its own page. Vento Cyber is a separate company that we work alongside.</p>
     </div>
 
-    <div class="grid three">
-      <article class="item">
-        <div class="tile" aria-hidden="true">
-          <svg viewBox="0 0 64 64"><circle cx="14" cy="50" r="7" fill="currentColor"/><path d="M14 50V30a10 10 0 0 1 10-10h26" fill="none" stroke="currentColor" stroke-width="8" stroke-linecap="round"/><path d="M44 8l12 12-12 12z" fill="#F26B21"/></svg>
-        </div>
-        <h3 class="name">Travio <span class="tag">Trade compliance</span></h3>
-        <p>Tariff classification and duty estimates for US importers. Each code is checked against CBP rulings and confirmed by a reviewer.</p>
-      </article>
-
-      <article class="item">
-        <div class="tile" aria-hidden="true">
-          <svg viewBox="0 0 64 64"><rect x="8" y="8" width="48" height="48" rx="12" fill="currentColor"/><path d="M20 33l8 8 17-18" fill="none" stroke="#1D1915" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </div>
-        <h3 class="name">AuditProof <span class="tag">Tax audit</span></h3>
-        <p>Fieldwork for Form 3CD tax audits and forensic reviews. Each finding links to the rows behind it, for a chartered accountant to sign off.</p>
-      </article>
-
-      <article class="item">
-        <div class="tile" aria-hidden="true">
-          <svg viewBox="0 0 64 64"><rect x="6" y="10" width="34" height="11" rx="5.5" fill="currentColor"/><rect x="14" y="27" width="44" height="11" rx="5.5" fill="currentColor"/><rect x="6" y="44" width="26" height="11" rx="5.5" fill="#F26B21"/></svg>
-        </div>
-        <h3 class="name">AP Automation <span class="tag">Finance</span></h3>
-        <p>Supplier invoices received, matched to purchase orders, coded and routed for approval, with each automated decision explained.</p>
-      </article>
+    <div class="tiles two">
+      <a class="tile" href="/automation/">
+        <div class="art"><svg viewBox="0 0 64 64" aria-hidden="true"><rect x="6" y="10" width="34" height="11" rx="5.5" fill="#EFE6D6"/><rect x="14" y="27" width="44" height="11" rx="5.5" fill="#EFE6D6"/><rect x="6" y="44" width="26" height="11" rx="5.5" fill="#F26B21"/></svg></div>
+        <div class="meta"><h3>Vento Automation</h3><span class="tag">( Software automation )</span></div>
+        <p>Software that takes the manual steps out of finance, operations and client-service processes.</p>
+        <span class="visit arrow">Visit</span>
+      </a>
+      <a class="tile" href="/ai/">
+        <div class="art"><svg viewBox="0 0 64 64" aria-hidden="true"><rect x="8" y="8" width="21" height="21" rx="6" fill="#EFE6D6"/><rect x="35" y="8" width="21" height="21" rx="10.5" fill="#F26B21"/><rect x="8" y="35" width="21" height="21" rx="10.5" fill="#EFE6D6"/><rect x="35" y="35" width="21" height="21" rx="6" fill="#EFE6D6"/></svg></div>
+        <div class="meta"><h3>Vento AI</h3><span class="tag">( AI in software )</span></div>
+        <p>Software where AI makes the judgement a specialist used to make, such as classifying a product or reviewing a set of accounts.</p>
+        <span class="visit arrow">Visit</span>
+      </a>
     </div>
 
-    <div class="grid four">
-      <article class="item">
-        <div class="tile" aria-hidden="true">
-          <svg viewBox="0 0 64 64"><path d="M32 8a24 24 0 1 1-24 24" fill="none" stroke="currentColor" stroke-width="9" stroke-linecap="round"/><path d="M8 32A24 24 0 0 1 32 8" fill="none" stroke="#F26B21" stroke-width="9" stroke-linecap="round"/></svg>
-        </div>
-        <h3 class="name">Practice Tracker <span class="tag">Accounting firms</span></h3>
-        <p>Shows which client work is blocked, and chases clients for missing documents by email and WhatsApp.</p>
-        <div class="more"><a href="/document-chaser/"><span class="arrow">Prototype</span></a></div>
-      </article>
-
-      <article class="item">
-        <div class="tile" aria-hidden="true">
-          <svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="25" fill="none" stroke="currentColor" stroke-width="6"/><circle cx="32" cy="32" r="13" fill="none" stroke="currentColor" stroke-width="6"/><circle cx="32" cy="32" r="5" fill="#F26B21"/></svg>
-        </div>
-        <h3 class="name">Site AI <span class="tag">Physical AI</span></h3>
-        <p>Camera, sensor and location systems that track assets and people on a site and alert the staff who respond.</p>
-      </article>
-
-      <article class="item">
-        <div class="tile" aria-hidden="true">
-          <svg viewBox="0 0 64 64"><rect x="8" y="12" width="48" height="30" rx="9" fill="currentColor"/><circle cx="20" cy="50" r="7" fill="currentColor"/><circle cx="44" cy="50" r="7" fill="currentColor"/><circle cx="44" cy="27" r="5" fill="#F26B21"/></svg>
-        </div>
-        <h3 class="name">Robotics <span class="tag">Lab</span></h3>
-        <p>Robotics work in our lab, currently a camera-guided mobile bin and controller firmware for a sit-to-stand walker.</p>
-      </article>
-
-      <article class="item">
-        <div class="tile" aria-hidden="true">
-          <svg viewBox="0 0 64 64"><path d="M32 6l22 9v16c0 14-9 23-22 28C19 54 10 45 10 31V15z" fill="currentColor"/><path d="M32 6l22 9v16c0 14-9 23-22 28z" fill="#C9B08A"/></svg>
-        </div>
-        <h3 class="name">Vento Cyber <span class="tag">Security</span></h3>
-        <p>Our sister company for cybersecurity services, delivered with specialist partners.</p>
-      </article>
-    </div>
-  </div>
-</section>
-
-<section id="services">
-  <div class="wrap">
-    <div class="head">
-      <div>
-        <p class="eyebrow">Services</p>
-        <h2>What we do for clients</h2>
-      </div>
-      <p>We build AI systems for a company&rsquo;s own operations, using the same methods behind our products.</p>
-    </div>
-    <div class="rows">
-      <div>
-        <p class="k">Train</p>
-        <h3>Models trained on your data</h3>
-        <p>Where a general model falls short, we train one on the examples only your company has. Before it goes into use, we measure it against a test set agreed with you.</p>
-      </div>
-      <div>
-        <p class="k">Host</p>
-        <h3>Hosted where you choose</h3>
-        <p>Models run in your cloud account or on your own servers. When a model from a large provider is the better fit, we recommend it and explain the trade-off.</p>
-      </div>
-      <div>
-        <p class="k">Connect</p>
-        <h3>Connected to your systems</h3>
-        <p>The system reads from SAP, your ERP, databases and document stores. Changes it proposes go to a person for approval before anything is written back.</p>
-      </div>
-      <div>
-        <p class="k">Sense</p>
-        <h3>AI on physical sites</h3>
-        <p>Systems that read camera, sensor and location data to track assets and people on a site, detect incidents and alert the staff who need to respond.</p>
-      </div>
-      <div>
-        <p class="k">Check</p>
-        <h3>Results that show their working</h3>
-        <p>Outputs come with the sources, rules and calculations behind them. Actions are written to an append-only log that an auditor can read.</p>
-      </div>
+    <div class="tiles three">
+      <a class="tile" href="/robotics/">
+        <div class="art"><svg viewBox="0 0 64 64" aria-hidden="true"><rect x="8" y="12" width="48" height="30" rx="9" fill="#EFE6D6"/><circle cx="20" cy="50" r="7" fill="#EFE6D6"/><circle cx="44" cy="50" r="7" fill="#EFE6D6"/><circle cx="44" cy="27" r="5" fill="#F26B21"/></svg></div>
+        <div class="meta"><h3>Vento Robotics</h3><span class="tag">( Robotics )</span></div>
+        <p>Robots and assistive devices, designed and tested in our lab.</p>
+        <span class="visit arrow">Visit</span>
+      </a>
+      <a class="tile" href="/safety/">
+        <div class="art"><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="25" fill="none" stroke="#EFE6D6" stroke-width="6"/><circle cx="32" cy="32" r="13" fill="none" stroke="#EFE6D6" stroke-width="6"/><circle cx="32" cy="32" r="5" fill="#F26B21"/></svg></div>
+        <div class="meta"><h3>Vento Safety</h3><span class="tag">( Safety systems )</span></div>
+        <p>Systems that help staff locate people on a site and respond quickly when someone needs help.</p>
+        <span class="visit arrow">Visit</span>
+      </a>
+      <a class="tile" href="/cyber/">
+        <div class="art"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M32 6l22 9v16c0 14-9 23-22 28C19 54 10 45 10 31V15z" fill="#EFE6D6"/><path d="M32 6l22 9v16c0 14-9 23-22 28z" fill="#C9B08A"/></svg></div>
+        <div class="meta"><h3>Vento Cyber</h3><span class="tag">( Security )</span></div>
+        <p>Our sister company for cybersecurity services.</p>
+        <span class="visit arrow">Visit</span>
+      </a>
     </div>
   </div>
 </section>
@@ -338,12 +107,12 @@ footer{padding:40px 0 34px;border-top:1px solid var(--line-soft)}
 <section class="why" id="why">
   <div class="wrap">
     <p class="eyebrow">Why Vento</p>
-    <p class="intro" style="margin-top:18px">Much of a company&rsquo;s work still runs on documents, spreadsheets and people checking each other&rsquo;s numbers. <span class="s">AI can take on a large share of it when it is built on the company&rsquo;s own data and its results can be checked.</span> These are the rules we build by.</p>
+    <p class="intro">Much of a company&rsquo;s work still runs on documents, spreadsheets and people checking each other&rsquo;s numbers. <span class="s">Software and AI can take on a large share of it when they are built on the company&rsquo;s own data and their results can be checked.</span> These are the rules we build by.</p>
     <div class="rules">
       <div>
         <p class="n">01</p>
         <h3>We measure before we build</h3>
-        <p>We start with a sample of your real work and agree how success will be measured. If AI is the wrong tool for the job, we tell you then.</p>
+        <p>We start with a sample of your real work and agree how success will be measured. If our technology is the wrong tool for the job, we tell you then.</p>
       </div>
       <div>
         <p class="n">02</p>
@@ -369,17 +138,17 @@ footer{padding:40px 0 34px;border-top:1px solid var(--line-soft)}
     <div class="head">
       <div>
         <p class="eyebrow">Clients</p>
-        <h2>Built for clients</h2>
+        <h2 class="caps">Built for clients</h2>
       </div>
     </div>
     <div class="clients">
       <article class="client">
-        <span class="tag">Trade compliance</span>
+        <span class="tag">( Vento AI )</span>
         <h3>A US importer of automotive parts</h3>
         <p>Tariff classification, duty estimates and an audit trail for imported parts, built around the client&rsquo;s SAP material data. The work became Travio.</p>
       </article>
       <article class="client">
-        <span class="tag">Pharmaceutical distribution</span>
+        <span class="tag">( Vento Automation )</span>
         <h3>A wholesale pharmaceutical distributor</h3>
         <p>Procurement, stock with batch and expiry tracking, sales, GST invoicing and payments in one system, with separate roles for each team.</p>
       </article>
@@ -392,8 +161,8 @@ footer{padding:40px 0 34px;border-top:1px solid var(--line-soft)}
   <div class="wrap contact">
     <div class="side">
       <p class="eyebrow">Start a project</p>
-      <h2>Tell us about the problem you want solved.</h2>
-      <p>Pick what is closest, add a few lines, and we will reply within two working days.</p>
+      <h2 class="caps">Tell us the problem</h2>
+      <p>Pick the division closest to what you need, add a few lines, and we will reply within two working days.</p>
       <a class="mail" href="mailto:hello@ventosystems.com">hello@ventosystems.com</a>
     </div>
 
@@ -401,10 +170,12 @@ footer{padding:40px 0 34px;border-top:1px solid var(--line-soft)}
       <fieldset>
         <legend>What do you need?</legend>
         <div class="choices">
-          <label><input type="radio" name="need" value="AI for a business workflow" checked><span>AI for a business workflow</span></label>
-          <label><input type="radio" name="need" value="AI for a physical site"><span>AI for a physical site</span></label>
-          <label><input type="radio" name="need" value="A demo of one of your products"><span>A product demo</span></label>
-          <label><input type="radio" name="need" value="Something else"><span>Something else</span></label>
+          <label><input type="radio" name="need" value="Software automation" data-key="automation" checked><span>Software automation</span></label>
+          <label><input type="radio" name="need" value="AI in software" data-key="ai"><span>AI in software</span></label>
+          <label><input type="radio" name="need" value="Robotics" data-key="robotics"><span>Robotics</span></label>
+          <label><input type="radio" name="need" value="A safety system" data-key="safety"><span>A safety system</span></label>
+          <label><input type="radio" name="need" value="Cybersecurity" data-key="cyber"><span>Cybersecurity</span></label>
+          <label><input type="radio" name="need" value="Something else" data-key="other"><span>Something else</span></label>
         </div>
       </fieldset>
       <div class="pair">
@@ -429,26 +200,33 @@ footer{padding:40px 0 34px;border-top:1px solid var(--line-soft)}
     <div class="foot">
       <span>&copy; 2026 Vento Systems Pvt Ltd</span>
       <a href="mailto:hello@ventosystems.com">hello@ventosystems.com</a>
-      <a href="#contact">Start a project</a>
+      <a href="/#contact">Start a project</a>
     </div>
   </div>
 </footer>
 
 <script>
 // The contact form has no server. It writes an email in the visitor's own mail app.
-document.getElementById('brief').addEventListener('submit', function (e) {
-  e.preventDefault();
-  var f = e.target;
-  var need = f.querySelector('input[name=need]:checked').value;
-  var name = f.elements['name'].value.trim();
-  var company = f.elements['company'].value.trim();
-  var subject = need + (company ? ' (' + company + ')' : '');
-  var body = 'What we need: ' + need + '\n'
-    + (name ? 'Name: ' + name + '\n' : '')
-    + (company ? 'Company: ' + company + '\n' : '')
-    + '\n' + f.elements['details'].value.trim() + '\n';
-  location.href = 'mailto:hello@ventosystems.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
-});
+// A division page links here as /?need=<division>#contact to preselect that division.
+(function () {
+  var form = document.getElementById('brief');
+  var key = new URLSearchParams(location.search).get('need');
+  var pick = key && form.querySelector('input[data-key="' + key.replace(/[^a-z]/g, '') + '"]');
+  if (pick) pick.checked = true;
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var need = form.querySelector('input[name=need]:checked').value;
+    var name = form.elements['name'].value.trim();
+    var company = form.elements['company'].value.trim();
+    var subject = need + (company ? ' (' + company + ')' : '');
+    var body = 'What we need: ' + need + '\n'
+      + (name ? 'Name: ' + name + '\n' : '')
+      + (company ? 'Company: ' + company + '\n' : '')
+      + '\n' + form.elements['details'].value.trim() + '\n';
+    location.href = 'mailto:hello@ventosystems.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+  });
+})();
 </script>
 
 </body>
