@@ -41,10 +41,18 @@
   const draft = document.getElementById('enquiry-draft');
   const status = document.getElementById('form-status');
   const open = document.getElementById('enquiry-open');
+  const projectContext = document.getElementById('enquiry-project');
   const clearUnrelatedProject = () => {
     // Once the visitor changes area, do not revive an earlier project later.
     if (project && project.area !== area.value) project = undefined;
+    if (projectContext) {
+      const text = project ? `Enquiry about ${project.label}` : '';
+      // Do not re-announce unchanged context while the visitor types.
+      if (projectContext.textContent !== text) projectContext.textContent = text;
+      projectContext.hidden = !project;
+    }
   };
+  clearUnrelatedProject();
   const invalidateDraft = () => {
     clearUnrelatedProject();
     if (!preview.hidden) { preview.hidden = true; status.textContent = 'Your details changed. Create the email draft again to update it.'; }
@@ -53,12 +61,12 @@
   area.addEventListener('change', invalidateDraft);
   form.addEventListener('submit', e => {
     e.preventDefault();
+    clearUnrelatedProject();
     if (!form.reportValidity()) return;
     const name = document.getElementById('enquiry-name').value.trim();
     const company = document.getElementById('enquiry-company').value.trim();
     const message = document.getElementById('enquiry-message').value.trim();
     if (!name || !message) { status.textContent = 'Please add your name and a few words about your enquiry.'; return; }
-    clearUnrelatedProject();
     const subject = `${project ? project.label + ' — ' : ''}${area.selectedOptions[0].text}${company ? ' — ' + company : ''}`;
     const body = `Hello Vento,\n\n${message}\n\n${project ? 'Project: ' + project.label + '\n' : ''}Area: ${area.selectedOptions[0].text}\nName: ${name}${company ? '\nOrganization: ' + company : ''}\n`;
     draft.value = `To: hello@ventosystems.com\nSubject: ${subject}\n\n${body}`;
