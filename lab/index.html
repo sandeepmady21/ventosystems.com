@@ -20,11 +20,14 @@
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;450;500;550;600;650;700&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/company.css">
 <link rel="stylesheet" href="/assets/exploration.css">
+<link rel="stylesheet" href="/assets/project-disclosures.css">
+<link rel="stylesheet" href="/assets/mobile.css" media="screen">
 <script src="/assets/company.js" defer></script>
+<script src="/assets/project-disclosures.js" defer></script>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
-<header class="site-header"><div class="container header-inner"><a class="brand" href="/" aria-label="Vento Systems, home"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M11 15h15l14 34-5 9z" fill="currentColor"/><path d="M38 26h8L37 50l-3-7z" fill="currentColor"/><path d="M40 15h14l-9 11h-7z" fill="#F47735"/></svg><span>VENTO<span class="brand-small">SYSTEMS</span></span></a><button class="menu-toggle" type="button" aria-controls="site-nav" aria-expanded="false">Menu <span aria-hidden="true">+</span></button><nav id="site-nav" class="site-nav" aria-label="Main navigation"><a href="/#businesses">Our businesses</a><a href="/#work">Selected work</a><a href="/vision/">Our vision</a><a class="nav-contact" href="/#contact">Get in touch <span aria-hidden="true">↗</span></a></nav></div></header>
+<header class="site-header"><div class="container header-inner"><a class="brand" href="/" aria-label="Vento Systems, home"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M11 15h15l14 34-5 9z" fill="currentColor"/><path d="M38 26h8L37 50l-3-7z" fill="currentColor"/><path d="M40 15h14l-9 11h-7z" fill="#F47735"/></svg><span>VENTO<span class="brand-small">SYSTEMS</span></span></a><button class="menu-toggle" type="button" aria-controls="site-nav" aria-expanded="false">Menu <span aria-hidden="true">+</span></button><nav id="site-nav" class="site-nav" aria-label="Main navigation"><a href="/#businesses">Our businesses</a><a href="/#work">Selected work</a><a href="/vision/">Our vision</a><a href="/lab/" aria-current="page">Lab</a><a href="/cyber/">Vento Cyber</a><a class="nav-contact" href="/#contact">Get in touch <span aria-hidden="true">↗</span></a></nav></div></header>
 <main id="main">
 <section class="page-hero container" aria-labelledby="page-title">
     <p class="eyebrow">Vento Lab</p>
@@ -42,32 +45,42 @@
     <div class="business-grid lab-project-grid">
     <article class="lab-project" id="primer">
       <figure class="project-figure">
-        <div class="business-art"><img src="/assets/orange/lab-primer.svg" alt="A reading source connects to a written answer, feedback and a topic map, with a loop for revisiting the material." width="900" height="620" loading="lazy"><span class="art-index">01 / LEARNING</span></div>
+        <div class="business-art"><img src="/assets/artwork-v2/lab-primer.webp" alt="A reading source connects to a written answer, feedback and topic cards, with a loop for revisiting the material." width="900" height="620" loading="lazy"><span class="art-index">01 / LEARNING</span></div>
         <figcaption>Conceptual illustration &middot; Reading, recall and feedback.</figcaption>
       </figure>
       <div class="card-heading"><h3>Primer</h3></div>
       <p class="status">Prototype &middot; Learning</p>
       <p class="project-summary">A learning tool exploring how reading, recall and feedback can work together.</p>
-      <dl class="project-questions">
+      <dl class="project-questions project-current">
         <dt>What exists today</dt><dd>An early reading and spaced-repetition prototype. The work explores written answers, AI-assisted feedback and a topic map based on a learner&rsquo;s responses.</dd>
-        <dt>The question</dt><dd>Can written answers and focused feedback make gaps in understanding easier to recognise?</dd>
-        <dt>A possible next experiment</dt><dd>Compare a learner&rsquo;s answer with the source material, review the feedback and see whether the next answer addresses the gap.</dd>
       </dl>
+      <details class="research-disclosure" data-project-disclosure open>
+        <summary><span>Research question &amp; next step</span><span class="disclosure-indicator" aria-hidden="true"></span></summary>
+        <dl class="project-questions">
+          <dt>The question</dt><dd>Can written answers and focused feedback make gaps in understanding easier to recognise?</dd>
+        <dt>A possible next experiment</dt><dd>Compare a learner&rsquo;s answer with the source material, review the feedback and see whether the next answer addresses the gap.</dd>
+        </dl>
+      </details>
       <a class="text-link" href="/?need=lab&amp;project=primer#contact">Discuss Primer <span aria-hidden="true">&rarr;</span></a>
     </article>
     <article class="lab-project" id="gather">
       <figure class="project-figure">
-        <div class="business-art"><img src="/assets/orange/lab-gather.svg" alt="People and AI agents connect to shared project tasks and documents, with a review point before work is accepted." width="900" height="620" loading="lazy"><span class="art-index">02 / COLLABORATION</span></div>
+        <div class="business-art"><img src="/assets/artwork-v2/lab-gather.webp" alt="People and AI agents connect to shared project tasks and documents, with a review point before work is accepted." width="900" height="620" loading="lazy"><span class="art-index">02 / COLLABORATION</span></div>
         <figcaption>Conceptual illustration &middot; Shared context and a reviewable result.</figcaption>
       </figure>
       <div class="card-heading"><h3>Gather</h3></div>
       <p class="status">Internal development &middot; Collaboration</p>
       <p class="project-summary">An internal workspace project exploring how people and AI agents can coordinate work as members of a team.</p>
-      <dl class="project-questions">
+      <dl class="project-questions project-current">
         <dt>What exists today</dt><dd>A workspace in internal development. The current focus is shared project, task and document context for people and AI agents.</dd>
-        <dt>The question</dt><dd>How can people and AI agents share context while keeping task ownership and review clear?</dd>
-        <dt>A possible next experiment</dt><dd>Follow one task from assignment to review, examining what context each participant needs and where a person should approve the result.</dd>
       </dl>
+      <details class="research-disclosure" data-project-disclosure open>
+        <summary><span>Research question &amp; next step</span><span class="disclosure-indicator" aria-hidden="true"></span></summary>
+        <dl class="project-questions">
+          <dt>The question</dt><dd>How can people and AI agents share context while keeping task ownership and review clear?</dd>
+        <dt>A possible next experiment</dt><dd>Follow one task from assignment to review, examining what context each participant needs and where a person should approve the result.</dd>
+        </dl>
+      </details>
       <a class="text-link" href="/?need=lab&amp;project=gather#contact">Discuss Gather <span aria-hidden="true">&rarr;</span></a>
     </article>
     </div>

@@ -1,0 +1,6 @@
+Use case: precise-object-edit.
+Asset type: wide desktop website illustration for Vento safety.
+Input image is the exact finished artwork to preserve. Make a PANORAMIC 2.55:1 LANDSCAPE derivative, ideally 2560 by 1008 pixels.
+Change ONLY the canvas/background framing: extend the quiet dark warm graphite studio ground and backdrop far to the left and right. Keep the whole original object composition centered, unaltered, and fully visible. Preserve every object, material, color, bevel, wheel or building or compute part, connector/path, lighting direction, perspective, and spatial relationship exactly. Do not redesign, remove, add, enlarge or rearrange anything.
+The central original scene should occupy about 58 percent of the new canvas width. It must retain its full original vertical framing, including generous breathing room above and below, so nothing is cropped. The added left and right areas are seamless quiet dark ground/background only, with subtle physically consistent falloff; no new structures, vignettes, decorative effects or gradients that visibly band. This is horizontal outpainting, not a zoom-in and not a square/3:2 output.
+Constraints: full complete original subject silhouette; wide 2.55:1 composition; no text, numbers, logos, borders, labels, UI or watermark. Keep the premium engineering editorial miniature style exactly.
