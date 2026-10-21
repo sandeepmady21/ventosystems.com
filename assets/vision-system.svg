@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="560" viewBox="0 0 1200 560" role="img" aria-labelledby="title desc">
+<title id="title">From information to useful action</title>
+<desc id="desc">Conceptual engineering system. Documents, sensing and visual observations feed a shared processing core. A review point connects the core to a decision record and a physical control response. This illustrates a way of thinking, not a deployed system.</desc>
+<defs>
+  <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#211e18"/><stop offset=".6" stop-color="#171510"/><stop offset="1" stop-color="#242019"/></linearGradient>
+  <linearGradient id="metal" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#d7c9af"/><stop offset=".23" stop-color="#6e6554"/><stop offset=".52" stop-color="#302b23"/><stop offset=".8" stop-color="#716654"/><stop offset="1" stop-color="#c0ae90"/></linearGradient>
+  <linearGradient id="panel" x2=".8" y2="1"><stop stop-color="#393228"/><stop offset="1" stop-color="#1c1914"/></linearGradient>
+  <linearGradient id="edge" x2=".7" y2="1"><stop stop-color="#efe8dc"/><stop offset=".5" stop-color="#9c8c71"/><stop offset="1" stop-color="#4b4336"/></linearGradient>
+  <linearGradient id="orange" x2=".8" y2="1"><stop stop-color="#ffbe7c"/><stop offset=".45" stop-color="#f47735"/><stop offset="1" stop-color="#b3441b"/></linearGradient>
+  <radialGradient id="glow"><stop stop-color="#c45c26" stop-opacity=".22"/><stop offset="1" stop-color="#c45c26" stop-opacity="0"/></radialGradient>
+  <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#b9a88e" stroke-opacity=".065" stroke-width="1"/></pattern>
+  <pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r=".8" fill="#b9a88e" opacity=".18"/></pattern>
+</defs>
+<rect width="1200" height="560" fill="url(#bg)"/>
+<rect width="1200" height="560" fill="url(#grid)"/>
+<ellipse cx="600" cy="280" rx="528" ry="246.4" fill="url(#glow)"/>
+
+<!-- Routes gather different inputs around one engineering core. -->
+<g fill="none" stroke="#b9a88e" stroke-opacity=".3" stroke-width="1">
+  <path d="M90 66H1110M90 494H1110"/>
+  <path d="M251 132H333V280H474M226 280H474M251 429H333V280"/>
+  <path d="M726 280H804M838 280H880V152H942M880 280V405H954"/>
+  <ellipse cx="600" cy="289" rx="160" ry="184" stroke-opacity=".14"/>
+  <ellipse cx="600" cy="289" rx="188" ry="210" stroke-opacity=".11" stroke-dasharray="2 7"/>
+  <path d="M472 479H728M495 485V473M705 485V473"/>
+</g>
+<path d="M226 280H474M726 280H804M838 280H880V152H942" fill="none" stroke="#f47735" stroke-width="2" stroke-opacity=".9"/>
+<!-- Records: a layered set of source documents. -->
+<rect x="116" y="92" width="145" height="100" rx="4" fill="#171510" stroke="#655943"/>
+<rect x="104" y="82" width="145" height="100" rx="4" fill="url(#panel)" stroke="#a08e70" stroke-opacity=".7"/>
+<path d="M125 105h30v39h-30zM131 114h17M131 121h17M131 128h10M169 107h59M169 121h43M169 135h54M125 160h104" fill="none" stroke="#d7c9af" stroke-opacity=".6"/>
+<circle cx="228" cy="160" r="3" fill="#f47735"/>
+<!-- A sensor and its observed field. -->
+<g fill="none" stroke="#b9a88e">
+  <circle cx="174" cy="280" r="66" stroke-opacity=".12"/>
+  <circle cx="174" cy="280" r="52" stroke-opacity=".23"/>
+  <circle cx="174" cy="280" r="37" fill="url(#panel)" stroke-opacity=".7"/>
+  <path d="M159 280h9l7-17 9 34 8-17h12" stroke="#f47735" stroke-opacity=".9" stroke-width="1.8"/>
+  <path d="M174 229v-13M174 331v13M123 280h-13" stroke-opacity=".4"/>
+</g>
+<!-- An observation from a physical environment. -->
+<rect x="104" y="379" width="145" height="100" rx="4" fill="url(#panel)" stroke="#a08e70" stroke-opacity=".7"/>
+<path d="M124 399h105v61H124z" fill="#191711" stroke="#84745b" stroke-opacity=".5"/>
+<path d="M132 448l25-22 23 12 34-30M142 407h12M142 407v12M211 452h-12M211 452v-12" fill="none" stroke="#b9a88e" stroke-opacity=".7"/>
+<circle cx="180" cy="438" r="5" fill="none" stroke="#f47735"/>
+<!-- Layered computation / integration core on a grounded platform. -->
+<path d="M458 354L600 272L742 354L600 436Z" fill="#171510" stroke="#79694f"/>
+<path d="M458 354v15l142 82v-15zM600 436l142-82v15l-142 82z" fill="#272218" stroke="#62543f"/>
+<g stroke="#a18e6e" stroke-opacity=".75">
+ <path d="M488 305L600 240L712 305V334L600 399L488 334Z" fill="url(#panel)"/>
+ <path d="M488 269L600 204L712 269V298L600 363L488 298Z" fill="url(#panel)"/>
+ <path d="M488 233L600 168L712 233V262L600 327L488 262Z" fill="url(#panel)"/>
+ <path d="M488 197L600 132L712 197V226L600 291L488 226Z" fill="url(#panel)"/>
+ <path d="M488 197L600 132L712 197L600 262Z" fill="url(#metal)"/>
+</g>
+<g fill="none" stroke="#cdbb9c" stroke-opacity=".35">
+ <path d="M512 183l112 65M536 169l112 65M560 155l112 65M584 141l112 65M512 211l112-65M536 225l112-65M560 239l112-65M584 253l112-65"/>
+ <path d="M600 262v29M600 298v29M600 334v29M600 370v29M488 233l112 65 112-65M488 269l112 65 112-65M488 305l112 65 112-65"/>
+ <path d="M508 222v10M518 228v10M528 234v10M538 240v10M548 246v10M558 252v10M568 258v10M578 264v10"/>
+ <path d="M508 294v10M518 300v10M528 306v10M538 312v10M548 318v10M558 324v10M568 330v10M578 336v10"/>
+</g>
+<path d="M566 197l34-20 34 20-34 20z" fill="url(#orange)" stroke="#ffc089"/>
+<g fill="#f47735"><circle cx="692" cy="236" r="2.4"/><circle cx="692" cy="308" r="2.4"/></g>
+<!-- A visible review point before the outputs. -->
+<circle cx="820" cy="280" r="31" fill="none" stroke="#b9a88e" stroke-opacity=".2"/>
+<circle cx="820" cy="280" r="22" fill="url(#panel)" stroke="#b9a88e" stroke-opacity=".8"/>
+<path d="M810 280l7 7 14-16" fill="none" stroke="#f47735" stroke-width="2" stroke-linecap="round"/>
+<!-- A decision with an inspectable record. -->
+<rect x="942" y="87" width="166" height="132" rx="4" fill="url(#panel)" stroke="#a08e70" stroke-opacity=".7"/>
+<path d="M942 117h166M962 103h69M962 137h11v11h-11zM987 142h96M962 163h11v11h-11zM987 168h76M962 189h11v11h-11zM987 194h88" fill="none" stroke="#cfbea0" stroke-opacity=".55"/>
+<path d="M964 141l3 3 7-8" fill="none" stroke="#f47735" stroke-width="1.8"/>
+<!-- Controlled motion on a bounded route. -->
+<path d="M955 322h153v156H955z" fill="#1c1914" stroke="#79694f" stroke-dasharray="3 5"/>
+<path d="M981 451v-45q0-18 18-18h54q19 0 19-19v-21" fill="none" stroke="#f47735" stroke-opacity=".85" stroke-width="2"/>
+<path d="M1066 354l6-7 6 7" fill="none" stroke="#f47735" stroke-width="2"/>
+<g transform="translate(981 422)">
+ <rect x="-22" y="-29" width="44" height="58" rx="8" fill="url(#panel)" stroke="#b9a88e"/>
+ <rect x="-27" y="-20" width="5" height="13" rx="1" fill="#564a37"/><rect x="22" y="-20" width="5" height="13" rx="1" fill="#564a37"/>
+ <rect x="-27" y="8" width="5" height="13" rx="1" fill="#564a37"/><rect x="22" y="8" width="5" height="13" rx="1" fill="#564a37"/>
+ <circle r="11" fill="#1d1913" stroke="#9b886a"/><circle r="4" fill="#f47735"/>
+ <path d="M-9-20h18M-9 21h18" stroke="#b9a88e" stroke-opacity=".5"/>
+</g>
+<g fill="#f47735"><circle cx="333" cy="280" r="3"/><circle cx="880" cy="280" r="3"/></g>
+
+<g fill="none" stroke="#b9a88e" stroke-opacity=".34" stroke-width="1"><path d="M32 36h8M36 32v8"/><path d="M1160 36h8M1164 32v8"/><path d="M32 524h8M36 520v8"/><path d="M1160 524h8M1164 520v8"/></g>
+</svg>

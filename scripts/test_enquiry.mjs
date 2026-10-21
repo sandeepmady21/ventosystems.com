@@ -78,7 +78,8 @@ test('known projects choose the correct area and survive in both draft represent
     ['travio', 'Travio', 'business'], ['ap-automation', 'AP Automation', 'business'],
     ['auditproof', 'AuditProof', 'business'], ['practice-tracker', 'Practice Tracker', 'business'],
     ['operations', 'Operations systems', 'business'], ['mobile-robot', 'Mobile robot', 'autonomy'],
-    ['controller', 'Controller firmware', 'autonomy']
+    ['controller', 'Controller firmware', 'autonomy'],
+    ['primer', 'Primer', 'lab'], ['gather', 'Gather', 'lab']
   ];
   for (const [key, label, expectedArea] of cases) {
     const form = enquiry(`?project=${key}`);

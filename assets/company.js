@@ -29,7 +29,9 @@
     ['practice-tracker', { label: 'Practice Tracker', area: 'business' }],
     ['operations', { label: 'Operations systems', area: 'business' }],
     ['mobile-robot', { label: 'Mobile robot', area: 'autonomy' }],
-    ['controller', { label: 'Controller firmware', area: 'autonomy' }]
+    ['controller', { label: 'Controller firmware', area: 'autonomy' }],
+    ['primer', { label: 'Primer', area: 'lab' }],
+    ['gather', { label: 'Gather', area: 'lab' }]
   ]);
   let project = projects.get(query.get('project'));
   // A known project determines its area, even when the URL's need disagrees.
