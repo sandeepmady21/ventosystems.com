@@ -105,3 +105,18 @@
 @media(prefers-reduced-motion:no-preference){
   @media(hover:hover){.business-card:hover .business-art img{transform:scale(1.02)}}
 }
+
+/* A concrete systems scene balances wide screens without lengthening phones. */
+.hero-scene{display:none;margin:0;min-width:0}
+.company-hero+.business-section{padding-top:clamp(44px,4.4vw,64px)}
+@media(min-width:1000px){
+  .company-hero{padding-top:20px}
+  .company-hero .hero-grid{grid-template-columns:minmax(0,1.08fr) minmax(0,1fr);gap:clamp(24px,3vw,44px)}
+  .company-hero .hero-copy{max-width:none;padding:40px 0 56px}
+  .company-hero .hero-copy h1{font-size:clamp(60px,6.7vw,98px);line-height:1.04}
+  .company-hero .hero-description{max-width:510px;font-size:17px}
+  .hero-scene{display:block;align-self:center}
+  .hero-scene img{width:100%;height:auto;aspect-ratio:1374/1145;object-fit:contain}
+  .hero-scene figcaption{display:flex;justify-content:space-between;gap:14px;padding:10px 6px 24px;color:var(--muted);font:400 9px/1.6 var(--mono)}
+  .hero-scene figcaption span:first-child{color:var(--ink)}
+}
