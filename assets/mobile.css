@@ -121,8 +121,9 @@
 
 /* One figure follows the headline in reading order at every screen size. */
 .hero-scene{display:block;margin:16px 0 0;min-width:0}
-.hero-scene picture{display:block}
-.hero-scene img{display:block;width:100%;height:auto;aspect-ratio:960/417;object-fit:cover;object-position:50% 35%;mask-image:linear-gradient(to bottom,transparent,#000 6%,#000 82%,transparent)}
+/* Fade each axis separately so the artwork meets the page without a hard frame. */
+.hero-scene picture{display:block;mask-image:linear-gradient(to right,transparent,#000 6%,#000 94%,transparent)}
+.hero-scene img{display:block;width:100%;height:auto;aspect-ratio:960/417;object-fit:cover;object-position:50% 35%;mask-image:linear-gradient(to bottom,transparent,#000 8%,#000 82%,transparent)}
 .hero-scene figcaption{padding:4px 6px 0;color:var(--muted);font:400 9px/1.6 var(--mono);text-align:center}
 .hero-scene figcaption span:first-child{display:none}
 .company-hero+.business-section{padding-top:clamp(44px,4.4vw,64px)}
@@ -146,7 +147,8 @@
   .company-hero .hero-copy h1{font-size:clamp(60px,6.7vw,98px);line-height:1.04}
   .company-hero .hero-description{max-width:510px;font-size:17px}
   .hero-scene{grid-column:2;grid-row:1/span 4;align-self:center;margin:0}
-  .hero-scene img{aspect-ratio:1536/1024;object-fit:contain;mask-image:linear-gradient(to bottom,transparent,#000 6%,#000 72%,transparent)}
+  .hero-scene picture{mask-image:linear-gradient(to right,transparent,#000 10%,#000 90%,transparent)}
+  .hero-scene img{aspect-ratio:1536/1024;object-fit:contain;mask-image:linear-gradient(to bottom,transparent,#000 16%,#000 72%,transparent)}
   .hero-scene figcaption{display:flex;justify-content:space-between;gap:14px;padding:10px 6px 24px;color:var(--muted);font:400 9px/1.6 var(--mono)}
   .hero-scene figcaption span:first-child{display:inline;color:var(--ink)}
 }
