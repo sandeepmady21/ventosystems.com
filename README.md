@@ -30,7 +30,7 @@ The homepage combines the shared engineering introduction with the four illustra
 
 Each business-area page keeps its original illustration and shared visual components. Its introduction links to the detailed work and an area-specific enquiry. Project and development labels distinguish client work, working builds, prototypes and research; proposed assessment and pilot outputs describe the scope to agree, rather than delivered results.
 
-Vision explains the shared engineering approach through `vision-system.svg`. Lab pairs `lab-primer.svg` and `lab-gather.svg` with each project's scope, current stage, research question and a possible next experiment. These are conceptual illustrations, not product screenshots or commitments to a release. Existing illustration assets remain unchanged.
+Vision explains the shared engineering approach through `vision-system.svg`. Lab pairs `lab-primer.svg` and `lab-gather.svg` with each project's scope, current stage, research question and a possible next experiment. These are conceptual illustrations, not product screenshots or commitments to a release. Original dark illustration assets remain available unchanged. The company pages use matching variants from `assets/orange/`, with warm orange backgrounds, charcoal objects and darker exposed connectors. Geometry and composition are preserved; the homepage V illustration retains its original dark treatment.
 
 Cyber uses `cyber-system.svg` to explain environment boundaries, access, specialist review and an agreed scope. The page explains how to discuss an environment and scope with Vento Cyber and specialist partners.
 
@@ -64,23 +64,23 @@ The source checker validates document structure, accessible labels, local links,
 
 ## Hosting
 
-The repository uses GitHub Pages with `CNAME` set to `ventosystems.com`. Production at `https://ventosystems.com/` is served from `main`. The current improvements are developed on `codex/vento-interdisciplinary-positioning`; pushing this branch does not replace production. Changes reach production through a reviewed pull request merged into `main`.
+The repository uses GitHub Pages with `CNAME` set to `ventosystems.com`. Production at `https://ventosystems.com/` is served from `main`. The current improvements are developed on `codex/vento-orange-illustrations`; pushing this branch does not replace production. Changes reach production through a reviewed pull request merged into `main`.
 
 ## Rollback
 
-The remote tag `vento-company-v1.7` preserves the production state immediately before the interdisciplinary positioning refinement, at commit `c8ba718`. This checkpoint includes both independent sub-sites, which remain unchanged in this refinement. The older `vento-company-v1.6`, `vento-company-v1.5`, `vento-company-v1.4`, `vento-company-v1.3`, `vento-company-v1.2`, `vento-company-v1.1` and `vento-company-v1` tags remain available as earlier checkpoints.
+The remote tag `vento-company-v1.8` preserves the production state immediately before the orange illustration backgrounds, at commit `668c87e`. This checkpoint includes both independent sub-sites, which remain unchanged in this refinement. The older `vento-company-v1.7`, `vento-company-v1.6`, `vento-company-v1.5`, `vento-company-v1.4`, `vento-company-v1.3`, `vento-company-v1.2`, `vento-company-v1.1` and `vento-company-v1` tags remain available as earlier checkpoints.
 
-To restore v1.7, work from the repository root with a clean working tree and create a new branch from current production. Restore the tagged tree as a new change; do not reset or force-push `main`.
+To restore v1.8, work from the repository root with a clean working tree and create a new branch from current production. Restore the tagged tree as a new change; do not reset or force-push `main`.
 
 ```sh
 git fetch origin --tags
-git switch -c restore/vento-company-v1-7 origin/main
-git restore --source=vento-company-v1.7 --staged --worktree -- .
+git switch -c restore/vento-company-v1-8 origin/main
+git restore --source=vento-company-v1.8 --staged --worktree -- .
 git diff --cached --stat
 python3 scripts/check_site.py .
 node --check assets/company.js
-git commit -m "Restore Vento company v1.7"
-git push -u origin restore/vento-company-v1-7
+git commit -m "Restore Vento company v1.8"
+git push -u origin restore/vento-company-v1-8
 ```
 
 Review the restored site locally, then open and merge a pull request from the restore branch into `main`. After GitHub Pages publishes, verify the production site. This retains the improvements in Git history while restoring the saved site files.

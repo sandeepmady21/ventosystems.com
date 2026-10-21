@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="560" viewBox="0 0 1200 560" role="img" aria-labelledby="title desc">
+<title id="title">Understand the environment, define the engagement</title>
+<desc id="desc">Conceptual cybersecurity scoping diagram. Applications, a device and data sit within a defined environment. Their connections pass through one access point to a specialist review and a document representing an agreed scope. The diagram explains an introduction and planning process, not a deployed security service or a guarantee of protection.</desc>
+<defs>
+  <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#ed985d" /><stop offset=".6" stop-color="#e88446" /><stop offset="1" stop-color="#d96f38" /></linearGradient>
+  <linearGradient id="panel" x2=".8" y2="1"><stop stop-color="#393228" /><stop offset="1" stop-color="#1c1914" /></linearGradient>
+  <linearGradient id="metal" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#b8a98d" /><stop offset=".5" stop-color="#433b2e" /><stop offset="1" stop-color="#8e7c60" /></linearGradient>
+  <linearGradient id="orange" x2=".8" y2="1"><stop stop-color="#ffbe7c" /><stop offset=".45" stop-color="#f47735" /><stop offset="1" stop-color="#b3441b" /></linearGradient>
+  <radialGradient id="glow"><stop stop-color="#ffcd8d" stop-opacity=".18" /><stop offset="1" stop-color="#ffcd8d" stop-opacity="0" /></radialGradient>
+  <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#312117" stroke-opacity=".065" /></pattern>
+</defs>
+<rect width="1200" height="560" fill="url(#bg)" />
+<rect width="1200" height="560" fill="url(#grid)" />
+<ellipse cx="640" cy="280" rx="500" ry="240" fill="url(#glow)" />
+
+
+<path d="M690 237V103H96V457H690V323" fill="#191711" fill-opacity=".24" stroke="#35251b" stroke-opacity="0.675" />
+<path d="M673 223V120H113V440H673V337" fill="none" stroke="#35251b" stroke-opacity="0.243" stroke-dasharray="3 6" />
+<g fill="none" stroke="#35251b" stroke-opacity="0.85">
+  <path d="M96 132v-29h29M661 103h29v29M96 428v29h29M661 457h29v-29" />
+  <path d="M684 237h13M684 323h13" />
+</g>
+<path d="M96 76H1110M96 486H1110" stroke="#35251b" stroke-opacity="0.21600000000000003" />
+
+
+<g fill="none" stroke="#35251b" stroke-opacity="0.54">
+  <path d="M303 211H362V280H575M277 365H362V280M514 214H575V280" />
+  <path d="M575 280V389H443" stroke-dasharray="3 6" stroke-opacity=".25" />
+</g>
+<path d="M303 211H362V280H650M725 280H770M870 280H966" fill="none" stroke="#35251b" stroke-opacity="0.85" stroke-width="2" />
+<circle cx="362" cy="280" r="3" fill="#35251b" />
+<circle cx="575" cy="280" r="8" fill="#211c14" stroke="#a18e6e" />
+<circle cx="575" cy="280" r="2.8" fill="#f47735" />
+
+
+<rect x="156" y="160" width="158" height="108" rx="4" fill="#171510" stroke="#655943" />
+<rect x="145" y="150" width="158" height="108" rx="4" fill="url(#panel)" stroke="#a08e70" stroke-opacity=".8" />
+<path d="M145 176h158M159 163h48M276 163h13" fill="none" stroke="#cfbea0" stroke-opacity=".6" />
+<g fill="none" stroke="#c6b394" stroke-opacity=".5">
+  <rect x="160" y="190" width="29" height="48" rx="2" />
+  <path d="M201 192h82M201 204h66M201 216h76M201 236h49" />
+</g>
+<path d="M160 190v48" stroke="#f47735" stroke-opacity=".8" stroke-width="2" />
+
+
+<path d="M156 322h121v77H156z" fill="url(#panel)" stroke="#a08e70" stroke-opacity=".8" />
+<path d="M164 330h105v58H164z" fill="#191711" stroke="#79694f" stroke-opacity=".55" />
+<path d="M202 399v15M230 399v15M186 415h60" fill="none" stroke="#35251b" stroke-opacity="0.85" />
+<path d="M177 345h25v27h-25zM212 345h43M212 357h34M212 369h40" fill="none" stroke="#c6b394" stroke-opacity=".5" />
+<circle cx="216" cy="393" r="2" fill="#f47735" />
+
+
+<path d="M405 167v81c0 25 109 25 109 0v-81Z" fill="url(#panel)" stroke="#a08e70" stroke-opacity=".8" />
+<ellipse cx="459.5" cy="167" rx="54.5" ry="18" fill="url(#metal)" stroke="#b9a88e" stroke-opacity=".75" />
+<g fill="none" stroke="#b9a88e" stroke-opacity=".5">
+  <path d="M405 194c0 25 109 25 109 0M405 221c0 25 109 25 109 0" />
+  <ellipse cx="459.5" cy="167" rx="39" ry="10" stroke-opacity=".24" />
+</g>
+<circle cx="495" cy="201" r="2.3" fill="#f47735" />
+<circle cx="495" cy="228" r="2.3" fill="#8c7c63" />
+
+<g fill="none" stroke="#35251b" stroke-opacity="0.44550000000000006">
+  <path d="M413 349l30 40-47 23M443 389l43-35M443 389l44 29" />
+  <circle cx="413" cy="349" r="8" /><circle cx="396" cy="412" r="7" />
+  <circle cx="486" cy="354" r="8" /><circle cx="487" cy="418" r="6" />
+  <circle cx="443" cy="389" r="13" fill="#242018" />
+</g>
+
+
+<rect x="650" y="247" width="75" height="66" rx="4" fill="url(#panel)" stroke="#b9a88e" stroke-opacity=".85" />
+<path d="M650 247v66" stroke="#f47735" stroke-width="2.2" />
+<g fill="none" stroke="#d7c9af" stroke-opacity=".7">
+  <circle cx="671" cy="267" r="7" />
+  <path d="M659 289v-5c0-10 25-10 25 0v5Z" />
+  <path d="M696 263h16M696 274h12M660 301h53" stroke-opacity=".45" />
+</g>
+<circle cx="708" cy="289" r="4" fill="url(#orange)" />
+
+
+<circle cx="820" cy="280" r="61" fill="none" stroke="#35251b" stroke-opacity="0.2025" />
+<circle cx="820" cy="280" r="47" fill="url(#panel)" stroke="#b9a88e" stroke-opacity=".75" />
+<g fill="none" stroke="#d7c9af" stroke-opacity=".75" stroke-width="1.3">
+  <circle cx="817" cy="263" r="11" />
+  <path d="M797 301v-7c0-16 40-16 40 0v7Z" />
+</g>
+<circle cx="844" cy="298" r="10" fill="#211c15" stroke="#f47735" stroke-opacity=".9" />
+<path d="M851 306l8 8" stroke="#35251b" stroke-opacity="0.85" stroke-width="2" />
+
+
+<path d="M977 175h110l28 28v187H977Z" fill="#171510" stroke="#655943" />
+<path d="M966 164h110l28 28v187H966Z" fill="url(#panel)" stroke="#a08e70" stroke-opacity=".8" />
+<path d="M1076 164v28h28M984 191h63M984 204h45M984 221h101" fill="none" stroke="#cfbea0" stroke-opacity=".6" />
+<g fill="none" stroke="#cfbea0" stroke-opacity=".55">
+  <path d="M984 242h11v11h-11zM1007 246h77M1007 258h60M984 282h11v11h-11zM1007 286h77M1007 298h51M984 322h11v11h-11zM1007 326h77M1007 338h67M984 361h101" />
+</g>
+<path d="M966 234v27" stroke="#f47735" stroke-width="2.5" />
+<circle cx="1085" cy="361" r="2.4" fill="#f47735" />
+<path d="M820 343v80h216v-32" fill="none" stroke="#35251b" stroke-opacity="0.31050000000000005" stroke-dasharray="3 6" />
+
+<g fill="none" stroke="#35251b" stroke-opacity="0.4590000000000001"><path d="M32 36h8M36 32v8" /><path d="M1160 36h8M1164 32v8" /><path d="M32 524h8M36 520v8" /><path d="M1160 524h8M1164 520v8" /></g>
+</svg>

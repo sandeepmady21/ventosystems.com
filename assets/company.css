@@ -55,3 +55,11 @@ a{color:inherit}button{cursor:pointer}img,svg{display:block;max-width:100%}img{h
 .recovery-links h2{font-size:25px;margin:15px 0}
 @media(max-width:900px){.recovery-links h2{font-size:22px}}
 @media(max-width:600px){.recovery-links h2{font-size:25px}}
+
+/* Orange illustration panels retain dark labels and controls. */
+.business-art:has(>img[src^="/assets/orange/"]){background:#e88446;border-color:#9d4d28}
+.business-art:has(>img[src^="/assets/orange/"]) .art-index{color:#302219}
+.business-art:has(>img[src^="/assets/orange/"]) .card-arrow{color:#302219;border-color:#302219}
+.business-card:hover .business-art:has(>img[src^="/assets/orange/"]) .card-arrow{background:#302219;border-color:#302219;color:#f3ac75}
+.page-art img[src^="/assets/orange/"]{background:#e88446;border-color:#9d4d28}
+.page-art img[src$="-wide.svg"]{aspect-ratio:900/620;object-fit:cover}
