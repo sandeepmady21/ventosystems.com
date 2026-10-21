@@ -1,0 +1,107 @@
+/* Phone-first reading, navigation and touch controls for the company site. */
+.site-nav a{min-height:44px;display:inline-flex;align-items:center}
+.page-art .artwork-zoom{display:block;cursor:zoom-in}
+.artwork-hint{display:block;margin-top:8px;color:var(--ink)}
+@media(max-width:900px){
+  .site-header{height:72px}
+  .menu-toggle{min-height:44px;min-width:72px;text-align:right}
+  .site-nav{top:71px;max-height:calc(100dvh - 72px);overflow-y:auto;padding:12px 24px 20px;overscroll-behavior:contain}
+  .site-nav a{min-height:52px;padding:12px 0}
+  .site-nav .nav-contact{padding:12px 0}
+  html{scroll-padding-top:92px}
+}
+@media(max-width:700px){
+  .container{width:calc(100% - 40px)}
+  .section{padding-block:52px}
+  .eyebrow{font-size:9px;line-height:1.6;letter-spacing:.1em}
+  h1,h2,h3{text-wrap:balance}
+  .company-hero{padding-top:10px}
+  .company-hero .hero-copy{padding:24px 0 36px}
+  .company-hero .hero-copy h1{font-size:clamp(42px,11.8vw,68px);line-height:1.04;letter-spacing:-.055em;margin-top:22px}
+  .company-hero .hero-description{font-size:16px;line-height:1.65;margin-top:22px;max-width:38rem}
+  .company-hero .hero-actions{margin-top:24px;gap:10px 20px;flex-direction:row;align-items:center}
+  .hero-actions .button{min-height:48px}
+  .text-link,.text-button,.footer-bottom a{min-height:44px;align-items:center}
+  .text-button{padding-block:10px}
+  .hero-actions .text-link{padding-block:8px}
+  .domain-strip{grid-template-columns:1fr 1fr}
+  .domain-strip a{min-height:54px;padding:14px;font-size:13px}
+  .domain-strip a:first-child{padding-left:14px}
+  .domain-strip a:nth-child(2){border-right:0}
+  .domain-strip a:nth-child(-n+2){border-bottom:1px solid var(--line)}
+  .business-section{padding-top:44px}
+  .section-heading{display:block;margin-bottom:26px}
+  .section-heading h2{font-size:clamp(31px,8.7vw,40px);line-height:1.1;margin-top:14px}
+  .section-heading>p{max-width:none;font-size:15px;line-height:1.65;margin-top:18px}
+  .business-grid{grid-template-columns:1fr;gap:36px}
+  .business-art img{aspect-ratio:3/2}
+  .business-card .card-heading{margin-top:18px}
+  .business-card .card-heading h3{font-size:27px}
+  .business-card>p{font-size:15px;line-height:1.65}
+  .card-topics{gap:8px 16px;line-height:1.7}
+  .art-index{font-size:9px;left:16px;top:16px}
+  .card-arrow{right:16px;bottom:16px;width:34px;height:34px}
+  .section-note{font-size:12px;line-height:1.65}
+  .thesis-section{border-top:1px solid var(--line)}
+  .thesis-grid{grid-template-columns:1fr;gap:18px}
+  .thesis-grid h2{font-size:34px;line-height:1.1}
+  .thesis-grid div>p{margin-top:18px;font-size:16px;line-height:1.65}
+  .work-item summary{grid-template-columns:20px minmax(0,1fr) 28px;gap:10px 12px;padding-block:22px}
+  .work-title{font-size:24px}
+  .work-stage{grid-column:2;grid-row:2;font-size:10px;line-height:1.5}
+  .work-title small{font-size:11px;line-height:1.5}
+  .work-body{margin-left:32px;padding-bottom:24px}
+  .work-body p{font-size:15px;line-height:1.7}
+  .vision-band{padding-block:52px}
+  .vision-band h2{font-size:clamp(38px,10.5vw,58px)}
+  .extended-grid{grid-template-columns:1fr;gap:16px}
+  .extended-card{padding:22px;gap:18px}
+  .extended-card h3{font-size:25px;margin:12px 0}
+  .extended-symbol{flex-shrink:0}
+  .page-hero{display:flex;flex-direction:column;align-items:stretch;padding-top:36px;padding-bottom:32px}
+  .page-hero>.eyebrow{order:0}
+  .page-hero h1{order:1;font-size:clamp(36px,10.5vw,52px);line-height:1.08;margin-top:18px;max-width:22ch}
+  .page-hero .page-art{order:2;margin:26px 0 0;width:100%}
+  .page-hero .page-lead{order:3;font-size:17px;line-height:1.65;margin-top:24px}
+  .page-hero>.status{order:4;align-self:flex-start;margin-top:20px}
+  .page-hero>.hero-actions{order:5;gap:10px 22px;flex-direction:row;align-items:center;margin-top:20px}
+  .page-art img[src^="/assets/artwork-v2/"]{aspect-ratio:3/2;max-height:none;object-fit:cover}
+  .page-hero .systems-figure{order:6}
+  .page-hero .systems-figure img[src^="/assets/artwork-v2/"]{aspect-ratio:1842/854;object-fit:contain}
+  .page-art figcaption,.project-figure figcaption{font-size:11px;line-height:1.6;padding-top:10px}
+  .page-hero+.section{padding-top:24px}
+  .page-jumps{flex-wrap:nowrap;gap:8px;overflow-x:auto;max-width:100%;margin:22px 0 26px;padding-bottom:10px;scrollbar-width:thin;scroll-snap-type:x proximity}
+  .page-jumps a{flex:0 0 auto;display:flex;align-items:center;min-height:44px;padding:10px 14px;border:1px solid var(--line);background:var(--panel);font-size:12px;scroll-snap-align:start}
+  .detail-row{grid-template-columns:20px minmax(0,1fr);gap:12px;padding-block:24px}
+  .detail-row h3{font-size:25px}
+  .detail-row p{font-size:15px;line-height:1.7}
+  .status{max-width:100%;white-space:normal;line-height:1.6}
+  .principles{grid-template-columns:1fr;gap:24px}
+  .principles>article,.principles>div{padding-top:20px}
+  .principles h3{font-size:23px}
+  .split-section{grid-template-columns:1fr;gap:32px}
+  .split-section h2{font-size:31px;line-height:1.12;margin:14px 0 20px}
+  .page-cta{padding:28px 22px}
+  .page-cta h2{font-size:32px;line-height:1.12}
+  .page-cta .button{max-width:100%;white-space:normal;min-height:48px;justify-content:space-between}
+  .contact-grid{grid-template-columns:1fr;gap:32px;padding-top:40px}
+  .contact-intro h2{font-size:38px;line-height:1.1}
+  .contact-intro>p{font-size:16px}
+  .contact-email{max-width:100%;font-size:16px;min-height:44px;gap:12px}
+  .enquiry-form input,.enquiry-form select,.enquiry-form textarea,#enquiry-draft{font-size:16px;line-height:1.6}
+  .enquiry-form input,.enquiry-form select{min-height:50px}
+  .enquiry-form label{font-size:11px}
+  .form-pair{grid-template-columns:1fr;gap:22px}
+  .form-action{flex-direction:column;align-items:stretch;gap:12px}
+  .form-action .button{min-height:50px;justify-content:space-between;font-size:14px;padding:14px 18px}
+  .form-action p{font-size:12px}
+  .form-action p br{display:none}
+  .draft-actions{flex-wrap:wrap;gap:12px}
+  .draft-actions a,.draft-actions button{min-height:48px}
+  .footer-bottom{align-items:stretch;gap:18px;font-size:11px}
+  .footer-bottom nav{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 20px}
+  .footer-bottom a{display:inline-flex;font-size:12px}
+}
+@media(prefers-reduced-motion:no-preference){
+  @media(hover:hover){.business-card:hover .business-art img{transform:scale(1.02)}}
+}

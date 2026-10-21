@@ -1,0 +1,24 @@
+/* Project disclosures keep their title and current stage visible at every size. */
+.detail-row.project-entry{display:block;padding:0}
+.project-disclosure>summary,.research-disclosure>summary{cursor:pointer;list-style:none}
+.project-disclosure>summary::-webkit-details-marker,.research-disclosure>summary::-webkit-details-marker{display:none}
+.project-disclosure>summary:focus-visible,.research-disclosure>summary:focus-visible{outline:2px solid var(--orange);outline-offset:5px}
+.project-disclosure>summary:hover .project-disclosure-title,.research-disclosure>summary:hover{color:var(--orange)}
+.project-disclosure .project-disclosure-heading{display:grid;grid-template-columns:90px minmax(0,1fr) 32px;align-items:start;gap:35px;margin:0;padding:32px 0}
+.project-disclosure-label{display:flex;min-width:0;flex-direction:column;align-items:flex-start;gap:13px}
+.project-disclosure-title{font-size:32px;line-height:1.2;overflow-wrap:break-word}
+.project-disclosure-label .status{display:inline-block;max-width:100%;margin:0;text-align:left;line-height:1.6}
+.project-disclosure .detail-number{padding-top:8px}
+.disclosure-indicator{display:block;position:relative;width:32px;height:32px;flex:none;border:1px solid var(--line);border-radius:50%;color:var(--ink)}
+.disclosure-indicator::before,.disclosure-indicator::after{content:"";position:absolute;top:50%;left:50%;width:12px;height:1px;background:currentColor;transform:translate(-50%,-50%)}
+.disclosure-indicator::after{transform:translate(-50%,-50%) rotate(90deg)}
+details[open]>summary .disclosure-indicator::after{display:none}
+.project-disclosure-body{margin-left:125px;padding:0 0 34px}
+.project-disclosure-body>p:first-child{margin-top:0}
+.research-disclosure{width:100%;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin:0 0 25px}
+.research-disclosure>summary{display:flex;align-items:center;justify-content:space-between;gap:18px;min-height:64px;padding:14px 0;font-size:15px;line-height:1.5}
+.research-disclosure .project-questions{margin:0;border:0;padding-top:6px}
+.research-disclosure .project-questions dd:last-child{margin-bottom:22px}
+.lab-project .project-current{border-top:0;padding-top:0;margin-top:22px}
+@media(max-width:900px){.project-disclosure .project-disclosure-heading{grid-template-columns:40px minmax(0,1fr) 32px;gap:20px}.project-disclosure-body{margin-left:60px}}
+@media(max-width:700px){.project-disclosure .project-disclosure-heading{grid-template-columns:22px minmax(0,1fr) 32px;gap:12px;padding:24px 0}.project-disclosure-title{font-size:23px}.project-disclosure-label{gap:10px}.project-disclosure .detail-number{padding-top:4px}.project-disclosure-label .status{font-size:9px;letter-spacing:.04em}.project-disclosure-body{margin-left:34px;padding-bottom:26px}.project-disclosure-body .hero-actions{gap:18px}.research-disclosure>summary{min-height:60px;font-size:14px}}
