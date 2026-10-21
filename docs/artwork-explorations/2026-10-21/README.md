@@ -2,7 +2,7 @@
 
 All original PNGs are preserved unchanged. WebP files are lightweight gallery previews. These are conceptual illustrations, not photographs of delivered products. Generated with built-in imagegen; exact prompts, original filenames, dimensions and SHA-256 hashes are in [manifest.json](manifest.json).
 
-The selected homepage artwork is **engineering-studio**: the human drawing beside a graph display, with a copper path connecting the plan to a rover experiment. Both desktop and mobile use this exact original, exported as optimized WebP files; compact screens frame it with CSS without regenerating the scene. The weave remains in the common-thread section. The previously published graph-and-lidar scene remains saved below and in rollback tag `vento-company-v1.13` at `2debcc3b3519b77b8bed971ca175f93745018601`. The earlier weave hero is preserved in `vento-company-v1.12`.
+The selected homepage artwork is **engineering-studio-containers**, a targeted revision of **engineering-studio** replacing its two plain blocks with small shipping-container models. Both desktop and mobile use optimized exports of the same scene. CSS fades all four image edges into the page background, and compact screens retain the existing short frame. The original studio scene is preserved in rollback tag `vento-company-v1.14` at `a10d3e8768338e336615ee050ae186f738043a7b`. All earlier images and prompts remain archived below.
 
 ## Desktop systems apparatus
 
@@ -81,3 +81,9 @@ The selected homepage artwork is **engineering-studio**: the human drawing besid
 [Original PNG](graphs-lidar-final-mobile.png) · [WebP preview](graphs-lidar-final-mobile.webp) · 1902 × 827
 
 ![Final scene — compact](graphs-lidar-final-mobile.webp)
+
+## Engineering studio with small shipping containers
+
+[Original PNG](engineering-studio-containers.png) · [WebP preview](engineering-studio-containers.webp) · 1536 × 1024
+
+![Engineering studio with small shipping containers](engineering-studio-containers.webp)

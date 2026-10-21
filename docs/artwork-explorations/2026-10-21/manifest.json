@@ -154,5 +154,17 @@
     ],
     "sha256": "9c1dde17620ea5bca8cb50152788f5c71df7ba8a1fa425392cee931c35d6eeb5",
     "mode": "built-in imagegen"
+  },
+  {
+    "id": "engineering-studio-containers",
+    "title": "Engineering studio with small shipping containers",
+    "source": "exec-b0dc5c45-457f-4ce7-8f6c-844e5673076b.png",
+    "prompt": "Use case: precise-object-edit.\nAsset: Vento Systems homepage hero.\nInput image is the exact selected engineering-studio illustration to EDIT, not a style reference.\nChange ONLY the two plain dark cuboid calibration blocks on the right-hand test surface into two small miniature shipping containers. Keep each at its existing position and orientation, with a footprint close to its existing block (at most 15% wider), and the same or slightly lower height. They must remain much smaller and less visually prominent than the ivory lidar rover. Make them recognisably refined scale models of intermodal freight containers: subtle vertical corrugation on their long sides, a thin perimeter frame and discreet paired cargo doors with slender locking bars on the visible end. Matte dark graphite metal, restrained warm gray highlights, precise realistic joinery, no lettering, logos, numbers, markings, rust, stacks or extra objects. They are low tabletop models, not warehouse buildings. Do not obscure or alter the copper path.\nPreserve everything else exactly: the entire person and pose, pen and hand resting on the physical sheet of paper, drawing lines, single monitor and its graph, lidar rover with all wheels and rooftop scanner, entire workbench and chair, copper route, tools, camera, framing, 1536x1024 landscape canvas, lighting, materials, shadows and dark warm background. Do not enlarge the blocks into buildings. No other scene changes. Output the complete revised illustration.",
+    "mode": "built-in imagegen",
+    "dimensions": [
+      1536,
+      1024
+    ],
+    "sha256": "557fc4c0e9be901f10187222fdbed4151bd7af713a235c75f3bf60bf94c500cd"
   }
 ]
