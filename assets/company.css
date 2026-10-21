@@ -36,9 +36,6 @@ a{color:inherit}button{cursor:pointer}img,svg{display:block;max-width:100%}img{h
 @media(max-width:900px){html:not(.js) .site-header{height:auto;position:static}html:not(.js) .header-inner{flex-wrap:wrap;padding-block:20px}html:not(.js) .site-nav{display:flex;position:static;flex:0 0 100%;background:none;padding:0;border:0}html:not(.js) .menu-toggle{display:none}}
 
 /* Fixes, 21 Oct 2026 */
-/* Keep keyboard and hover states visible on the orange brand panel. */
-.vision-band :focus-visible{outline-color:var(--dark)}
-.vision-band .text-link:hover{color:var(--dark);border-bottom-width:2px}
 /* A status label in a detail row sits on its own line above the link, at label size */
 .detail-row p.status{display:table;margin:20px 0 0;max-width:none;font:400 10px/1.5 var(--mono);letter-spacing:.04em;color:var(--muted)}
 .detail-row p.status+.text-link{margin-top:18px}
