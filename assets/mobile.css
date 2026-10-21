@@ -16,10 +16,10 @@
   .eyebrow{font-size:9px;line-height:1.6;letter-spacing:.1em}
   h1,h2,h3{text-wrap:balance}
   .company-hero{padding-top:10px}
-  .company-hero .hero-copy{padding:24px 0 36px}
-  .company-hero .hero-copy h1{font-size:clamp(42px,11.8vw,68px);line-height:1.04;letter-spacing:-.055em;margin-top:22px}
-  .company-hero .hero-description{font-size:16px;line-height:1.65;margin-top:22px;max-width:38rem}
-  .company-hero .hero-actions{margin-top:24px;gap:10px 20px;flex-direction:row;align-items:center}
+  .company-hero .hero-copy{padding:14px 0 18px}
+  .company-hero .hero-copy h1{font-size:clamp(42px,11.8vw,68px);line-height:1.04;letter-spacing:-.055em;margin-top:12px}
+  .company-hero .hero-description{font-size:16px;line-height:1.6;margin-top:14px;max-width:38rem}
+  .company-hero .hero-actions{margin-top:16px;gap:10px 20px;flex-direction:row;align-items:center}
   .hero-actions .button{min-height:48px}
   .text-link,.text-button,.footer-bottom a{min-height:44px;align-items:center}
   .text-button{padding-block:10px}
@@ -106,17 +106,34 @@
   @media(hover:hover){.business-card:hover .business-art img{transform:scale(1.02)}}
 }
 
-/* A concrete systems scene balances wide screens without lengthening phones. */
-.hero-scene{display:none;margin:0;min-width:0}
+/* One figure follows the headline in reading order at every screen size. */
+.hero-scene{display:block;margin:16px 0 0;min-width:0}
+.hero-scene picture{display:block}
+.hero-scene img{display:block;width:100%;height:auto;aspect-ratio:960/417;object-fit:contain;mask-image:linear-gradient(to bottom,transparent,#000 6%,#000 82%,transparent)}
+.hero-scene figcaption{padding:4px 6px 0;color:var(--muted);font:400 9px/1.6 var(--mono);text-align:center}
+.hero-scene figcaption span:first-child{display:none}
 .company-hero+.business-section{padding-top:clamp(44px,4.4vw,64px)}
+@media(max-width:700px){
+  .hero-scene{margin-top:12px}
+  .hero-scene img{height:clamp(128px,40vw,160px)}
+}
+@media(min-width:701px) and (max-width:999px){
+  .company-hero .hero-copy{padding:24px 0 32px}
+  .company-hero .hero-copy h1{margin-top:20px}
+  .company-hero .hero-description{margin-top:20px}
+  .company-hero .hero-actions{margin-top:24px}
+  .hero-scene{max-width:620px;margin:20px auto 0}
+  .hero-scene img{max-height:220px}
+}
 @media(min-width:1000px){
   .company-hero{padding-top:20px}
-  .company-hero .hero-grid{grid-template-columns:minmax(0,1.08fr) minmax(0,1fr);gap:clamp(24px,3vw,44px)}
-  .company-hero .hero-copy{max-width:none;padding:40px 0 56px}
+  .company-hero .hero-grid{grid-template-columns:1fr}
+  .company-hero .hero-copy{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(0,1fr);column-gap:clamp(24px,3vw,44px);max-width:none;padding:40px 0 56px}
+  .company-hero .hero-copy>.eyebrow,.company-hero .hero-copy>h1,.company-hero .hero-copy>.hero-description,.company-hero .hero-copy>.hero-actions{grid-column:1}
   .company-hero .hero-copy h1{font-size:clamp(60px,6.7vw,98px);line-height:1.04}
   .company-hero .hero-description{max-width:510px;font-size:17px}
-  .hero-scene{display:block;align-self:center}
-  .hero-scene img{width:100%;height:auto;aspect-ratio:1374/1145;object-fit:contain}
+  .hero-scene{grid-column:2;grid-row:1/span 4;align-self:center;margin:0}
+  .hero-scene img{aspect-ratio:1536/1024;mask-image:linear-gradient(to bottom,transparent,#000 6%,#000 72%,transparent)}
   .hero-scene figcaption{display:flex;justify-content:space-between;gap:14px;padding:10px 6px 24px;color:var(--muted);font:400 9px/1.6 var(--mono)}
-  .hero-scene figcaption span:first-child{color:var(--ink)}
+  .hero-scene figcaption span:first-child{display:inline;color:var(--ink)}
 }
