@@ -16,7 +16,7 @@ from urllib.parse import unquote, urlsplit
 
 DEFAULT_PAGES = ["index.html"] + [f"{name}/index.html" for name in (
     "business", "private-ai", "safety", "autonomy", "cyber", "lab", "vision"
-)]
+)] + ["404.html"]
 SITE_HOSTS = {"ventosystems.com", "www.ventosystems.com"}
 VOID_TAGS = {"area", "base", "br", "col", "embed", "hr", "img", "input",
              "link", "meta", "param", "source", "track", "wbr"}
@@ -204,7 +204,7 @@ def run(root: Path, names: list[str]) -> int:
         print("FAIL: " + str(len(errors)) + " source validation issue(s)")
         print("\n".join(errors))
     else:
-        print(f"PASS: {page_count} company pages, {checked_refs} references, {len(css_seen)} CSS files")
+        print(f"PASS: {page_count} site pages, {checked_refs} references, {len(css_seen)} CSS files")
     print(f"External URLs observed but not fetched: {len(external)}")
     print("Checks cover static structure, labels, local targets, fragments and CSS assets; browser behavior and claims require separate review.")
     return 1 if errors else 0

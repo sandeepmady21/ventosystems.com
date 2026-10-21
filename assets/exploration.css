@@ -1,4 +1,4 @@
-/* Additions used only by Vision and Lab; the shared company style stays intact. */
+/* Scoped additions for Vision, Lab and Cyber; the shared company style stays intact. */
 .page-hero .systems-figure img{max-height:none;aspect-ratio:1200/560;object-fit:contain}
 .project-figure figcaption{padding-top:13px;color:var(--muted);font:400 10px/1.5 var(--mono)}
 .lab-project{min-width:0;display:flex;flex-direction:column;align-items:flex-start}
