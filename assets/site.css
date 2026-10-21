@@ -64,6 +64,8 @@ section{padding:110px 0}
 .tiles{display:grid;gap:22px}
 .tiles.two{grid-template-columns:repeat(2,1fr)}
 .tiles.three{grid-template-columns:repeat(3,1fr);margin-top:22px}
+.tiles.four{grid-template-columns:repeat(4,1fr);margin-top:22px}
+.tiles.four .tile .art{aspect-ratio:1/1}
 .tile{display:block;text-decoration:none;color:inherit}
 .tile .art{border:1px solid var(--line);border-radius:16px;background:var(--card);display:grid;place-items:center;aspect-ratio:16/10;transition:border-color .25s,background .25s}
 .tiles.three .tile .art{aspect-ratio:1/1}
@@ -134,6 +136,8 @@ textarea{min-height:120px;resize:vertical}
 .offer p{color:var(--muted)}
 .offer .eg{display:block;margin-top:12px;color:var(--ink);font-size:15px}
 .offer .eg b{font-weight:600;color:var(--sand)}
+.offers + .head{margin-top:72px}
+.offers.dev .n{color:var(--sand)}
 
 .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
 .step{border-top:2px solid var(--sand);padding-top:22px}
@@ -148,7 +152,9 @@ textarea{min-height:120px;resize:vertical}
 .cta .wrap{display:flex;justify-content:space-between;align-items:flex-end;gap:32px;flex-wrap:wrap}
 .cta h2{font-size:clamp(34px,5vw,72px);max-width:16ch}
 
-.others .tiles.four{grid-template-columns:repeat(4,1fr)}
+.others .tiles.row{grid-template-columns:repeat(5,1fr);gap:16px;margin-top:0}
+.others .tile h3{font-size:16px}
+.others .tile p{font-size:14.5px}
 .others .tile .art{aspect-ratio:4/3}
 .others .tile .art svg{width:22%}
 
@@ -162,7 +168,8 @@ footer{padding:40px 0 34px;border-top:1px solid var(--line-soft)}
 /* Tablet */
 @media (max-width: 1000px){
   .links a:not(.btn){display:none}
-  .others .tiles.four{grid-template-columns:1fr 1fr}
+  .tiles.four{grid-template-columns:1fr 1fr}
+  .others .tiles.row{grid-template-columns:repeat(3,1fr)}
   .rules{grid-template-columns:1fr 1fr;gap:40px 28px}
   .contact{grid-template-columns:1fr;gap:36px}
   .offer{grid-template-columns:60px 1fr;gap:12px 24px}
@@ -179,8 +186,8 @@ footer{padding:40px 0 34px;border-top:1px solid var(--line-soft)}
   .hero{padding:120px 0 48px;min-height:auto}
   .hero .under p{font-size:17px}
   section{padding:76px 0}
-  .tiles.two,.tiles.three,.others .tiles.four{grid-template-columns:1fr}
-  .tiles.three .tile .art{aspect-ratio:16/10}
+  .tiles.two,.tiles.three,.tiles.four,.others .tiles.row{grid-template-columns:1fr}
+  .tiles.three .tile .art,.tiles.four .tile .art{aspect-ratio:16/10}
   .rules{grid-template-columns:1fr;gap:32px;margin-top:44px}
   .clients{grid-template-columns:1fr}
   .client,form{padding:20px}
