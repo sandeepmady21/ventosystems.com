@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" fill="none">
+  <title>Vento Cyber</title>
+  <g stroke="#eee8dc" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M56 24V14L50 8H14L8 14V50L14 56H50L56 50V40"/>
+    <path d="M46 25V21L41 16H23L18 21V43L23 48H41L46 43V39"/>
+    <rect x="26" y="26" width="12" height="12" rx="2"/>
+  </g>
+  <g stroke="#f47735" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M38 32H54.5M49 27V37"/>
+    <circle cx="58" cy="32" r="3.5"/>
+  </g>
+</svg>

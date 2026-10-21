@@ -106,6 +106,19 @@
   @media(hover:hover){.business-card:hover .business-art img{transform:scale(1.02)}}
 }
 
+/* The weave makes the shared-engineering idea tangible after its explanation. */
+.thesis-grid{grid-template-columns:minmax(110px,.55fr) minmax(0,1.45fr) minmax(0,1.35fr);gap:clamp(24px,3vw,40px)}
+.thesis-art{display:block;min-width:0;align-self:center;text-decoration:none}
+.thesis-art img{display:block;width:100%;height:auto;aspect-ratio:960/417;object-fit:contain}
+.thesis-art-caption{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:44px;margin-top:8px;border-bottom:1px solid var(--line);color:var(--muted);font:400 11px/1.5 var(--mono)}
+.thesis-art-caption>span{color:var(--orange);font-size:18px}
+.thesis-art:hover .thesis-art-caption{color:var(--ink);border-color:var(--orange)}
+@media(max-width:900px){
+  .thesis-grid{grid-template-columns:1fr;gap:20px}
+  .thesis-art{width:100%;max-width:480px;justify-self:center;margin-top:4px}
+  .thesis-art img{max-height:160px}
+}
+
 /* One figure follows the headline in reading order at every screen size. */
 .hero-scene{display:block;margin:16px 0 0;min-width:0}
 .hero-scene picture{display:block}
