@@ -43,3 +43,5 @@ a{color:inherit}button{cursor:pointer}img,svg{display:block;max-width:100%}img{h
 .work-title small,.work-stage,.work-number,.work-section .section-note,.prototype-note{color:#564e43}
 .work-title small{font-size:12px}.work-stage{font-size:11px}
 @media(max-width:600px){.work-title small{font-size:11px}.work-stage{font-size:10px}}
+/* Keep keyboard focus visible against the orange vision band. */
+.vision-band :focus-visible{outline-color:var(--dark)}

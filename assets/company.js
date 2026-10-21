@@ -21,15 +21,34 @@
   const form = document.getElementById('enquiry-form');
   if (!form) return;
   const area = document.getElementById('enquiry-area');
-  const query = new URLSearchParams(location.search).get('need');
-  if (query && Array.from(area.options).some(option => option.value === query)) area.value = query;
+  const query = new URLSearchParams(location.search);
+  const projects = new Map([
+    ['travio', { label: 'Travio', area: 'business' }],
+    ['ap-automation', { label: 'AP Automation', area: 'business' }],
+    ['auditproof', { label: 'AuditProof', area: 'business' }],
+    ['practice-tracker', { label: 'Practice Tracker', area: 'business' }],
+    ['operations', { label: 'Operations systems', area: 'business' }],
+    ['mobile-robot', { label: 'Mobile robot', area: 'autonomy' }],
+    ['controller', { label: 'Controller firmware', area: 'autonomy' }]
+  ]);
+  let project = projects.get(query.get('project'));
+  // A known project determines its area, even when the URL's need disagrees.
+  const requestedArea = project ? project.area : query.get('need');
+  if (Array.from(area.options).some(option => option.value === requestedArea)) area.value = requestedArea;
   const preview = document.getElementById('enquiry-preview');
   const draft = document.getElementById('enquiry-draft');
   const status = document.getElementById('form-status');
   const open = document.getElementById('enquiry-open');
-  form.addEventListener('input', () => {
-    if (!preview.hidden) { preview.hidden = true; status.textContent = 'Your details changed. Prepare the enquiry again to update your draft.'; }
-  });
+  const clearUnrelatedProject = () => {
+    // Once the visitor changes area, do not revive an earlier project later.
+    if (project && project.area !== area.value) project = undefined;
+  };
+  const invalidateDraft = () => {
+    clearUnrelatedProject();
+    if (!preview.hidden) { preview.hidden = true; status.textContent = 'Your details changed. Create the email draft again to update it.'; }
+  };
+  form.addEventListener('input', invalidateDraft);
+  area.addEventListener('change', invalidateDraft);
   form.addEventListener('submit', e => {
     e.preventDefault();
     if (!form.reportValidity()) return;
@@ -37,8 +56,9 @@
     const company = document.getElementById('enquiry-company').value.trim();
     const message = document.getElementById('enquiry-message').value.trim();
     if (!name || !message) { status.textContent = 'Please add your name and a few words about your enquiry.'; return; }
-    const subject = `${area.selectedOptions[0].text}${company ? ' — ' + company : ''}`;
-    const body = `Hello Vento,\n\n${message}\n\nArea: ${area.selectedOptions[0].text}\nName: ${name}${company ? '\nOrganization: ' + company : ''}\n`;
+    clearUnrelatedProject();
+    const subject = `${project ? project.label + ' — ' : ''}${area.selectedOptions[0].text}${company ? ' — ' + company : ''}`;
+    const body = `Hello Vento,\n\n${message}\n\n${project ? 'Project: ' + project.label + '\n' : ''}Area: ${area.selectedOptions[0].text}\nName: ${name}${company ? '\nOrganization: ' + company : ''}\n`;
     draft.value = `To: hello@ventosystems.com\nSubject: ${subject}\n\n${body}`;
     open.href = `mailto:hello@ventosystems.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     preview.hidden = false;
