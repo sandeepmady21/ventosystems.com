@@ -4,14 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Vento Systems</title>
-<meta name="description" content="Vento Systems is an applied AI studio. We build AI systems that work on a company's own records, run in its own environment and connect to the software it already uses.">
+<meta name="description" content="Vento Systems builds AI for business operations, from back-office workflows to the physical sites a company runs. The systems work on the company's own data and run in its own environment.">
 <meta name="theme-color" content="#F4F2EC" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#121316" media="(prefers-color-scheme: dark)">
 <meta name="color-scheme" content="light dark">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Vento Systems">
-<meta property="og:title" content="Vento Systems, an applied AI studio">
-<meta property="og:description" content="We build AI systems that work on a company's own records, run in its own environment and connect to the software it already uses.">
+<meta property="og:title" content="Vento Systems, AI for business operations">
+<meta property="og:description" content="AI for business operations, from back-office workflows to the physical sites a company runs, built on the company's own data.">
 <meta property="og:url" content="https://ventosystems.com/">
 <meta name="twitter:card" content="summary">
 <link rel="canonical" href="https://ventosystems.com/">
@@ -80,7 +80,7 @@ p{margin:0}
 
 /* Hero */
 .hero{padding:96px 0 72px}
-.hero h1{font-size:clamp(40px,6.2vw,76px);line-height:1.04;max-width:17ch;margin:20px 0 28px}
+.hero h1{font-size:clamp(38px,5.6vw,68px);line-height:1.05;max-width:19ch;margin:20px 0 28px}
 .hero h1 em{font-style:italic;color:var(--accent)}
 .hero .lead{font-size:20px;line-height:1.55;color:var(--muted);max-width:60ch}
 .hero .actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:36px}
@@ -110,12 +110,11 @@ section{padding:96px 0;border-top:1px solid var(--line-soft)}
 .sec-head p{color:var(--muted);font-size:18px;max-width:52ch}
 
 /* What we do */
-.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid var(--line)}
-.grid4 > div{padding:28px 28px 8px 0}
-.grid4 > div + div{padding-left:28px;border-left:1px solid var(--line)}
-.grid4 .k{font:500 13px/1 var(--mono);color:var(--accent);margin-bottom:18px}
-.grid4 h3{font-size:24px;line-height:1.2;margin-bottom:12px}
-.grid4 p{font-size:15.5px;color:var(--muted)}
+.points{border-top:1px solid var(--line)}
+.points > div{display:grid;grid-template-columns:120px 1fr 1.5fr;gap:32px;align-items:baseline;padding:28px 0;border-bottom:1px solid var(--line)}
+.points .k{font:500 13px/1 var(--mono);color:var(--accent)}
+.points h3{font-size:26px;line-height:1.2}
+.points p{font-size:16px;color:var(--muted)}
 
 /* Products */
 .products{display:grid;grid-template-columns:1fr 1fr;gap:20px}
@@ -174,9 +173,8 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;
 
 /* Tablet */
 @media (max-width: 960px){
-  .grid4{grid-template-columns:1fr 1fr}
-  .grid4 > div:nth-child(3){padding-left:0;border-left:0}
-  .grid4 > div:nth-child(n+3){border-top:1px solid var(--line);margin-top:20px}
+  .points > div{grid-template-columns:90px 1fr;gap:12px 24px}
+  .points p:not(.k){grid-column:2}
   .products{grid-template-columns:1fr}
   .sec-head{grid-template-columns:1fr;gap:16px}
   .client{grid-template-columns:1fr;gap:20px}
@@ -194,9 +192,8 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;
   .node:not(:last-child)::before{top:auto;bottom:-31px;right:auto;left:calc(50% - 5px);border:6px solid transparent;border-top:8px solid var(--ink);border-bottom:0}
   section{padding:64px 0}
   .sec-head{margin-bottom:36px}
-  .grid4{grid-template-columns:1fr}
-  .grid4 > div,.grid4 > div + div{padding:24px 0 20px;border-left:0;margin-top:0}
-  .grid4 > div + div{border-top:1px solid var(--line)}
+  .points > div{grid-template-columns:1fr;gap:10px;padding:24px 0}
+  .points p:not(.k){grid-column:auto}
   .product,.client{padding:22px}
   .product h3{font-size:30px}
   .lab{grid-template-columns:1fr}
@@ -229,8 +226,8 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;
 <div class="hero">
   <div class="wrap">
     <p class="label">Applied AI studio</p>
-    <h1>We build AI that works on your company&rsquo;s <em>own records</em>.</h1>
-    <p class="lead">Vento Systems designs, trains and runs AI systems for companies whose documents, transactions and rules are specific to them. The systems run in your environment and connect to the software you already use. Decisions that matter go to a person for review.</p>
+    <h1>We build AI for business <em>operations</em>, from the back office to the sites you run.</h1>
+    <p class="lead">Vento Systems designs, trains and runs AI systems on a company&rsquo;s own records and live data. They run in your environment and connect to the software and equipment you already use. Decisions that matter go to a person for review.</p>
     <div class="actions">
       <a class="btn btn-primary" href="#contact">Tell us about your problem</a>
       <a class="btn btn-quiet" href="#products">See what we have built</a>
@@ -243,10 +240,11 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;
       </div>
       <div class="flow">
         <div class="node">
-          <h3>Your records</h3>
+          <h3>Your records and live data</h3>
           <ul>
             <li>Invoices, ledgers and contracts</li>
             <li>Product and material master data</li>
+            <li>Camera, sensor and location feeds</li>
             <li>Past decisions made by your team</li>
           </ul>
         </div>
@@ -259,17 +257,18 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;
           </ul>
         </div>
         <div class="node">
-          <h3>Results your team can check</h3>
+          <h3>Results your team can act on</h3>
           <ul>
             <li>Answers with sources and working</li>
             <li>Proposed changes waiting for approval</li>
+            <li>Alerts sent to the staff who respond</li>
             <li>An audit log of each action</li>
           </ul>
         </div>
       </div>
       <figcaption class="env-foot">
         Connects to
-        <span class="chip">SAP</span><span class="chip">ERPs</span><span class="chip">Databases</span><span class="chip">Document stores</span><span class="chip">Email and WhatsApp</span>
+        <span class="chip">SAP</span><span class="chip">ERPs</span><span class="chip">Databases</span><span class="chip">Document stores</span><span class="chip">Cameras and sensors</span><span class="chip">Email and WhatsApp</span>
       </figcaption>
     </figure>
   </div>
@@ -282,9 +281,9 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;
         <p class="label"><span class="n">01</span>Approach</p>
         <h2>What we do</h2>
       </div>
-      <p>We work with companies in any sector, usually where the data is particular to the company and a wrong answer costs money.</p>
+      <p>We work on a company&rsquo;s operations, in its back office and at the sites where its staff and customers are. The data is usually particular to the company, and mistakes are costly.</p>
     </div>
-    <div class="grid4">
+    <div class="points">
       <div>
         <p class="k">Train</p>
         <h3>Models trained on your data</h3>
@@ -304,6 +303,11 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;
         <p class="k">Check</p>
         <h3>Results that show their working</h3>
         <p>Outputs come with the sources, rules and calculations behind them. Actions are written to an append-only log that an auditor can read.</p>
+      </div>
+      <div>
+        <p class="k">Sense</p>
+        <h3>AI on physical sites</h3>
+        <p>Systems that read camera, sensor and location data to track assets and people on a site, detect incidents and alert the staff who need to respond. The data stays on your network, and you decide how long it is kept.</p>
       </div>
     </div>
   </div>
@@ -439,9 +443,9 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;
         <p>A reading and spaced-repetition app that grades written answers with AI and maps which topics a learner knows and which they are ready for.</p>
       </div>
       <div>
-        <p class="label">Robotics</p>
+        <p class="label">Physical AI</p>
         <h3>Robotics and assistive devices</h3>
-        <p>A mobile bin that tracks a thrown object and moves to catch it, now at motor and camera testing. Controller firmware and a safety review for a sit-to-stand walker for elderly users.</p>
+        <p>A mobile bin that uses a camera to track a thrown object and moves to catch it, now at motor and vision testing. Controller firmware and a safety review for a sit-to-stand walker for elderly users.</p>
       </div>
     </div>
   </div>
