@@ -5,9 +5,8 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Vento Systems</title>
 <meta name="description" content="Vento Systems builds AI for business operations, from back-office workflows to the physical sites a company runs. The systems work on the company's own data and run in its own environment.">
-<meta name="theme-color" content="#F4F2EC" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#121316" media="(prefers-color-scheme: dark)">
-<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#16130F">
+<meta name="color-scheme" content="dark">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Vento Systems">
 <meta property="og:title" content="Vento Systems, AI for business operations">
@@ -15,275 +14,298 @@
 <meta property="og:url" content="https://ventosystems.com/">
 <meta name="twitter:card" content="summary">
 <link rel="canonical" href="https://ventosystems.com/">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%2316181D'/%3E%3Cpath d='M17 18h8l7 20 7-20h8L36 46h-8z' fill='%23E0573A'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2316130F'/%3E%3Cpath d='M11 15h15l14 34-5 9z' fill='%23EFE6D6'/%3E%3Cpath d='M38 26h8L37 50l-3-7z' fill='%23EFE6D6'/%3E%3Cpath d='M40 15h14l-9 11h-7z' fill='%23F26B21'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..800&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
-/* Colours. Change them here and the whole page follows. */
+/* Colours. Change them here and the whole page follows.
+   Warm dark tones with the orange from the logo; no red, blue or plain black and white. */
 :root{
-  --paper:#F4F2EC; --raised:#FBFAF6; --sunk:#EAE7DE;
-  --ink:#16181D; --muted:#5D6068; --faint:#8A8C92;
-  --line:#DAD6CB; --line-soft:#E5E1D7;
-  --accent:#C8432A; --accent-soft:#F6E1DA; --accent-ink:#FFFFFF;
-  --ok:#2E7D5B;
-  --band:#16181D; --band-ink:#F4F2EC;
+  --bg:#16130F; --card:#1D1915; --card-2:#24201A;
+  --line:#342D25; --line-soft:#2A241E;
+  --ink:#EFE6D6; --muted:#A99F8F; --faint:#776E61;
+  --sand:#C9B08A; --orange:#F26B21; --orange-ink:#1A120A;
 
-  --serif:"Newsreader",Georgia,"Times New Roman",serif;
-  --sans:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  --sans:"Archivo",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
   --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
-  --measure:1120px;
-  --radius:10px;
-}
-@media (prefers-color-scheme: dark){
-  :root{
-    --paper:#121316; --raised:#1A1C20; --sunk:#0D0E10;
-    --ink:#ECEAE4; --muted:#A3A39E; --faint:#76776F;
-    --line:#2D2F34; --line-soft:#24262A;
-    --accent:#EE6A4C; --accent-soft:#3A221C; --accent-ink:#16181D;
-    --ok:#5DBB8E;
-    --band:#1B1D22; --band-ink:#ECEAE4;
-  }
+  --measure:1200px;
 }
 
 *,*::before,*::after{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;scroll-padding-top:84px}
 @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
-body{margin:0;background:var(--paper);color:var(--ink);font:400 17px/1.6 var(--sans);-webkit-font-smoothing:antialiased}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.6 var(--sans);font-stretch:100%;-webkit-font-smoothing:antialiased}
 a{color:inherit}
-img,svg{display:block;max-width:100%}
-h1,h2,h3{font-family:var(--serif);font-weight:400;margin:0;letter-spacing:-.01em}
+svg{display:block}
+h1,h2,h3{margin:0;font-weight:500;letter-spacing:-.015em}
 p{margin:0}
-:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+:focus-visible{outline:2px solid var(--orange);outline-offset:3px;border-radius:4px}
 
-.wrap{max-width:var(--measure);margin:0 auto;padding:0 24px}
-.label{font:500 12px/1.4 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
-.label .n{color:var(--accent);margin-right:10px}
+.wrap{max-width:var(--measure);margin:0 auto;padding:0 28px}
+.tag{display:inline-block;font:500 11px/1 var(--mono);letter-spacing:.04em;padding:5px 8px;border-radius:999px;background:var(--card-2);color:var(--muted);white-space:nowrap}
+.eyebrow{font:500 12px/1.4 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--sand)}
+.eyebrow .n{color:var(--faint);margin-left:10px}
+.arrow::after{content:"\2192";margin-left:6px;transition:transform .2s}
+a:hover .arrow::after,.arrow:hover::after{transform:translateX(3px)}
 
-/* Header */
-.top{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--paper) 88%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line-soft)}
-.top .wrap{display:flex;align-items:center;justify-content:space-between;height:64px;gap:24px}
-.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font:600 16px/1 var(--sans);letter-spacing:-.01em}
-.brand svg{width:26px;height:26px}
-.nav{display:flex;gap:28px;align-items:center}
-.nav a{text-decoration:none;font-size:15px;color:var(--muted)}
-.nav a:hover{color:var(--ink)}
-.nav .cta{color:var(--ink);border:1px solid var(--line);padding:7px 14px;border-radius:999px}
-.nav .cta:hover{border-color:var(--ink)}
-
-/* Buttons */
-.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 20px;border-radius:999px;font:500 15px/1 var(--sans);text-decoration:none;border:1px solid transparent}
-.btn-primary{background:var(--ink);color:var(--paper)}
-.btn-primary:hover{background:var(--accent);color:var(--accent-ink)}
-.btn-quiet{border-color:var(--line)}
-.btn-quiet:hover{border-color:var(--ink)}
+/* Floating bar */
+.bar{position:fixed;top:14px;left:0;right:0;z-index:20;pointer-events:none}
+.bar .inner{pointer-events:auto;max-width:var(--measure);margin:0 auto;padding:0 28px}
+.bar nav{display:flex;align-items:center;justify-content:space-between;gap:20px;height:56px;padding:0 10px 0 18px;border:1px solid var(--line);border-radius:999px;background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font:700 15px/1 var(--sans);font-stretch:125%;letter-spacing:.06em;text-transform:uppercase}
+.brand svg{width:22px;height:22px}
+.links{display:flex;align-items:center;gap:26px}
+.links a{text-decoration:none;font-size:14.5px;color:var(--muted)}
+.links a:hover{color:var(--ink)}
+.links a.btn{color:var(--orange-ink)}
+.btn{display:inline-flex;align-items:center;gap:6px;border:0;cursor:pointer;padding:11px 18px;border-radius:999px;font:600 14.5px/1 var(--sans);text-decoration:none}
+.btn-orange{background:var(--orange);color:var(--orange-ink)}
+.btn-orange:hover{background:var(--ink)}
 
 /* Hero */
-.hero{padding:96px 0 72px}
-.hero h1{font-size:clamp(38px,5.6vw,68px);line-height:1.05;max-width:19ch;margin:20px 0 28px}
-.hero h1 em{font-style:italic;color:var(--accent)}
-.hero .lead{font-size:20px;line-height:1.55;color:var(--muted);max-width:60ch}
-.hero .actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:36px}
-
-/* The environment figure */
-.env{margin:72px 0 0;border:1px solid var(--line);border-radius:16px;background:var(--raised);padding:28px}
-.env-head{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;margin-bottom:22px}
-.env-head .note{font-size:14px;color:var(--faint)}
-.flow{display:grid;grid-template-columns:1fr 1.1fr 1fr;gap:44px;position:relative}
-.node{border:1px solid var(--line);border-radius:var(--radius);background:var(--paper);padding:20px 20px 18px;position:relative}
-.node h3{font:500 15px/1.3 var(--sans);margin-bottom:12px}
-.node ul{list-style:none;margin:0;padding:0;font-size:14px;color:var(--muted)}
-.node li{padding:7px 0;border-top:1px dashed var(--line)}
-.node li:first-child{border-top:0;padding-top:0}
-.node.model{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
-.node.model ul{color:inherit;opacity:.9}
-.node.model li{border-top-color:color-mix(in srgb,var(--accent-ink) 35%,transparent)}
-.node:not(:last-child)::after{content:"";position:absolute;top:50%;right:-36px;width:28px;height:2px;background:var(--ink)}
-.node:not(:last-child)::before{content:"";position:absolute;top:calc(50% - 5px);right:-38px;border:6px solid transparent;border-left:8px solid var(--ink);border-right:0}
-.env-foot{margin-top:22px;padding-top:18px;border-top:1px solid var(--line-soft);display:flex;flex-wrap:wrap;gap:8px 10px;align-items:center;font-size:14px;color:var(--muted)}
-.chip{font:500 12px/1 var(--mono);padding:7px 10px;border:1px solid var(--line);border-radius:999px;color:var(--ink);background:var(--paper)}
+.hero{min-height:100vh;min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px 0 72px}
+.mark{width:min(300px,62vw);height:auto;margin:0 auto 56px}
+.hero h1{font-size:clamp(34px,4.8vw,58px);line-height:1.08;font-stretch:112%;max-width:20ch;margin:0 auto}
+.hero h1 .s{color:var(--sand)}
+.hero p{color:var(--muted);font-size:18px;max-width:52ch;margin:22px auto 0}
+.hero .go{display:flex;gap:28px;justify-content:center;margin-top:34px;font-size:15.5px}
+.hero .go a{text-decoration:none;font-weight:500}
+.hero .go a + a{color:var(--muted)}
+.hero .go a:hover{color:var(--ink)}
 
 /* Sections */
-section{padding:96px 0;border-top:1px solid var(--line-soft)}
-.sec-head{display:grid;grid-template-columns:1fr 1.4fr;gap:48px;align-items:end;margin-bottom:56px}
-.sec-head h2{font-size:clamp(32px,4vw,48px);line-height:1.1;margin-top:14px}
-.sec-head p{color:var(--muted);font-size:18px;max-width:52ch}
+section{padding:110px 0}
+.head{display:flex;justify-content:space-between;align-items:flex-end;gap:32px;flex-wrap:wrap;margin-bottom:44px}
+.head h2{font-size:clamp(30px,3.6vw,46px);line-height:1.1;font-stretch:112%;margin-top:14px;max-width:22ch}
+.head p{color:var(--muted);max-width:46ch}
+
+/* Product grid */
+.grid{display:grid;gap:22px}
+.grid.three{grid-template-columns:repeat(3,1fr)}
+.grid.four{grid-template-columns:repeat(4,1fr);margin-top:22px}
+.item .tile{aspect-ratio:1/1.08;border:1px solid var(--line);border-radius:14px;background:var(--card);display:grid;place-items:center;color:var(--ink);transition:border-color .2s,background .2s}
+.grid.three .item .tile{aspect-ratio:1/.82}
+.item:hover .tile{border-color:var(--sand);background:var(--card-2)}
+.item .tile svg{width:30%;max-width:96px;height:auto}
+.item .tile.word{font:700 clamp(22px,2.4vw,32px)/1 var(--sans);font-stretch:125%;letter-spacing:.02em}
+.item .name{display:flex;align-items:center;gap:10px;margin-top:18px;font-weight:600;font-size:17px}
+.item p{margin-top:8px;font-size:16px;line-height:1.45;color:var(--ink);max-width:36ch}
+.item .more{display:flex;gap:18px;margin-top:12px;font-size:13.5px;color:var(--muted)}
+.item .more a{text-decoration:none}
+.item .more a:hover{color:var(--ink)}
 
 /* What we do */
-.points{border-top:1px solid var(--line)}
-.points > div{display:grid;grid-template-columns:120px 1fr 1.5fr;gap:32px;align-items:baseline;padding:28px 0;border-bottom:1px solid var(--line)}
-.points .k{font:500 13px/1 var(--mono);color:var(--accent)}
-.points h3{font-size:26px;line-height:1.2}
-.points p{font-size:16px;color:var(--muted)}
+.rows{border-top:1px solid var(--line)}
+.rows > div{display:grid;grid-template-columns:150px 1fr 1.5fr;gap:32px;align-items:baseline;padding:30px 0;border-bottom:1px solid var(--line)}
+.rows .k{font:500 12px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--orange)}
+.rows h3{font-size:24px;line-height:1.2;font-stretch:108%}
+.rows p{color:var(--muted);font-size:16px}
 
-/* Products */
-.products{display:grid;grid-template-columns:1fr 1fr;gap:20px}
-.product{border:1px solid var(--line);border-radius:16px;background:var(--raised);padding:32px;display:flex;flex-direction:column}
-.product .meta{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:22px}
-.product h3{font-size:34px;line-height:1.1;margin-bottom:12px}
-.product > p{color:var(--muted);font-size:16px}
-.product ul{list-style:none;margin:22px 0 0;padding:0;font-size:15px}
-.product li{padding:9px 0 9px 22px;border-top:1px solid var(--line-soft);position:relative}
-.product li::before{content:"";position:absolute;left:2px;top:20px;width:8px;height:2px;background:var(--accent)}
-.sample{margin-top:auto;padding-top:26px}
-.sample-box{font:400 13px/1.55 var(--mono);background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px;color:var(--muted);overflow-x:auto}
-.sample-box b{font-weight:500;color:var(--ink)}
-.sample-box .hl{color:var(--accent)}
-.sample .cap{font-size:12px;color:var(--faint);margin-top:8px}
-.product .more{margin-top:18px;font-size:15px}
-.product .more a{color:var(--accent);text-underline-offset:3px}
+/* Why Vento */
+.why{background:var(--card);border-top:1px solid var(--line-soft);border-bottom:1px solid var(--line-soft)}
+.why .intro{font-size:clamp(22px,2.4vw,30px);line-height:1.35;font-stretch:106%;max-width:34ch;color:var(--ink)}
+.why .intro .s{color:var(--sand)}
+.rules{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;margin-top:64px}
+.rules .n{font:500 13px/1 var(--mono);color:var(--orange)}
+.rules h3{font-size:20px;line-height:1.25;margin:16px 0 10px;font-stretch:108%}
+.rules p{color:var(--muted);font-size:15.5px}
 
-/* Client work */
-.client{display:grid;grid-template-columns:1fr 1.4fr;gap:48px;border:1px solid var(--line);border-radius:16px;padding:32px;background:var(--raised)}
-.client h3{font-size:28px;line-height:1.15;margin-top:12px}
-.client p{color:var(--muted)}
-.client ul{margin:16px 0 0;padding-left:18px;color:var(--muted);font-size:15.5px}
-.client li{margin:6px 0}
+/* Clients */
+.clients{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.client{border:1px solid var(--line);border-radius:14px;padding:28px}
+.client h3{font-size:21px;line-height:1.25;margin:14px 0 10px;font-stretch:108%}
+.client p{color:var(--muted);font-size:15.5px}
+.note{margin-top:18px;font-size:14px;color:var(--faint)}
 
-/* Lab */
-.lab{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border-top:1px solid var(--line)}
-.lab > div{padding:28px 32px 28px 0;border-bottom:1px solid var(--line)}
-.lab > div:nth-child(even){padding-left:32px;padding-right:0;border-left:1px solid var(--line)}
-.lab h3{font-size:22px;line-height:1.25;margin:10px 0 8px}
-.lab p{font-size:15.5px;color:var(--muted)}
+/* Contact form */
+.contact{display:grid;grid-template-columns:1fr 1.25fr;gap:56px;align-items:start}
+.contact h2{font-size:clamp(34px,4.2vw,54px);line-height:1.06;font-stretch:112%;margin-top:14px}
+.contact .side p{color:var(--muted);margin-top:18px;max-width:40ch}
+.contact .side .mail{display:inline-block;margin-top:24px;font-weight:600;text-decoration:none;border-bottom:1px solid var(--orange);padding-bottom:2px}
+form{border:1px solid var(--line);border-radius:16px;background:var(--card);padding:28px}
+fieldset{border:0;margin:0 0 22px;padding:0}
+legend,label{display:block;font:500 12px/1.4 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;padding:0}
+.choices{display:flex;flex-wrap:wrap;gap:8px}
+.choices label{display:inline-block;margin:0;font:inherit;letter-spacing:0;text-transform:none;color:inherit}
+.choices input{position:absolute;opacity:0;pointer-events:none}
+.choices span{display:inline-block;padding:9px 14px;border:1px solid var(--line);border-radius:999px;font-size:14.5px;cursor:pointer;color:var(--ink)}
+.choices input:checked + span{background:var(--orange);border-color:var(--orange);color:var(--orange-ink)}
+.choices input:focus-visible + span{outline:2px solid var(--orange);outline-offset:2px}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:22px}
+input[type=text],input[type=email],textarea{width:100%;font:400 16px/1.4 var(--sans);color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+input::placeholder,textarea::placeholder{color:var(--faint)}
+input:focus,textarea:focus{outline:none;border-color:var(--sand)}
+textarea{min-height:120px;resize:vertical}
+.send{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:22px}
+.send small{color:var(--faint);font-size:13px}
 
-/* Process */
-.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;counter-reset:step}
-.step{border-top:2px solid var(--ink);padding-top:22px}
-.step .label{color:var(--accent)}
-.step h3{font-size:26px;margin:10px 0 10px}
-.step p{color:var(--muted);font-size:16px}
-
-/* Contact */
-.contact{background:var(--band);color:var(--band-ink);border-top:0}
-.contact .label{color:color-mix(in srgb,var(--band-ink) 60%,transparent)}
-.contact h2{font-size:clamp(36px,5vw,60px);line-height:1.08;margin:16px 0 20px;max-width:18ch}
-.contact p{color:color-mix(in srgb,var(--band-ink) 72%,transparent);font-size:18px;max-width:56ch}
-.contact .actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
-.contact .btn-primary{background:var(--accent);color:var(--accent-ink)}
-.contact .btn-primary:hover{background:var(--band-ink);color:var(--band)}
-.contact .btn-quiet{border-color:color-mix(in srgb,var(--band-ink) 30%,transparent);color:var(--band-ink)}
-.contact .btn-quiet:hover{border-color:var(--band-ink)}
-.contact dl{display:grid;grid-template-columns:repeat(3,auto);justify-content:start;gap:8px 56px;margin:56px 0 0;padding-top:28px;border-top:1px solid color-mix(in srgb,var(--band-ink) 18%,transparent)}
-.contact dt{font:500 12px/1.4 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:color-mix(in srgb,var(--band-ink) 55%,transparent)}
-.contact dd{margin:4px 0 0;font-size:16px}
-
-footer{background:var(--band);color:color-mix(in srgb,var(--band-ink) 55%,transparent);font-size:14px}
-footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;padding-top:24px;padding-bottom:32px;border-top:1px solid color-mix(in srgb,var(--band-ink) 12%,transparent)}
+/* Footer */
+footer{padding:40px 0 34px;border-top:1px solid var(--line-soft)}
+.big{font:800 clamp(64px,19vw,250px)/.82 var(--sans);font-stretch:125%;letter-spacing:-.01em;color:var(--sand);text-align:center;margin-bottom:28px;user-select:none}
+.foot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px 28px;font-size:14px;color:var(--muted)}
+.foot a{text-decoration:none}
+.foot a:hover{color:var(--ink)}
 
 /* Tablet */
-@media (max-width: 960px){
-  .points > div{grid-template-columns:90px 1fr;gap:12px 24px}
-  .points p:not(.k){grid-column:2}
-  .products{grid-template-columns:1fr}
-  .sec-head{grid-template-columns:1fr;gap:16px}
-  .client{grid-template-columns:1fr;gap:20px}
+@media (max-width: 1000px){
+  .links a:not(.btn){display:none}
+  .grid.three{grid-template-columns:1fr 1fr}
+  .grid.four{grid-template-columns:1fr 1fr}
+  .item .tile,.grid.three .item .tile{aspect-ratio:4/3}
+  .rows > div{grid-template-columns:110px 1fr;gap:12px 24px}
+  .rows p:not(.k){grid-column:2}
+  .rules{grid-template-columns:1fr 1fr;gap:40px 28px}
+  .contact{grid-template-columns:1fr;gap:36px}
 }
 /* Phone */
-@media (max-width: 720px){
+@media (max-width: 640px){
   body{font-size:16px}
-  .wrap{padding:0 16px}
-  .nav a:not(.cta){display:none}
-  .hero{padding:56px 0 48px}
-  .hero .lead{font-size:18px}
-  .env{padding:18px;margin-top:48px}
-  .flow{grid-template-columns:1fr;gap:36px}
-  .node:not(:last-child)::after{top:auto;bottom:-29px;right:auto;left:50%;width:2px;height:22px}
-  .node:not(:last-child)::before{top:auto;bottom:-31px;right:auto;left:calc(50% - 5px);border:6px solid transparent;border-top:8px solid var(--ink);border-bottom:0}
-  section{padding:64px 0}
-  .sec-head{margin-bottom:36px}
-  .points > div{grid-template-columns:1fr;gap:10px;padding:24px 0}
-  .points p:not(.k){grid-column:auto}
-  .product,.client{padding:22px}
-  .product h3{font-size:30px}
-  .lab{grid-template-columns:1fr}
-  .lab > div,.lab > div:nth-child(even){padding:24px 0;border-left:0}
-  .steps{grid-template-columns:1fr;gap:32px}
-  .contact dl{grid-template-columns:1fr;gap:16px}
+  .wrap,.bar .inner{padding:0 16px}
+  .bar{top:10px}
+  .bar nav{height:52px;padding:0 6px 0 14px}
+  .hero{padding:110px 0 56px}
+  .mark{margin:0 auto 40px}
+  .hero p{font-size:16.5px}
+  .hero .go{flex-direction:column;gap:12px}
+  section{padding:76px 0}
+  .grid.three,.grid.four{grid-template-columns:1fr}
+  .grid.three .item .tile,.item .tile{aspect-ratio:16/9}
+  .item .tile svg{width:22%}
+  .rows > div{grid-template-columns:1fr;gap:10px;padding:24px 0}
+  .rows p:not(.k){grid-column:auto}
+  .rules{grid-template-columns:1fr;gap:32px;margin-top:44px}
+  .clients{grid-template-columns:1fr}
+  .client,form{padding:20px}
+  .pair{grid-template-columns:1fr}
 }
 </style>
 </head>
 <body>
 
-<header class="top">
-  <div class="wrap">
-    <a class="brand" href="/" aria-label="Vento Systems, home">
-      <svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="12" fill="currentColor"/><path d="M17 18h8l7 20 7-20h8L36 46h-8z" fill="#E0573A"/></svg>
-      Vento Systems
-    </a>
-    <nav class="nav" aria-label="Main">
-      <a href="#approach">Approach</a>
-      <a href="#products">Products</a>
-      <a href="#lab">Lab</a>
-      <a href="#process">How we work</a>
-      <a class="cta" href="#contact">Contact</a>
+<header class="bar">
+  <div class="inner">
+    <nav aria-label="Main">
+      <a class="brand" href="#top" aria-label="Vento Systems, top of page">
+        <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M11 15h15l14 34-5 9z" fill="#EFE6D6"/><path d="M38 26h8L37 50l-3-7z" fill="#EFE6D6"/><path d="M40 15h14l-9 11h-7z" fill="#F26B21"/></svg>
+        Vento
+      </a>
+      <div class="links">
+        <a href="#work">What we build</a>
+        <a href="#services">Services</a>
+        <a href="#why">Why Vento</a>
+        <a href="#clients">Clients</a>
+        <a class="btn btn-orange" href="#contact">Start a project</a>
+      </div>
     </nav>
   </div>
 </header>
 
-<main>
+<main id="top">
 
 <div class="hero">
   <div class="wrap">
-    <p class="label">Applied AI studio</p>
-    <h1>We build AI for business <em>operations</em>, from the back office to the sites you run.</h1>
-    <p class="lead">Vento Systems designs, trains and runs AI systems on a company&rsquo;s own records and live data. They run in your environment and connect to the software and equipment you already use. Decisions that matter go to a person for review.</p>
-    <div class="actions">
-      <a class="btn btn-primary" href="#contact">Tell us about your problem</a>
-      <a class="btn btn-quiet" href="#products">See what we have built</a>
+    <svg class="mark" viewBox="0 0 300 260" aria-hidden="true">
+      <defs>
+        <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#EFE6D6"/><stop offset="1" stop-color="#C9B08A"/></linearGradient>
+        <linearGradient id="g2" x1="1" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E3D5BC"/><stop offset="1" stop-color="#9E8768"/></linearGradient>
+      </defs>
+      <path d="M20 30h78l84 196-26 32z" fill="url(#g1)"/>
+      <path d="M184 92h42l-58 134-16-38z" fill="url(#g2)"/>
+      <path d="M196 30h86l-52 62h-46z" fill="#F26B21"/>
+    </svg>
+    <h1>AI for business operations, <span class="s">from the back office to the sites you run.</span></h1>
+    <p>Vento Systems designs, trains and runs AI systems on a company&rsquo;s own records and live data, inside the company&rsquo;s own environment.</p>
+    <div class="go">
+      <a href="#contact"><span class="arrow">Start a project</span></a>
+      <a href="#work"><span class="arrow">See what we build</span></a>
     </div>
-
-    <figure class="env" aria-label="How a Vento system sits inside a company's environment">
-      <div class="env-head">
-        <span class="label">Inside your environment</span>
-        <span class="note">Your cloud account or your own servers</span>
-      </div>
-      <div class="flow">
-        <div class="node">
-          <h3>Your records and live data</h3>
-          <ul>
-            <li>Invoices, ledgers and contracts</li>
-            <li>Product and material master data</li>
-            <li>Camera, sensor and location feeds</li>
-            <li>Past decisions made by your team</li>
-          </ul>
-        </div>
-        <div class="node model">
-          <h3>An AI system built for them</h3>
-          <ul>
-            <li>Trained or tuned on your examples</li>
-            <li>Tested against a set you agree with us</li>
-            <li>Retrained when your rules change</li>
-          </ul>
-        </div>
-        <div class="node">
-          <h3>Results your team can act on</h3>
-          <ul>
-            <li>Answers with sources and working</li>
-            <li>Proposed changes waiting for approval</li>
-            <li>Alerts sent to the staff who respond</li>
-            <li>An audit log of each action</li>
-          </ul>
-        </div>
-      </div>
-      <figcaption class="env-foot">
-        Connects to
-        <span class="chip">SAP</span><span class="chip">ERPs</span><span class="chip">Databases</span><span class="chip">Document stores</span><span class="chip">Cameras and sensors</span><span class="chip">Email and WhatsApp</span>
-      </figcaption>
-    </figure>
   </div>
 </div>
 
-<section id="approach">
+<section id="work">
   <div class="wrap">
-    <div class="sec-head">
+    <div class="head">
       <div>
-        <p class="label"><span class="n">01</span>Approach</p>
-        <h2>What we do</h2>
+        <p class="eyebrow">What we build<span class="n">07</span></p>
+        <h2>Products for the back office, and AI for physical sites</h2>
       </div>
-      <p>We work on a company&rsquo;s operations, in its back office and at the sites where its staff and customers are. The data is usually particular to the company, and mistakes are costly.</p>
+      <p>Our products handle routine work for finance, tax and compliance teams. We also build AI for physical sites and robots, and our sister company Vento Cyber covers security.</p>
     </div>
-    <div class="points">
+
+    <div class="grid three">
+      <article class="item">
+        <div class="tile" aria-hidden="true">
+          <svg viewBox="0 0 64 64"><circle cx="14" cy="50" r="7" fill="currentColor"/><path d="M14 50V30a10 10 0 0 1 10-10h26" fill="none" stroke="currentColor" stroke-width="8" stroke-linecap="round"/><path d="M44 8l12 12-12 12z" fill="#F26B21"/></svg>
+        </div>
+        <h3 class="name">Travio <span class="tag">Trade compliance</span></h3>
+        <p>Tariff classification and duty estimates for US importers. Each code is checked against CBP rulings and confirmed by a reviewer.</p>
+      </article>
+
+      <article class="item">
+        <div class="tile" aria-hidden="true">
+          <svg viewBox="0 0 64 64"><rect x="8" y="8" width="48" height="48" rx="12" fill="currentColor"/><path d="M20 33l8 8 17-18" fill="none" stroke="#1D1915" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <h3 class="name">AuditProof <span class="tag">Tax audit</span></h3>
+        <p>Fieldwork for Form 3CD tax audits and forensic reviews. Each finding links to the rows behind it, for a chartered accountant to sign off.</p>
+      </article>
+
+      <article class="item">
+        <div class="tile" aria-hidden="true">
+          <svg viewBox="0 0 64 64"><rect x="6" y="10" width="34" height="11" rx="5.5" fill="currentColor"/><rect x="14" y="27" width="44" height="11" rx="5.5" fill="currentColor"/><rect x="6" y="44" width="26" height="11" rx="5.5" fill="#F26B21"/></svg>
+        </div>
+        <h3 class="name">AP Automation <span class="tag">Finance</span></h3>
+        <p>Supplier invoices received, matched to purchase orders, coded and routed for approval, with each automated decision explained.</p>
+      </article>
+    </div>
+
+    <div class="grid four">
+      <article class="item">
+        <div class="tile" aria-hidden="true">
+          <svg viewBox="0 0 64 64"><path d="M32 8a24 24 0 1 1-24 24" fill="none" stroke="currentColor" stroke-width="9" stroke-linecap="round"/><path d="M8 32A24 24 0 0 1 32 8" fill="none" stroke="#F26B21" stroke-width="9" stroke-linecap="round"/></svg>
+        </div>
+        <h3 class="name">Practice Tracker <span class="tag">Accounting firms</span></h3>
+        <p>Shows which client work is blocked, and chases clients for missing documents by email and WhatsApp.</p>
+        <div class="more"><a href="/document-chaser/"><span class="arrow">Prototype</span></a></div>
+      </article>
+
+      <article class="item">
+        <div class="tile" aria-hidden="true">
+          <svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="25" fill="none" stroke="currentColor" stroke-width="6"/><circle cx="32" cy="32" r="13" fill="none" stroke="currentColor" stroke-width="6"/><circle cx="32" cy="32" r="5" fill="#F26B21"/></svg>
+        </div>
+        <h3 class="name">Site AI <span class="tag">Physical AI</span></h3>
+        <p>Camera, sensor and location systems that track assets and people on a site and alert the staff who respond.</p>
+      </article>
+
+      <article class="item">
+        <div class="tile" aria-hidden="true">
+          <svg viewBox="0 0 64 64"><rect x="8" y="12" width="48" height="30" rx="9" fill="currentColor"/><circle cx="20" cy="50" r="7" fill="currentColor"/><circle cx="44" cy="50" r="7" fill="currentColor"/><circle cx="44" cy="27" r="5" fill="#F26B21"/></svg>
+        </div>
+        <h3 class="name">Robotics <span class="tag">Lab</span></h3>
+        <p>Robotics work in our lab, currently a camera-guided mobile bin and controller firmware for a sit-to-stand walker.</p>
+      </article>
+
+      <article class="item">
+        <div class="tile" aria-hidden="true">
+          <svg viewBox="0 0 64 64"><path d="M32 6l22 9v16c0 14-9 23-22 28C19 54 10 45 10 31V15z" fill="currentColor"/><path d="M32 6l22 9v16c0 14-9 23-22 28z" fill="#C9B08A"/></svg>
+        </div>
+        <h3 class="name">Vento Cyber <span class="tag">Security</span></h3>
+        <p>Our sister company for cybersecurity services, delivered with specialist partners.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="services">
+  <div class="wrap">
+    <div class="head">
+      <div>
+        <p class="eyebrow">Services</p>
+        <h2>What we do for clients</h2>
+      </div>
+      <p>We build AI systems for a company&rsquo;s own operations, using the same methods behind our products.</p>
+    </div>
+    <div class="rows">
       <div>
         <p class="k">Train</p>
         <h3>Models trained on your data</h3>
@@ -300,200 +322,102 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;
         <p>The system reads from SAP, your ERP, databases and document stores. Changes it proposes go to a person for approval before anything is written back.</p>
       </div>
       <div>
+        <p class="k">Sense</p>
+        <h3>AI on physical sites</h3>
+        <p>Systems that read camera, sensor and location data to track assets and people on a site, detect incidents and alert the staff who need to respond.</p>
+      </div>
+      <div>
         <p class="k">Check</p>
         <h3>Results that show their working</h3>
         <p>Outputs come with the sources, rules and calculations behind them. Actions are written to an append-only log that an auditor can read.</p>
-      </div>
-      <div>
-        <p class="k">Sense</p>
-        <h3>AI on physical sites</h3>
-        <p>Systems that read camera, sensor and location data to track assets and people on a site, detect incidents and alert the staff who need to respond. The data stays on your network, and you decide how long it is kept.</p>
       </div>
     </div>
   </div>
 </section>
 
-<section id="products">
+<section class="why" id="why">
   <div class="wrap">
-    <div class="sec-head">
+    <p class="eyebrow">Why Vento</p>
+    <p class="intro" style="margin-top:18px">Much of a company&rsquo;s work still runs on documents, spreadsheets and people checking each other&rsquo;s numbers. <span class="s">AI can take on a large share of it when it is built on the company&rsquo;s own data and its results can be checked.</span> These are the rules we build by.</p>
+    <div class="rules">
       <div>
-        <p class="label"><span class="n">02</span>Products</p>
-        <h2>Products we have built</h2>
+        <p class="n">01</p>
+        <h3>We measure before we build</h3>
+        <p>We start with a sample of your real work and agree how success will be measured. If AI is the wrong tool for the job, we tell you then.</p>
       </div>
-      <p>We build and run these ourselves. They are also the clearest examples of how we approach client work.</p>
-    </div>
-
-    <div class="products">
-
-      <article class="product">
-        <div class="meta"><span class="label">Trade compliance &middot; US importers</span></div>
-        <h3>Travio</h3>
-        <p>Classifies imported parts under the US Harmonized Tariff Schedule and estimates the duty on each one. Codes are checked against the published schedule and CBP rulings, shown with how certain they are, and confirmed by a reviewer.</p>
-        <ul>
-          <li>Section 301, Section 232 and anti-dumping duties included in the estimate</li>
-          <li>Syncs material master data with SAP, with approval before anything is sent back</li>
-          <li>Decision support for the trade team; a licensed broker still files the entry</li>
-        </ul>
-        <div class="sample">
-          <div class="sample-box"><b>Radiator assembly, aluminium</b><br>HTS <span class="hl">8708.91.5000</span> &middot; sureness &#9679;&#9679;&#9675;<br>3 CBP rulings considered &middot; 1 revoked ruling excluded<br>Waiting for reviewer</div>
-          <p class="cap">Illustrative record from the demo catalogue</p>
-        </div>
-      </article>
-
-      <article class="product">
-        <div class="meta"><span class="label">Tax audit &middot; CA firms in India</span></div>
-        <h3>AuditProof</h3>
-        <p>Prepares the fieldwork for a Form 3CD tax audit and a forensic review of an SME&rsquo;s books. A chartered accountant reviews each finding and signs off.</p>
-        <ul>
-          <li>Each finding links to the exact rows of the client&rsquo;s file</li>
-          <li>Shows the rule, citation, threshold and computation behind each finding</li>
-          <li>A second run gives a byte-identical result, and actions go to a hash-chained log</li>
-        </ul>
-        <div class="sample">
-          <div class="sample-box"><b>Clause 21(a), expenses of a personal nature</b><br>2 findings &middot; linked to ledger rows 418 and 1,203<br>Checked: 14 rules &middot; could not verify: 1, with reason<br>Ready for partner sign-off</div>
-          <p class="cap">Illustrative record from the synthetic demo company</p>
-        </div>
-      </article>
-
-      <article class="product">
-        <div class="meta"><span class="label">Finance operations</span></div>
-        <h3>AP Automation</h3>
-        <p>Receives supplier invoices, validates them, matches them to purchase orders, codes them and routes them for approval. Routine exceptions are resolved automatically; the rest go to the right person with a recommended action.</p>
-        <ul>
-          <li>Two- and three-way matching at line level, with tolerances by supplier and category</li>
-          <li>Coding decisions explained from your own history</li>
-          <li>Confidence thresholds set by your finance team decide what is automatic</li>
-        </ul>
-        <div class="sample">
-          <div class="sample-box"><b>INV-10023 &middot; cloud hosting, October</b><br>Matched to PO 4500012 &middot; within tolerance<br>Coded to GL 6120: <span class="hl">27 of the last 30</span> invoices from this supplier used it<br>Auto-approved under policy</div>
-          <p class="cap">Illustrative record from the demo dataset</p>
-        </div>
-      </article>
-
-      <article class="product">
-        <div class="meta"><span class="label">Practice management &middot; CA firms</span></div>
-        <h3>Practice Tracker</h3>
-        <p>Shows partners which client work is blocked, on whom, and since when. A document chaser asks clients for missing papers by email and WhatsApp, using checklists the firm chooses.</p>
-        <ul>
-          <li>Recurring filings and due dates set up per client</li>
-          <li>One-click reminders, with a record of each one sent</li>
-          <li>An AI agent can join the team as a member, with limits the partners set</li>
-        </ul>
-        <div class="sample">
-          <div class="sample-box"><b>GST return, September</b><br>Blocked on client &middot; <span class="hl">6 days</span><br>Missing: purchase register, 2 bank statements<br>Reminder sent on WhatsApp yesterday</div>
-          <p class="cap">Illustrative record from the prototype</p>
-        </div>
-        <p class="more"><a href="/document-chaser/">Open the clickable prototype</a></p>
-      </article>
-
+      <div>
+        <p class="n">02</p>
+        <h3>Your data stays with you</h3>
+        <p>Systems run in your environment. You decide what is stored and for how long.</p>
+      </div>
+      <div>
+        <p class="n">03</p>
+        <h3>A person signs off</h3>
+        <p>Decisions that matter go to someone on your team for approval, and each action is logged.</p>
+      </div>
+      <div>
+        <p class="n">04</p>
+        <h3>You own what we build</h3>
+        <p>Code, models and test sets sit in your accounts from the start. You can run, retrain and check the system without us.</p>
+      </div>
     </div>
   </div>
 </section>
 
 <section id="clients">
   <div class="wrap">
-    <div class="sec-head">
+    <div class="head">
       <div>
-        <p class="label"><span class="n">03</span>Client work</p>
+        <p class="eyebrow">Clients</p>
         <h2>Built for clients</h2>
       </div>
-      <p>We describe client work without names unless the client has agreed to be named.</p>
     </div>
-    <div class="client">
-      <div>
-        <p class="label">Pharmaceutical distribution</p>
-        <h3>Operations system for a wholesale distributor</h3>
-      </div>
-      <div>
-        <p>Procurement, stock, sales, invoicing and payments in one system, with separate roles for each team.</p>
-        <ul>
-          <li>Goods received against purchase orders, with batch and expiry captured on arrival</li>
-          <li>Stock issued from the earliest-expiring batches first</li>
-          <li>GST worked out from each customer&rsquo;s GSTIN and printed on the tax invoice</li>
-          <li>Overdue invoices and expiring stock flagged automatically</li>
-        </ul>
-      </div>
+    <div class="clients">
+      <article class="client">
+        <span class="tag">Trade compliance</span>
+        <h3>A US importer of automotive parts</h3>
+        <p>Tariff classification, duty estimates and an audit trail for imported parts, built around the client&rsquo;s SAP material data. The work became Travio.</p>
+      </article>
+      <article class="client">
+        <span class="tag">Pharmaceutical distribution</span>
+        <h3>A wholesale pharmaceutical distributor</h3>
+        <p>Procurement, stock with batch and expiry tracking, sales, GST invoicing and payments in one system, with separate roles for each team.</p>
+      </article>
     </div>
+    <p class="note">We name clients only with their agreement.</p>
   </div>
 </section>
 
-<section id="lab">
-  <div class="wrap">
-    <div class="sec-head">
-      <div>
-        <p class="label"><span class="n">04</span>Lab</p>
-        <h2>What we are researching</h2>
-      </div>
-      <p>Early work that we run alongside client projects. None of it is offered as a product yet.</p>
+<section id="contact">
+  <div class="wrap contact">
+    <div class="side">
+      <p class="eyebrow">Start a project</p>
+      <h2>Tell us about the problem you want solved.</h2>
+      <p>Pick what is closest, add a few lines, and we will reply within two working days.</p>
+      <a class="mail" href="mailto:hello@ventosystems.com">hello@ventosystems.com</a>
     </div>
-    <div class="lab">
-      <div>
-        <p class="label">Private AI</p>
-        <h3>AI on hardware a company owns</h3>
-        <p>Which models run well on which machines, and what it costs a company to run them in-house instead of paying per request.</p>
-      </div>
-      <div>
-        <p class="label">Agents at work</p>
-        <h3>Gather, a workspace for people and agents</h3>
-        <p>Projects, tasks, discussions and documents where AI agents are members of the team, with their own assignments and a record of what they did.</p>
-      </div>
-      <div>
-        <p class="label">Learning</p>
-        <h3>Primer, adaptive study</h3>
-        <p>A reading and spaced-repetition app that grades written answers with AI and maps which topics a learner knows and which they are ready for.</p>
-      </div>
-      <div>
-        <p class="label">Physical AI</p>
-        <h3>Robotics and assistive devices</h3>
-        <p>A mobile bin that uses a camera to track a thrown object and moves to catch it, now at motor and vision testing. Controller firmware and a safety review for a sit-to-stand walker for elderly users.</p>
-      </div>
-    </div>
-  </div>
-</section>
 
-<section id="process">
-  <div class="wrap">
-    <div class="sec-head">
-      <div>
-        <p class="label"><span class="n">05</span>How we work</p>
-        <h2>How an engagement runs</h2>
+    <form id="brief" action="mailto:hello@ventosystems.com" method="post" enctype="text/plain">
+      <fieldset>
+        <legend>What do you need?</legend>
+        <div class="choices">
+          <label><input type="radio" name="need" value="AI for a business workflow" checked><span>AI for a business workflow</span></label>
+          <label><input type="radio" name="need" value="AI for a physical site"><span>AI for a physical site</span></label>
+          <label><input type="radio" name="need" value="A demo of one of your products"><span>A product demo</span></label>
+          <label><input type="radio" name="need" value="Something else"><span>Something else</span></label>
+        </div>
+      </fieldset>
+      <div class="pair">
+        <div><label for="f-name">Your name</label><input id="f-name" name="name" type="text" autocomplete="name"></div>
+        <div><label for="f-company">Company</label><input id="f-company" name="company" type="text" autocomplete="organization"></div>
       </div>
-      <p>Each project follows the same three stages.</p>
-    </div>
-    <div class="steps">
-      <div class="step">
-        <p class="label">Weeks 1&ndash;2</p>
-        <h3>Measure first</h3>
-        <p>We take a sample of your real work and agree with you how success will be measured. If AI is the wrong tool for the job, we tell you at this stage.</p>
+      <label for="f-note">A few lines about it</label>
+      <textarea id="f-note" name="details" placeholder="What the work is today, roughly how much of it there is, and what a good result would look like."></textarea>
+      <div class="send">
+        <button class="btn btn-orange" type="submit">Write the email</button>
+        <small>Opens your email app with this filled in. Nothing is sent until you press send.</small>
       </div>
-      <div class="step">
-        <p class="label">Two-week cycles</p>
-        <h3>Build on your data</h3>
-        <p>You see a working version every two weeks, running on your own data in a staging environment your team can use.</p>
-      </div>
-      <div class="step">
-        <p class="label">From day one</p>
-        <h3>Hand over</h3>
-        <p>Code, models and the test set sit in your accounts from the start. You can run, retrain and check the system without us.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="contact" id="contact">
-  <div class="wrap">
-    <p class="label">Contact</p>
-    <h2>Tell us about the problem you want solved.</h2>
-    <p>Send a short description and, if you can, a sample of the data involved. We reply within two working days.</p>
-    <div class="actions">
-      <a class="btn btn-primary" href="mailto:hello@ventosystems.com">hello@ventosystems.com</a>
-      <a class="btn btn-quiet" href="mailto:hello@ventosystems.com?subject=30-minute%20call">Ask for a 30-minute call</a>
-    </div>
-    <dl>
-      <div><dt>Company</dt><dd>Vento Systems Pvt Ltd</dd></div>
-      <div><dt>Based in</dt><dd>India</dd></div>
-      <div><dt>Working hours</dt><dd>IST, overlapping Europe and US East</dd></div>
-    </dl>
+    </form>
   </div>
 </section>
 
@@ -501,10 +425,31 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;
 
 <footer>
   <div class="wrap">
-    <span>&copy; 2026 Vento Systems Pvt Ltd</span>
-    <span>hello@ventosystems.com</span>
+    <div class="big" aria-hidden="true">VENTO</div>
+    <div class="foot">
+      <span>&copy; 2026 Vento Systems Pvt Ltd</span>
+      <a href="mailto:hello@ventosystems.com">hello@ventosystems.com</a>
+      <a href="#contact">Start a project</a>
+    </div>
   </div>
 </footer>
+
+<script>
+// The contact form has no server. It writes an email in the visitor's own mail app.
+document.getElementById('brief').addEventListener('submit', function (e) {
+  e.preventDefault();
+  var f = e.target;
+  var need = f.querySelector('input[name=need]:checked').value;
+  var name = f.elements['name'].value.trim();
+  var company = f.elements['company'].value.trim();
+  var subject = need + (company ? ' (' + company + ')' : '');
+  var body = 'What we need: ' + need + '\n'
+    + (name ? 'Name: ' + name + '\n' : '')
+    + (company ? 'Company: ' + company + '\n' : '')
+    + '\n' + f.elements['details'].value.trim() + '\n';
+  location.href = 'mailto:hello@ventosystems.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+});
+</script>
 
 </body>
 </html>
