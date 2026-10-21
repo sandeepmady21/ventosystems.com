@@ -20,7 +20,6 @@ Open `http://127.0.0.1:8765/`. A server is needed because site links and assets 
 - `vision/`: company thesis and development model.
 - `assets/company.css`, `assets/company.js`: shared presentation and interaction.
 - `assets/*.svg`: original conceptual diagrams and brand assets. `social-preview.png` is the social card exported from its SVG source.
-- `docs/positioning-research.md`: reference companies, research sources and implementation decisions.
 - `document-chaser/` and `sarath/`: existing independent sub-sites, retained. Document Chaser is linked as a prototype with fictional data.
 
 Headers and footers are static HTML repeated across the eight company pages. Keep them aligned when editing. Shared layout and behavior belong in the company CSS/JS.

@@ -34,3 +34,12 @@ a{color:inherit}button{cursor:pointer}img,svg{display:block;max-width:100%}img{h
 
 /* Keep navigation available when scripting is unavailable. */
 @media(max-width:900px){html:not(.js) .site-header{height:auto;position:static}html:not(.js) .header-inner{flex-wrap:wrap;padding-block:20px}html:not(.js) .site-nav{display:flex;position:static;flex:0 0 100%;background:none;padding:0;border:0}html:not(.js) .menu-toggle{display:none}}
+
+/* Fixes, 21 Oct 2026 */
+/* A status label in a detail row sits on its own line above the link, at label size */
+.detail-row p.status{display:table;margin:20px 0 0;max-width:none;font:400 10px/1.5 var(--mono);letter-spacing:.04em;color:var(--muted)}
+.detail-row p.status+.text-link{margin-top:18px}
+/* Small labels on the light Selected work band meet 4.5:1 contrast */
+.work-title small,.work-stage,.work-number,.work-section .section-note,.prototype-note{color:#564e43}
+.work-title small{font-size:12px}.work-stage{font-size:11px}
+@media(max-width:600px){.work-title small{font-size:11px}.work-stage{font-size:10px}}
