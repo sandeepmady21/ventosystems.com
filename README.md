@@ -30,7 +30,7 @@ The homepage combines the shared engineering introduction with the four illustra
 
 Each business-area page keeps its shared visual components and uses a conceptual illustration of the system it explains. Its introduction links to the detailed work and an area-specific enquiry. Project and development labels distinguish client work, working builds, prototypes and research; proposed assessment and pilot outputs describe the scope to agree, rather than delivered results.
 
-Vision explains the shared engineering approach through `assets/artwork-v2/vision-system.webp`. Lab pairs `lab-primer.webp` and `lab-gather.webp` with each project's scope, current stage, research question and a possible next experiment. The illustrations use consistent graphite, warm ivory and copper studio materials. They are conceptual illustrations, not product photographs, screenshots or commitments to a release. The homepage opens with the company proposition. The decorative V hero has been removed. A conceptual engineered weave of graphite structure, ivory layers and a copper path appears alongside the headline on desktop. Phones show a separate wide composition between the headline and description, capped at 160px image height. Responsive image selection downloads the compact asset below 1000px; tablets cap the image at 220px. The earlier systems-scene artwork is retained for rollback. Original SVGs and the orange variants remain unchanged in the repository. Four domain pages select wider compositions on desktop and complete standard compositions on smaller screens. Optimized WebP assets are published; exact built-in imagegen prompts are in `docs/illustrations/`.
+Vision explains the shared engineering approach through `assets/artwork-v2/vision-system.webp`. Lab pairs `lab-primer.webp` and `lab-gather.webp` with each project's scope, current stage, research question and a possible next experiment. The illustrations use consistent graphite, warm ivory and copper studio materials. They are conceptual illustrations, not product photographs, screenshots or commitments to a release. The homepage opens with the company proposition. The decorative V hero has been removed. A conceptual engineering scene pairs a person drawing on paper and a graph monitor with a prominent lidar-equipped rover and smaller model buildings. Phones show a separate wide composition between the headline and description, capped at 160px image height. Responsive image selection downloads the compact asset below 1000px; tablets cap the image at 220px. The graphite/ivory/copper weave now accompanies the common-thread section and links to Vision. Lab and Cyber use matching custom SVG icons instead of font glyphs. Original SVGs and the orange variants remain unchanged in the repository. Four domain pages select wider compositions on desktop and complete standard compositions on smaller screens. Optimized WebP assets are published; exact built-in imagegen prompts are in `docs/illustrations/`.
 
 Cyber uses `assets/artwork-v2/cyber-system.webp` to explain environment boundaries, access, specialist review and an agreed scope. The page explains how to discuss an environment and scope with Vento Cyber and specialist partners.
 
@@ -64,31 +64,35 @@ The source checker validates document structure, accessible labels, local links,
 
 ## Mobile experience
 
-The phone homepage includes a compact hero illustration and brings the illustrated domains before the longer shared-engineering explanation. A larger composition of the same sculpture balances the desktop opening. Selected-work controls use centered CSS plus/minus strokes rather than a font glyph. The phone layout uses shorter headline wrapping, tighter section spacing, 44px-or-larger primary touch targets, a scrollable menu, and single-column enquiry fields at 16px text size.
+The phone homepage includes a compact hero illustration and brings the illustrated domains before the longer shared-engineering explanation. A larger composition of the same engineering scene balances the desktop opening. Selected-work controls use centered CSS plus/minus strokes rather than a font glyph. The phone layout uses shorter headline wrapping, tighter section spacing, 44px-or-larger primary touch targets, a scrollable menu, and single-column enquiry fields at 16px text size.
 
 Business and Autonomy project rows use native disclosures with titles and current stages always visible. At phone widths, the first project starts open; desktop and no-JavaScript views show all project content. Lab keeps its artwork and current project descriptions visible while research questions and next experiments can expand on demand. Direct project links open their matching disclosure. Vision and Cyber offer full-size artwork links.
 
 `assets/mobile.css` applies only to the company pages. `assets/project-disclosures.css` and `assets/project-disclosures.js` are loaded by Business, Autonomy and Lab. Sarath and Document Chaser do not use these assets and remain unchanged.
 
+## Artwork archive
+
+[Hero concept gallery](docs/artwork-explorations/2026-10-21/README.md) preserves all 13 generated hero originals, including the earlier apparatus and weave, plus every plan, human, paper, lidar and graph-screen revision. Each original PNG has a lightweight WebP preview. The gallery manifest records exact built-in imagegen prompts, dimensions and hashes. The current site uses optimized `hero-engineering.webp` and `hero-engineering-compact.webp`; the archive is retained for later reuse.
+
 ## Hosting
 
-The repository uses GitHub Pages with `CNAME` set to `ventosystems.com`. Production at `https://ventosystems.com/` is served from `main`. The current improvements are developed on `codex/vento-hero-evolution`; pushing this branch does not replace production. Changes reach production through a reviewed pull request merged into `main`.
+The repository uses GitHub Pages with `CNAME` set to `ventosystems.com`. Production at `https://ventosystems.com/` is served from `main`. The current improvements are developed on `codex/vento-hero-and-icons`; pushing this branch does not replace production. Changes reach production through a reviewed pull request merged into `main`.
 
 ## Rollback
 
-The remote tag `vento-company-v1.11` preserves the published desktop systems hero and centered disclosure controls before this all-screen artwork redesign, at commit `1463b78`. The previous mobile-first version remains in `vento-company-v1.10` at `c1cfe9a`. The orange illustration version remains in `vento-company-v1.9` at `85a1605`. The earlier dark illustration treatment is preserved by `vento-company-v1.8` at `668c87e`. This checkpoint includes both independent sub-sites, which remain unchanged in this refinement. The older `vento-company-v1.7`, `vento-company-v1.6`, `vento-company-v1.5`, `vento-company-v1.4`, `vento-company-v1.3`, `vento-company-v1.2`, `vento-company-v1.1` and `vento-company-v1` tags remain available as earlier checkpoints.
+The remote tag `vento-company-v1.12` preserves the published weave hero before the engineering-scene and specialist-icon update, at commit `f653790`. The earlier desktop systems hero remains in `vento-company-v1.11` at `1463b78`. The previous mobile-first version remains in `vento-company-v1.10` at `c1cfe9a`. The orange illustration version remains in `vento-company-v1.9` at `85a1605`. The earlier dark illustration treatment is preserved by `vento-company-v1.8` at `668c87e`. This checkpoint includes both independent sub-sites, which remain unchanged in this refinement. The older `vento-company-v1.7`, `vento-company-v1.6`, `vento-company-v1.5`, `vento-company-v1.4`, `vento-company-v1.3`, `vento-company-v1.2`, `vento-company-v1.1` and `vento-company-v1` tags remain available as earlier checkpoints.
 
-To restore v1.11, work from the repository root with a clean working tree and create a new branch from current production. Restore the tagged tree as a new change; do not reset or force-push `main`.
+To restore v1.12, work from the repository root with a clean working tree and create a new branch from current production. Restore the tagged tree as a new change; do not reset or force-push `main`.
 
 ```sh
 git fetch origin --tags
-git switch -c restore/vento-company-v1-11 origin/main
-git restore --source=vento-company-v1.11 --staged --worktree -- .
+git switch -c restore/vento-company-v1-12 origin/main
+git restore --source=vento-company-v1.12 --staged --worktree -- .
 git diff --cached --stat
 python3 scripts/check_site.py .
 node --check assets/company.js
-git commit -m "Restore Vento company v1.11"
-git push -u origin restore/vento-company-v1-11
+git commit -m "Restore Vento company v1.12"
+git push -u origin restore/vento-company-v1-12
 ```
 
 Review the restored site locally, then open and merge a pull request from the restore branch into `main`. After GitHub Pages publishes, verify the production site. This retains the improvements in Git history while restoring the saved site files.

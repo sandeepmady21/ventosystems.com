@@ -1,0 +1,158 @@
+[
+  {
+    "id": "systems-apparatus",
+    "title": "Desktop systems apparatus",
+    "source": "exec-daafe0ac-bf7e-472e-b21e-3bb91b71182d.png",
+    "prompt": "Use case: stylized-concept. Asset: desktop homepage hero illustration for Vento Systems, an interdisciplinary engineering company. Input image is a STYLE REFERENCE ONLY for the precise materials, charcoal studio background, warm ivory and copper accents, soft light, tactile bevels and beautifully grounded contact shadows. Create a new distinct integrated system, no documents conveyor.\nOne single compact coherent engineering apparatus, viewed from a refined elevated three-quarter orthographic camera. A precision charcoal modular computation core at center with small warm-ivory layered inserts, connected on its left to a tangible industrial camera/sensor aperture and a simple slim ivory record tile; on its right a short purposeful mechanical linear actuator with an accurately constructed extending shaft. Slender recessed copper conductors physically connect these components across one low machined graphite plinth: information and sensing become intelligent physical action. It must read as one beautifully resolved apparatus, not a collage of separate icons. The core is the dominant sculptural object, with only 3 supporting objects, clean visual hierarchy. No V shape or lettering.\nComposition: near-square landscape, 6:5 aspect ratio, complete apparatus centered with generous quiet margins, 75% subject width, 65% subject height. Intended to sit to the right of a large headline on a warm-black website. Pure dark warm graphite background and floor around the edges, softly receding, no hard border, no flat orange background. Upper-left soft studio key, restrained warm reflections, matte black anodized metal, machined chamfers, brushed metallic edge accents, smooth warm ivory surfaces, copper/orange is less than8% of image and concentrated only at meaningful connections. A sophisticated editorial engineering model with photorealistic physical materials and exceptionally crisp workmanship.\nAvoid: logo, letters, words, numbers, captions, equations, floating screens, app UI, generic brain/neural web, humanoid robots, padlocks, shields, neon blue/purple, sci-fi holograms, explosions, industrial clutter, orange floodlighting, excessive bloom, decorative circuits, watermark. Deliver only the complete finished artwork.\n",
+    "dimensions": [
+      1374,
+      1145
+    ],
+    "sha256": "81b35b89235f26b5b1c9c6623d732255c5efe326dec193ee86250f35d30a81db",
+    "mode": "built-in imagegen"
+  },
+  {
+    "id": "weave-desktop",
+    "title": "Engineered weave — desktop",
+    "source": "exec-05f638ab-898b-4fef-9e00-d62cedc98395.png",
+    "prompt": "Use case: stylized-concept.\nAsset: distinctive homepage hero illustration for Vento Systems, an interdisciplinary deep technology company. Premium editorial 3D sculpture about disciplines becoming one working system. Create one extraordinarily elegant engineered weave, not a literal machine or a logo.\nSubject: a single low, wide interlocking architectural form. A broad matte charcoal structural band rises, bends with a beautifully machined radius, and returns into an open bridge-like loop. Three thin warm-ivory ceramic laminations pass smoothly through its open center and fan apart slightly toward one side, held within the graphite structure. A single narrow satin copper-orange inlay follows the flowing route continuously through the construction, making connection tangible. Beautifully resolved intersections, purposeful joinery, subtle ribbed side sections, precise bevels, realistic wall thickness, no impossible self-intersections. One coherent object, a clear memorable horizontal silhouette, a large open negative space, no small surrounding props. Conceptually: information, intelligence and physical structure woven together.\nStyle: exceptionally refined industrial-design editorial art, photorealistic tactile materials, calm and sculptural, restrained sophistication. Charcoal ceramic-coated metal, warm ivory porcelain-like satin surfaces, burnt orange copper accent, crisp edges, beautiful subtle contact shadows. Mostly black and ivory, copper less than 8%. Bright enough to read immediately at phone size, no murky black-on-black surfaces.\nComposition: landscape 3:2 canvas, a close three-quarter front perspective with a slightly elevated camera, almost orthographic, entire sculpture visible, centered and occupying 83% of width and 62% of height. One continuous sculptural gesture with a width-to-height near 2.3:1. Dark seamless warm-charcoal studio floor and background matching #171510, edges quiet and almost uniform, soft top-left key and restrained warm rimlight, no spotlit box edges. No pedestal or stage. High-end art-direction and beautiful material separation, sharp craftsmanship, no excessive ornament.\nAvoid: V shapes, letters, words, logo, text, digits, captions, watermark, arrows, infinity logo, torus, AI brain, neural network, orb, glass sphere, floating UI, computer screens, humanoid robot, camera, actuator, server, circuit board, factory equipment, gold/brass steampunk, ornate screws, neon, bloom, holograms, wires, collages, orange background. Deliver only the finished artwork.",
+    "dimensions": [
+      1536,
+      1024
+    ],
+    "sha256": "b53a2d5a916e4a1853e09c63a121d5f27447ad4946f44ff591abdc68d8f159e8",
+    "mode": "built-in imagegen"
+  },
+  {
+    "id": "weave-mobile",
+    "title": "Engineered weave — compact",
+    "source": "exec-4d8582ea-656b-4fe6-aea0-307600d21fed.png",
+    "prompt": "Use case: precise-object-edit. The input is the approved hero artwork to preserve, not just inspiration. Create the compact mobile composition of exactly this same engineered-weave sculpture. Change only camera framing/canvas: make a wide landscape image with 2.3:1 aspect ratio. Keep the entire sculpture visible including both end tips, with 6% dark breathing room at left and right and modest top/bottom clearance. The full object must occupy about 88% width and 82% height so it reads clearly at 350×152 CSS pixels. Keep the existing graphite curved structure, all three ivory flowing laminations, copper inlay, ribbing, exact interlocking geometry, materials, lighting and three-quarter angle unchanged. The same seamless dark warm-charcoal #171510 studio background, no new objects, no text, no logo. Preserve the sculptural negative space and visible contact shadows. Deliver only this compact landscape artwork.",
+    "dimensions": [
+      1902,
+      827
+    ],
+    "sha256": "b2b22f8537f77c5eeae65f44ed2e29a213d5042467763c0821f5a39b9daf4bc8",
+    "mode": "built-in imagegen"
+  },
+  {
+    "id": "plan-to-system",
+    "title": "Plan becoming a working system",
+    "source": "exec-54834dcb-49eb-4a14-a8ae-1f98e78a5890.png",
+    "prompt": "Use case: stylized-concept.\nAsset: premium Vento Systems homepage hero, interdisciplinary engineering company. Clear visual story: a technical plan becomes an intelligent working environment. A single, carefully art-directed architectural model, not a product photo or a collage of business icons.\nScene: one low, wide charcoal engineering floorplate with exquisitely machined edges, viewed from an elevated three-quarter perspective. On the left, precise ivory drafting lines and a few small ivory volume outlines are etched flat into the surface, a readable floor plan with no labels or text. Moving toward the right, those same outlines gain height and become two beautifully crafted warm-ivory architectural masses: a small low open-frame workshop and one taller simple building. One continuous restrained copper-orange route starts as a fine line on the flat plan, flows smoothly into the physical environment, turns between the two volumes and reaches one tiny ivory autonomous mobile unit. The route is the clear focal gesture. Plan and physical model are two stages of ONE environment, not separate plates. This is about transforming information and domain understanding into useful real-world action.\nComposition: landscape3:2; entire low, wide site model visible, 82% of canvas width and 61% height, centered, quiet dark margins on all sides. Only two building volumes and one small mobile unit; no clutter or tiny surrounding props. Low-profile buildings so scene reads clearly when rendered at350×150. Model should feel like a beautifully composed architecture museum maquette, clean confident silhouettes, exquisite scale and hierarchy, asymmetric with the plan area left and tangible environment right. No house/suburban city imagery. Grounded on a seamless warm near-black studio backdrop #171510, background and floor fade gently to the same dark edges, no hard lighting panel or stage.\nStyle: exceptionally crafted high-end editorial3D, tactile matte graphite and warm ivory surfaces, precise layered machining, delicate copper inlay less than8% of scene. Restrained warm top-left studio illumination, realistic soft contact shadows, subtle material grain, readable dark values. Sophisticated dark visual language, calm and expert. The actual buildings remain understated; the continuity between plan and built system is the story.\nAvoid: text, labels, digits, logo, V shapes, watermark, random decorative ribbons, abstract sculpture, brains, orbs, neural networks, holograms, floating screens, sci-fi glass, neon, purple/blue, generic circuit board, separate server/camera/actuator lineup, gold steampunk, clutter, glossy toy/plastic style. Deliver only the finished image.",
+    "dimensions": [
+      1536,
+      1024
+    ],
+    "sha256": "f5211af5fbb624f611070b757bdd3d4fa9a6cab39d8eed951fb831af43553aeb",
+    "mode": "built-in imagegen"
+  },
+  {
+    "id": "engineering-studio",
+    "title": "Human drawing and testing a lidar vehicle",
+    "source": "exec-0f4351a1-63a9-48fd-a194-66c2c634f29f.png",
+    "prompt": "Use case: stylized-concept.\nAsset: beautifully art-directed Vento Systems website hero, interdisciplinary intelligence and product engineering. Concept title for internal use only: The experiment. Show one coherent scene about human expertise connecting software, sensing and physical action. A premium architectural-scale miniature of an engineering studio, not a literal photograph or a branded product.\nSubject: a single low wide charcoal workbench occupies the scene. At the left, one small elegant faceless warm-ivory human figure sits in a charcoal chair, leaning forward thoughtfully over an ivory technical plan. Only one slim upright instrument display with a simple abstract ivory plot, no interface labels. At the right, the same table becomes a bounded experimental surface on which one small, thoughtfully designed ivory mobile machine is following an inset copper path around two low calibration blocks. The copper line starts at the plan near the person's hand and continues across the table as the actual route on the test surface. The person's scale and hands-on judgment are central; the machine is clearly part of one experiment. A few fine etched calibration marks and one tidy tool slot are enough to imply rigor. There are no unrelated objects, no extra furniture, no enclosing room, no multiple workstations. Keep a calm precise hierarchy: engineer, continuous copper route, experiment. The machine has a simple recognisable silhouette, no humanoid robot.\nComposition: wide landscape3:2 image, complete scene visible, 80% canvas width and62% height. Slightly elevated three-quarter viewpoint at near human-model eye-level, looking across the workbench. Wide horizontal silhouette suited to a compact mobile banner, generous quiet near-black background margins. Objects of readable scale, not tiny busy detailing. Face completely abstract smooth mannequin style, figure clothes simple ivory. Practical purposeful furniture and exactly one experimental machine. Ground the studio model on seamless dark warm-charcoal #171510 floor that fades gently to uniform near-black edges, no separate stage/plinth and no room walls.\nStyle: sophisticated editorial3D maquette, tactile matte graphite metal, warm ivory ceramic, copper-orange accents under8%, elegantly rounded precise edges, balanced material contrast, soft overhead studio light with warm edge highlights, beautiful grounded shadows, fine material texture. Expert craftsmanship, believable miniature proportions and readable hands. Warm human curiosity and technical rigor. Match the black/ivory/copper visual family of a deep technology company, not playful toys or glossy clay.\nAvoid: words, letters, digits, logo, watermark, screens full of UI, floating panels, brains, orbs, sci-fi holograms, neural network motifs, generic factory machinery, server boxes, separate camera-actuator lineup, ribbon sculptures, neon, blue/purple, bright green, gold/brass steampunk, clutter, childlike cartoon, photographic real person. Deliver only the finished artwork.",
+    "dimensions": [
+      1536,
+      1024
+    ],
+    "sha256": "82040ec216d1e2f6c837772985e668e38736392fe13e4eca512942d034b388f3",
+    "mode": "built-in imagegen"
+  },
+  {
+    "id": "plan-to-system-mobile",
+    "title": "Plan becoming a working system — compact",
+    "source": "exec-07e5b1e1-77ed-42bf-a248-824db2aa9270.png",
+    "prompt": "Use case: precise-object-edit. Input is the selected Vento Systems hero artwork; preserve it exactly. Create only its compact mobile composition, landscape2.3:1. Keep the same single low graphite floorplate, the technical plan etched into its left half, the same two warm-ivory workshop/building forms on its right half, the same copper route, and the same small mobile unit. Keep lighting, materials, proportions, camera angle, geometry and relationship between the flat plan and physical environment unchanged. Reframe closer by removing most empty background above and below, while keeping the entire plate and all building tops and every corner visible. At least5% clear dark margin left and right; sculpture occupies about88% of width and80% of height. It must be readable at350×152 CSS pixels. No additional buildings, symbols, humans, props, labels or text. Same seamless warm near-black #171510 backdrop and gentle contact shadows, no cropping any object. Output only the final wide mobile artwork.",
+    "dimensions": [
+      1902,
+      827
+    ],
+    "sha256": "d78654e988a9ef062319983ba7a2ef1c12e6414e154cec110d8d066ca88570ba",
+    "mode": "built-in imagegen"
+  },
+  {
+    "id": "combined-human-plan",
+    "title": "Human and plan-to-system combined",
+    "source": "exec-3ed6dadb-1f33-4b82-a45d-6d103dcd18ed.png",
+    "prompt": "Use case: compositing. Create one unified premium Vento Systems hero by combining the two attached concept artworks.\nInput1 is the PRIMARY scene: preserve the graphite site floorplate, the flat etched technical drawing on the left, the two ivory workshop/building models on the right, the copper route and the small autonomous unit. Input2 supplies ONLY the thoughtfully drawing ivory human, hands/pen pose and subtle chair; do not duplicate its robot, obstacle track, screen, or second worktable.\nDesired final scene: a single integrated engineering workbench where a human is drawing a technical plan that becomes a working physical environment. Place one warm-ivory human seated just behind the left edge, leaning over the plan and actively drawing with a fine pen, thoughtful attentive posture, the other hand gently supporting the chin. The person's torso and arms rise above the left half of the work surface, with the chair/legs mostly naturally occluded by the bench, never amputated. Keep the flat plan readable under the drawing hand. A single copper path begins at the pen's plan and continues across the same graphite surface into the two precisely built architectural models on the right, ending at the small mobile unit. Remove the extra instrument screen entirely: human thinking, the plan, the physical model are the story. The buildings are scaled as maquette prototypes on the person's desk, so proportions are believable. No separate island, no pasted-in look. Human and physical environment must share the same camera, light, scale logic and ground shadows.\nRefine composition rather than adding clutter: one continuous low graphite tabletop/base, no long table legs taking over frame, one seated ivory person on left, two simple model buildings on right, one small mobile unit and copper route. The person balances the taller right building, leaving quiet negative space above the middle. The entire scene fits a low horizontal silhouette and is legible at phone size. Beautifully readable drawing hand, no extra fingers, no facial identity, tasteful minimal mannequin sculpture with subtle clothing folds. The open workshop interior remains understated.\nStyle must match both references: exquisite editorial3D, tactile matte charcoal, warm ivory, restrained copper-orange, crisp machined edges, fine detail, sophisticated soft studio light and contact shadows. Dark warm near-black #171510 seamless floor/backdrop, gently fading to uniform dark edges, mostly black aesthetic. Calm expert practical research, not a cartoon or stock office scene.\nOutput landscape3:2, complete scene centered, 84% image width and65% height, at least5% margin around every extreme. No cropping person or buildings. No text, labels, numbers, brandmarks, V, watermark, UI, holograms, brains, generic AI orbs, neural networks, orange floodlighting or gold steampunk. Only the finished single integrated artwork.",
+    "dimensions": [
+      1536,
+      1024
+    ],
+    "sha256": "413bc889e3c996fa5ce294009694c51a14df279ada503f7668f4178c1d99f3c8",
+    "mode": "built-in imagegen"
+  },
+  {
+    "id": "combined-human-plan-mobile",
+    "title": "Combined scene — compact",
+    "source": "exec-5cecf154-d641-4217-80a0-fab862b3be17.png",
+    "prompt": "Use case: precise-object-edit. Input is the finished combined hero to preserve exactly. Create its mobile wide composition, aspect ratio2.3:1. Only adjust canvas/framing to remove unused dark space above and below. Preserve the seated ivory person drawing at the left, pen and hands, chair, the etched technical plan, BOTH architectural maquette buildings, the copper route and the small mobile unit, all on the same single low graphite floorplate. Preserve perspective, exact scene arrangement, scale, light and materials. Entire human head and whole plate including every corner must remain visible, with quiet dark breathing room at every extreme. Full scene occupies about88% width and80% height. The person and workshop must remain clear at350×152 CSS pixels. No added or removed objects; no labels, letters, digits or logos. Same seamless #171510 warm-charcoal background. Deliver only the complete compact landscape artwork.",
+    "dimensions": [
+      1902,
+      827
+    ],
+    "sha256": "8df8d64a009ec8641ac6b0740857c4515fe930f5334baba5fcb9309ff4eb267e",
+    "mode": "built-in imagegen"
+  },
+  {
+    "id": "paper-and-rover",
+    "title": "Drawing paper, smaller warehouses and lidar rover",
+    "source": "exec-7779ed2d-58c7-4592-98d9-784e03958564.png",
+    "prompt": "Use case: precise-object-edit / compositing. Refine the selected combined Vento hero using these exact user requests. Image1 is the scene to edit and preserve. Image2 is a reference ONLY for the lidar vehicle and visible paper under the drawing hand.\nMake exactly these changes to image1:\n1. Put a clearly visible physical rectangular sheet of warm-ivory drawing paper directly under the person's drawing hand and pen on the left tabletop. It must visibly be a sheet with clean edges and a slight believable thickness, not merely etched lines on the table. Add fine dark-gray technical plan strokes on the paper without any words or numbers. Keep the hand convincingly resting on the paper and the pen tip touching the plan. Preserve the person's thoughtful pose, face, scale, chair, clothing and arms.\n2. Shrink BOTH warehouse/workshop model buildings by roughly40% in height and footprint. Move them toward the rear right, retaining their same refined architecture, materials and open workshop details. They are supporting context, not the dominant subject.\n3. Replace the tiny box-shaped mobile unit with the recognisable ivory autonomous four-wheel rover from image2: chunky black tires, precise ivory rounded body, dark side sections, a very clear short cylindrical lidar scanner with a black band mounted on top. Place it prominently in the front center-right, on the copper route, at about18% of the entire artwork width and large enough to see the lidar and wheels at mobile size. It should be the main physical-system detail and visually balanced with the drawing human. Keep vehicle design restrained and technically plausible, no exaggerated toy smile or human-like face.\n4. Preserve one continuous copper route beginning at the sketch on the paper, carrying on across the charcoal surface, and turning clearly toward the rover before continuing into the smaller buildings. A couple of subtle thin ivory etched sensing arcs near the rover may indicate perception, but no floating graphics or holograms.\nPreserve the single low wide graphite workbench/floorplate, the plan-to-physical-world concept, elevated three-quarter camera, warm-charcoal and ivory palette with restrained copper accents, elegant soft studio lighting, beautiful contact shadows, and near-black #171510 seamless background. Keep the hero one coherent engineering experiment with real paper, human judgment and visible autonomy; no pasted-together objects. Same landscape3:2 canvas, full scene visible with quiet dark margins. Do not crop the person's head, vehicle, building tops or floorplate corners. No extra people, screens, labels, lettering, logos, numbers, decorative props, neon, or ornate brass. Output only the refined finished artwork.",
+    "dimensions": [
+      1536,
+      1024
+    ],
+    "sha256": "55c1dffc930555bbf910c51d460a1ea9d52df5423d188d82c91baa6bfdee4512",
+    "mode": "built-in imagegen"
+  },
+  {
+    "id": "large-lidar-rover",
+    "title": "Larger foreground lidar rover",
+    "source": "exec-2034eab8-8c46-44fd-adab-5a3e3b3a6166.png",
+    "prompt": "Use case: precise-object-edit. Make one targeted change to this finished Vento hero: enlarge ONLY the autonomous lidar rover in the front center-right by about1.8× in linear size, to approximately18–19% of total image width. It is currently too small to read in the mobile header. Keep the whole rover on the floorplate and on the copper route, shifting its center slightly upward/back if needed to retain the front plate edge and maintain plausible contact shadows. Preserve its ivory rounded body, four black tires, dark side sections, clear cylindrical rooftop lidar scanner with black band, and subtle orange front detail. Rover should now be a primary visual subject alongside the human, significantly larger than each small warehouse model. Adapt the few etched sensing arcs locally around the larger rover. Do not add another vehicle. Keep everything else exactly unchanged: person pose and scale, paper beneath drawing hand, pen, sheet drawing, two small background buildings, all plan lines, copper route, camera angle, entire scene framing, palette, lighting and3:2 canvas. No new objects or text. Deliver the complete final image, not a crop.",
+    "dimensions": [
+      1536,
+      1024
+    ],
+    "sha256": "943bc8d3023b27e422879f3c2577b7e00a91c86ef05f5efdde4950644ea205ae",
+    "mode": "built-in imagegen"
+  },
+  {
+    "id": "large-lidar-rover-mobile",
+    "title": "Larger lidar rover — compact",
+    "source": "exec-0f853742-a41c-402b-abef-9c7cb329b903.png",
+    "prompt": "Use case: precise-object-edit. This is the finished Vento Systems hero to preserve. Make ONLY a compact mobile composition by reframing to a wide2.3:1 landscape canvas, removing empty dark space above and below. Preserve everything in the scene exactly: the ivory person drawing on a clearly visible paper sheet at the left, the large four-wheel ivory lidar rover in the foreground right, BOTH smaller workshop/warehouse models in the rear right, plan markings, copper route, sensing arcs, single graphite floorplate, all materials, perspective, scale relationships and lighting. Do not reduce the large rover or hide its rooftop lidar. The rover and the paper under the human's hand must be immediately readable at350×152 CSS pixels. Keep the complete scene and every floorplate corner visible; no crop of the person's head, chair, rover, wheels, lidar or building tops. Allow4–6% dark breathing room around extreme edges. Entire scene uses about90% width and83% height. Same warm near-black #171510 seamless backdrop, subtle floor contact shadows; no added objects, no text, no labels or logos. Deliver only the final complete mobile landscape image.",
+    "dimensions": [
+      1902,
+      827
+    ],
+    "sha256": "f2ce7a5dee348e9240a6d674f0f9a1a2fc21573ea505d5b599a2d3b292a242ad",
+    "mode": "built-in imagegen"
+  },
+  {
+    "id": "graphs-lidar-final",
+    "title": "Final: paper, graphs, large lidar rover and smaller warehouses",
+    "source": "exec-b298849c-5a10-44c6-a4fc-d06fbb5d3482.png",
+    "prompt": "Use case: precise-object-edit / compositing. Image1 is the final Vento engineering concept to preserve; image2 supplies ONLY the slim physical graph screen as a reference. Add that graph screen to image1 while changing nothing else.\nPlace one slim, upright charcoal instrument monitor on a small physical stand, on the tabletop just to the right of the seated drawing person, behind the paper in the open center-left area. It should be about the height of the person's upper torso and comfortably below the top of the head, with a gentle angle toward the person. The dark screen shows two beautifully simple, precise ivory engineering plots: one smooth response curve with very restrained copper highlight, and a smaller simple signal trace below. Delicate axes, absolutely no words, numbers, labels, UI buttons or branding. Make this clearly a tangible monitor on the table, not a floating hologram. It should be visible at compact mobile size but remain secondary to the person and foreground lidar rover.\nKeep all existing content exactly unchanged: ivory drawing person and thoughtful pose, hand with pen on the clearly visible warm-ivory paper sheet, architectural drawing on paper, continuous copper route, the prominent LARGE ivory four-wheel rover with cylindrical rooftop lidar, both SMALL buildings in rear right, etched plan and sensing arcs, graphite floorplate, camera and lighting. Keep monitor clear of the human arm, head and buildings; do not obscure the paper or the rover. Same premium editorial3D warm charcoal/ivory/copper materials and near-black seamless background. Same landscape3:2 canvas and entire scene framing. No extra object other than this one graph monitor. Output only the complete revised image.",
+    "dimensions": [
+      1536,
+      1024
+    ],
+    "sha256": "d9880110b0387eb087cb06cd2e5867a6e1a20a6a1ba9cea33b72df49535e715c",
+    "mode": "built-in imagegen"
+  },
+  {
+    "id": "graphs-lidar-final-mobile",
+    "title": "Final scene — compact",
+    "source": "exec-40e8d08f-2820-4eec-9620-19377548bd42.png",
+    "prompt": "Use case: precise-object-edit. Reframe this exact finished Vento engineering illustration into a wide2.3:1 mobile composition by removing unused dark space above and below. Preserve every object, geometry, material, scale and placement: the human drawing on paper at left, physical monitor with two graphs behind the paper, large four-wheel rooftop-lidar rover foreground right, two small background model warehouses, continuous copper route, plan lines and complete graphite floorplate. Keep the whole person's head, paper, monitor, rover and every plate corner visible with at least4% dark breathing room. Entire scene occupies about90% width and83% height. Keep the monitor graphs and rooftop lidar readable at350×152 CSS pixels. Same camera and lighting, near-black warm backdrop. No new text or objects. Only return the complete wide artwork.",
+    "dimensions": [
+      1902,
+      827
+    ],
+    "sha256": "9c1dde17620ea5bca8cb50152788f5c71df7ba8a1fa425392cee931c35d6eeb5",
+    "mode": "built-in imagegen"
+  }
+]
