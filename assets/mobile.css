@@ -152,3 +152,17 @@
   .hero-scene figcaption{display:flex;justify-content:space-between;gap:14px;padding:10px 6px 24px;color:var(--muted);font:400 9px/1.6 var(--mono)}
   .hero-scene figcaption span:first-child{display:inline;color:var(--ink)}
 }
+
+/* Hero art fades out in an oval, so its slightly lighter background never reads as a panel */
+@media(min-width:1000px){
+  .hero-scene picture{-webkit-mask-image:radial-gradient(ellipse closest-side at 50% 48%,#000 80%,transparent 100%);mask-image:radial-gradient(ellipse closest-side at 50% 48%,#000 80%,transparent 100%)}
+  .hero-scene img{-webkit-mask-image:none;mask-image:none}
+}
+
+/* Larger hero art on wide screens: a wider column that runs to the right edge of the window */
+@media(min-width:1000px){
+  .company-hero{overflow-x:clip}
+  .company-hero .hero-copy{grid-template-columns:minmax(0,.86fr) minmax(0,1.3fr);column-gap:clamp(12px,1.6vw,28px)}
+  .company-hero .hero-copy h1{font-size:clamp(56px,5.9vw,92px)}
+  .hero-scene{margin-right:calc((min(var(--max),100vw - 112px) - 100vw)/2)}
+}
