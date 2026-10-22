@@ -69,3 +69,6 @@ a{color:inherit}button{cursor:pointer}img,svg{display:block;max-width:100%}img{h
 
 /* The Lab and Cyber icons keep the same square proportions on phones. */
 @media(max-width:700px){.extended-symbol{width:44px;height:44px;flex-basis:44px}}
+/* Refresh, 22 Oct 2026 */
+.vision-band .band-lead{max-width:640px;margin-top:26px;font-size:clamp(17px,1.5vw,20px);line-height:1.55;color:var(--dark)}
+.footer-bottom nav a,.footer-bottom>a{display:inline-flex;align-items:center;min-height:32px}
