@@ -64,35 +64,39 @@ The source checker validates document structure, accessible labels, local links,
 
 ## Mobile experience
 
-The phone homepage includes a compact hero illustration and brings the illustrated domains before the longer shared-engineering explanation. A larger composition of the same engineering scene balances the desktop opening. Selected-work controls use centered CSS plus/minus strokes rather than a font glyph. The phone layout uses shorter headline wrapping, tighter section spacing, 44px-or-larger primary touch targets, a scrollable menu, and single-column enquiry fields at 16px text size.
+The phone homepage includes a compact hero illustration and brings the illustrated domains before the longer shared-engineering explanation. A larger composition of the same engineering scene balances the desktop opening. Selected work shows each project’s summary and stage without requiring expansion. The phone layout uses shorter headline wrapping, tighter section spacing, 44px-or-larger primary touch targets, a scrollable menu, and single-column enquiry fields at 16px text size.
 
-Business and Autonomy project rows use native disclosures with titles and current stages always visible. At phone widths, the first project starts open; desktop and no-JavaScript views show all project content. Lab keeps its artwork and current project descriptions visible while research questions and next experiments can expand on demand. Direct project links open their matching disclosure. Vision and Cyber offer full-size artwork links.
+Business and Autonomy project rows use native disclosures with titles and current stages always visible. At phone widths, the first project starts open; desktop and no-JavaScript views show all project content. Lab keeps its artwork and current project descriptions visible while research questions and next experiments can expand on demand. Direct project links open their matching disclosure.
 
 `assets/mobile.css` applies only to the company pages. Mobile introductions and actions precede supporting artwork. The homepage illustration is 112–128px tall on phones and is hidden on short phone screens (up to 700px high) or compact landscape viewports. The desktop presentation is preserved. Specialist cards give their descriptions the full card width, and project shortcuts wrap into visible rows. `assets/project-disclosures.css` and `assets/project-disclosures.js` are loaded by Business, Autonomy and Lab. Sarath and Document Chaser do not use these assets and remain unchanged.
 
+## Homepage structure
+
+`assets/homepage.css` is loaded only on the homepage. Each area groups its heading, illustration, description and stage inside one link panel. Selected work is visible without accordions. A semantic three-step diagram uses the existing Travio project details to explain data integration, domain logic and human review; it stacks vertically on phones. This replaces the two overlapping positioning sections while retaining the weave illustration.
+
 ## Artwork archive
 
-[Hero concept gallery](docs/artwork-explorations/2026-10-21/README.md) preserves all 14 generated hero originals, including the earlier apparatus and weave, plus every plan, human, paper, lidar and graph-screen revision. Each original PNG has a lightweight WebP preview. The gallery manifest records exact built-in imagegen prompts, dimensions and hashes. The current site uses optimized `hero-studio-containers.webp` and `hero-studio-containers-small.webp`, both exported from the selected `engineering-studio-containers.png` original; the archive is retained for later reuse.
+[Hero concept gallery](docs/artwork-explorations/2026-10-21/README.md) preserves all 14 generated hero originals, including the earlier apparatus and weave, plus every plan, human, paper, lidar and graph-screen revision. Each original PNG has a lightweight WebP preview. The gallery manifest records exact built-in imagegen prompts, dimensions and hashes. The current homepage uses the existing `hero-engineering.webp` and `hero-engineering-compact.webp` compositions, with responsive versions in `assets/artwork-v2/r/`. The container-studio alternatives and archive remain available for later reuse.
 
 ## Hosting
 
-The repository uses GitHub Pages with `CNAME` set to `ventosystems.com`. Production at `https://ventosystems.com/` is served from `main`. The current improvements are developed on `codex/vento-mobile-ready`; pushing this branch does not replace production. Changes reach production through a reviewed pull request merged into `main`.
+The repository uses GitHub Pages with `CNAME` set to `ventosystems.com`. Production at `https://ventosystems.com/` is served from `main`. The current improvements are developed on `codex/vento-clearer-story`; pushing this branch does not replace production. Changes reach production through a reviewed pull request merged into `main`.
 
 ## Rollback
 
-The remote tag `vento-company-v1.16` preserves the current responsive illustrations and plain headings before the mobile refinement, at commit `255616b`. The earlier `vento-company-v1.15` preserves the container hero and background blend at `f8bc1ed`. The tag `vento-company-v1.14` preserves the selected studio hero before container details and edge blending, at commit `a10d3e8`. The tag `vento-company-v1.13` preserves the published graph-and-lidar hero, weave section and specialist icons before selecting the engineering-studio artwork, at commit `2debcc3`. The tag `vento-company-v1.12` preserves the published weave hero before the engineering-scene and specialist-icon update, at commit `f653790`. The earlier desktop systems hero remains in `vento-company-v1.11` at `1463b78`. The previous mobile-first version remains in `vento-company-v1.10` at `c1cfe9a`. The orange illustration version remains in `vento-company-v1.9` at `85a1605`. The earlier dark illustration treatment is preserved by `vento-company-v1.8` at `668c87e`. This checkpoint includes both independent sub-sites, which remain unchanged in this refinement. The older `vento-company-v1.7`, `vento-company-v1.6`, `vento-company-v1.5`, `vento-company-v1.4`, `vento-company-v1.3`, `vento-company-v1.2`, `vento-company-v1.1` and `vento-company-v1` tags remain available as earlier checkpoints.
+The remote tag `vento-company-v1.17` preserves the mobile-ready company site before the homepage structure and content redesign, at commit `2869288`. The tag `vento-company-v1.16` preserves the current responsive illustrations and plain headings before the mobile refinement, at commit `255616b`. The earlier `vento-company-v1.15` preserves the container hero and background blend at `f8bc1ed`. The tag `vento-company-v1.14` preserves the selected studio hero before container details and edge blending, at commit `a10d3e8`. The tag `vento-company-v1.13` preserves the published graph-and-lidar hero, weave section and specialist icons before selecting the engineering-studio artwork, at commit `2debcc3`. The tag `vento-company-v1.12` preserves the published weave hero before the engineering-scene and specialist-icon update, at commit `f653790`. The earlier desktop systems hero remains in `vento-company-v1.11` at `1463b78`. The previous mobile-first version remains in `vento-company-v1.10` at `c1cfe9a`. The orange illustration version remains in `vento-company-v1.9` at `85a1605`. The earlier dark illustration treatment is preserved by `vento-company-v1.8` at `668c87e`. This checkpoint includes both independent sub-sites, which remain unchanged in this refinement. The older `vento-company-v1.7`, `vento-company-v1.6`, `vento-company-v1.5`, `vento-company-v1.4`, `vento-company-v1.3`, `vento-company-v1.2`, `vento-company-v1.1` and `vento-company-v1` tags remain available as earlier checkpoints.
 
-To restore v1.16, work from the repository root with a clean working tree and create a new branch from current production. Restore the tagged tree as a new change; do not reset or force-push `main`.
+To restore v1.17, work from the repository root with a clean working tree and create a new branch from current production. Restore the tagged tree as a new change; do not reset or force-push `main`.
 
 ```sh
 git fetch origin --tags
-git switch -c restore/vento-company-v1-16 origin/main
-git restore --source=vento-company-v1.16 --staged --worktree -- .
+git switch -c restore/vento-company-v1-17 origin/main
+git restore --source=vento-company-v1.17 --staged --worktree -- .
 git diff --cached --stat
 python3 scripts/check_site.py .
 node --check assets/company.js
-git commit -m "Restore Vento company v1.16"
-git push -u origin restore/vento-company-v1-16
+git commit -m "Restore Vento company v1.17"
+git push -u origin restore/vento-company-v1-17
 ```
 
 Review the restored site locally, then open and merge a pull request from the restore branch into `main`. After GitHub Pages publishes, verify the production site. This retains the improvements in Git history while restoring the saved site files.
