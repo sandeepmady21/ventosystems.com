@@ -16,12 +16,13 @@ Open `http://127.0.0.1:8765/`. A server is needed because site links and assets 
 
 - `index.html`: company mission, combined engineering and business areas, selected work and enquiry flow.
 - `business/`, `private-ai/`, `safety/`, `autonomy/`: four business-area pages.
+- `gcc-offshore-development/`: dedicated offshore engineering teams and Global Capability Center planning.
 - `lab/`: research and early work. `cyber/`: cybersecurity expertise and enquiries.
 - `vision/`: company thesis and development model.
 - `assets/company.css`, `assets/company.js`: shared presentation and interaction.
 - `assets/exploration.css`: scoped presentation additions for Vision, Lab and Cyber, using the company design tokens.
 - `assets/*.svg`: original conceptual diagrams and brand assets. `social-preview.png` is the social card exported from its SVG source.
-- `sitemap.xml`, `robots.txt`: discovery for the eight canonical company pages. The sitemap excludes the independent demo sub-sites; robots.txt permits crawling throughout the site.
+- `sitemap.xml`, `robots.txt`: discovery for the canonical company pages. The sitemap excludes the independent demo sub-sites; robots.txt permits crawling throughout the site.
 - `document-chaser/`: an interactive prototype with fictional data and its own ledger-inspired visual style.
 - `sarath/`: an 11-page client preview with its own editorial identity, local assets and `noindex, nofollow` metadata. Its README describes the supplied firm information and historical newsletters.
 - `404.html`: a branded recovery page with absolute links, so missing addresses at any depth can return to Vento.
@@ -40,7 +41,7 @@ Headers and footers are static HTML repeated across the eight company pages. Kee
 
 The mobile menu supports keyboard activation, Escape to close and selection of a navigation link. Project details use native HTML disclosure controls. Reduced-motion visitors retain every interaction without animated scrolling or scaling.
 
-The enquiry form validates required fields, prepares a visible email draft and offers an email-app link and copy action. It does not send mail or retain submissions. `/?need=business#contact` preselects a business area; supported values are `general`, `business`, `private-ai`, `safety`, `autonomy`, `lab` and `cyber`. For area-only links, unrecognized values use the general enquiry.
+The enquiry form validates required fields, prepares a visible email draft and offers an email-app link and copy action. It does not send mail or retain submissions. `/?need=business#contact` preselects a business area; supported values are `general`, `business`, `private-ai`, `offshore-development`, `gcc`, `safety`, `autonomy`, `lab` and `cyber`. For area-only links, unrecognized values use the general enquiry.
 
 Project links also carry a recognized `project` ID, for example `/?need=business&project=travio#contact`. Recognized project context appears above the enquiry fields and is included in the email draft. Supported IDs map to these areas:
 
@@ -60,7 +61,7 @@ node --check assets/company.js
 node --test scripts/test_enquiry.mjs
 ```
 
-The source checker validates document structure, accessible labels, local links, fragments and assets across the eight company pages and the root fallback. Browser checks cover desktop and mobile layouts, menus, project disclosures, area and project enquiry context, draft generation and recovery navigation. The independent Sarath and Document Chaser sub-sites are outside this company-site refinement.
+The source checker validates document structure, accessible labels, local links, fragments and assets across the company pages and the root fallback. Browser checks cover desktop and mobile layouts, menus, project disclosures, area and project enquiry context, draft generation and recovery navigation. The independent Sarath and Document Chaser sub-sites are outside this company-site refinement.
 
 ## Mobile experience
 

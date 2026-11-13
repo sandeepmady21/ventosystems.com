@@ -30,6 +30,7 @@ function enquiry(search = '') {
   const options = [
     ['general', 'A conversation with Vento'], ['business', 'Business systems'],
     ['private-ai', 'Private AI'], ['safety', 'Safety systems'],
+    ['offshore-development', 'Offshore development team'], ['gcc', 'Global Capability Center (GCC)'],
     ['autonomy', 'Autonomy & machines'], ['lab', 'Research & Vento Lab'],
     ['cyber', 'Vento Cyber']
   ].map(([value, text]) => ({ value, text }));
@@ -104,6 +105,19 @@ test('a known project resolves a conflicting need consistently', () => {
   assert.equal(form.area.value, 'business');
   assert.equal(form.elements['enquiry-project'].textContent, 'Enquiry about Travio');
   assert.equal(form.submit().subject, 'Travio — Business systems — Example & Co');
+});
+
+test('GCC and offshore links preselect their own enquiry topics', () => {
+  for (const [key, label] of [
+    ['offshore-development', 'Offshore development team'],
+    ['gcc', 'Global Capability Center (GCC)']
+  ]) {
+    const form = enquiry(`?need=${key}`);
+    assert.equal(form.area.value, key);
+    const { subject, body } = form.submit();
+    assert.equal(subject, `${label} — Example & Co`);
+    assert.ok(body.includes(`Area: ${label}\n`));
+  }
 });
 
 test('unknown project values never enter the draft and a valid need still works', () => {
