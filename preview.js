@@ -44,7 +44,7 @@ if (form) {
     ['team-extension', 'offshore'], ['dedicated-team', 'offshore'], ['offshore', 'offshore'],
     ['offshore-development', 'odc'], ['odc', 'odc'], ['gcc', 'gcc'],
     ['build-operate-transfer', 'transfer'], ['transfer', 'transfer'],
-    ['business', 'business'], ['private-ai', 'private-ai'], ['safety', 'safety'],
+    ['business', 'business'], ['private-ai', 'private-ai'], ['sovereign-ai', 'private-ai'], ['safety', 'safety'],
     ['autonomy', 'autonomy'], ['lab', 'lab'], ['cyber', 'cyber'], ['general', 'general'], ['choose', 'choose'],
     ['public-sector', 'public-sector'], ['government', 'public-sector'],
   ]);
@@ -61,7 +61,7 @@ if (form) {
     ['gcc', 'What would the center own? Share the first functions and your target start.'],
     ['transfer', 'What should be set up first, and when would you like to take it over?'],
     ['business', 'Which workflow or product is this about, and what should change?'],
-    ['private-ai', 'Which documents or systems should the AI work with, and where must it run?'],
+    ['private-ai', 'Which task should the model handle, what data does it need, and must it run offline?'],
     ['safety', 'Describe the site, the people involved and what should trigger a response.'],
     ['autonomy', 'Describe the machine, the environment and the problem to solve.'],
     ['lab', 'Which project or research question is this about?'],
