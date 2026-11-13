@@ -1058,3 +1058,10 @@ a[href^="#"] .arr,a[href^="#"]:hover .arr{transform:none}
 .sector-grid .svc-card h3{margin-top:0;font-size:21px}
 @media(max-width:1000px){.sector-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:640px){.sector-grid{grid-template-columns:1fr}}
+/* Sovereign AI headline: the three ideas as a numbered list */
+.product-hero h1.h1-stack{display:grid;gap:6px;font-size:clamp(30px,3.3vw,50px);line-height:1.08;letter-spacing:-.03em}
+.h1-stack span{display:flex;align-items:baseline;gap:14px}
+.h1-stack i{flex:0 0 auto;font:500 clamp(12px,1vw,14px)/1 var(--mono);letter-spacing:.06em;font-style:normal;color:#a8471a;transform:translateY(-.35em)}
+.h1-stack span:nth-child(2){color:#a8471a}
+.product-hero h1.h1-stack{font-size:clamp(28px,2.7vw,42px)}
+@media(min-width:1001px){.h1-stack span{white-space:nowrap}}
