@@ -898,3 +898,9 @@ a[href^="#"] .arr,a[href^="#"]:hover .arr{transform:none}
   .mock:not(.mock-mini) :is(.mock-card,.mock-pill,.mock-example){position:static;width:auto;max-width:none}
   .mock:not(.mock-mini) .mock-example{justify-self:start}
 }
+
+/* Service pages: plain tiles and photo heroes */
+.svc-tiles .card h3{font-size:clamp(21px,1.8vw,25px)}
+.svc-tiles .card p{margin-top:8px}
+.svc-tiles .card .svc-includes{margin-top:14px;padding-top:12px;border-top:1px solid #eadfce;font-size:14.5px;line-height:1.5;color:#5b5042}
+.photo-hero img{display:block;width:100%;height:auto;aspect-ratio:3/2;object-fit:cover;border-radius:12px;background:#e9dfd0}
