@@ -46,7 +46,7 @@ if (form) {
     ['build-operate-transfer', 'transfer'], ['transfer', 'transfer'],
     ['business', 'business'], ['private-ai', 'private-ai'], ['safety', 'safety'],
     ['autonomy', 'autonomy'], ['lab', 'lab'], ['cyber', 'cyber'], ['general', 'general'], ['choose', 'choose'],
-    ['public-sector', 'public-sector'], ['government', 'public-sector'], ['demo-videos', 'demo-videos'],
+    ['public-sector', 'public-sector'], ['government', 'public-sector'],
   ]);
   const projects = new Map([
     ['tarivo', ['Tarivo', 'business']], ['ap-automation', ['AP Automation', 'business']], ['sightline', ['Sightline', 'business']], ['plinth', ['Plinth', 'business']], ['branchglass', ['BranchGlass', 'business']],
@@ -65,8 +65,7 @@ if (form) {
     ['safety', 'Describe the site, the people involved and what should trigger a response.'],
     ['autonomy', 'Describe the machine, the environment and the problem to solve.'],
     ['lab', 'Which project or research question is this about?'],
-    ['cyber', 'What would you like Vento Cyber to look at?'],
-    ['demo-videos', 'Which product is the video for, who will watch it, and where will it be shown?'],
+    ['cyber', 'What should be tested or audited, where does it run, and is there a deadline?'],
     ['public-sector', 'Which agency or bid is this for, and what should the system do? A capability statement request is fine too.'],
     ['general', 'Tell us what you have in mind.'],
   ]);
