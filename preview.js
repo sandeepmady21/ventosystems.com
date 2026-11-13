@@ -49,7 +49,7 @@ if (form) {
     ['public-sector', 'public-sector'], ['government', 'public-sector'], ['demo-videos', 'demo-videos'],
   ]);
   const projects = new Map([
-    ['tarivo', ['Tarivo', 'business']], ['ap-automation', ['AP Automation', 'business']], ['sightline', ['Sightline', 'business']], ['plinth', ['Plinth', 'business']],
+    ['tarivo', ['Tarivo', 'business']], ['ap-automation', ['AP Automation', 'business']], ['sightline', ['Sightline', 'business']], ['plinth', ['Plinth', 'business']], ['branchglass', ['BranchGlass', 'business']],
     ['auditproof', ['AuditProof', 'business']], ['practice-tracker', ['Practice Tracker', 'business']],
     ['operations', ['Distribution operations', 'business']], ['mobile-robot', ['Mobile robot', 'autonomy']],
     ['controller', ['Controller firmware', 'autonomy']], ['primer', ['Primer', 'lab']], ['gather', ['Gather', 'lab']],
@@ -135,4 +135,29 @@ document.querySelectorAll('video.clip-video').forEach(video => {
     else { userPaused = true; video.pause(); }
   });
   sync();
+});
+
+// Clip tabs: one frame, switch between clips; arrow keys move between tabs.
+document.querySelectorAll('.clip-player').forEach(player => {
+  const tabs = [...player.querySelectorAll('[role="tab"]')];
+  const select = tab => {
+    tabs.forEach(t => {
+      const on = t === tab;
+      t.setAttribute('aria-selected', String(on));
+      t.tabIndex = on ? 0 : -1;
+      const panel = document.getElementById(t.getAttribute('aria-controls'));
+      panel.hidden = !on;
+      const video = panel.querySelector('video');
+      if (!on) video.pause();
+      else if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) { video.preload = 'metadata'; video.play().catch(() => {}); }
+    });
+  };
+  tabs.forEach((tab, i) => {
+    tab.addEventListener('click', () => select(tab));
+    tab.addEventListener('keydown', e => {
+      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+      const next = tabs[(i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length];
+      next.focus(); select(next);
+    });
+  });
 });
