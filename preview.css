@@ -646,3 +646,20 @@ a[href^="#"] .arr,a[href^="#"]:hover .arr{transform:none}
 .clip-tabs button:focus-visible{outline:2px solid #a8471a;outline-offset:2px}
 .clip .clip-toggle{top:3px;right:8px;bottom:auto;padding:4px 11px;font-size:12px;line-height:1.2;background:#3a3027;color:#faf6ee}
 .clip .clip-toggle:hover{background:#262018}
+.page-title-plain{font-size:clamp(40px,4.5vw,64px);line-height:1.04;margin-top:14px}
+.footer-legal a{color:inherit;text-decoration:underline;text-underline-offset:3px}
+.footer-legal a:hover{color:#f47735}
+.photo-card>img{display:block;width:100%;height:auto;aspect-ratio:3/2;object-fit:cover;border-radius:6px;margin-bottom:18px;background:#e9dfd0}
+.photo-card .eyebrow{margin-bottom:6px}
+.photo-card h3{font-size:clamp(22px,1.9vw,28px)}
+.photo-card p:not(.eyebrow){margin-top:8px}
+.photo-card>img{display:block;width:100%;height:auto;aspect-ratio:3/2;object-fit:cover;border-radius:6px;margin-bottom:18px;background:#e9dfd0}
+.photo-card .eyebrow{margin-bottom:6px}
+.photo-card h3{font-size:clamp(22px,1.9vw,28px)}
+.photo-card p:not(.eyebrow){margin-top:8px}
+.city-mosaic{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:auto auto;gap:10px;min-width:0}
+.city-mosaic figure{position:relative;margin:0;overflow:hidden;border-radius:8px;background:#e9dfd0}
+.city-mosaic .city-main{grid-column:1/-1}
+.city-mosaic img{display:block;width:100%;height:100%;aspect-ratio:3/2;object-fit:cover}
+.city-mosaic .city-main img{aspect-ratio:16/9}
+.city-mosaic figcaption{position:absolute;left:10px;bottom:10px;padding:5px 10px;border-radius:99px;background:rgba(31,26,20,.78);color:#faf6ee;font:600 12.5px/1.2 var(--sans)}
