@@ -1065,3 +1065,12 @@ a[href^="#"] .arr,a[href^="#"]:hover .arr{transform:none}
 .h1-stack span:nth-child(2){color:#a8471a}
 .product-hero h1.h1-stack{font-size:clamp(28px,2.7vw,42px)}
 @media(min-width:1001px){.h1-stack span{white-space:nowrap}}
+/* Sovereign AI: use cases with photos */
+.uc-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+.uc-card{display:flex;flex-direction:column}
+.uc-card>p:not(.eyebrow):not(.uc-decides){font-size:15.5px;line-height:1.55;color:#3d342a}
+.uc-card .uc-decides{margin-top:auto;padding-top:14px;border-top:1px solid #eadfce;font-size:14.5px;font-weight:600;color:#262018}
+.uc-card .uc-decides b{display:block;margin-bottom:3px;font:500 12px/1.4 var(--mono);text-transform:uppercase;letter-spacing:.06em;color:#853a15}
+.uc-card>p:not(.eyebrow):not(.uc-decides){margin-bottom:16px}
+@media(max-width:1000px){.uc-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:640px){.uc-grid{grid-template-columns:1fr}}
