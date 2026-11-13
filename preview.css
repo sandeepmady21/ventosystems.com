@@ -177,7 +177,7 @@
 .site-layout .section{padding-block:clamp(46px,6vw,94px)}
 .site-layout h1,.site-layout h2,.site-layout h3{font-weight:650;letter-spacing:-.045em}
 .site-layout h2{font-size:clamp(32px,4vw,57px);line-height:1.06}
-.site-layout .eyebrow{color:#805538}
+.site-layout .eyebrow{color:#74482b}
 .site-layout .button{border-radius:99px;font-size:14px;font-weight:650}
 .site-layout .text-link{font-weight:550}
 .site-layout .paper{background:var(--ref-tint)}
@@ -427,3 +427,37 @@
   .footer-content{grid-template-columns:1fr}
   .footer-content>div:first-child{grid-column:auto}
 }
+
+/* 2026-11-13 US-first company pages */
+.reference-home-copy .hero-lead{max-width:52ch;margin:-8px 0 30px;color:#e1c8b6;font-size:clamp(17px,1.4vw,20px);line-height:1.6}
+.company-hero-new .reference-home-copy h1{max-width:12ch}
+.offer-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.offer-card{display:flex;flex-direction:column;text-decoration:none;transition:border-color .2s ease,background-color .2s ease}
+.offer-card:hover{border-color:#9e5d3d;background:#fffdf8}
+.offer-card>img{display:block;width:100%;aspect-ratio:16/10;object-fit:cover;margin-bottom:20px;background:#171611}
+.offer-card h3{margin-top:8px}
+.offer-more{margin-top:auto;padding-top:18px;font-size:14px;font-weight:600;color:#853a15}
+.offer-card:hover .offer-more{text-decoration:underline;text-underline-offset:3px}
+.also-line{display:flex;flex-wrap:wrap;align-items:center;gap:6px 24px;margin-top:24px;color:#5b5042;font-size:15px}
+.also-line a{font-weight:600;text-decoration:none;color:var(--ref-text)}
+.also-line a span{color:#a8471a}
+.also-line a:hover{color:#a8471a}
+.check-list{list-style:none;padding:0;margin:0;border-top:1px solid var(--ref-line)}
+.check-list li{display:flex;align-items:flex-start;gap:14px;padding:16px 0;border-bottom:1px solid var(--ref-line);font-size:17px;line-height:1.45}
+.check-list li::before{content:"✓";display:grid;place-items:center;flex:0 0 28px;height:28px;border-radius:50%;background:var(--ref-accent);color:var(--ref-text);font-size:15px;font-weight:650}
+.principle-grid{list-style:none;padding:0}
+.principle-grid h3{font-size:clamp(21px,1.9vw,26px)}
+.principle-grid .step-number{margin-bottom:10px}
+.reference-cta>.shell>.eyebrow{color:#edb187}
+@media(max-width:900px){.offer-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.offer-grid{grid-template-columns:1fr}}
+
+/* Sharp type: full-weight smoothing on cream, thin smoothing only on dark bands; looser tracking; no tiny labels */
+body.site-layout{-webkit-font-smoothing:auto;-moz-osx-font-smoothing:auto;text-rendering:optimizeLegibility;font-kerning:normal}
+.reference-home-hero,.reference-hero:not(.paper),.reference-proof,.reference-cta,.reference-signal,.preview-footer,.site-layout .closing{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+.site-layout h1,.site-layout h2,.site-layout h3{letter-spacing:-.03em}
+.site-layout .reference-home-copy h1{letter-spacing:-.04em}
+.site-layout .eyebrow{font-size:12px;font-weight:500;letter-spacing:.1em}
+.site-layout .card p:not(.eyebrow),.site-layout .card li{font-size:16px}
+.footer-content .footer-heading{font-size:12px}
+.ladder-scale{font-size:12px}

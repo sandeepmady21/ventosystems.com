@@ -46,6 +46,7 @@ if (form) {
     ['build-operate-transfer', 'transfer'], ['transfer', 'transfer'],
     ['business', 'business'], ['private-ai', 'private-ai'], ['safety', 'safety'],
     ['autonomy', 'autonomy'], ['lab', 'lab'], ['cyber', 'cyber'], ['general', 'general'],
+    ['public-sector', 'public-sector'], ['government', 'public-sector'],
   ]);
   const projects = new Map([
     ['tarivo', ['Tarivo', 'business']], ['ap-automation', ['AP Automation', 'business']],
@@ -65,6 +66,7 @@ if (form) {
     ['autonomy', 'Describe the machine, the environment and the problem to solve.'],
     ['lab', 'Which project or research question is this about?'],
     ['cyber', 'What would you like Vento Cyber to look at?'],
+    ['public-sector', 'Which agency or bid is this for, and what should the system do? A capability statement request is fine too.'],
     ['general', 'Tell us what you have in mind.'],
   ]);
   const project = projects.get(params.get('project'));

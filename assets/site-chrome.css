@@ -59,7 +59,7 @@
 .products .solutions-menu{width:320px}
 .solutions-menu [aria-current]{background:#eee6d8;color:#8b3e18}
 .footer-content{grid-template-columns:1.4fr 1fr 1fr 1fr}
-.footer-content .footer-heading{margin:0 0 6px;font:400 11px/1.5 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:#edb187!important}
+.footer-content .footer-heading{margin:0 0 6px;font:400 12px/1.5 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:#edb187!important}
 .footer-content .footer-email{display:inline-block;margin-top:14px}
 @media(max-width:1200px){
   .nav-shell{min-height:72px}

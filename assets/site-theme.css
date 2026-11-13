@@ -6,8 +6,8 @@
 }
 body{background:var(--bg);color:var(--ink)}
 ::selection{color:var(--ink)}
-.eyebrow{color:#805538}
-h1,h2,h3{font-weight:650;letter-spacing:-.045em}
+.eyebrow{color:#74482b}
+h1,h2,h3{font-weight:650;letter-spacing:-.03em}
 
 /* Buttons match the new site: rounded, orange with dark text */
 .button{border-radius:99px;color:var(--ink);font-weight:650}
@@ -51,3 +51,10 @@ h1,h2,h3{font-weight:650;letter-spacing:-.045em}
 
 /* Home "GCC & offshore" feature card */
 .offshore-feature{background:var(--panel)}
+
+/* Sharp type: full-weight smoothing on cream, thin smoothing only on dark bands; looser tracking; no tiny labels */
+body{-webkit-font-smoothing:auto;-moz-osx-font-smoothing:auto;text-rendering:optimizeLegibility;font-kerning:normal}
+.vision-band,.page-cta,.preview-footer{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+.eyebrow{font-size:12px;font-weight:500;letter-spacing:.1em}
+/* No label below 12px */
+.status,p.status,.detail-row p.status,.detail-number,.art-index,.prose .eyebrow,.project-questions dt,.page-art figcaption{font-size:12px!important;letter-spacing:.06em}
