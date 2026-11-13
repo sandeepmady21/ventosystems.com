@@ -664,3 +664,5 @@ a[href^="#"] .arr,a[href^="#"]:hover .arr{transform:none}
 .city-mosaic .city-main img{aspect-ratio:16/9}
 .city-mosaic figcaption{position:absolute;left:10px;bottom:10px;padding:5px 10px;border-radius:99px;background:rgba(31,26,20,.78);color:#faf6ee;font:600 12.5px/1.2 var(--sans)}
 .product-tile .shot-frame img{aspect-ratio:16/10;object-fit:cover;object-position:top left}
+.sample-video{display:block;width:100%;height:auto;aspect-ratio:16/9;background:#111}
+.service-card .art-figure img{aspect-ratio:3/2;object-fit:cover}
