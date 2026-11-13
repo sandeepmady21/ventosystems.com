@@ -686,7 +686,7 @@ a[href^="#"] .arr,a[href^="#"]:hover .arr{transform:none}
 .stack-back{top:0;right:0;width:86%;z-index:1}
 .stack-mid{left:0;bottom:7%;width:60%;z-index:2}
 .stack-front{right:3%;bottom:0;width:54%;z-index:3;border:2px solid #f47735}
-.stack-label{position:absolute;right:10px;top:28px;padding:5px 11px;border-radius:99px;background:rgba(31,26,20,.86);color:#faf6ee;font:600 12.5px/1.2 var(--sans);letter-spacing:.01em}
+.stack-label{position:absolute;right:10px;top:28px;padding:5px 11px;border-radius:99px;background:#1f1a14;color:#faf6ee;font:600 12.5px/1.2 var(--sans);letter-spacing:.01em}
 .stack-front .stack-label{top:auto;bottom:10px;background:#f47735;color:#1f1a14}
 .stack-card:hover,.stack-card:focus-visible{transform:translateY(-6px);box-shadow:0 56px 100px -36px rgba(0,0,0,.9),0 18px 32px -14px rgba(0,0,0,.6)}
 .stack-card:focus-visible{outline:2px solid #f47735;outline-offset:3px}
@@ -803,4 +803,30 @@ a[href^="#"] .arr,a[href^="#"]:hover .arr{transform:none}
 @media(max-width:560px){
   .model-cards{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:84%;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:6px;margin-inline:-20px;padding-inline:20px;scroll-padding-inline:20px;scrollbar-width:thin}
   .model-card{scroll-snap-align:start}
+}
+
+/* Home routes, About "More from Vento", five-column footer */
+.routes.section{padding-block:36px}
+.route-grid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.route-card{display:flex;flex-direction:column;height:100%;padding:22px 22px 20px;border:1px solid var(--ref-line);border-radius:12px;background:#fffaf2;color:#262018;text-decoration:none;transition:border-color .15s,background .15s}
+.route-card:hover{border-color:#9e5d3d;background:#fffdf8}
+.route-card .eyebrow{margin:0 0 10px}
+.route-card b{font-size:21px;line-height:1.2;font-weight:650}
+.route-card .route-text{margin-top:8px;font-size:15px;line-height:1.5;color:#4f4538}
+.route-card .arr{align-self:flex-start;margin-top:auto;padding-top:16px;color:#a8471a}
+.more-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+.footer-content{grid-template-columns:1.4fr repeat(4,minmax(0,1fr))}
+@media(max-width:1100px){.footer-content{grid-template-columns:repeat(4,minmax(0,1fr))}.footer-content>div:first-child{grid-column:1/-1}}
+@media(max-width:1000px){.route-grid,.more-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:700px){.footer-content{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.route-grid,.more-grid{grid-template-columns:1fr}}
+#services .work-grid.grid-two{grid-template-columns:repeat(2,minmax(0,1fr))}
+@media(max-width:700px){#services .work-grid.grid-two{grid-template-columns:1fr}}
+@media(max-width:560px){
+  .route-grid{gap:10px}
+  .route-card{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:14px;padding:16px 18px}
+  .route-card .eyebrow{display:none}
+  .route-card b{grid-column:1;font-size:19px}
+  .route-card .route-text{grid-column:1;margin-top:4px;font-size:14.5px}
+  .route-card .arr{grid-column:2;grid-row:1/span 2;align-self:center;margin:0;padding:0}
 }
