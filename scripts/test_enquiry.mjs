@@ -31,6 +31,7 @@ function enquiry(search = '') {
     ['general', 'A conversation with Vento'], ['business', 'Business systems'],
     ['private-ai', 'Private AI'], ['safety', 'Safety systems'],
     ['offshore-development', 'Offshore development team'], ['gcc', 'Global Capability Center (GCC)'],
+    ['india-delivery', 'Help choosing an India delivery model'],
     ['autonomy', 'Autonomy & machines'], ['lab', 'Research & Vento Lab'],
     ['cyber', 'Vento Cyber']
   ].map(([value, text]) => ({ value, text }));
@@ -44,7 +45,7 @@ function enquiry(search = '') {
     'enquiry-project': element({ hidden: true }),
     'enquiry-name': element({ value: 'Ada' }),
     'enquiry-company': element({ value: 'Example & Co' }),
-    'enquiry-message': element({ value: 'Review invoices & exceptions?\nConnect the records.' }),
+    'enquiry-message': element({ value: 'Review invoices & exceptions?\nConnect the records.', placeholder: 'Describe the problem.' }),
     'enquiry-preview': element({ hidden: true }),
     'enquiry-draft': element(), 'form-status': element(),
     'enquiry-open': element({ href: 'mailto:hello@ventosystems.com' }),
@@ -107,16 +108,20 @@ test('a known project resolves a conflicting need consistently', () => {
   assert.equal(form.submit().subject, 'Travio — Business systems — Example & Co');
 });
 
-test('GCC and offshore links preselect their own enquiry topics', () => {
-  for (const [key, label] of [
-    ['offshore-development', 'Offshore development team'],
-    ['gcc', 'Global Capability Center (GCC)']
+test('India delivery links preselect topics and update enquiry prompts', () => {
+  for (const [key, label, prompt] of [
+    ['offshore-development', 'Offshore development team', 'What would the team build?'],
+    ['gcc', 'Global Capability Center (GCC)', 'What would the center own?'],
+    ['india-delivery', 'Help choosing an India delivery model', 'What would the India team take on first?']
   ]) {
     const form = enquiry(`?need=${key}`);
     assert.equal(form.area.value, key);
+    assert.ok(form.elements['enquiry-message'].placeholder.startsWith(prompt));
     const { subject, body } = form.submit();
     assert.equal(subject, `${label} — Example & Co`);
     assert.ok(body.includes(`Area: ${label}\n`));
+    form.changeArea('business');
+    assert.equal(form.elements['enquiry-message'].placeholder, 'Describe the problem.');
   }
 });
 

@@ -16,7 +16,8 @@ from urllib.parse import unquote, urlsplit
 
 DEFAULT_PAGES = ["index.html"] + [f"{name}/index.html" for name in (
     "business", "private-ai", "safety", "autonomy", "cyber", "lab", "vision",
-    "gcc-offshore-development",
+    "gcc-offshore-development", "gcc-offshore-development/engagement-models",
+    "gcc-offshore-development/how-we-work", "gcc-offshore-development/capabilities",
 )] + ["404.html"]
 SITE_HOSTS = {"ventosystems.com", "www.ventosystems.com"}
 VOID_TAGS = {"area", "base", "br", "col", "embed", "hr", "img", "input",

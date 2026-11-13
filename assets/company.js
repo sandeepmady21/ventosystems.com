@@ -37,6 +37,18 @@
   // A known project determines its area, even when the URL's need disagrees.
   const requestedArea = project ? project.area : query.get('need');
   if (Array.from(area.options).some(option => option.value === requestedArea)) area.value = requestedArea;
+  const messageField = document.getElementById('enquiry-message');
+  const defaultPrompt = messageField.placeholder;
+  const deliveryPrompts = new Map([
+    ['offshore-development', 'What would the team build? Share the roles or skills you need and when you want to start.'],
+    ['gcc', 'What would the center own? Share your first functions, target start and preferences for local operations.'],
+    ['india-delivery', 'What would the India team take on first? Tell us what is already in place and what you need help deciding.']
+  ]);
+  const updateMessagePrompt = () => {
+    messageField.placeholder = deliveryPrompts.get(area.value) ?? defaultPrompt;
+  };
+  updateMessagePrompt();
+  area.addEventListener('change', updateMessagePrompt);
   const preview = document.getElementById('enquiry-preview');
   const draft = document.getElementById('enquiry-draft');
   const status = document.getElementById('form-status');
@@ -65,7 +77,7 @@
     if (!form.reportValidity()) return;
     const name = document.getElementById('enquiry-name').value.trim();
     const company = document.getElementById('enquiry-company').value.trim();
-    const message = document.getElementById('enquiry-message').value.trim();
+    const message = messageField.value.trim();
     if (!name || !message) { status.textContent = 'Please add your name and a few words about your enquiry.'; return; }
     const subject = `${project ? project.label + ' — ' : ''}${area.selectedOptions[0].text}${company ? ' — ' + company : ''}`;
     const body = `Hello Vento,\n\n${message}\n\n${project ? 'Project: ' + project.label + '\n' : ''}Area: ${area.selectedOptions[0].text}\nName: ${name}${company ? '\nOrganization: ' + company : ''}\n`;
