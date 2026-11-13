@@ -115,3 +115,23 @@ if (form) {
     }
   });
 }
+
+// Product clips: play only while visible, never for people who prefer reduced motion, with a pause button.
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+document.querySelectorAll('video.clip-video').forEach(video => {
+  const button = video.parentElement.querySelector('.clip-toggle');
+  let userPaused = reduceMotion.matches;
+  const sync = () => { if (button) button.textContent = video.paused ? 'Play' : 'Pause'; };
+  const tryPlay = () => { if (!userPaused) video.play().catch(() => {}); };
+  if (reduceMotion.matches) video.pause();
+  new IntersectionObserver(entries => {
+    entries.forEach(e => (e.isIntersecting ? tryPlay() : video.pause()));
+  }, { threshold: 0.35 }).observe(video);
+  video.addEventListener('play', sync);
+  video.addEventListener('pause', sync);
+  button?.addEventListener('click', () => {
+    if (video.paused) { userPaused = false; video.play().catch(() => {}); }
+    else { userPaused = true; video.pause(); }
+  });
+  sync();
+});
