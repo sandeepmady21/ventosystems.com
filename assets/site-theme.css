@@ -1,0 +1,53 @@
+/* Light theme for the company and division pages, matching the Hyderabad pages:
+   cream background, dark-brown text and bands, orange accent. Loaded after company.css. */
+:root{
+  --bg:#faf6ee;--panel:#fffaf2;--panel-2:#eee6d8;--ink:#262018;--muted:#5b5042;--line:#d8c9b7;
+  --paper:#eee6d8;--dark:#262018;--brown:#311d14;--cream:#faf6ee;--on-dark:#eee8dc;--on-dark-muted:#e1c8b6;
+}
+body{background:var(--bg);color:var(--ink)}
+::selection{color:var(--ink)}
+.eyebrow{color:#805538}
+h1,h2,h3{font-weight:650;letter-spacing:-.045em}
+
+/* Buttons match the new site: rounded, orange with dark text */
+.button{border-radius:99px;color:var(--ink);font-weight:650}
+.button:hover{background:var(--ink);border-color:var(--ink);color:var(--cream)}
+.skip-link{color:var(--ink)}
+.circle-link:hover,.business-card:hover .card-arrow{color:var(--ink)}
+.card-arrow{border-color:#b6a792}
+.status{border-color:#b6a792}
+
+/* Cards and panels */
+.domain-card{background:var(--panel)}
+.extended-card,.business-art{background:var(--panel)}
+.domain-art,.business-art:has(img[src^="/assets/artwork-v2/"]),.page-art img[src^="/assets/artwork-v2/"]{background:#171611}
+.business-art:has(img[src^="/assets/artwork-v2/"]) .art-index{color:#cfc8b8}
+
+/* Forms */
+.enquiry-form input,.enquiry-form textarea,.enquiry-form select{background:#fffdf8;border-color:#b6a792;color:var(--ink);color-scheme:light}
+.enquiry-form input::placeholder,.enquiry-form textarea::placeholder{color:#8a7d6a}
+.form-status{color:#a64010}
+
+/* Light tinted sections stay light */
+.work-section,.evidence-section{background:var(--paper);color:var(--ink)}
+
+/* Dark bands use the same deep brown as the Hyderabad pages */
+.vision-band,.page-cta{background:var(--brown);color:var(--on-dark);border-color:var(--brown)}
+.vision-band .eyebrow,.page-cta .eyebrow{color:#edb187}
+.vision-band h2 span{color:#f47735}
+.vision-band .band-lead,.vision-band p:not(.eyebrow),.page-cta p:not(.eyebrow){color:var(--on-dark-muted)}
+.vision-band .text-link,.page-cta .text-link{color:var(--on-dark)}
+.vision-band .text-link:hover,.page-cta .text-link:hover{color:#f47735}
+.vision-band .button:hover,.page-cta .button:hover{background:var(--cream);border-color:var(--cream);color:var(--ink)}
+.vision-band :focus-visible,.page-cta :focus-visible{outline-color:#f47735}
+
+/* Orange: bright for fills (buttons, markers), deeper for text on cream so it stays readable */
+:root{--orange:#a8471a}
+.button{background:#f47735;border-color:#f47735}
+.small-square,.skip-link,::selection{background:#f47735}
+.circle-link:hover,.business-card:hover .card-arrow{background:#f47735;border-color:#f47735}
+.preview-nav>[aria-current]{color:#a8471a}
+.solutions summary span{color:#a8471a}
+
+/* Home "GCC & offshore" feature card */
+.offshore-feature{background:var(--panel)}

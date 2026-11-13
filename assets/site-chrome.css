@@ -1,0 +1,55 @@
+/* Shared header and footer for pages that do not load preview.css (company and division pages).
+   Mirrors the header and footer of the Hyderabad pages so the whole site reads as one. */
+.shell{width:min(1376px,calc(100% - 64px));margin-inline:auto}
+.preview-header{position:sticky;top:0;z-index:50;background:#faf6ee;border-bottom:1px solid #d8c9b7;color:#262018}
+.nav-shell,.preview-nav{display:flex;align-items:center;justify-content:space-between}
+.nav-shell{min-height:88px;gap:22px}
+.preview-header .brand img{width:42px;height:42px}
+.preview-nav{gap:clamp(14px,3vw,44px)}
+.preview-nav>a,.solutions summary{font-size:16px;font-weight:600;line-height:1.3;text-decoration:none;white-space:nowrap;color:#262018}
+.preview-nav>a:not(.button),.solutions summary{display:flex;align-items:center;min-height:44px}
+.preview-nav>a:not(.button):hover,.preview-nav>[aria-current],.solutions .current{color:#c4531b}
+.preview-nav .nav-contact{display:inline-flex;align-items:center;gap:10px;min-height:48px;border:1px solid #262018;background:transparent;color:#262018;border-radius:99px;padding:11px 22px;font-size:14px;font-weight:650}
+.preview-nav .nav-contact:hover{background:#262018;color:#faf6ee}
+.preview-nav .nav-contact span{color:currentColor;margin:0}
+.preview-menu{display:none;background:none;border:0;color:#262018;font-size:0;width:44px;height:44px;padding:8px;cursor:pointer}
+.preview-menu::before,.preview-menu::after{content:"";display:block;width:27px;height:3px;background:currentColor;margin:6px auto}
+.preview-menu span{display:none}
+.solutions{position:relative}
+.solutions summary{cursor:pointer;list-style:none}
+.solutions summary::-webkit-details-marker{display:none}
+.solutions summary span{color:#f47735;margin-left:6px}
+.solutions-menu{position:absolute;top:calc(100% + 16px);left:-18px;width:265px;background:#faf6ee;border:1px solid #d8c9b7;padding:8px;box-shadow:0 16px 38px #0002}
+.solutions-menu a{display:block;padding:10px 12px;font-size:14px;text-decoration:none;color:#262018}
+.solutions-menu a:hover{background:#eee6d8;color:#8b3e18}
+
+.preview-footer{padding:45px 0 25px;background:#251811;color:#eee8dc;border:0}
+.footer-content{display:grid;grid-template-columns:1.1fr 1fr 1fr;gap:26px}
+.footer-content>div:last-child,.footer-content nav{display:flex;flex-direction:column;gap:5px}
+.footer-content a{text-decoration:none;font-size:14px;color:#eee8dc}
+.footer-content a:hover{color:#f47735}
+.footer-content .footer-brand{font-size:46px;line-height:1;font-weight:550;letter-spacing:-.07em}
+.footer-content p,.footer-legal{color:#c9b8a6;font-size:13px}
+.footer-content p{margin-top:10px}
+.footer-legal{border-top:1px solid #704932;margin-top:30px;padding-top:16px}
+
+@media(max-width:1080px){
+  .nav-shell{min-height:72px}
+  .preview-js .preview-menu{display:block}
+  .preview-js .preview-nav{display:none;position:absolute;top:100%;left:0;right:0;max-height:calc(100dvh - 72px);overflow:auto;padding:12px 24px 20px;background:#faf6ee;border-bottom:1px solid #d8c9b7}
+  .preview-js .preview-nav.is-open{display:grid;gap:0}
+  .preview-nav>a:not(.button),.solutions summary{display:block;padding:12px 0}
+  .preview-nav .nav-contact{justify-self:start;margin-top:9px}
+  .solutions-menu{position:static;width:auto;box-shadow:none}
+  html:not(.preview-js) .nav-shell{align-items:start;flex-direction:column;padding-block:16px}
+  html:not(.preview-js) .preview-nav{flex-wrap:wrap;gap:14px}
+}
+@media(max-width:700px){
+  .shell{width:calc(100% - 40px)}
+  .footer-content{grid-template-columns:1fr 1fr}
+  .footer-content>div:first-child{grid-column:1/-1}
+}
+@media(max-width:470px){
+  .footer-content{grid-template-columns:1fr}
+  .footer-content>div:first-child{grid-column:auto}
+}

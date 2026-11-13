@@ -390,3 +390,9 @@
   .model-ladder li:nth-child(n+2){border-top:1px solid var(--ref-line)}
   .reference-home-copy .hero-actions{flex-direction:column;align-items:flex-start;gap:6px}
 }
+
+/* Readable text on cream: old dark-theme grey and bright orange were too faint for body text */
+.site-layout{--muted:#5b5042}
+.site-layout .preview-footer p,.site-layout .footer-legal{color:#c9b8a6}
+.site-layout .preview-nav>a:not(.button):hover,.site-layout .preview-nav>[aria-current],.site-layout .solutions .current,
+.site-layout .solutions summary span,.site-layout .step-number{color:#a8471a}
