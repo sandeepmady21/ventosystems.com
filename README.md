@@ -16,7 +16,7 @@ Open `http://127.0.0.1:8765/`. A server is needed because site links and assets 
 
 - `index.html`: company mission, combined engineering and business areas, selected work and enquiry flow.
 - `business/`, `private-ai/`, `safety/`, `autonomy/`: four business-area pages.
-- `gcc-offshore-development/`: dedicated offshore engineering teams and Global Capability Center planning.
+- `gcc-offshore-development/`: GCC and offshore development overview, five engagement models, delivery process and engineering capabilities.
 - `lab/`: research and early work. `cyber/`: cybersecurity expertise and enquiries.
 - `vision/`: company thesis and development model.
 - `assets/company.css`, `assets/company.js`: shared presentation and interaction.
@@ -41,7 +41,7 @@ Headers and footers are static HTML repeated across the eight company pages. Kee
 
 The mobile menu supports keyboard activation, Escape to close and selection of a navigation link. Project details use native HTML disclosure controls. Reduced-motion visitors retain every interaction without animated scrolling or scaling.
 
-The enquiry form validates required fields, prepares a visible email draft and offers an email-app link and copy action. It does not send mail or retain submissions. `/?need=business#contact` preselects a business area; supported values are `general`, `business`, `private-ai`, `offshore-development`, `gcc`, `safety`, `autonomy`, `lab` and `cyber`. For area-only links, unrecognized values use the general enquiry.
+The enquiry form validates required fields, prepares a visible email draft and offers an email-app link and copy action. It does not send mail or retain submissions. `/?need=business#contact` preselects a business area; supported values are `general`, `business`, `private-ai`, `offshore-development`, `gcc`, `india-delivery`, `safety`, `autonomy`, `lab` and `cyber`. The three India delivery topics also change the suggested message prompt. For area-only links, unrecognized values use the general enquiry.
 
 Project links also carry a recognized `project` ID, for example `/?need=business&project=travio#contact`. Recognized project context appears above the enquiry fields and is included in the email draft. Supported IDs map to these areas:
 
