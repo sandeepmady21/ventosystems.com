@@ -1027,3 +1027,14 @@ a[href^="#"] .arr,a[href^="#"]:hover .arr{transform:none}
 .proof-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
 @media(max-width:1200px){.proof-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:640px){.proof-grid{grid-template-columns:1fr}}
+.proof-card{display:flex;flex-direction:column}
+.proof-card .proof-src{margin-top:auto;padding-top:14px;display:inline-flex;align-items:center;gap:6px;font-size:13px;color:#5b5042;text-decoration:none}
+.proof-card .proof-src:hover{color:#853a15;text-decoration:underline;text-underline-offset:3px}
+.proof-card .proof-src .arr{color:#a8471a}
+.vento-band{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr) auto;align-items:center;gap:32px;margin-top:22px;padding:28px 32px;border-radius:14px;background:#311d14;color:#eee8dc}
+.vento-band .eyebrow{margin:0 0 8px;color:#edb187!important}
+.vento-band h3{margin:0 0 8px;font-size:clamp(24px,2.4vw,32px);line-height:1.15;color:#faf6ee}
+.vento-band p:not(.eyebrow){margin:0;font-size:16px;line-height:1.5;color:#d9c8b5}
+.vento-band .check-list{border-color:#5a3a28}
+.vento-band .check-list li{padding:10px 0;font-size:15.5px;border-color:#5a3a28;color:#eee8dc}
+@media(max-width:1100px){.vento-band{grid-template-columns:1fr;gap:20px}.vento-band .button{justify-self:start}}
