@@ -904,3 +904,14 @@ a[href^="#"] .arr,a[href^="#"]:hover .arr{transform:none}
 .svc-tiles .card p{margin-top:8px}
 .svc-tiles .card .svc-includes{margin-top:14px;padding-top:12px;border-top:1px solid #eadfce;font-size:14.5px;line-height:1.5;color:#5b5042}
 .photo-hero img{display:block;width:100%;height:auto;aspect-ratio:3/2;object-fit:cover;border-radius:12px;background:#e9dfd0}
+
+/* Home: four product cards in one row, the same height as the "Built for you" cards */
+#products .product-tiles{grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+#products .product-tile{display:flex;flex-direction:column}
+#products .tile-copy{flex:1;display:flex;flex-direction:column}
+#products .tile-copy .offer-more{margin-top:auto;padding-top:14px}
+#products .tile-head{flex-direction:column-reverse;align-items:flex-start;gap:10px}
+#products .product-tile h3{font-size:22px}
+#products .product-tile .tile-copy p{font-size:15px}
+@media(max-width:1100px){#products .product-tiles{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}}
+@media(max-width:640px){#products .product-tiles{grid-template-columns:1fr}}
