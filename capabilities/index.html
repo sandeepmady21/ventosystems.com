@@ -14,7 +14,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;450;500;550;600;650;700&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap">
 <link rel="stylesheet" href="/assets/company.css?v=20261022">
-<link rel="stylesheet" href="/preview.css?v=20261113c">
+<link rel="stylesheet" href="/preview.css?v=20261113d">
 </head>
 <body class="site-layout">
   
@@ -24,14 +24,16 @@
   <button class="preview-menu" type="button" aria-label="Menu" aria-controls="preview-nav" aria-expanded="false" hidden>Menu <span aria-hidden="true">+</span></button>
   <nav id="preview-nav" class="preview-nav" aria-label="Main navigation">
     <a href="/how-we-work/">How we work</a>
-    <details class="solutions"><summary>Solutions <span aria-hidden="true">⌄</span></summary>
-      <div class="solutions-menu"><a href="/engagement-models/">Compare all models</a><a href="/engagement-models/#team-extension">Team extension</a><a href="/engagement-models/#dedicated-teams">Dedicated engineering teams</a><a href="/engagement-models/#offshore-development-center">Offshore Development Center</a><a href="/engagement-models/#global-capability-center">Global Capability Center</a><a href="/engagement-models/#build-operate-transfer">Build–Operate–Transfer</a></div>
+    <details class="solutions"><summary>Engagement models <span aria-hidden="true">⌄</span></summary>
+      <div class="solutions-menu"><a href="/engagement-models/">Compare all five models</a><a href="/engagement-models/#team-extension">Team extension</a><a href="/engagement-models/#dedicated-teams">Dedicated engineering teams</a><a href="/engagement-models/#offshore-development-center">Offshore Development Center</a><a href="/engagement-models/#global-capability-center">Global Capability Center</a><a href="/engagement-models/#build-operate-transfer">Build–Operate–Transfer</a></div>
     </details>
     <a href="/capabilities/" aria-current="page">Capabilities</a>
-    <a href="/#selected-work">Client projects</a>
     <a href="/hyderabad/">Hyderabad</a>
-    <a href="/company/">About Vento</a>
-    <a class="button nav-contact" href="/contact/">Get in touch <span aria-hidden="true">↗</span></a>
+    <details class="solutions products"><summary>Products &amp; research <span aria-hidden="true">⌄</span></summary>
+      <div class="solutions-menu"><a href="/business/">Business software<small>Tarivo, AP Automation, AuditProof, Practice Tracker</small></a><a href="/private-ai/">Private AI<small>Models and search on your own servers</small></a><a href="/safety/">Safety systems<small>Sensing and response for physical sites</small></a><a href="/autonomy/">Autonomy research<small>Perception and control for machines</small></a><a href="/lab/">Vento Lab<small>Early prototypes and research questions</small></a><a href="/cyber/">Vento Cyber<small>Cybersecurity services</small></a></div>
+    </details>
+    <a href="/company/">About</a>
+    <a class="button nav-contact" href="/contact/">Get in touch</a>
   </nav>
 </div></header>
   <main id="main">
@@ -40,7 +42,7 @@
         <p class="eyebrow">Engineering capabilities</p>
         <h1>What should your Hyderabad team build?</h1>
         <p>Give the team a part of your product or operations it can take responsibility for. Start with the outcome, then choose the engineering roles and delivery model that fit.</p>
-        <a class="button" href="/contact/">Scope your team <span aria-hidden="true">↗</span></a>
+        <a class="button" href="/contact/">Discuss your team <span aria-hidden="true">→</span></a>
       </div>
     </section>
 
@@ -93,19 +95,19 @@
             <p class="eyebrow">Client project</p>
             <h3>Trade classification for a US importer</h3>
             <p>Tarivo brings SAP material data, classification suggestions and duty estimates into one review workflow, with references the reviewer can inspect.</p>
-            <a class="text-link" href="/business/#tarivo">Explore Tarivo <span aria-hidden="true">↗</span></a>
+            <a class="text-link" href="/business/#tarivo">See the Tarivo project <span aria-hidden="true">→</span></a>
           </article>
           <article class="card">
             <p class="eyebrow">Client project</p>
             <h3>Pharmaceutical distribution operations</h3>
             <p>Vento built software connecting purchasing, inventory, sales and payments, with batch and expiry tracking and role-based access.</p>
-            <a class="text-link" href="/business/#operations">Explore the distribution project <span aria-hidden="true">↗</span></a>
+            <a class="text-link" href="/business/#operations">See the distribution project <span aria-hidden="true">→</span></a>
           </article>
           <article class="card">
             <p class="eyebrow">Research &amp; prototypes</p>
             <h3>Perception &amp; controller firmware</h3>
             <p>Vento Autonomy explores camera-guided navigation and how controller firmware translates inputs into machine commands.</p>
-            <a class="text-link" href="/autonomy/#current-work">Explore the Autonomy prototypes <span aria-hidden="true">↗</span></a>
+            <a class="text-link" href="/autonomy/#current-work">Explore the Autonomy prototypes <span aria-hidden="true">→</span></a>
           </article>
         </div>
       </div>
@@ -124,7 +126,7 @@
         <h2 id="capabilities-cta-title">Start with one area of work</h2>
         <p>Share your current stack, the outcome you need and what the team should be able to deliver first.</p>
         <div class="hero-actions">
-          <a class="button" href="/contact/">Discuss your engineering scope <span aria-hidden="true">↗</span></a>
+          <a class="button" href="/contact/">Discuss your engineering scope <span aria-hidden="true">→</span></a>
           <a class="text-link" href="/engagement-models/">Compare engagement models <span aria-hidden="true">→</span></a>
         </div>
       </div>
@@ -133,15 +135,13 @@
   
 <footer class="preview-footer"><div class="shell">
   <div class="footer-content">
-    <div><a class="footer-brand" href="/" aria-label="Vento Systems, home">VENTO</a><p>Offshore engineering &amp; GCCs<br>Hyderabad, Telangana, India</p></div>
-    <nav aria-label="Footer navigation">
-      <a href="/engagement-models/">Engagement models</a><a href="/how-we-work/">How we work</a>
-      <a href="/capabilities/">Capabilities</a><a href="/hyderabad/">Hyderabad</a><a href="/contact/">Contact</a>
-    </nav>
-    <div><a href="mailto:hello@ventosystems.com">hello@ventosystems.com</a><a href="/company/">Vento Systems company overview</a></div>
+    <div><a class="footer-brand" href="/" aria-label="Vento Systems, home">VENTO</a><p>Engineering teams, products and research<br>Hyderabad, Telangana, India</p><a class="footer-email" href="mailto:hello@ventosystems.com">hello@ventosystems.com</a></div>
+    <nav aria-label="Engineering teams"><p class="footer-heading">Engineering teams</p><a href="/engagement-models/">Engagement models</a><a href="/how-we-work/">How we work</a><a href="/capabilities/">Capabilities</a><a href="/hyderabad/">Hyderabad</a></nav>
+    <nav aria-label="Products and research"><p class="footer-heading">Products &amp; research</p><a href="/business/">Business software</a><a href="/private-ai/">Private AI</a><a href="/safety/">Safety systems</a><a href="/autonomy/">Autonomy research</a><a href="/lab/">Vento Lab</a><a href="/cyber/">Vento Cyber</a></nav>
+    <nav aria-label="Company"><p class="footer-heading">Company</p><a href="/company/">About Vento</a><a href="/vision/">Our vision</a><a href="/contact/">Get in touch</a></nav>
   </div>
   <p class="footer-legal">© 2026 Vento Systems Pvt Ltd</p>
 </div></footer>
-<script src="/preview.js?v=20261113b" defer></script>
+<script src="/preview.js?v=20261113d" defer></script>
 </body>
 </html>

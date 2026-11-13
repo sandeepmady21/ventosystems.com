@@ -8,7 +8,7 @@
 .preview-nav{gap:clamp(14px,3vw,44px)}
 .preview-nav>a,.solutions summary{font-size:16px;font-weight:600;line-height:1.3;text-decoration:none;white-space:nowrap;color:#262018}
 .preview-nav>a:not(.button),.solutions summary{display:flex;align-items:center;min-height:44px}
-.preview-nav>a:not(.button):hover,.preview-nav>[aria-current],.solutions .current{color:#c4531b}
+.preview-nav>a:not(.button):hover,.preview-nav>[aria-current],.solutions .current{color:#a8471a}
 .preview-nav .nav-contact{display:inline-flex;align-items:center;gap:10px;min-height:48px;border:1px solid #262018;background:transparent;color:#262018;border-radius:99px;padding:11px 22px;font-size:14px;font-weight:650}
 .preview-nav .nav-contact:hover{background:#262018;color:#faf6ee}
 .preview-nav .nav-contact span{color:currentColor;margin:0}
@@ -46,6 +46,31 @@
 }
 @media(max-width:700px){
   .shell{width:calc(100% - 40px)}
+  .footer-content{grid-template-columns:1fr 1fr}
+  .footer-content>div:first-child{grid-column:1/-1}
+}
+@media(max-width:470px){
+  .footer-content{grid-template-columns:1fr}
+  .footer-content>div:first-child{grid-column:auto}
+}
+
+/* 2026-11-13 navigation and footer */
+.solutions-menu small{display:block;margin-top:2px;font-size:12px;font-weight:400;color:#6b5e4c}
+.products .solutions-menu{width:320px}
+.solutions-menu [aria-current]{background:#eee6d8;color:#8b3e18}
+.footer-content{grid-template-columns:1.4fr 1fr 1fr 1fr}
+.footer-content .footer-heading{margin:0 0 6px;font:400 11px/1.5 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:#edb187!important}
+.footer-content .footer-email{display:inline-block;margin-top:14px}
+@media(max-width:1200px){
+  .nav-shell{min-height:72px}
+  .preview-js .preview-menu{display:block}
+  .preview-js .preview-nav{display:none;position:absolute;top:100%;left:0;right:0;max-height:calc(100dvh - 72px);overflow:auto;padding:12px 24px 20px;background:#faf6ee;border-bottom:1px solid #d8c9b7}
+  .preview-js .preview-nav.is-open{display:grid;gap:0}
+  .preview-nav>a:not(.button),.solutions summary{display:block;padding:12px 0}
+  .preview-nav .nav-contact{justify-self:start;margin-top:9px}
+  .solutions-menu,.products .solutions-menu{position:static;width:auto;box-shadow:none}
+}
+@media(max-width:900px){
   .footer-content{grid-template-columns:1fr 1fr}
   .footer-content>div:first-child{grid-column:1/-1}
 }
