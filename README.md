@@ -43,11 +43,11 @@ The mobile menu supports keyboard activation, Escape to close and selection of a
 
 The enquiry form validates required fields, prepares a visible email draft and offers an email-app link and copy action. It does not send mail or retain submissions. `/?need=business#contact` preselects a business area; supported values are `general`, `business`, `private-ai`, `offshore-development`, `gcc`, `india-delivery`, `safety`, `autonomy`, `lab` and `cyber`. The three India delivery topics also change the suggested message prompt. For area-only links, unrecognized values use the general enquiry.
 
-Project links also carry a recognized `project` ID, for example `/?need=business&project=travio#contact`. Recognized project context appears above the enquiry fields and is included in the email draft. Supported IDs map to these areas:
+Project links also carry a recognized `project` ID, for example `/?need=business&project=tarivo#contact`. Recognized project context appears above the enquiry fields and is included in the email draft. Supported IDs map to these areas:
 
 | Project IDs | Area |
 | --- | --- |
-| `travio`, `ap-automation`, `auditproof`, `practice-tracker`, `operations` | `business` |
+| `tarivo`, `ap-automation`, `auditproof`, `practice-tracker`, `operations` | `business` |
 | `mobile-robot`, `controller` | `autonomy` |
 | `primer`, `gather` | `lab` |
 
@@ -73,7 +73,7 @@ Business and Autonomy project rows use native disclosures with titles and curren
 
 ## Homepage structure
 
-`assets/homepage.css` is loaded only on the homepage. Each area groups its heading, illustration, description and stage inside one link panel. Selected work is visible without accordions. A semantic three-step diagram uses the existing Travio project details to explain data integration, domain logic and human review; it stacks vertically on phones. This replaces the two overlapping positioning sections while retaining the weave illustration.
+`assets/homepage.css` is loaded only on the homepage. Each area groups its heading, illustration, description and stage inside one link panel. Selected work is visible without accordions. A semantic three-step diagram uses the existing Tarivo project details to explain data integration, domain logic and human review; it stacks vertically on phones. This replaces the two overlapping positioning sections while retaining the weave illustration.
 
 ## Artwork archive
 

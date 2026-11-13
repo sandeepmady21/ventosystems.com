@@ -78,7 +78,7 @@ function enquiry(search = '') {
 
 test('known projects choose the correct area and survive in both draft representations', () => {
   const cases = [
-    ['travio', 'Travio', 'business'], ['ap-automation', 'AP Automation', 'business'],
+    ['tarivo', 'Tarivo', 'business'], ['ap-automation', 'AP Automation', 'business'],
     ['auditproof', 'AuditProof', 'business'], ['practice-tracker', 'Practice Tracker', 'business'],
     ['operations', 'Operations systems', 'business'], ['mobile-robot', 'Mobile robot', 'autonomy'],
     ['controller', 'Controller firmware', 'autonomy'],
@@ -102,10 +102,10 @@ test('known projects choose the correct area and survive in both draft represent
 });
 
 test('a known project resolves a conflicting need consistently', () => {
-  const form = enquiry('?need=private-ai&project=travio');
+  const form = enquiry('?need=private-ai&project=tarivo');
   assert.equal(form.area.value, 'business');
-  assert.equal(form.elements['enquiry-project'].textContent, 'Enquiry about Travio');
-  assert.equal(form.submit().subject, 'Travio — Business systems — Example & Co');
+  assert.equal(form.elements['enquiry-project'].textContent, 'Enquiry about Tarivo');
+  assert.equal(form.submit().subject, 'Tarivo — Business systems — Example & Co');
 });
 
 test('India delivery links preselect topics and update enquiry prompts', () => {
@@ -145,7 +145,7 @@ test('unknown project values never enter the draft and a valid need still works'
 
 test('changing area invalidates the draft and permanently clears the original project', () => {
   for (const event of ['input', 'change']) {
-    const form = enquiry('?need=business&project=travio');
+    const form = enquiry('?need=business&project=tarivo');
     form.submit();
     form.changeArea('private-ai', event);
     assert.equal(form.elements['enquiry-project'].hidden, true);
@@ -177,7 +177,7 @@ test('editing a message refreshes the draft while retaining a compatible project
 });
 
 test('native validation and whitespace-only required values cannot create a draft', () => {
-  const form = enquiry('?project=travio');
+  const form = enquiry('?project=tarivo');
   form.elements['enquiry-form'].valid = false;
   assert.equal(form.submit().subject, null);
   assert.equal(form.elements['enquiry-preview'].hidden, true);
@@ -188,7 +188,7 @@ test('native validation and whitespace-only required values cannot create a draf
 });
 
 test('a silently restored area cannot submit an unrelated project', () => {
-  const form = enquiry('?project=travio');
+  const form = enquiry('?project=tarivo');
   form.area.value = 'autonomy';
   const { subject, body } = form.submit();
   assert.equal(subject, 'Autonomy & machines — Example & Co');
@@ -198,7 +198,7 @@ test('a silently restored area cannot submit an unrelated project', () => {
 });
 
 test('a silently restored area clears visible context even when the form is incomplete', () => {
-  const form = enquiry('?project=travio');
+  const form = enquiry('?project=tarivo');
   form.area.value = 'safety';
   form.elements['enquiry-form'].valid = false;
   assert.equal(form.submit().subject, null);

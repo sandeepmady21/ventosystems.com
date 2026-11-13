@@ -23,7 +23,7 @@
   const area = document.getElementById('enquiry-area');
   const query = new URLSearchParams(location.search);
   const projects = new Map([
-    ['travio', { label: 'Travio', area: 'business' }],
+    ['tarivo', { label: 'Tarivo', area: 'business' }],
     ['ap-automation', { label: 'AP Automation', area: 'business' }],
     ['auditproof', { label: 'AuditProof', area: 'business' }],
     ['practice-tracker', { label: 'Practice Tracker', area: 'business' }],
