@@ -1024,3 +1024,6 @@ a[href^="#"] .arr,a[href^="#"]:hover .arr{transform:none}
 @media(max-width:900px){.proof-grid{grid-template-columns:1fr}.model-hero{max-width:640px;margin:8px auto 0}}
 @media(max-width:560px){.model-hero{aspect-ratio:auto;display:grid;gap:12px}.mh-photo,.mh-card{position:static;width:100%}}
 .proof-grid .proof-card p.proof-num{margin:10px 0 8px;font-size:clamp(40px,4vw,56px);line-height:1;font-weight:600;letter-spacing:-.03em;color:#a8471a}
+.proof-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+@media(max-width:1200px){.proof-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:640px){.proof-grid{grid-template-columns:1fr}}
