@@ -1,5 +1,6 @@
 User-agent: *
 Allow: /
 Disallow: /docs/
+Disallow: /hyderabad-preview/
 
 Sitemap: https://ventosystems.com/sitemap.xml
