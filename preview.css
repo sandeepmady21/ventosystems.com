@@ -1074,3 +1074,9 @@ a[href^="#"] .arr,a[href^="#"]:hover .arr{transform:none}
 .uc-card>p:not(.eyebrow):not(.uc-decides){margin-bottom:16px}
 @media(max-width:1000px){.uc-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:640px){.uc-grid{grid-template-columns:1fr}}
+.agx-strip{display:grid;grid-template-columns:auto 1fr;gap:6px 24px;align-items:center;margin-top:26px;padding:22px 24px;border:1px solid var(--ref-line);border-radius:14px;background:#fffaf2}
+.agx-strip .eyebrow{margin:0;color:#853a15}
+.agx-strip>p:not(.eyebrow){margin:0;font-size:16px;color:#3d342a}
+.agx-strip .role-chips{grid-column:1/-1;margin-top:10px}
+.agx-strip .role-chips li{padding:8px 14px;font-size:14.5px}
+@media(max-width:700px){.agx-strip{grid-template-columns:1fr}}
