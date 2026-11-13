@@ -23,6 +23,10 @@ const files = new Map([
   ['/assets/hyderabad-hitec-city.jpg', ['image/jpeg', './assets/hyderabad-hitec-city.jpg']],
   ['/assets/delivery/engineering-studios-640.webp', ['image/webp', '../assets/delivery/engineering-studios-640.webp']],
   ['/assets/delivery/engineering-studios-1280.webp', ['image/webp', '../assets/delivery/engineering-studios-1280.webp']],
+  ...['hero-engineering', 'business', 'private-ai', 'autonomy'].map(name => [
+    `/assets/artwork-v2/r/${name}-960.webp`,
+    ['image/webp', `../assets/artwork-v2/r/${name}-960.webp`],
+  ]),
 ]);
 
 const models = [
@@ -32,11 +36,10 @@ const models = [
   ['global-capability-center', 'Global Capability Center'],
   ['build-operate-transfer', 'Build–Operate–Transfer'],
 ];
+const briefForm = await readFile(new URL('./brief-form.html', import.meta.url), 'utf8');
 
 function header(path) {
-  const nav = ['/how-we-work/', '/capabilities/', '/hyderabad/'].map(route =>
-    `<a href="${route}"${path === route ? ' aria-current="page"' : ''}>${pages.get(route)[0]}</a>`
-  ).join('');
+  const navLink = route => `<a href="${route}"${path === route ? ' aria-current="page"' : ''}>${pages.get(route)[0]}</a>`;
   const modelLinks = models.map(([anchor, label]) =>
     `<a href="/engagement-models/#${anchor}">${label}</a>`
   ).join('');
@@ -45,12 +48,15 @@ function header(path) {
 <a class="skip-link" href="#main">Skip to content</a>
 <header class="preview-header"><div class="shell nav-shell">
   <a class="brand" href="/" aria-label="Vento Systems, home"><img src="/assets/favicon.svg" width="42" height="42" alt=""><span>VENTO<span class="brand-small">SYSTEMS</span></span></a>
-  <button class="preview-menu" type="button" aria-controls="preview-nav" aria-expanded="false" hidden>Menu <span aria-hidden="true">+</span></button>
+  <button class="preview-menu" type="button" aria-label="Menu" aria-controls="preview-nav" aria-expanded="false" hidden>Menu <span aria-hidden="true">+</span></button>
   <nav id="preview-nav" class="preview-nav" aria-label="Main navigation">
+    ${navLink('/how-we-work/')}
     <details class="solutions"><summary${path === '/engagement-models/' ? ' class="current"' : ''}>Solutions <span aria-hidden="true">⌄</span></summary>
       <div class="solutions-menu"><a href="/engagement-models/"${path === '/engagement-models/' ? ' aria-current="page"' : ''}>Compare all models</a>${modelLinks}</div>
     </details>
-    ${nav}
+    ${navLink('/capabilities/')}
+    <a href="/#selected-work">Client projects</a>
+    ${navLink('/hyderabad/')}
     <a class="button nav-contact" href="/contact/"${path === '/contact/' ? ' aria-current="page"' : ''}>Get in touch <span aria-hidden="true">↗</span></a>
   </nav>
 </div></header>`;
@@ -100,6 +106,7 @@ const server = createServer(async (request, response) => {
       ? (await readFile(new URL(page[1], import.meta.url), 'utf8'))
           .replace('<!-- SITE_HEADER -->', () => header(path))
           .replace('<!-- SITE_FOOTER -->', () => footer)
+          .replace('<!-- BRIEF_FORM -->', () => briefForm)
       : await readFile(new URL(asset[1], import.meta.url));
 
     response.writeHead(200, { 'Content-Type': page ? 'text/html; charset=utf-8' : asset[0] });
