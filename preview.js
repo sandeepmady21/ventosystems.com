@@ -242,3 +242,21 @@ document.querySelectorAll('.section-bar').forEach(bar => {
   }, { rootMargin: '-40% 0px -55% 0px' });
   sections.forEach(s => io.observe(s));
 });
+
+// Theme: follows the device setting until someone picks light or dark; the choice is remembered on this device.
+const themeButton = document.querySelector('.theme-toggle');
+if (themeButton) {
+  const root = document.documentElement;
+  const systemDark = window.matchMedia('(prefers-color-scheme: dark)');
+  const isDark = () => (root.dataset.theme ? root.dataset.theme === 'dark' : systemDark.matches);
+  const sync = () => themeButton.setAttribute('aria-pressed', String(isDark()));
+  themeButton.hidden = false;
+  themeButton.addEventListener('click', () => {
+    const next = isDark() ? 'light' : 'dark';
+    root.dataset.theme = next;
+    try { localStorage.setItem('theme', next); } catch {}
+    sync();
+  });
+  systemDark.addEventListener('change', sync);
+  sync();
+}
