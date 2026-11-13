@@ -606,3 +606,26 @@ body.site-layout{-webkit-font-smoothing:auto;-moz-osx-font-smoothing:auto;text-r
 .tile-copy .offer-more{display:inline-block;margin-top:18px}
 @media(max-width:1000px){.product-tile:only-child{grid-template-columns:1fr}.product-tile:only-child .shot-frame{margin-bottom:8px}}
 .reference-home-hero{background-color:#24170f}
+
+/* Drawn icons: one stroke weight everywhere, aligned to the text */
+.arr{display:inline-flex;align-items:center;justify-content:center;line-height:1}
+.ico{width:1.05em;height:1.05em;flex:none;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+.button .ico{width:1.15em;height:1.15em}
+.text-link .arr,.offer-more .arr,.also-line .arr{margin-left:2px;transition:transform .18s ease}
+.text-link:hover .arr,.offer-card:hover .offer-more .arr,.product-tile:hover .offer-more .arr,.service-card:hover .offer-more .arr,.also-line a:hover .arr,.button:hover .arr{transform:translateX(3px)}
+a[href^="#"] .arr,a[href^="#"]:hover .arr{transform:none}
+.solutions summary{display:flex;align-items:center;gap:7px}
+.solutions summary .chev{width:13px;height:13px;flex:none;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;opacity:.6;transition:transform .2s ease,opacity .2s ease;margin-top:1px}
+.solutions summary:hover .chev,.solutions[open] summary .chev{opacity:1}
+.solutions[open] summary .chev{transform:rotate(180deg)}
+.solutions summary span{display:none}
+@media (prefers-reduced-motion: reduce){.arr,.solutions summary .chev{transition:none}}
+
+/* Wordmark: VENTO with SYSTEMS spread to the same width beneath it */
+.preview-header .brand{gap:12px;text-decoration:none;color:#1f1a14}
+.preview-header .brand img{width:44px;height:44px;border-radius:9px}
+.brand-word{display:inline-flex;flex-direction:column;align-items:stretch;line-height:1}
+.brand-name{font:700 27px/0.9 var(--sans);letter-spacing:.06em;margin-right:-.06em;color:#1f1a14}
+.brand-sub{display:flex;justify-content:space-between;margin-top:7px;font:600 10.5px/1 var(--sans);color:#6b5a48}
+.brand-sub i{font-style:normal}
+@media(max-width:700px){.brand-name{font-size:23px}.brand-sub{font-size:9.5px;margin-top:6px}.preview-header .brand img{width:38px;height:38px}}
