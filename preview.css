@@ -461,3 +461,14 @@ body.site-layout{-webkit-font-smoothing:auto;-moz-osx-font-smoothing:auto;text-r
 .site-layout .card p:not(.eyebrow),.site-layout .card li{font-size:16px}
 .footer-content .footer-heading{font-size:12px}
 .ladder-scale{font-size:12px}
+
+/* Section headers: short name left, one-line summary right */
+.section-head-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);align-items:end;gap:14px 64px;margin-bottom:34px}
+.section-head-row h2{margin:0}
+.site-layout .section-head-row p{margin:0;max-width:56ch;color:#5b5042;font-size:clamp(17px,1.4vw,19px);line-height:1.55}
+.site-layout .reference-proof .section-head-row p{color:#e1c8b6}
+.offer-card h3{font-size:clamp(26px,2.3vw,32px);margin-top:0}
+.site-layout .card .offer-tags{list-style:none;padding:0;margin:16px 0 0;display:flex;flex-wrap:wrap;gap:6px}
+.site-layout .card .offer-tags li{font:500 12px/1 var(--mono);letter-spacing:.04em;padding:7px 10px;border:1px solid var(--ref-line);border-radius:99px;color:#4f4538;background:#fff}
+.reference-proof .work-grid{max-width:none}
+@media(max-width:800px){.section-head-row{grid-template-columns:1fr;gap:12px;margin-bottom:24px}}
