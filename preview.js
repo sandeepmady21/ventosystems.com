@@ -46,10 +46,10 @@ if (form) {
     ['build-operate-transfer', 'transfer'], ['transfer', 'transfer'],
     ['business', 'business'], ['private-ai', 'private-ai'], ['safety', 'safety'],
     ['autonomy', 'autonomy'], ['lab', 'lab'], ['cyber', 'cyber'], ['general', 'general'],
-    ['public-sector', 'public-sector'], ['government', 'public-sector'],
+    ['public-sector', 'public-sector'], ['government', 'public-sector'], ['demo-videos', 'demo-videos'],
   ]);
   const projects = new Map([
-    ['tarivo', ['Tarivo', 'business']], ['ap-automation', ['AP Automation', 'business']],
+    ['tarivo', ['Tarivo', 'business']], ['ap-automation', ['AP Automation', 'business']], ['sightline', ['Sightline', 'business']], ['plinth', ['Plinth', 'business']],
     ['auditproof', ['AuditProof', 'business']], ['practice-tracker', ['Practice Tracker', 'business']],
     ['operations', ['Distribution operations', 'business']], ['mobile-robot', ['Mobile robot', 'autonomy']],
     ['controller', ['Controller firmware', 'autonomy']], ['primer', ['Primer', 'lab']], ['gather', ['Gather', 'lab']],
@@ -66,6 +66,7 @@ if (form) {
     ['autonomy', 'Describe the machine, the environment and the problem to solve.'],
     ['lab', 'Which project or research question is this about?'],
     ['cyber', 'What would you like Vento Cyber to look at?'],
+    ['demo-videos', 'Which product is the video for, who will watch it, and where will it be shown?'],
     ['public-sector', 'Which agency or bid is this for, and what should the system do? A capability statement request is fine too.'],
     ['general', 'Tell us what you have in mind.'],
   ]);
