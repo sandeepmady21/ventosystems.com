@@ -1049,3 +1049,4 @@ a[href^="#"] .arr,a[href^="#"]:hover .arr{transform:none}
 .about-links a .arr{color:#a8471a}
 .about-links span{font-size:16px;color:#4f4538}
 @media(max-width:640px){.about-links li{grid-template-columns:1fr;gap:4px}}
+.product-hero h1.h1-long{font-size:clamp(38px,4.4vw,66px);line-height:1.02}
