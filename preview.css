@@ -673,3 +673,23 @@ a[href^="#"] .arr,a[href^="#"]:hover .arr{transform:none}
 @media(max-width:700px){.company-hero-new .reference-home-copy h1{font-size:clamp(36px,11vw,52px)}}
 .company-hero-new .reference-home-copy h1{font-size:clamp(48px,6.2vw,96px)}
 @media(max-width:700px){.company-hero-new .reference-home-copy h1{font-size:clamp(36px,11vw,52px)}}
+
+/* Home hero: real product screens, layered */
+.hero-stack{position:relative;min-width:0;width:100%;aspect-ratio:1.16/1}
+.stack-card{position:absolute;display:block;margin:0;border-radius:10px;overflow:hidden;background:#fff;text-decoration:none;
+  border:1px solid rgba(255,250,240,.16);
+  box-shadow:0 46px 90px -36px rgba(0,0,0,.85),0 14px 28px -14px rgba(0,0,0,.6);
+  transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s ease}
+.stack-card img{display:block;width:100%;height:auto}
+.stack-back::before,.stack-mid::before{content:"";display:block;height:20px;border-bottom:1px solid #e3d7c6;
+  background:radial-gradient(circle at 12px 10px,#d6c6b1 3.2px,transparent 3.8px),radial-gradient(circle at 24px 10px,#d6c6b1 3.2px,transparent 3.8px),radial-gradient(circle at 36px 10px,#d6c6b1 3.2px,transparent 3.8px),#f4eee4}
+.stack-back{top:0;right:0;width:86%;z-index:1}
+.stack-mid{left:0;bottom:7%;width:60%;z-index:2}
+.stack-front{right:3%;bottom:0;width:54%;z-index:3;border:2px solid #f47735}
+.stack-label{position:absolute;right:10px;top:28px;padding:5px 11px;border-radius:99px;background:rgba(31,26,20,.86);color:#faf6ee;font:600 12.5px/1.2 var(--sans);letter-spacing:.01em}
+.stack-front .stack-label{top:auto;bottom:10px;background:#f47735;color:#1f1a14}
+.stack-card:hover,.stack-card:focus-visible{transform:translateY(-6px);box-shadow:0 56px 100px -36px rgba(0,0,0,.9),0 18px 32px -14px rgba(0,0,0,.6)}
+.stack-card:focus-visible{outline:2px solid #f47735;outline-offset:3px}
+@media (prefers-reduced-motion: reduce){.stack-card{transition:none}.stack-card:hover{transform:none}}
+@media(max-width:900px){.hero-stack{max-width:640px;margin:8px auto 0}}
+@media(max-width:560px){.stack-label{font-size:11.5px;padding:4px 9px;top:24px}.stack-front .stack-label{bottom:8px}}
