@@ -45,7 +45,7 @@ if (form) {
     ['offshore-development', 'odc'], ['odc', 'odc'], ['gcc', 'gcc'],
     ['build-operate-transfer', 'transfer'], ['transfer', 'transfer'],
     ['business', 'business'], ['private-ai', 'private-ai'], ['safety', 'safety'],
-    ['autonomy', 'autonomy'], ['lab', 'lab'], ['cyber', 'cyber'], ['general', 'general'],
+    ['autonomy', 'autonomy'], ['lab', 'lab'], ['cyber', 'cyber'], ['general', 'general'], ['choose', 'choose'],
     ['public-sector', 'public-sector'], ['government', 'public-sector'], ['demo-videos', 'demo-videos'],
   ]);
   const projects = new Map([
@@ -160,4 +160,68 @@ document.querySelectorAll('.clip-player').forEach(player => {
       next.focus(); select(next);
     });
   });
+});
+
+// India team builder: count the roles you need, then add the list to the enquiry form on the same page.
+document.querySelectorAll('[data-builder]').forEach(builder => {
+  document.documentElement.classList.add('builder-js');
+  const MAX = 20;
+  const rows = [...builder.querySelectorAll('.builder-row')];
+  const counts = new Map(rows.map(r => [r, 0]));
+  const total = builder.querySelector('[data-total]');
+  const totalLabel = builder.querySelector('[data-total-label]');
+  const picked = builder.querySelector('[data-picked]');
+  const note = builder.querySelector('[data-note]');
+  const sum = () => [...counts.values()].reduce((a, b) => a + b, 0);
+  const people = n => (n === 1 ? 'person' : 'people');
+  const lines = () => rows.filter(r => counts.get(r) > 0)
+    .map(r => `${counts.get(r)} ${counts.get(r) === 1 ? r.dataset.name : `${r.dataset.name}s`}`);
+  const render = () => {
+    const n = sum();
+    total.textContent = n;
+    totalLabel.textContent = people(n);
+    picked.textContent = n ? lines().join(' · ') : 'Add roles with the + buttons.';
+    rows.forEach(r => {
+      const c = counts.get(r);
+      r.querySelector('output').textContent = c;
+      r.classList.toggle('is-on', c > 0);
+      r.querySelector('[data-step="-1"]').setAttribute('aria-disabled', String(c === 0));
+      r.querySelector('[data-step="1"]').setAttribute('aria-disabled', String(c === MAX));
+    });
+  };
+  builder.addEventListener('click', event => {
+    const button = event.target.closest('[data-step]');
+    if (!button || button.getAttribute('aria-disabled') === 'true') return;
+    const row = button.closest('.builder-row');
+    counts.set(row, Math.min(MAX, Math.max(0, counts.get(row) + Number(button.dataset.step))));
+    note.textContent = '';
+    render();
+  });
+  builder.querySelector('[data-use]').addEventListener('click', () => {
+    const n = sum();
+    if (!n) {
+      note.textContent = 'Add at least one role first.';
+      rows[0].querySelector('[data-step="1"]').focus();
+      return;
+    }
+    const form = document.getElementById('brief-form');
+    if (!form) return;
+    const f = form.elements;
+    const block = [`Team we have in mind (${n} ${people(n)}):`, ...lines().map(l => `- ${l}`)].join('\n');
+    const previous = form.dataset.teamBlock;
+    const text = f.message.value;
+    if (previous && text.includes(previous)) f.message.value = text.replace(previous, block);
+    else f.message.value = text.trim() ? `${block}\n\n${text.trim()}` : `${block}\n\nWhat the team would own: `;
+    form.dataset.teamBlock = block;
+    f.message.rows = Math.max(5, Math.min(14, f.message.value.split('\n').length + 1));
+    if (f.interest.value === 'choose') {
+      f.interest.value = 'offshore';
+      f.interest.dispatchEvent(new Event('change'));
+    }
+    note.textContent = 'Added to your enquiry below.';
+    document.getElementById('plan')?.scrollIntoView({ behavior: reduceMotion.matches ? 'auto' : 'smooth', block: 'start' });
+    f.message.focus({ preventScroll: true });
+    f.message.setSelectionRange(f.message.value.length, f.message.value.length);
+  });
+  render();
 });
