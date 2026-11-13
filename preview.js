@@ -225,3 +225,21 @@ document.querySelectorAll('[data-builder]').forEach(builder => {
   });
   render();
 });
+
+// Section bar: mark the section in view, and keep its link visible when the bar scrolls sideways.
+document.querySelectorAll('.section-bar').forEach(bar => {
+  const list = bar.querySelector('ul');
+  const links = [...bar.querySelectorAll('ul a')];
+  const sections = links.map(a => document.querySelector(a.hash)).filter(Boolean);
+  const mark = id => links.forEach(a => {
+    const on = a.hash === `#${id}`;
+    if (on) {
+      a.setAttribute('aria-current', 'location');
+      list.scrollTo({ left: a.offsetLeft - 12, behavior: reduceMotion.matches ? 'auto' : 'smooth' });
+    } else a.removeAttribute('aria-current');
+  });
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) mark(e.target.id); });
+  }, { rootMargin: '-40% 0px -55% 0px' });
+  sections.forEach(s => io.observe(s));
+});
