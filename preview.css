@@ -1038,3 +1038,14 @@ a[href^="#"] .arr,a[href^="#"]:hover .arr{transform:none}
 .vento-band .check-list{border-color:#5a3a28}
 .vento-band .check-list li{padding:10px 0;font-size:15.5px;border-color:#5a3a28;color:#eee8dc}
 @media(max-width:1100px){.vento-band{grid-template-columns:1fr;gap:20px}.vento-band .button{justify-self:start}}
+
+/* About, kept simple until people and photos are ready */
+.about-intro .lead{max-width:780px;margin-top:16px}
+.about-intro .hero-actions{margin-top:26px}
+.about-links{list-style:none;margin:0;padding:0;border-top:1px solid var(--ref-line)}
+.about-links li{display:grid;grid-template-columns:minmax(160px,.4fr) 1fr;gap:20px;align-items:baseline;padding:16px 0;border-bottom:1px solid var(--ref-line)}
+.about-links a{display:inline-flex;align-items:center;gap:8px;font-size:18px;font-weight:650;color:#262018;text-decoration:none}
+.about-links a:hover{color:#853a15}
+.about-links a .arr{color:#a8471a}
+.about-links span{font-size:16px;color:#4f4538}
+@media(max-width:640px){.about-links li{grid-template-columns:1fr;gap:4px}}
