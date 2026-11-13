@@ -99,7 +99,7 @@ if (form) {
     const topic = fields.interest.selectedOptions[0].text;
     const company = fields.company.value.trim();
     const recipient = 'hello@ventosystems.com';
-    const subject = `Enquiry: ${project ? project[0] : topic}`;
+    const subject = `Inquiry: ${project ? project[0] : topic}`;
     const body = `Hello Vento,\n\n${message}\n\nName: ${name}${company ? `\nOrganization: ${company}` : ''}\nTopic: ${topic}`;
     draft.value = `To: ${recipient}\nSubject: ${subject}\n\n${body}`;
     result.hidden = false;
@@ -161,7 +161,7 @@ document.querySelectorAll('.clip-player').forEach(player => {
   });
 });
 
-// India team builder: count the roles you need, then add the list to the enquiry form on the same page.
+// India team builder: count the roles you need, then add the list to the inquiry form on the same page.
 document.querySelectorAll('[data-builder]').forEach(builder => {
   document.documentElement.classList.add('builder-js');
   const MAX = 20;
@@ -217,7 +217,7 @@ document.querySelectorAll('[data-builder]').forEach(builder => {
       f.interest.value = 'offshore';
       f.interest.dispatchEvent(new Event('change'));
     }
-    note.textContent = 'Added to your enquiry below.';
+    note.textContent = 'Added to your inquiry below.';
     document.getElementById('plan')?.scrollIntoView({ behavior: reduceMotion.matches ? 'auto' : 'smooth', block: 'start' });
     f.message.focus({ preventScroll: true });
     f.message.setSelectionRange(f.message.value.length, f.message.value.length);

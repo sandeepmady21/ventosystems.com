@@ -844,3 +844,12 @@ a[href^="#"] .arr,a[href^="#"]:hover .arr{transform:none}
 .start-list b{font-size:18px;line-height:1.35;color:#262018}
 .start-list span{font-size:17px;line-height:1.5;color:#4f4538}
 @media(max-width:860px){.svc-grid{grid-template-columns:1fr}.start-list li{grid-template-columns:1fr;gap:4px}}
+
+/* Brand diagrams in place of the clay renders */
+.art-figure.diagram svg{display:block;width:100%;height:auto;border-radius:12px;box-shadow:0 30px 60px -36px rgba(36,23,15,.6)}
+.service-card .art-figure.diagram svg{border-radius:8px;box-shadow:none}
+.ps-offers .card .text-link{margin-top:16px}
+.procure-spec{margin-bottom:28px}
+.procure-spec a{color:#853a15;text-underline-offset:3px}
+.art-figure.diagram .dg-mini{display:none}
+@media(max-width:560px){.art-figure.diagram .dg-full{display:none}.art-figure.diagram .dg-mini{display:block}}
