@@ -1050,3 +1050,11 @@ a[href^="#"] .arr,a[href^="#"]:hover .arr{transform:none}
 .about-links span{font-size:16px;color:#4f4538}
 @media(max-width:640px){.about-links li{grid-template-columns:1fr;gap:4px}}
 .product-hero h1.h1-long{font-size:clamp(38px,4.4vw,66px);line-height:1.02}
+.pillar{display:flex;flex-direction:column}
+.pillar .pillar-eg{margin-top:auto;padding-top:14px;border-top:1px solid #eadfce;font-size:14.5px;line-height:1.5;color:#4f4538}
+.pillar .pillar-eg b{display:block;margin-bottom:4px;font:500 12px/1.4 var(--mono);text-transform:uppercase;letter-spacing:.06em;color:#853a15}
+.svc-tiles .card.pillar>p:not(.pillar-eg){margin-bottom:16px}
+.sector-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+.sector-grid .svc-card h3{margin-top:0;font-size:21px}
+@media(max-width:1000px){.sector-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:640px){.sector-grid{grid-template-columns:1fr}}
