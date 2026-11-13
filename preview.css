@@ -666,3 +666,10 @@ a[href^="#"] .arr,a[href^="#"]:hover .arr{transform:none}
 .product-tile .shot-frame img{aspect-ratio:16/10;object-fit:cover;object-position:top left}
 .sample-video{display:block;width:100%;height:auto;aspect-ratio:16/9;background:#111}
 .service-card .art-figure img{aspect-ratio:3/2;object-fit:cover}
+
+/* Home headline: two deliberate lines, never split mid-phrase */
+.company-hero-new .reference-home-copy h1{max-width:none;font-size:clamp(46px,5.6vw,86px);line-height:1;letter-spacing:-.035em}
+.company-hero-new .reference-home-copy h1 .h1-line{display:block;white-space:nowrap}
+@media(max-width:700px){.company-hero-new .reference-home-copy h1{font-size:clamp(36px,11vw,52px)}}
+.company-hero-new .reference-home-copy h1{font-size:clamp(48px,6.2vw,96px)}
+@media(max-width:700px){.company-hero-new .reference-home-copy h1{font-size:clamp(36px,11vw,52px)}}
